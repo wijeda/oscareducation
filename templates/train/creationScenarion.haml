@@ -4,7 +4,38 @@
 -load compress
 
 -block content
-        %h1 Hello
+        #parameters
+          %h1 parameters
+          Here is the different parameters for the exercise
+          %form
+            %br
+            Title :
+            %input{:id => 'title', :placeholder => 'Ex: Sequence 1'}
+            %br
+            Grade Level :
+            %input{:id => 'grade', :placeholder => 'Ex: Elementary'}
+            %br
+            Skills :
+            %input{:id => 'skills', :placeholder => 'Ex: Calculus'}
+            %br
+            Topics :
+            %input{:id => 'topics', :placeholder => 'Ex: Algebra'}
+            %br
+            Instructions :
+            %input{:id => 'instructions', :placeholder => 'Explain your question'}
+
+        #video
+          %h1 video
+          here is a video for an exercise
+
+        #exercise
+          %h1 exercise
+          the exercise is create here
+          %form
+            %select
+              %optgroup
+
+
     -# .row
     -#   -# navigation
     -#   %nav.navbar.navbar-default
