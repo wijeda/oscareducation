@@ -12,3 +12,6 @@ def home(request):
 
 def create_scenario(request):
     return TemplateResponse(request, "train/creationScenarion.haml", {})
+
+def list_scenario(request):
+    return TemplateResponse(request, "train/listScenario.haml", {})

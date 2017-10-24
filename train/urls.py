@@ -11,5 +11,5 @@ urlpatterns = [
     url(r'^data/', views.home),
     url(r'^create_scenario', views.create_scenario, name='student_dashboard'),
     url(r'^edit_scenario/', viewsStu.dashboard, name='student_dashboard'),
-    url(r'^list_scenario/', viewsStu.dashboard, name='student_dashboard'),
+    url(r'^list_scenario/', views.list_scenario, name='student_dashboard'),
 ]
