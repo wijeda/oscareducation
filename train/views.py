@@ -19,3 +19,6 @@ def create_scenario(request):
     #     "no_menu": True,
     # })
     {"no_menu": True,})
+
+def list_scenario(request):
+    return TemplateResponse(request, "train/listScenario.haml", {})
