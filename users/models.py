@@ -18,13 +18,18 @@ class Professor(models.Model):
     user = models.OneToOneField(User)
     is_pending = models.BooleanField(default=True)
     code = models.BigIntegerField(null=True,blank=True)
+    re
 
     def __unicode__(self):
         return ("%s %s" % (
         self.user.first_name, self.user.last_name)) if self.user.first_name or self.user.last_name else self.user.username
 
+    def update_status(self):
+        pass
+
     class Meta:
         ordering = ['user__last_name', 'user__first_name']
+
 
 
 class Student(models.Model):
