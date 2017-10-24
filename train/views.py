@@ -9,3 +9,6 @@ def root_redirection(request):
 
 def home(request):
     return TemplateResponse(request, "home.haml", {})
+
+def create_scenario(request):
+    return TemplateResponse(request, "train/creationScenarion.haml", {})
