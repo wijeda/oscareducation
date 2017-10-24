@@ -4,38 +4,41 @@
 -load compress
 
 -block content
-        %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
-        #parameters
-          %h1 parameters
-          Here is the different parameters for the exercise
-          %form
-            %br
-            %label{:for => 'title'} Title :
-            %input{:id => 'title', :placeholder => 'Ex: Sequence 1'}
-            %br
-            %label{:for => 'grade'} Grade Level :
-            %input{:id => 'grade', :placeholder => 'Ex: Elementary'}
-            %br
-            %label{:for => 'skills'} Skills :
-            %input{:id => 'skills', :placeholder => 'Ex: Calculus'}
-            %br
-            %label{:for => 'topics'} Topics :
-            %input{:id => 'topics', :placeholder => 'Ex: Algebra'}
-            %br
-            %label{:for => 'instruction'} Instructions :
-            %input{:id => 'instructions', :placeholder => 'Explain your question'}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
+    #whiteBox
+        #parameters.blk
+            %h1 parameters
+            %p Here is the different parameters for the exercise
+            %form
+                %label{:for => 'title'} Title :
+                %input{:id => 'title', :placeholder => 'Ex: Sequence 1'}
+                %br
+                %label{:for => 'grade'} Grade Level :
+                %input{:id => 'grade', :placeholder => 'Ex: Elementary'}
+                %br
+                %label{:for => 'skills'} Skills :
+                %input{:id => 'skills', :placeholder => 'Ex: Calculus'}
+                %br
+                %label{:for => 'topics'} Topics :
+                %input{:id => 'topics', :placeholder => 'Ex: Algebra'}
+                %br
+                %label{:for => 'instruction'} Instructions :
+                %input{:id => 'instructions', :placeholder => 'Explain your question'}
 
-        #video
-          %h1 video
-          here is a video for an exercise
+        #video.blk
+            %h1 video
+            %p here is a video for an exercise
 
-        #exercise
-          %h1 exercise
-          the exercise is create here
-          %form
-            %select
-              %optgroup
+        #exercise.blk
+            %h1 exercise
+            %p the exercise is create here
+            %form
+                %select
+                    %optgroup
 
+        #Tools.blk
+            %button.btn.btn-primary#addElement Ajouter un élément
+            %button.btn.btn-primary#submit Sauver
 
 
 
