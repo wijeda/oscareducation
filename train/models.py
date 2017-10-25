@@ -5,24 +5,27 @@ from django.db import models
 import random
 from django.db.models import Count
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 
-class AuthUserManager(models.Manager):
-    def get_queryset(self):
-        return super(AuthUserManager, self).get_queryset().select_related('user')
+class Scenario(Models.Model):
+
+    name = models.CharField(max_length = 60)
+    Creator = models.ForeignKeys(Professor, on_delete=models.CASCADE)
+    public = models.BooleanField(default = True)
+
+    def get_element(self):
+        """get all the elements attached to this scenario"""
+        elements = list()
+        for element in Element.object.filter(id = self.id):
+            elements.append(element)
+        return elements
 
 
-class Professor(models.Model):
+class Element(Models.Model):
 
-    objects = AuthUserManager()
-    user = models.OneToOneField(User)
-    is_pending = models.BooleanField(default=True)
-    code = models.BigIntegerField(null=True,blank=True)
-
-    def __unicode__(self):
-        return ("%s %s" % (
-        self.user.first_name, self.user.last_name)) if self.user.first_name or self.user.last_name else self.user.username
-
-    class Meta:
-        ordering = ['user__last_name', 'user__first_name']
-
+    scenario = models.ForeignKeys(Scenario, on_delete=models.CASCADE)
+    order = models.DecimalField(max_digits = 3, decimal_places = None)
+    content_type = models.CharField()
+    content = models.CharField(max_length = None)
