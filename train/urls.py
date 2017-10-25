@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^scenario/(?P<id>\d+)', views.create_scenario, name='student_dashboard'),
     url(r'^data/', views.home),
     url(r'^create_scenario', views.create_scenario, name='student_dashboard'),
+    url(r'^save_scenario', views.save_scenario, name='student_dashboard'),
     url(r'^edit_scenario/', viewsStu.dashboard, name='student_dashboard'),
     url(r'^list_scenario/', views.list_scenario, name='student_dashboard'),
 ]

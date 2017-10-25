@@ -31,3 +31,6 @@ def list_scenario(request):
     dico["scenarios"] = [{"sequence":"Sequence 1", "type":"MCQ", "topic":"", "grade":"5","edit":"e","delete":"d","see":"s"},
                         {"sequence":"Sequence 2", "type":"Fill-in", "topic":"Algebre", "grade":"2","edit":"e","delete":"d","see":"s"}]
     return render(request, "train/listScenario.haml", dico)
+
+def save_scenario(request):
+    return TemplateResponse(request, "home.haml", {})
