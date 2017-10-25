@@ -6,25 +6,25 @@
 -block content
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
-    #whiteBox
+    %form#whiteBox{:methode => "post", :action => "professor/train/save_scenario"}
         #parameters.blk
             %h1 parameters
             %p Here is the different parameters for the exercise
-            %form
-                %label{:for => 'title'} Title :
-                %input{:id => 'title', :placeholder => 'Ex: Sequence 1'}
-                %br
-                %label{:for => 'grade'} Grade Level :
-                %input{:id => 'grade', :placeholder => 'Ex: Elementary'}
-                %br
-                %label{:for => 'skills'} Skills :
-                %input{:id => 'skills', :placeholder => 'Ex: Calculus'}
-                %br
-                %label{:for => 'topics'} Topics :
-                %input{:id => 'topics', :placeholder => 'Ex: Algebra'}
-                %br
-                %label{:for => 'instruction'} Instructions :
-                %input{:id => 'instructions', :placeholder => 'Explain your question'}
+
+            %label{:for => 'title'} Title :
+            %input{:id => 'title', :placeholder => 'Ex: Sequence 1'}
+            %br
+            %label{:for => 'grade'} Grade Level :
+            %input{:id => 'grade', :placeholder => 'Ex: Elementary'}
+            %br
+            %label{:for => 'skills'} Skills :
+            %input{:id => 'skills', :placeholder => 'Ex: Calculus'}
+            %br
+            %label{:for => 'topics'} Topics :
+            %input{:id => 'topics', :placeholder => 'Ex: Algebra'}
+            %br
+            %label{:for => 'instruction'} Instructions :
+            %input{:id => 'instructions', :placeholder => 'Explain your question'}
 
         #video.blk
             %h1 video
@@ -33,13 +33,15 @@
         #exercise.blk
             %h1 exercise
             %p the exercise is create here
-            %form
-                %select
-                    %optgroup
+            %select
+                %optgroup
 
         #Tools.blk
             %button.btn.btn-primary#addElement Ajouter un élément
-            %button.btn.btn-primary#submit Sauver
+            #addElementDiv
+                %button.btn.btn-primary#addElementVideo Ajoouter vidéo
+            %br
+            %input.btn.btn-primary#submit{:type => "submit", :value => "Sauver"}
 
 
 
