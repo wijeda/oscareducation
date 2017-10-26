@@ -1,13 +1,10 @@
 language: python
 install:
   - pip install pyyaml
-  - pip install coverage
   - pip install coveralls
-  - pip install -r requirements-oscar2.txt
 python:
   - "2.7"
 script:
   - python validate_exercices.py
-  - coverage run manage.py runserver
 after_success:
   - coveralls
