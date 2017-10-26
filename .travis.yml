@@ -1,6 +1,8 @@
 language: python
 install:
   - pip install pyyaml
+  - pip install coverage
+  - pip install nose
   - pip install python-coveralls
 python:
   - "2.7"
