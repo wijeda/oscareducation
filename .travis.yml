@@ -8,6 +8,7 @@ python:
   - "2.7"
 script:
   - python validate_exercices.py
-  # TODO add tests here so that "Coveralls" can run them automatically
+  - nosetests --with-coverage
+  # Nose tests are ALWAYS called "test_**"
 after_success:
   - coveralls
