@@ -1,11 +1,12 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from promotions.models import Lesson, Stage
 from skills.models import Skill, StudentSkill, CodeR, Section, Relations, CodeR_relations
 from resources.models import KhanAcademy, Sesamath, Resource
-
+from .models import Scenario
+from .forms import ScenarioForm
 def root_redirection(request):
 
     return HttpResponseRedirect(reverse("username_login"))
@@ -14,13 +15,7 @@ def home(request):
     return TemplateResponse(request, "home.haml", {})
 
 def create_scenario(request):
-    return TemplateResponse(request, "train/creationScenarion.haml",
-    # {
-    #     "lessons": Lesson.objects.filter(professors=request.user.professor).annotate(Count("students")).select_related(
-    #         "stage"),
-    #     "no_menu": True,
-    # })
-    {"no_menu": True,})
+    return render(request, "train/creationScenarion.haml")
 
 def list_scenario(request):
     # data = {1:"Title", 2:"Type of exercice", 3:"Topic", 4:"Grade Level", 5:"Actions"}
@@ -33,4 +28,10 @@ def list_scenario(request):
     return render(request, "train/listScenario.haml", dico)
 
 def save_scenario(request):
-    return TemplateResponse(request, "home.haml", {})
+    form = ScenarioForm(request.POST) if request.method == "POST" else ScenarioForm()
+
+    if form.is_valid():
+        scenario = form.save()
+        return redirect("creationScenarion.haml")
+
+    return render(request, "train/creationScenarion.haml")
