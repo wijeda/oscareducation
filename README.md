@@ -100,3 +100,6 @@ the modules described in the .rst files, located in the
 
 The `conf.py` file in the `documentation/source` contains the
 configuration for the `sphinx` tool.
+
+
+[![Coverage Status](https://coveralls.io/repos/github/sigustin/oscareducation/badge.svg?branch=master)](https://coveralls.io/github/sigustin/oscareducation?branch=master)
