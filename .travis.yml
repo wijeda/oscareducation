@@ -2,14 +2,11 @@ language: python
 install:
   - pip install pyyaml
   - pip install coverage
-  - pip install nose
-  - pip install python-coveralls
-  - pip install django
+  - pip install coveralls
 python:
   - "2.7"
 script:
   - python validate_exercices.py
-  - nosetests --with-coverage
-  # Nose tests are ALWAYS called "test_**"
+  - coverage run manage.py runserver
 after_success:
   - coveralls
