@@ -5,3 +5,6 @@ python:
   - "2.7"
 script:
   - python validate_exercices.py
+  # TODO add tests here so that "Coveralls" can run them automatically
+after_success:
+  - coveralls
