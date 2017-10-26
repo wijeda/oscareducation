@@ -1,10 +1,9 @@
 language: python
 install:
   - pip install pyyaml
+  - pip install python-coveralls
 python:
   - "2.7"
-before_script:
-  - pip install python-coveralls
 script:
   - python validate_exercices.py
   # TODO add tests here so that "Coveralls" can run them automatically
