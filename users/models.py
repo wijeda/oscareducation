@@ -5,11 +5,13 @@ from django.db import models
 import random
 from django.db.models import Count
 from django.contrib.auth.models import User
-
+from django.contrib.postgres.fields import JSONField
+from interface import *
 
 class AuthUserManager(models.Manager):
     def get_queryset(self):
         return super(AuthUserManager, self).get_queryset().select_related('user')
+
 
 
 class Professor(models.Model):
@@ -18,14 +20,42 @@ class Professor(models.Model):
     user = models.OneToOneField(User)
     is_pending = models.BooleanField(default=True)
     code = models.BigIntegerField(null=True,blank=True)
-    re
+    nbr_4_star_res = models.IntegerField()
+    status = JSONField()
+    status_changed = models.BooleanField(default=False)
+    user_id = models.IntegerField()
+
+    def print_something(self):
+        print(self.nbr_4_star_res)
+
+    def addRating(self, Resource):
+        pass
 
     def __unicode__(self):
         return ("%s %s" % (
         self.user.first_name, self.user.last_name)) if self.user.first_name or self.user.last_name else self.user.username
 
     def update_status(self):
-        pass
+        top = Top_contributor.objects.get()
+        top_prof = Professor.objects.get(user_id=top.prof_id)
+        if top_prof.nbr_4_star_res < self.nbr_4_star_res:
+            self.status = Status("Top Contributor", "icon.png")
+            top.prof_id = self.user_id
+            top_prof.update_status()
+            top_prof.status_changed = True
+        else:
+            if self.nbr_4_star_res >= 1 and self.nbr_4_star_res < 4:
+                self.status = Status("Contributor", "icon.png")
+            elif self.nbr_4_star_res >= 4 and self.nbr_4_star_res < 9:
+                self.status = Status("Motivated Contributor", "icon.png")
+            elif self.nbr_4_star_res >= 9 and self.nbr_4_star_res < 19:
+                self.status = Status("Advanced Contributor", "icon.png")
+            elif self.nbr_4_star_res >= 19:
+                self.status = Status("Super Contributor", "icon.png")
+
+    # augments the number of 4-5 star ratings
+    def inc(self):
+        self.nbr_4_star_res += 1
 
     class Meta:
         ordering = ['user__last_name', 'user__first_name']
@@ -53,6 +83,9 @@ class Student(models.Model):
         self.is_pending = True
         self.save()
         return new_code
+
+    def addRating(self, Resource):
+        pass
 
     class Meta:
         ordering = ['user__last_name']

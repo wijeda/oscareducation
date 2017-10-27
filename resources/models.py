@@ -22,6 +22,20 @@ class Resource(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     added_by = models.ForeignKey(User, null=True)
 
+    def add_star(self, rate, user):
+        if isinstance(user, Professor):
+            pass
+        elif isinstance(user, Student):
+            pass
+        else:
+            pass
+
+    def average_prof(self):
+        pass
+
+    def average_student(self):
+        pass
+
 
 
 #khanAcademy video reference data parsed from source url

@@ -20,6 +20,7 @@ class UsernameLoginForm(forms.Form):
 
         try:
             prof_or_stud = Professor.objects.get(user=user)
+            prof_or_stud.print_something()
         except:
             try:
                 prof_or_stud = Student.objects.get(user=user)
