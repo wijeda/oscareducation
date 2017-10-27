@@ -11,6 +11,7 @@
 	padding: 10px;
 }
 
+/*	list scenario's part	*/
 #headline {
 	background-color: #f58025;
 	border-radius: 0px;
@@ -18,6 +19,10 @@
 	text-transform: uppercase;
 }
 
-#headline td a {
+#headline td p {
 	color: white;
+}
+
+#contentlist {
+	color: #f58025;
 }
