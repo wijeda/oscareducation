@@ -2,6 +2,7 @@ language: python
 install:
   - pip install pyyaml
   - pip install coveralls
+  - pip install pyhamcrest
 python:
   - "2.7"
 script:
