@@ -7,11 +7,11 @@ class ScenarioCreation {
          * @pre : anchor is the node under where are the differents box to
          *        create element
          */
-        this.anchorID = anchorID;
-        this.btnPlus = document.getElementById(btnPlusID);
-        this.addElementDivID = addElementDivID;
+        let this.anchorID = anchorID;
+        let this.btnPlus = document.getElementById(btnPlusID);
+        let this.addElementDivID = addElementDivID;
 
-        this.addElementOption = true // at start it is show
+        let this.addElementOption = true // at start it is show
         this.showDiffElements()
         //this.btnPlus.addEventListener("click", this.showDiffElements, true);
     }
