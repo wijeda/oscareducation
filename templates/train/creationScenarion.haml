@@ -8,7 +8,8 @@
 -block content
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
-    %form#whiteBox{:methode => "POST", :action => "save_scenario"}
+    %form#whiteBox{:methode => "POST"}
+                    -# , :action => "save_scenario"}
         {% csrf_token %}
         {{ form.errors }}
         {{ form.non_field_errors }}
@@ -56,26 +57,7 @@
         -#     form.submit();
         -# }
         -# post('/contact/', {name: 'Johnny Bravo'});
-        function sendForm() {
-            form = document.getElementById("whiteBox");
-            form.setAttribute("method", "POST");
-            form.setAttribute("action", "save_scenario");
 
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", "title");
-            hiddenField.setAttribute("value", "azertty");
-            form.appendChild(hiddenField);
-
-            var hiddenField2 = document.createElement("input");
-            hiddenField2.setAttribute("type", "hidden");
-            hiddenField2.setAttribute("name", "instructions");
-            hiddenField2.setAttribute("value", "azer2");
-            form.appendChild(hiddenField2);
-
-
-            form.submit();
-        }
 
 
     -# .row

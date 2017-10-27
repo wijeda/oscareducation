@@ -48,3 +48,25 @@ window.onload = function(){
     var a = new ScenarioCreation(anchorID, btnPlusID, addElementDivID);
     a.addListener();
 };
+
+
+function sendForm() {
+    let form = document.getElementById("whiteBox");
+    form.setAttribute("method", "POST");
+    form.setAttribute("action", "save_scenario");
+
+    let listOfIDfield = ["title", "instructions"];
+    for(let key in listOfIDfield){
+        console.log("key : " + listOfIDfield[key]);
+        let elem = document.getElementById(listOfIDfield[key])
+        let hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", listOfIDfield[key]);
+        console.log(elem.value)
+        hiddenField.setAttribute("value", elem.value);
+        form.appendChild(hiddenField);
+    }
+
+
+    form.submit();
+}
