@@ -6,7 +6,8 @@ python:
   - "2.7"
 script:
   - python validate_exercices.py
-  - coverage run --source=oscareducation manage.py test
+  - coverage run --source=graph validate_exercices.py
+  - coverage run --source=graph graph/tests.py
 after_success:
   - coveralls
 notifications:
