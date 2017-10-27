@@ -28,11 +28,16 @@ def list_scenario(request):
     # the request need to ask the database for scenario's title, skill, topic and grade level
     # for now, the actions are represented by character e for "edit", d for "delete" and s for "see"
     dico = {}
+    dico["scenarios"]=[]
+    # test d recup de date dans la db
+    for s in Scenario.objects.all():
+        dico["scenarios"].append({"sequence":s.title, "skill":s.instructions, "topic":"", "grade":"","edit":"","delete":"","see":""})
+
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
     # 2 examples to be replaced:
-    dico["scenarios"] = [{"sequence":"Calculer l'aire d'un triangle", "skill":"Aire d'un triangle", "topic":"Trigonometrie", "grade":"3e Primaire","edit":"e","delete":"d","see":"s"},
-                        {"sequence":"Decouverte des fractions", "skill":"Addition de fraction", "topic":"Algebre", "grade":"2e Primaire","edit":"e","delete":"d","see":"s"}]
+    # dico["scenarios"] = [{"sequence":"Calculer l'aire d'un triangle", "skill":"Aire d'un triangle", "topic":"Trigonometrie", "grade":"3e Primaire","edit":"e","delete":"d","see":"s"},
+                        # {"sequence":"Decouverte des fractions", "skill":"Addition de fraction", "topic":"Algebre", "grade":"2e Primaire","edit":"e","delete":"d","see":"s"}]
     # to access the values passed to dico, you need to call the key not dico itself, here it is "scenarios" or "headlines"
     return render(request, "train/listScenario.haml", dico)
 
