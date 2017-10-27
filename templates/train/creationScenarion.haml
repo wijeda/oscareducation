@@ -1,12 +1,18 @@
--extends "base.haml"
+-# -extends "base.haml"
 
 -load static
 -load compress
 
+-load bootstrap3
+
 -block content
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
-    %form#whiteBox{:methode => "post", :action => "save_scenario"}
+    %form#whiteBox{:methode => "POST"}
+                    -# , :action => "save_scenario"}
+        {% csrf_token %}
+        {{ form.errors }}
+        {{ form.non_field_errors }}
         #parameters.blk
             %h1 Parametre
             %p Entrez les differents parametres pour l'exercice
@@ -17,10 +23,40 @@
             %label{:for => 'instructions'} Instructions :
             %input{:id => 'instructions', :placeholder => 'Expliquez votre question'}
 
-        #Tools.blk
-            %br
-            %input.btn.btn-primary#submit{:type => "submit", :value => "Sauver"}
 
+    #Tools.blk
+        %br
+        -# %input.btn.btn-primary#submit{:type => "submit"}
+        {% buttons %}
+            %button.btn.btn-primary{:onclick=> "sendForm()"}
+                Ajouter
+        {% endbuttons %}
+
+    %script
+        -# function post(path, params, method) {
+        -#     method = method || "post"; // Set method to post by default if not specified.
+        -#
+        -#     // The rest of this code assumes you are not using a library.
+        -#     // It can be made less wordy if you use one.
+        -#     var form = document.createElement("form");
+        -#     form.setAttribute("method", method);
+        -#     form.setAttribute("action", path);
+        -#
+        -#     for(var key in params) {
+        -#         if(params.hasOwnProperty(key)) {
+        -#             var hiddenField = document.createElement("input");
+        -#             hiddenField.setAttribute("type", "hidden");
+        -#             hiddenField.setAttribute("name", key);
+        -#             hiddenField.setAttribute("value", params[key]);
+        -#
+        -#             form.appendChild(hiddenField);
+        -#         }
+        -#     }
+        -#
+        -#     document.body.appendChild(form);
+        -#     form.submit();
+        -# }
+        -# post('/contact/', {name: 'Johnny Bravo'});
 
 
 

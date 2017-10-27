@@ -2,6 +2,5 @@ from django import forms
 from .models import Scenario
 
 class ScenarioForm(forms.Form):
-    class Meta:
-        model = Scenario
-        fields = ['titre', 'instructions']
+        title = forms.CharField() #("Titre", max_length = 255)
+        instructions = forms.CharField() # ("Instructions", max_length = 755)

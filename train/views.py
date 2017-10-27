@@ -15,7 +15,13 @@ def home(request):
     return TemplateResponse(request, "home.haml", {})
 
 def create_scenario(request):
+
+    # test d recup de date dans la db
+    for s in Scenario.objects.all():
+        print(s)
+
     return render(request, "train/creationScenarion.haml")
+
 
 def list_scenario(request):
     # "dico" is a dictionnary variable that will store the database information for the scenarios
@@ -31,10 +37,31 @@ def list_scenario(request):
     return render(request, "train/listScenario.haml", dico)
 
 def save_scenario(request):
-    form = ScenarioForm(request.POST) if request.method == "POST" else ScenarioForm()
 
-    if form.is_valid():
-        scenario = form.save()
-        return redirect("creationScenarion.haml")
+    if request.method == "POST":
+        form = ScenarioForm(request.POST)
+        print(form.errors)
+        print("form :")
+        print(form)
+        if form.is_valid():
+            print("----form valid")
+            title = request.POST.get('title', '')
+            instructions = request.POST.get('instructions', '')
+            scena_obj = Scenario(title = title, instructions= instructions)
+            scena_obj.save()
+            print("end")
+        else:
+            print("----form non valid")
 
+
+
+
+
+    # form = ScenarioForm(request.POST) if request.method == "POST" else ScenarioForm()
+    # print("meth : "+ request.method)
+    # print(request)
+    # if form.is_valid():
+    #     scenario = form.save()
+    #     return redirect("creationScenarion.haml")
+    #
     return render(request, "train/creationScenarion.haml")
