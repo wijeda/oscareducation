@@ -50,9 +50,16 @@ def save_scenario(request):
         print(form)
         if form.is_valid():
             print("----form valid")
+            creator = request.POST.get('creator', '')
             title = request.POST.get('title', '')
+            skill = request.POST.get('skill', '')
+            topic = request.POST.get('topic', '')
+            grade_level = request.POST.get('grade_level', '')
             instructions = request.POST.get('instructions', '')
-            scena_obj = Scenario(title = title, instructions= instructions)
+            public = request.POST.get('public', '')
+            print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            print(public)
+            scena_obj = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
             scena_obj.save()
             print("end")
         else:

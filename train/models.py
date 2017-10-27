@@ -11,8 +11,13 @@ from django.contrib.contenttypes.models import ContentType
 
 class Scenario(models.Model):
 
+    creator = models.CharField("Createur", max_length = 755)
     title = models.CharField("Titre", max_length = 255)
+    skill = models.CharField("Compétences", max_length = 755)
+    topic = models.CharField("Sujet", max_length = 755)
+    grade_level = models.CharField("Niveau", max_length = 755)
     instructions = models.CharField("Instructions", max_length = 755)
+    public = models.BooleanField("Visibilité")
 
     def __str__(self):
-        return("titre:"+ self.title+" and instructions :" + self.instructions)
+        return("titre:"+ self.title+" and instructions :" + self.instructions + "and public : " + str(self.public))
