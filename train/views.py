@@ -58,12 +58,6 @@ def save_scenario(request):
         else:
             print("----form non valid")
 
-def delete_scenario(request, id):
-    print("Voici mon print :D :",request)
-    print(id)
-    Scenario.objects.get(id=id).delete()
-    return TemplateResponse(request, "home.haml", {})
-
 
     # form = ScenarioForm(request.POST) if request.method == "POST" else ScenarioForm()
     # print("meth : "+ request.method)
@@ -73,3 +67,9 @@ def delete_scenario(request, id):
     #     return redirect("creationScenarion.haml")
     #
     return render(request, "train/creationScenarion.haml")
+
+def delete_scenario(request, id):
+    # print("Voici mon print :D :",request)
+    # print(id)
+    Scenario.objects.get(id=id).delete()
+    return TemplateResponse(request, "home.haml", {})
