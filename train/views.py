@@ -18,13 +18,15 @@ def create_scenario(request):
     return render(request, "train/creationScenarion.haml")
 
 def list_scenario(request):
-    # data = {1:"Title", 2:"Type of exercice", 3:"Topic", 4:"Grade Level", 5:"Actions"}
-    # data = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
+    # "dico" is a dictionnary variable that will store the database information for the scenarios
+    # the request need to ask the database for scenario's title, skill, topic and grade level
+    # for now, the actions are represented by character e for "edit", d for "delete" and s for "see"
     dico = {}
-    dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
-    # dico["scenario1"] = ["Sequence 1", "MCQ", "", "5",""]
-    dico["scenarios"] = [{"sequence":"Sequence 1", "type":"MCQ", "topic":"", "grade":"5","edit":"e","delete":"d","see":"s"},
-                        {"sequence":"Sequence 2", "type":"Fill-in", "topic":"Algebre", "grade":"2","edit":"e","delete":"d","see":"s"}]
+    # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
+    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
+    # 2 examples to be replaced:
+    dico["scenarios"] = [{"sequence":"Calculer l'aire d'un triangle", "skill":"Aire d'un triangle", "topic":"Trigonometrie", "grade":"3e Primaire","edit":"e","delete":"d","see":"s"},
+                        {"sequence":"Decouverte des fractions", "skill":"Addition de fraction", "topic":"Algebre", "grade":"2e Primaire","edit":"e","delete":"d","see":"s"}]
     return render(request, "train/listScenario.haml", dico)
 
 def save_scenario(request):

@@ -8,14 +8,14 @@
     %script{:src => "/static/js/train/creation_scenario.js"}
     %form#whiteBox{:methode => "post", :action => "save_scenario"}
         #parameters.blk
-            %h1 parameters
-            %p Here is the different parameters for the exercise
+            %h1 Parametre
+            %p Entrez les differents parametres pour l'exercice
 
-            %label{:for => 'title'} Title :
+            %label{:for => 'title'} Titre :
             %input{:id => 'title', :placeholder => 'Ex: Sequence 1'}
             %br
             %label{:for => 'instructions'} Instructions :
-            %input{:id => 'instructions', :placeholder => 'Explain your question'}
+            %input{:id => 'instructions', :placeholder => 'Expliquez votre question'}
 
         #Tools.blk
             %br
