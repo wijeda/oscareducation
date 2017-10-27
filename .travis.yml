@@ -8,7 +8,7 @@ python:
 script:
   - python validate_exercices.py
   - coverage run --source=graph validate_exercices.py
-  - coverage run --source=graph graph/tests.py
+  - coverage run --source=graph graph/tests/tests.py
 after_success:
   - coveralls
 notifications:
