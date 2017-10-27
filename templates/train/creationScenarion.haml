@@ -28,9 +28,15 @@
         %br
         -# %input.btn.btn-primary#submit{:type => "submit"}
         {% buttons %}
+            %button.btn.btn-primary
+                Ajouter un element
+            %br
             %button.btn.btn-primary{:onclick=> "sendForm()"}
-                Ajouter
+                Save
         {% endbuttons %}
+
+        #addElementDiv
+            %button.btn.btn-primary#addElementVideo{:value => "Ajouter vidéo"}
 
     %script
         -# function post(path, params, method) {
