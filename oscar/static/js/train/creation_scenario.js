@@ -53,7 +53,7 @@ window.onload = function(){
 function sendForm() {
     let form = document.getElementById("whiteBox");
     form.setAttribute("method", "POST");
-    form.setAttribute("action", "save_scenario");
+    form.setAttribute("action", "/professor/train/save_scenario");
 
     let listOfIDfield = ["title", "instructions"];
     for(let key in listOfIDfield){
