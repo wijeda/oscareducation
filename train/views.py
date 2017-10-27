@@ -58,8 +58,10 @@ def save_scenario(request):
         else:
             print("----form non valid")
 
-
-
+def delete_scenario(request, id):
+    print("Voici mon print :D :",request)
+    print(id)
+    return TemplateResponse(request, "home.haml", {})
 
 
     # form = ScenarioForm(request.POST) if request.method == "POST" else ScenarioForm()
