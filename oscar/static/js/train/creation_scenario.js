@@ -51,6 +51,7 @@ window.onload = function(){
 
 
 function sendForm() {
+    let emptyfield = false
     let form = document.getElementById("whiteBox");
     form.setAttribute("method", "POST");
     form.setAttribute("action", "/professor/train/save_scenario");
@@ -62,11 +63,16 @@ function sendForm() {
         let hiddenField = document.createElement("input");
         hiddenField.setAttribute("type", "hidden");
         hiddenField.setAttribute("name", listOfIDfield[key]);
-        console.log(elem.value)
+        if(!elem.value || elem.value == ""){
+            emptyfield = true
+        }
         hiddenField.setAttribute("value", elem.value);
         form.appendChild(hiddenField);
     }
+    if (!emptyfield) {
+        form.submit();
+    }else {
+        console.error("Empty field");
+    }
 
-
-    form.submit();
 }
