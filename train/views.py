@@ -17,6 +17,7 @@ def home(request):
 def create_scenario(request):
     return render(request, "train/creationScenarion.haml")
 
+
 def list_scenario(request):
     # data = {1:"Title", 2:"Type of exercice", 3:"Topic", 4:"Grade Level", 5:"Actions"}
     # data = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
@@ -29,7 +30,8 @@ def list_scenario(request):
 
 def save_scenario(request):
     form = ScenarioForm(request.POST) if request.method == "POST" else ScenarioForm()
-
+    print("meth : "+ request.method)
+    print(request)
     if form.is_valid():
         scenario = form.save()
         return redirect("creationScenarion.haml")
