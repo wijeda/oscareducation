@@ -10,6 +10,8 @@
     %script{:src => "/static/js/train/creation_scenario.js"}
     %form#whiteBox{:methode => "POST", :action => "save_scenario"}
         {% csrf_token %}
+        {{ form.errors }}
+        {{ form.non_field_errors }}
         #parameters.blk
             %h1 Parametre
             %p Entrez les differents parametres pour l'exercice
@@ -58,6 +60,20 @@
             form = document.getElementById("whiteBox");
             form.setAttribute("method", "POST");
             form.setAttribute("action", "save_scenario");
+
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", "title");
+            hiddenField.setAttribute("value", "azertty");
+            form.appendChild(hiddenField);
+
+            var hiddenField2 = document.createElement("input");
+            hiddenField2.setAttribute("type", "hidden");
+            hiddenField2.setAttribute("name", "instructions");
+            hiddenField2.setAttribute("value", "azer2");
+            form.appendChild(hiddenField2);
+
+
             form.submit();
         }
 

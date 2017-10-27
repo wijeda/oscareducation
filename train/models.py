@@ -13,3 +13,6 @@ class Scenario(models.Model):
 
     title = models.CharField("Titre", max_length = 255)
     instructions = models.CharField("Instructions", max_length = 755)
+
+    def __str__(self):
+        return("titre:"+ self.title+" and instructions :" + self.instructions)
