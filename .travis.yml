@@ -4,8 +4,6 @@ install:
   - pip install coveralls
 python:
   - "2.7"
-before_script:
-  - python manage.py makemigrations
 script:
   - python validate_exercices.py
   - coverage run --source=oscareducation manage.py test
