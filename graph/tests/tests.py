@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
+# Add your tests in this file
+# pyhamcrest has to be installed
+# doc: http://pyhamcrest.readthedocs.io/en/release-1.8/tutorial/
+
 from hamcrest import *
 import unittest
 
