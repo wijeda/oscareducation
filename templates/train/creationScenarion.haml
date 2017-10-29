@@ -1,4 +1,4 @@
--# -extends "base.haml"
+-extends "base.haml"
 
 -load static
 -load compress
@@ -17,12 +17,26 @@
             %h1 Parametre
             %p Entrez les differents parametres pour l'exercice
 
+            %label{:for => 'creator'} Créateur
+            %input{:id => 'creator', :placeholder => 'Createur'}
+            %br
             %label{:for => 'title'} Titre :
             %input{:id => 'title', :placeholder => 'Ex: Sequence 1'}
             %br
+            %label{:for => 'skill'} Compétences :
+            %input{:id => 'skill', :placeholder => 'Indiquez les compétences requises pour le scénario'}
+            %br
+            %label{:for => 'topic'} Sujet :
+            %input{:id => 'topic', :placeholder => 'Indiquez le sujet du scénario'}
+            %br
+            %label{:for => 'grade_level'} Niveau :
+            %input{:id => 'grade_level', :placeholder => "Indiquez le niveau d&rsquo;étude requis pour le scénario"}
+            %br
             %label{:for => 'instructions'} Instructions :
             %input{:id => 'instructions', :placeholder => 'Expliquez votre question'}
-
+            %br
+            %label{:for => 'public'} Public :
+            %input{:id => 'public', :type => 'checkbox'}
 
     #Tools.blk
         %br
