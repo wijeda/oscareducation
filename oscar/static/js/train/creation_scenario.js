@@ -71,17 +71,16 @@ function sendForm() {
     }else {
         console.error("Empty field");
     }
+}
 
-  function AddVideo() {
+function AddVideo() {
 
-  }
+}
 
-  function AddText() {
+function AddText() {
 
-  }
+}
 
-  function AddQCM() {
-
-  }
+function AddQCM() {
 
 }
