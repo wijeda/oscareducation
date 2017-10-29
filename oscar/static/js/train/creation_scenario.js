@@ -3,50 +3,34 @@
 class ScenarioCreation {
 
     constructor(anchorID, btnPlusID, addElementDivID){
-        /*
-         * @pre : anchor is the node under where are the differents box to
-         *        create element
-         */
-        this.anchorID = anchorID;
+        this.anchor = document.getElementById(anchorID);
         this.btnPlus = document.getElementById(btnPlusID);
-        this.addElementDivID = addElementDivID;
-
-        this.addElementOption = true // at start it is show
-        this.showDiffElements()
-        //this.btnPlus.addEventListener("click", this.showDiffElements, true);
+        this.addElementDiv = document.getElementById(addElementDivID);
+        this.addElementOption = false; // at start it is not shown
+        document.getElementById(btnPlusID).addEventListener("click", this.showDiffElements.bind(this), true);
     }
 
     showDiffElements(){
-        console.log(this.addElementDivID)
-        console.log(document.getElementById('addElementDiv'));
         if(this.addElementOption) {
-            console.log("off")
-            document.getElementById(this.addElementDivID).style.display = "none";
+            this.addElementDiv.style.display = "none";
         }else {
-            console.log("on")
-            document.getElementById(this.addElementDivID).style.display = "block";
+            this.addElementDiv.style.display = "block";
         }
 
         this.addElementOption = !this.addElementOption
 
-        //alert("Work");
     }
 
-    addListener(){
-        this.btnPlus.addEventListener("click", this.showDiffElements, true);
-    }
 
 }
 
 // initiation
 window.onload = function(){
-    var btnPlusID = "addElement";
-    var anchorID = 'whiteBox';
-    var addElementDivID = 'addElementDiv';
+    let btnPlusID = "addElement"; //document.getElementById("addElement");
+    let anchorID = 'whiteBox';
+    let addElementDivID = 'addElementDiv';
 
-    console.log(addElementDiv)
-    var a = new ScenarioCreation(anchorID, btnPlusID, addElementDivID);
-    a.addListener();
+    new ScenarioCreation(anchorID, btnPlusID, addElementDivID);
 };
 
 

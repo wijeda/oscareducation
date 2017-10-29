@@ -42,15 +42,20 @@
         %br
         -# %input.btn.btn-primary#submit{:type => "submit"}
         {% buttons %}
-            %button.btn.btn-primary
+            %button.btn.btn-primary#addElement
                 Ajouter un element
+            #addElementDiv{:style => "display: none"}
+                %button.btn.btn-primary#addElementVideo
+                    Ajouter vidéo
+                %button.btn.btn-primary#addElementTxt
+                    Ajouter d'un text
+                %button.btn.btn-primary#addElementTxt
+                    Ajouter d'un QCM
             %br
             %button.btn.btn-primary#saveScenario{:onclick=> "sendForm()"}
                 Save
         {% endbuttons %}
 
-        #addElementDiv
-            %button.btn.btn-primary#addElementVideo{:value => "Ajouter vidéo"}
 
     %script
         -# function post(path, params, method) {
