@@ -19,6 +19,7 @@
                                 %p{:dico => "tab"} #{st}
 
                     -for st in scenarios
+
                         %tr#contentlist
                             %td{:width => "20%"}
                                 %p{:dico => "tab"} #{st.sequence}
@@ -33,7 +34,7 @@
                                     %img{:alt => "Editer la question", :height => "12.5%", :src => "/static/img/icons/modify.png", :width => "12.5%"}/
                                 %a{:href => "/professor/train/delete_scenario/#{st.id}"}
                                     %img{:alt => "Supprimer la question", :height => "25%", :src => "/static/img/icons/delete.png", :width => "25%"}/
-                                %a{:dico => "tab"}
+                                %a{:href => "/professor/train/scenario/#{st.id}"}
                                     %img{:alt => "Voir la question", :height => "25%", :src => "/static/img/icons/detail.png", :width => "25%"}/
         #Tools.blk
             %a.btn.btn-primary#addElement{:href => "/professor/train/create_scenario/"} Creer un autre exercice

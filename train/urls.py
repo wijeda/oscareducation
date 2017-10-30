@@ -7,7 +7,7 @@ from . import views
 from . import viewsStu
 
 urlpatterns = [
-    url(r'^scenario/(?P<id>\d+)', views.create_scenario, name='student_dashboard'),
+    url(r'^scenario/(?P<id>\d+)', views.scenario, name='student_dashboard'),
     url(r'^data/', views.home),
     url(r'^create_scenario', views.create_scenario, name='student_dashboard'),
     url(r'^save_scenario', views.save_scenario, name='student_dashboard'),
