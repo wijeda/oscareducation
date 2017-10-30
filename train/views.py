@@ -31,7 +31,7 @@ def list_scenario(request):
     dico["scenarios"]=[]
     # test d recup de date dans la db
     for s in Scenario.objects.all():
-        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.instructions, "topic":"", "grade":"","edit":"","delete":"","see":""})
+        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.instructions, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
@@ -82,5 +82,5 @@ def delete_scenario(request, id):
     return TemplateResponse(request, "home.haml", {})
 
 def scenario(request, id):
-    
+
     return render(request, "train/scenario.haml")
