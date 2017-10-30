@@ -94,27 +94,30 @@ function sendForm() {
     for(let key in listOfIDfield){
         console.log("key : " + listOfIDfield[key]);
         let elem = document.getElementById(listOfIDfield[key])
-        let hiddenField = document.createElement("input");
-        hiddenField.setAttribute("type", "hidden");
-        hiddenField.setAttribute("name", listOfIDfield[key]);
+        if(elem){
 
-        if (elem.type == "checkbox"){
-          //hiddenField.setAttribute("type", "checkbox");
-          //hiddenField.setAttribute("checked", elem.checked);
-          //hiddenField.setAttribute("value", (elem.checked?"True":"False"));
-          hiddenField.setAttribute("value", "True");
-          //hiddenField.setAttribute("required", false);
-          console.log(elem.checked)
-        }else{
-          console.log(elem.value)
-          hiddenField.setAttribute("value", elem.value);
+            let hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", listOfIDfield[key]);
+
+            if (elem.type == "checkbox"){
+              //hiddenField.setAttribute("type", "checkbox");
+              //hiddenField.setAttribute("checked", elem.checked);
+              //hiddenField.setAttribute("value", (elem.checked?"True":"False"));
+              hiddenField.setAttribute("value", "True");
+              //hiddenField.setAttribute("required", false);
+              console.log(elem.checked)
+            }else{
+              console.log(elem.value)
+              hiddenField.setAttribute("value", elem.value);
+            }
+
+            if(!elem.value || elem.value == ""){
+                emptyfield = true
+            }
+
+            form.appendChild(hiddenField);
         }
-
-        if(!elem.value || elem.value == ""){
-            emptyfield = true
-        }
-
-        form.appendChild(hiddenField);
     }
     if (!emptyfield) {
         form.submit();
@@ -122,4 +125,16 @@ function sendForm() {
         console.error("Empty field");
     }
 
+}
+
+function editForm(){
+    var pathTab = window.location.pathname.split("/")
+    var id = pathTab[pathTab.length - 1]
+    console.log("hello")
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
+    xmlHttp.send( null );
+    //return xmlHttp.responseText;
+    console.log("hello")
+    sendForm();
 }
