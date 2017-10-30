@@ -26,10 +26,12 @@ class ScenarioCreation {
     makeBlockElemText(){
         let newelem = document.createElement("input");
         newelem.setAttribute("placeholder", "Tapez votre texte");
+        newelem.setAttribute("wrap", "hard");
         newelem.innerHTML = this.textBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
-
+        newelem.style.width = "100%";
+        newelem.style.height = "150px";
     }
 
     makeBlockElemVideo(){
@@ -39,6 +41,8 @@ class ScenarioCreation {
         newelem.innerHTML = this.videoBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
+        newelem.style.width = "100%";
+
     }
 
     makeBlockElemMcq(){
