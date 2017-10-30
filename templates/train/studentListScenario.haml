@@ -1,0 +1,31 @@
+-extends "base.haml"
+
+-load static
+-load compress
+
+-block content
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
+    #whiteBox
+        #parameters.blk
+            %h1 Exercices disponibles
+            %p #{dico}
+
+            %table.table.no-border
+                %tbody
+                    %tr#headline
+                        -# %p {{data}}
+                        -for st in headline
+                            %td{:width => "20%"}
+                                %p{:dico => "tab"} #{st}
+
+                    -for st in scenarios
+
+                        %tr#contentlist
+                            %td{:width => "20%"}
+                                %a{:href => "/professor/train/make_scenario/#{st.id}"} #{st.sequence}
+                            %td{:width => "20%"}
+                                %p{:dico => "tab"} #{st.skill}
+                            %td{:width => "20%"}
+                                %p{:dico => "tab"} #{st.topic}
+                            %td{:width => "20%"}
+                                %p{:dico => "tab"} #{st.grade}

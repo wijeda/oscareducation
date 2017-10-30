@@ -41,6 +41,24 @@ def list_scenario(request):
     # to access the values passed to dico, you need to call the key not dico itself, here it is "scenarios" or "headlines"
     return render(request, "train/listScenario.haml", dico)
 
+def student_list_scenario(request):
+    # "dico" is a dictionnary variable that will store the database information for the scenarios
+    # the request need to ask the database for scenario's title, skill, topic and grade level
+    # for now, the actions are represented by character e for "edit", d for "delete" and s for "see"
+    dico = {}
+    dico["scenarios"]=[]
+    # test d recup de date dans la db
+    for s in Scenario.objects.all():
+        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.instructions, "topic":s.topic, "grade":s.grade_level})
+
+    # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
+    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire"]
+    # 2 examples to be replaced:
+    # dico["scenarios"] = [{"sequence":"Calculer l'aire d'un triangle", "skill":"Aire d'un triangle", "topic":"Trigonometrie", "grade":"3e Primaire","edit":"e","delete":"d","see":"s"},
+                        # {"sequence":"Decouverte des fractions", "skill":"Addition de fraction", "topic":"Algebre", "grade":"2e Primaire","edit":"e","delete":"d","see":"s"}]
+    # to access the values passed to dico, you need to call the key not dico itself, here it is "scenarios" or "headlines"
+    return render(request, "train/studentListScenario.haml", dico)
+
 def save_scenario(request):
 
     if request.method == "POST":
@@ -81,6 +99,7 @@ def delete_scenario(request, id):
     Scenario.objects.get(id=id).delete()
     return TemplateResponse(request, "train/listScenario.haml", {})
 
-    '''return TemplateResponse(request, "home.haml", {})
+    '''return TemplateResponse(request, "home.haml", {})'''
 
 def scenario(request, id):
+    return render(request, "train/scenario.haml")
