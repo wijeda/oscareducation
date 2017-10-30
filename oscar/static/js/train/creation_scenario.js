@@ -2,12 +2,51 @@
 
 class ScenarioCreation {
 
-    constructor(anchorID, btnPlusID, addElementDivID){
+    constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, mcqBlockElemID, mcqButtonID){
         this.anchor = document.getElementById(anchorID);
         this.btnPlus = document.getElementById(btnPlusID);
         this.addElementDiv = document.getElementById(addElementDivID);
         this.addElementOption = false; // at start it is not shown
         document.getElementById(btnPlusID).addEventListener("click", this.showDiffElements.bind(this), true);
+
+        this.textBlockElem = document.getElementById(textBlockElemID);
+        this.textButton = document.getElementById(textButtonID);
+        document.getElementById(textButtonID).addEventListener("click", this.makeBlockElemText.bind(this), true);
+
+        this.videoBlockElem = document.getElementById(videoBlockElemID);
+        this.videoButton = document.getElementById(videoButtonID);
+        document.getElementById(videoButtonID).addEventListener("click", this.makeBlockElemVideo.bind(this), true);
+
+        this.mcqBlockElem = document.getElementById(mcqBlockElemID);
+        this.mcqButton = document.getElementById(mcqButtonID);
+        document.getElementById(mcqButtonID).addEventListener("click", this.makeBlockElemMcq.bind(this), true);
+
+    }
+
+    makeBlockElemText(){
+        let newelem = document.createElement("input");
+        newelem.setAttribute("placeholder", "Tapez votre texte");
+        newelem.innerHTML = this.textBlockElem.innerHTML;
+        this.anchor.appendChild(newelem);
+        newelem.style.display = "block";
+
+    }
+
+    makeBlockElemVideo(){
+        //TODO : adapter les liens
+        let newelem = document.createElement("input");
+        newelem.setAttribute("placeholder", "URL de votre vidéo");
+        newelem.innerHTML = this.videoBlockElem.innerHTML;
+        this.anchor.appendChild(newelem);
+        newelem.style.display = "block";
+    }
+
+    makeBlockElemMcq(){
+        //TODO remplacer par QCM
+        let newelem = document.createElement("input");
+        newelem.innerHTML = this.mcqBlockElem.innerHTML;
+        this.anchor.appendChild(newelem);
+        newelem.style.display = "block";
     }
 
     showDiffElements(){
@@ -20,8 +59,6 @@ class ScenarioCreation {
         this.addElementOption = !this.addElementOption
 
     }
-
-
 }
 
 // initiation
@@ -30,7 +67,16 @@ window.onload = function(){
     let anchorID = 'whiteBox';
     let addElementDivID = 'addElementDiv';
 
-    new ScenarioCreation(anchorID, btnPlusID, addElementDivID);
+    let textBlockElemID = "textBlockElem";
+    let textButtonID = "addElementTxt"
+
+    let videoBlockElemID = "videoBlockElem";
+    let videoButtonID = "addElementVideo"
+
+    let mcqBlockElemID = "mcqBlockElem";
+    let mcqButtonID = "addElementMcq"
+
+    new ScenarioCreation(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, mcqBlockElemID, mcqButtonID);
 };
 
 

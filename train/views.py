@@ -73,10 +73,10 @@ def save_scenario(request):
     #     scenario = form.save()
     #     return redirect("creationScenarion.haml")
     #
-    return render(request, "train/creationScenarion.haml")
+    return render(request, "train/listScenario.haml")
 
 def delete_scenario(request, id):
     # print("Voici mon print :D :",request)
     # print(id)
     Scenario.objects.get(id=id).delete()
-    return TemplateResponse(request, "home.haml", {})
+    return TemplateResponse(request, "train/listScenario.haml", {})

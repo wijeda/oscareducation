@@ -37,6 +37,19 @@
             %br
             %label{:for => 'public'} Public :
             %input{:id => 'public', :type => 'checkbox'}
+            %br
+
+
+
+    #videoBlockElem{:style => "display: none"}
+        URL de votre vidéo :
+        video
+
+    #mcqBlockElem{:style => "display: none"}
+        Les QCMS ne sont pas encore fait, lol
+
+    #textBlockElem{:style => "display: none"}
+        text
 
     #Tools.blk
         %br
@@ -49,8 +62,9 @@
                     Ajouter vidéo
                 %button.btn.btn-primary#addElementTxt
                     Ajouter d'un text
-                %button.btn.btn-primary#addElementTxt
+                %button.btn.btn-primary#addElementMcq
                     Ajouter d'un QCM
+
             %br
             %button.btn.btn-primary#saveScenario{:onclick=> "sendForm()"}
                 Save
