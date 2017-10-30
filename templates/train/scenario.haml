@@ -1,0 +1,14 @@
+-extends "base.haml"
+
+-load static
+-load compress
+
+-block content
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
+    #whiteBox
+        #parameters.blk
+            %h1 Scenario
+            %p #{dico}
+
+        #Tools.blk
+            %a.btn.btn-primary#nextElement{:href => "/professor/train/scenario/?"} Creer un autre exercice
