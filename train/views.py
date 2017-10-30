@@ -80,3 +80,9 @@ def delete_scenario(request, id):
     # print(id)
     Scenario.objects.get(id=id).delete()
     return TemplateResponse(request, "train/listScenario.haml", {})
+
+    '''return TemplateResponse(request, "home.haml", {})
+
+def scenario(request, id):
+
+    return render(request, "train/scenario.haml")'''
