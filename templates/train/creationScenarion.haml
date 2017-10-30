@@ -42,175 +42,217 @@
         %br
         -# %input.btn.btn-primary#submit{:type => "submit"}
         {% buttons %}
-            %button.btn.btn-primary#AddElement{data-target: "#personal_resource-form"}
-                Ajouter un élément
-            %ul.list-group
-              -for resource in personal_resources
-                %li.list-group-item
-                  %h4.list-group-item-heading= resource.content.title
-                    -if resource.content.author
-                      par
-                      %i
-                        =resource.content.author
-                    %small= resource.content.kind
-                  %p.list-group-text
-                    -if resource.content.comment
-                      =resource.content.comment|safe
-                  .row
-                    -if resource.content.resources.link|cut:" "|length > 0 or  resource.content.resoures.file|cut:" "|length > 0
-                      %div{class: "col-md-{% if resource.content.resources.link|cut:' '|length > 0 and resource.content.resoures.file|cut:' '|length > 0 %}6{% else %}12{% endif %}"}
-                            %h5 Fichiers
-
-                          .list-group
-
-                            %a.list-group-item{href: "{{ MEDIA_URL }}{{ resource.content.resources.file }}"}
-                              %span.badge= resource.content.resources.type
-                              -if resource.content.resources.optionalName
-                                =resource.content.resources.optionalName
-                              -else
-                               // =file.file.name|clean_file_name
-                  -if resource.content.resources.link|cut:" "|length > 0
-                    %div{class: "col-md-{% if resource.content.resources.file|cut:' '|length > 0 %}6{% else %}12{% endif %}"}
-                          %h5 Liens
-                          %a.list-group-item{href: "{{ resource.content.resources.link }}", target: "_blank"}
-                            %span.badge= resource.content.resources.type
-                            //=resource.content.resources.optionalName|default:resource.content.resoures.link
-
-                  -if user.professor and resource.added_by == request.user
-                    %a.btn.btn-danger.btn-sm.remove.delete{href: "{% url 'professor:remove_pedagogical_ressources' 'resource' resource.id %}"}
-                      supprimer
+            %button.btn.btn-primary#addElement
+                Ajouter un element
+            #addElementDiv{:style => "display: none"}
+                %button.btn.btn-primary#addElementVideo
+                    Ajouter vidéo
+                %button.btn.btn-primary#addElementTxt
+                    Ajouter d'un text
+                %button.btn.btn-primary#addElementTxt
+                    Ajouter d'un QCM
             %br
             %button.btn.btn-primary#saveScenario{:onclick=> "sendForm()"}
                 Save
         {% endbuttons %}
-  :css
-      .level2 {
-        padding-left: 10px;
-      }
 
-      .level3 {
-        padding-left: 20px;
-      }
 
-      .level4 {
-        padding-left: 30px;
-      }
+    %script
+        -# function post(path, params, method) {
+        -#     method = method || "post"; // Set method to post by default if not specified.
+        -#
+        -#     // The rest of this code assumes you are not using a library.
+        -#     // It can be made less wordy if you use one.
+        -#     var form = document.createElement("form");
+        -#     form.setAttribute("method", method);
+        -#     form.setAttribute("action", path);
+        -#
+        -#     for(var key in params) {
+        -#         if(params.hasOwnProperty(key)) {
+        -#             var hiddenField = document.createElement("input");
+        -#             hiddenField.setAttribute("type", "hidden");
+        -#             hiddenField.setAttribute("name", key);
+        -#             hiddenField.setAttribute("value", params[key]);
+        -#
+        -#             form.appendChild(hiddenField);
+        -#         }
+        -#     }
+        -#
+        -#     document.body.appendChild(form);
+        -#     form.submit();
+        -# }
+        -# post('/contact/', {name: 'Johnny Bravo'});
 
-      .dropdown-menu {
-        float: none;
-        max-width: 100%;
-        width: 5000px;
-      }
-      .dropdown-submenu {
-          position:relative;
-      }
-      .dropdown-submenu>.dropdown-menu {
-          top:0;
-          left:100%;
-          margin-top:-6px;
-          margin-left:-1px;
-          -webkit-border-radius:0 6px 6px 6px;
-          -moz-border-radius:0 6px 6px 6px;
-          border-radius:0 6px 6px 6px;
-      }
-      .dropdown-submenu:hover>.dropdown-menu {
-          display:block;
-      }
-      .dropdown-submenu>a:after {
-          display:block;
-          content:" ";
-          float:right;
-          width:0;
-          height:0;
-          border-color:transparent;
-          border-style:solid;
-          border-width:5px 0 5px 5px;
-          border-left-color:#cccccc;
-          margin-top:5px;
-          margin-right:-10px;
-      }
-      .dropdown-submenu:hover>a:after {
-          border-left-color:#ffffff;
-      }
-      .dropdown-submenu.pull-left {
-          float:none;
-      }
-      .dropdown-submenu.pull-left>.dropdown-menu {
-          left:-100%;
-          margin-left:10px;
-          -webkit-border-radius:6px 0 6px 6px;
-          -moz-border-radius:6px 0 6px 6px;
-          border-radius:6px 0 6px 6px;
-      }
-      .dropdown-menu > li > a {
-        white-space: normal;
-      }
 
-      .remove-form {
-        display: inline;
-      }
 
-      h3, h4 {
-        margin-top: 0px;
-      }
-
-      .well hr {
-        margin-top: 35px;
-        margin-bottom: 35px;
-      }
-
-      .remove {
-        position: absolute;
-        top: 0px;
-        right: 0px;
-        border-radius: 0px;
-        border-bottom-left-radius: 3px;
-        padding: 2px 6px;
-      }
-
-      .khan-well {
-        background-color: rgba(159, 182, 59, .4);
-        border-color: rgba(159, 182, 59, .8);
-      }
-
-      .sesamath-well {
-        background-color: rgba(229, 105, 10, .2);
-        border-color: rgba(229, 105, 10, .6);
-
--block javascript
-  -compress js
-    %script{src: "{% static 'js/professor_update_pedagogical_resources.js' %}"}
-  :javascript
-    $(".show-form").click(function(event) {
-      $(event.currentTarget).hide();
-      $(event.currentTarget.attributes["data-target"].value).show();
-    })
-    $(".show-synthese-form").click(function(event) {
-      $(event.currentTarget).hide();
-      $(".synthese").hide();
-      $(event.currentTarget.attributes["data-target"].value).show();
-    })
-    function selectionSesamathReference(ref_pk, title, url, kind) {
-      $("#ref_pk_title_" + kind).val(title);
-      $("#ref_pk_" + kind).val(ref_pk);
-      $("#sesamath_verify_" + kind).removeClass("disabled");
-      $("#sesamath_verify_" + kind).attr("href", url);
-
-      var sesamath_pdf = $("#sesamath_pdf_" + kind);
-      sesamath_pdf.find("object").attr("data", url);
-      sesamath_pdf.find("iframe").attr("src", url);
-      sesamath_pdf.find("a").attr("href", url);
-      sesamath_pdf.show();
-    }
-    function selectKhanReference(ref_pk, title, url) {
-      $("#khan_ref_pk_title").val(title);
-      $("#khan_ref_pk").val(ref_pk);
-      $("#khan_verify").removeClass("disabled");
-      $("#khan_verify").attr("href", url);
-    }
-    $(".delete").click(function(event) {
-      var yes = confirm("Êtes-vous sûr de vouloir supprimer cette ressource ?");
-      if (yes != true) {
-        event.preventDefault();
-      }
-    })
+    -# .row
+    -#   -# navigation
+    -#   %nav.navbar.navbar-default
+    -#     .container
+    -#       .navbar-header
+    -#         %button.navbar-toggle.collapsed{"aria-expanded" : "false", "data-target" : "#bs-example-navbar-collapse-1", "data-toggle" : "collapse", type : "button"}
+    -#           %span.sr-only Toggle navigation
+    -#           %span.icon-bar
+    -#           %span.icon-bar
+    -#           %span.icon-bar
+    -#         %a.navbar-brand{href : "#"}
+    -#           %img.img-responsive{alt : "oscar", height : "15%", src : "{% static 'homepage/images/Logo-Oscar.png' %} ", width : "15%"}
+    -#       #bs-example-navbar-collapse-1.collapse.navbar-collapse
+    -#         %ul.nav.navbar-nav.navbar-right
+    -#           %li.active
+    -#             %a{href : "{% url 'username_login' %}", target:'__blank'}
+    -#               se connecter
+    -#               %span.sr-only (current)
+    -#           %li
+    -#             %a{href : "{% url 'subscribe_teacher' %}", target:'__blank'} s'inscrire
+    -#       -# section header
+    -#     %header#header.row
+    -#       -# left
+    -#       .col-md-6.header-left
+    -#         .float-section
+    -#           %h4.with-bg.uppercase.blue votre profil
+    -#           %ul.list-unstyled.shadow
+    -#             %li.orange-text.bg-gray-1
+    -#               %p Vous avez
+    -#               %p=static
+    -#               %p.text-meduim des classes hétérogènes
+    -#             %li.orange-text.bg-gray-2
+    -#               %p Vous voulez
+    -#               %p.text-meduim connaitre les besoins d'apprentissage de vos élèves
+    -#             %li.orange-text.bg-gray-3
+    -#               %p Vous voulez
+    -#               %p.text-meduim gagner du temps
+    -#       -# right
+    -#       .col-md-6.header-right
+    -#         .content
+    -#           %h3.uppercase.white-text.text-large.text-strong différencier l'enseignement.
+    -#           %h4.uppercase.white-text Apprendre avec plaisir
+    -#           %h2.uppercase.orange-text.text-larger Je suis enseignant
+    -#       -#section header
+    -#     %section#registration.row
+    -#       .col-md-4.section-left
+    -#       .col-md-offset-2.col-md-6.section-right
+    -#         .content
+    -#           %h3.h1.uppercase.text-strong
+    -#             %span.orange-text Inscrivez-vous gratuitement à la
+    -#             %span.blue-text version BETA
+    -#             %span.orange-text d'oscar
+    -#           %h4.h2.text-blue et saisissez un des 500 comptes disponibles !
+    -#     -#section process
+    -#     %section#process.row
+    -#       %h1.text-center.orange-text.text-larger
+    -#         Le
+    -#         %strong processus
+    -#       %img.img-responsive{alt :"process image", src : "{% static 'homepage/images/process-content.png' %}"}
+    -#     -#section quote
+    -#     %section#quote.row
+    -#       .content.container
+    -#         %h1.text-center.orange-text.text-larger
+    -#           Les
+    -#           %strong témoignages
+    -#         .blockquote
+    -#           .item
+    -#             %blockquote.quote-box.shadow
+    -#               %p.quotation-mark “
+    -#               %h6.quote-text
+    -#                 Avec Oscar, je vais pouvoir accompagner mes élèves de manière
+    -#                 différenciée, tout en leur proposant un environnement ludique pour faire
+    -#                 des maths.
+    -#               .blog-post-actions
+    -#                 %p.blog-post-bottom.pull-left.orange-text.text-small
+    -#                   Lucie, 31 ans, enseignante en général de transition.
+    -#           .item
+    -#             %blockquote.quote-box.shadow
+    -#               %p.quotation-mark “
+    -#               %h6.quote-text
+    -#                 Oscar, cela change! Mes élèves sont heureux de faire des maths dans un
+    -#                 contexte numérique attractif. Pour ma part, je peux précisément cerner
+    -#                 les besoins de la classe.
+    -#               .blog-post-actions
+    -#                 %p.blog-post-bottom.pull-left.orange-text.text-small
+    -#                   Isabelle, 56 ans, enseignante en technique et professionnel.
+    -#           .item
+    -#             %blockquote.quote-box.shadow
+    -#               %p.quotation-mark “
+    -#               %h6.quote-text
+    -#                 Grâce aux fonctionnalités d'impression sur papier, je suis heureux de
+    -#                 pouvoir utiliser Oscar en classe malgré le fait que nous n'avons pas
+    -#                 d'accès internet à l'école.
+    -#               .blog-post-actions
+    -#                 %p.blog-post-bottom.pull-left.orange-text.text-small
+    -#                   Gaëtan, 35 ans, enseignant en technique de qualification.
+    -#           .item
+    -#             %blockquote.quote-box.shadow
+    -#               %p.quotation-mark “
+    -#               %h6.quote-text
+    -#                 Oscar, c'est ma bibliothèque virtuelle professionnelle. Un lieu pour
+    -#                 partager mes propres ressources crées au fur et à mesure des années et
+    -#                 en découvrir de nouvelles!
+    -#               .blog-post-actions
+    -#                 %p.blog-post-bottom.pull-left.orange-text.text-small
+    -#                   Marie, 32 ans, enseignante en secondaire inférieur.
+    -#           .item
+    -#             %blockquote.quote-box.shadow
+    -#               %p.quotation-mark “
+    -#               %h6.quote-text Un outil très utile pour la préparation au CEB!
+    -#               .blog-post-actions
+    -#                 %p.blog-post-bottom.pull-left.orange-text.text-small
+    -#                   Pierre, 45 ans, enseignant en primaire.
+    -#           .item
+    -#             %blockquote.quote-box.shadow
+    -#               %p.quotation-mark “
+    -#               %h6.quote-text
+    -#                 J'ai toujours appris les maths en regardant des vidéos sur Youtube,
+    -#                 même si la qualité n'y était pas toujours. Je me réjouis de voir un
+    -#                 outil de confiance, qui rendra des ressources diverses disponibles à de
+    -#                 nombreux élèves!
+    -#               .blog-post-actions
+    -#                 %p.blog-post-bottom.pull-left.orange-text.text-small
+    -#                   Maureen, 22 ans, régente professeur de maths.
+    -#     -# section registration_2
+    -#     %section#registration_2.row
+    -#       .col-md-6.section-left.shadow
+    -#         .content
+    -#           %h2
+    -#             Oscar
+    -#             %strong c'est
+    -#           %ul.list-unstyled.with-image
+    -#             %li
+    -#               %img.push-small-right{src : "{% static 'homepage/images/ok.png' %}"}>
+    -#               un
+    -#               %strong diagnostic complet
+    -#               des prérequis en primaire et secondaire
+    -#             %li
+    -#               %img.push-small-right{src : "{% static 'homepage/images/ok.png' %}"}>
+    -#               un outil d'
+    -#               %strong évaluation continue
+    -#             %li
+    -#               %img.push-small-right{src : "{% static 'homepage/images/construction.png' %}"}>
+    -#               la construction collective d'une bibliothèque de
+    -#               %strong ressources éducatives
+    -#               ou "wikimath"
+    -#               %small (en cours)
+    -#       .col-md-6.section-right
+    -#         .content
+    -#           %h2
+    -#             Oscar
+    -#             %strong sera aussi
+    -#           %ul.list-unstyled.with-image
+    -#             %li
+    -#               %img.push-small-right{src : "{% static 'homepage/images/construction.png' %}"}>
+    -#               un
+    -#               %strong parcours d'apprentissage personnalisé
+    -#               pour chaque élève
+    -#               %small en cours de développement)
+    -#             %li
+    -#               %img.push-small-right{src : "{% static 'homepage/images/dont.png' %}"}>
+    -#               une aide à la remédiation des maths dans un
+    -#               %strong environnement ludique
+    -#           .registration_btn
+    -#             %a.btn.btn-default.btn-large.uppercase.shadow{href : "{% url 'subscribe_teacher' %}", target:'__blank'} Je m'inscris
+    -#     %footer#footer.row
+    -#
+    -# -compress js
+    -#   %script{type: "text/javascript", src: "{% static 'js/jquery.min.js' %}"}
+    -#   %script{type: "text/javascript", src: "{% static 'homepage/js/slick.js' %}"}
+    -#   %script{type: "text/javascript", src: "{% static 'homepage/js/core.js' %}"}
