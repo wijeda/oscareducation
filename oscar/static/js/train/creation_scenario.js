@@ -33,7 +33,6 @@ class ScenarioCreation {
 
     loadImage(){
         let newelem = document.createElement("image");
-        console.log(this);
         newelem.setAttribute("url", this.value);
         this.anchor.appendChild(newelem);
     }
@@ -58,9 +57,7 @@ class ScenarioCreation {
     }
 
     makeBlockElemVideo(){
-        //TODO : adapter les liens
-        let newelem = document.createElement("input");
-        newelem.setAttribute("placeholder", "URL de votre vidéo");
+        let newelem = document.createElement("div");
         newelem.innerHTML = this.videoBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
@@ -94,6 +91,27 @@ function loadImage(elem){
     return false;
 }
 
+function loadVideo(elem){
+    var root = elem.parentNode.childNodes;
+    var ID = getVideoId(root[7].value);
+    var embedURL = "//www.youtube.com/embed/" + ID
+    root[1].setAttribute("src", embedURL);
+    return false;
+}
+
+function getVideoId(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        console.log("ERROR with video URL !")
+        return 'error';
+    }
+}
+
+
 // initiation
 window.onload = function(){
     let btnPlusID = "addElement"; //document.getElementById("addElement");
@@ -105,6 +123,8 @@ window.onload = function(){
 
     let videoBlockElemID = "videoBlockElem";
     let videoButtonID = "addElementVideo";
+    let loadVidID = "loadVideo";
+    let loadVidButtonID = "addVid";
 
     let mcqBlockElemID = "mcqBlockElem";
     let mcqButtonID = "addElementMcq";
@@ -119,12 +139,17 @@ window.onload = function(){
                         addElementDivID,
                         textBlockElemID,
                         textButtonID,
+
                         videoBlockElemID,
                         videoButtonID,
+                        loadVidID,
+                        loadVidButtonID,
+
                         imgBlockElemID,
                         imgButtonID,
                         loadImgID,
                         loadImgButtonID,
+
                         mcqBlockElemID,
                         mcqButtonID);
 };
