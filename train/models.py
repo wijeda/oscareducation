@@ -21,3 +21,21 @@ class Scenario(models.Model):
 
     def __str__(self):
         return("titre:"+ self.title+" and instructions :" + self.instructions + "and public : " + str(self.public))
+
+class TextElem(models.Model):
+
+    id_scenario = models.IntegerField()
+    order = models.IntegerField()
+    title = models.CharField("Titre", max_length = 500)
+    content = models.CharField("Contenu", max_length = 500)
+
+    def __str__(self):
+        return("titre:"+ self.title+" and content :" + self.content)
+
+class PicElem(models.Model):
+
+    id_scenario = models.IntegerField()
+    order = models.IntegerField()
+    title = models.CharField("Titre", max_length = 500)
+    url = models.CharField("url", max_length = 500)
+    description = models.CharField("description", max_length = 500)
