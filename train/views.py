@@ -83,12 +83,16 @@ def make_scenario(request, id):
     return render(request, "train/st_begin_scenario.haml", dico)
 
 def save_scenario(request):
-
     if request.method == "POST":
 
         # loading the json
         parsed_json = json.loads(request.body)
 
+<<<<<<< HEAD
+=======
+        print('raw_data : "%s"' % request.body)
+
+>>>>>>> 9b508fedb4720f5b109c3db736ad2afcd5f5386d
         # parsing the parameters of the json
         creator = parsed_json['creator']
         title = parsed_json['titre']
@@ -127,6 +131,7 @@ def save_scenario(request):
                 elem.save()
 
     return HttpResponse("OK")
+<<<<<<< HEAD
 
 
         # form = ScenarioForm(request.POST)
@@ -160,6 +165,9 @@ def save_scenario(request):
     #
 
     return HttpResponseRedirect('/professor/train/list_scenario/')
+=======
+    # return HttpResponseRedirect('/professor/train/list_scenario/')
+>>>>>>> 9b508fedb4720f5b109c3db736ad2afcd5f5386d
 
 def delete_scenario(request, id):
     # print("Voici mon print :D :",request)
