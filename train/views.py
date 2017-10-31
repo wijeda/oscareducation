@@ -59,6 +59,9 @@ def student_list_scenario(request):
     # to access the values passed to dico, you need to call the key not dico itself, here it is "scenarios" or "headlines"
     return render(request, "train/studentListScenario.haml", dico)
 
+def make_scenario(request, id):
+    return render(request, "train/st_begin_scenario.haml")
+
 def save_scenario(request):
 
     if request.method == "POST":

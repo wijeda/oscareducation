@@ -1,0 +1,27 @@
+-extends "base.haml"
+
+-load static
+
+-block javascript
+  %script{src: "{% static 'js/mermaid.full.js' %}"}
+
+-block content
+  %h3 Title
+    -# =id.title
+  %hr
+  %h4 Author
+    -# =id.instructions
+
+  .ligneorange
+
+  .container-fluid.boxclassetitle
+    .pull-right
+      %p Ressources
+
+  .ligneorangefine
+
+  .boxclasse.container-fluid
+        %p
+          %b Commencer
+
+        %h3 Questions
