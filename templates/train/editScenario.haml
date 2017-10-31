@@ -1,0 +1,75 @@
+-extends "base.haml"
+
+-load static
+-load compress
+
+-load bootstrap3
+
+-block content
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
+    %script{:src => "/static/js/train/creation_scenario.js"}
+    %form#whiteBox{:methode => "POST"}
+                    -# , :action => "save_scenario"}
+        {% csrf_token %}
+        {{ form.errors }}
+        {{ form.non_field_errors }}
+
+        #parameters.blk
+            %h1 Parametre
+            %p Entrez les differents parametres pour l'exercice
+
+            %label{:for => 'creator'} Créateur :
+            %input{:id => 'creator', :value => "#{scenario.creator}"}
+            %br
+            %label{:for => 'title'} Titre :
+            %input{:id => 'title', :value => "#{scenario.title}"}
+            %br
+            %label{:for => 'skill'} Compétences :
+            %input{:id => 'skill', :value => "#{scenario.skill}"}
+            %br
+            %label{:for => 'topic'} Sujet :
+            %input{:id => 'topic', :value => "#{scenario.topic}"}
+            %br
+            %label{:for => 'grade_level'} Niveau :
+            %input{:id => 'grade_level', :value => "#{scenario.grade_level}"}
+            %br
+            %label{:for => 'instructions'} Instructions :
+            %input{:id => 'instructions', :value => "#{scenario.instructions}"}
+            %br
+            %label{:for => 'public'} Public :
+            %input{:id => 'public', :type => 'checkbox'}
+            %br
+
+
+
+    #videoBlockElem{:style => "display: none"}
+        URL de votre vidéo :
+        video
+
+    #mcqBlockElem{:style => "display: none"}
+        Les QCMS ne sont pas encore fait, lol
+
+    #textBlockElem{:style => "display: none"}
+        text
+
+    #Tools.blk
+        %br
+        -# %input.btn.btn-primary#submit{:type => "submit"}
+        {% buttons %}
+            %button.btn.btn-primary#addElement
+                Ajouter un element
+            #addElementDiv{:style => "display: none"}
+                %button.btn.btn-primary#addElementVideo
+                    Ajouter vidéo
+                %button.btn.btn-primary#addElementTxt
+                    Ajouter d'un text
+                %button.btn.btn-primary#addElementMcq
+                    Ajouter d'un QCM
+
+            %br
+            %button.btn.btn-primary#saveScenario{:onclick=> "editForm()"}
+                Save
+        {% endbuttons %}
+
+
+    %script

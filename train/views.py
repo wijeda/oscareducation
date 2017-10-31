@@ -7,6 +7,7 @@ from skills.models import Skill, StudentSkill, CodeR, Section, Relations, CodeR_
 from resources.models import KhanAcademy, Sesamath, Resource
 from .models import Scenario
 from .forms import ScenarioForm
+from django.views.generic.base import RedirectView
 def root_redirection(request):
 
     return HttpResponseRedirect(reverse("username_login"))
@@ -21,6 +22,16 @@ def create_scenario(request):
         print(s)
 
     return render(request, "train/creationScenarion.haml")
+
+def edit_scenario(request, id):
+
+    s = Scenario.objects.get(id=id)
+
+    dico = {}
+
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+
+    return render(request, "train/editScenario.haml", dico)
 
 
 def list_scenario(request):
@@ -94,7 +105,8 @@ def save_scenario(request):
     #     scenario = form.save()
     #     return redirect("creationScenarion.haml")
     #
-    return render(request, "train/listScenario.haml")
+
+    return HttpResponseRedirect('/professor/train/list_scenario/')
 
 def delete_scenario(request, id):
     # print("Voici mon print :D :",request)
