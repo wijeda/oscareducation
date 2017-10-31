@@ -39,9 +39,9 @@ class ScenarioCreation {
     }
 
     makeBlockElemText(){
-        let newelem = document.createElement("textarea");
-        newelem.value=''
-        newelem.setAttribute("placeholder", "Tapez votre texte");
+        let newelem = document.createElement("div");
+        // newelem.value=''
+        // newelem.setAttribute("placeholder", "Tapez votre texte");
         newelem.innerHTML = this.textBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
@@ -129,9 +129,25 @@ window.onload = function(){
                         mcqButtonID);
 };
 
+function getCookie(c_name)
+{
+    if (document.cookie.length > 0)
+    {
+        var c_start = document.cookie.indexOf(c_name + "=");
+        var c_end;
+        if (c_start != -1)
+        {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return unescape(document.cookie.substring(c_start,c_end));
+        }
+    }
+    return "";
+ }
 
 function sendForm() {
-    let emptyfield = false
+    /*let emptyfield = false
     let form = document.getElementById("whiteBox");
     form.setAttribute("method", "POST");
     form.setAttribute("action", "/professor/train/save_scenario");
@@ -169,7 +185,31 @@ function sendForm() {
         form.submit();
     }else {
         console.error("Empty field");
-    }
+    }*/
+
+
+    var data = {"creator": "super_creator",
+                "titre": "super_titre",
+                "skill": "super_skill",
+                "topic": "super_topic",
+                "grade_level": "super grade",
+                "description": "super_description",
+                "elements":[{"type": "TextElem", "data":{"title": "super title", "content": "my content"}}],
+        }
+        // construct an HTTP request
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "/professor/train/save_scenario", true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+    // send the collected data as JSON
+    xhr.send(JSON.stringify(data));
+
+    xhr.onloadend = function () {
+        // done
+        console.log(data);
+        console.log("done");
+    };
 
 }
 
