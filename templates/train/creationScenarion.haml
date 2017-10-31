@@ -32,25 +32,18 @@
             %label{:for => 'grade_level'} Niveau :
             %input{:id => 'grade_level', :placeholder => "Indiquez le niveau d&rsquo;étude requis pour le scénario"}
             %br
-            %label{:for => 'description'} description :
-            %input{:id => 'description', :placeholder => 'Expliquez votre question'}
+            %label{:for => 'instructions'} Instructions :
+            %input{:id => 'instructions', :placeholder => 'Expliquez votre question'}
             %br
             %label{:for => 'public'} Public :
             %input{:id => 'public', :type => 'checkbox'}
             %br
 
+
+
     #videoBlockElem{:style => "display: none"}
-        .panel-body
-            %label{:for => 'title_video'} Titre:
-            %input{:id => 'title_video', :placeholder => '(Optionnel)'}
-            %br
-            .form-group
-                %iframe{:width => "420", :height => "315"}
-                %br
-                %label URL de votre vidéo (Youtube)
-                %input{:id => 'vid_url', :type => "text"}
-                %button.btn.btn-primary#addVid{:action => "#", :onclick => "return loadVideo(this)"} Ajouter
-                -# #loadVid{:style => "display: none"}
+        URL de votre vidéo :
+        video
 
     #mcqBlockElem{:style => "display: none"}
         Les QCMS ne sont pas encore fait, lol

@@ -35,6 +35,7 @@ class ScenarioCreation {
 
     loadImage(){
         let newelem = document.createElement("image");
+        console.log(this);
         newelem.setAttribute("url", this.value);
         this.anchor.appendChild(newelem);
     }
@@ -63,7 +64,9 @@ class ScenarioCreation {
     }
 
     makeBlockElemVideo(){
-        let newelem = document.createElement("div");
+        //TODO : adapter les liens
+        let newelem = document.createElement("input");
+        newelem.setAttribute("placeholder", "URL de votre vidéo");
         newelem.innerHTML = this.videoBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
@@ -97,27 +100,6 @@ function loadImage(elem){
     return false;
 }
 
-function loadVideo(elem){
-    var root = elem.parentNode.childNodes;
-    var ID = getVideoId(root[7].value);
-    var embedURL = "//www.youtube.com/embed/" + ID
-    root[1].setAttribute("src", embedURL);
-    return false;
-}
-
-function getVideoId(url) {
-    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    var match = url.match(regExp);
-
-    if (match && match[2].length == 11) {
-        return match[2];
-    } else {
-        console.log("ERROR with video URL !")
-        return 'error';
-    }
-}
-
-
 // initiation
 window.onload = function(){
     let btnPlusID = "addElement"; //document.getElementById("addElement");
@@ -129,8 +111,6 @@ window.onload = function(){
 
     let videoBlockElemID = "videoBlockElem";
     let videoButtonID = "addElementVideo";
-    let loadVidID = "loadVideo";
-    let loadVidButtonID = "addVid";
 
     let mcqBlockElemID = "mcqBlockElem";
     let mcqButtonID = "addElementMcq";
@@ -147,28 +127,39 @@ window.onload = function(){
                         addElementDivID,
                         textBlockElemID,
                         textButtonID,
-
                         videoBlockElemID,
                         videoButtonID,
-                        loadVidID,
-                        loadVidButtonID,
-
                         imgBlockElemID,
                         imgButtonID,
                         deleteImgButtonId,
                         loadImgID,
                         loadImgButtonID,
-
                         mcqBlockElemID,
                         mcqButtonID);
 };
 
+function getCookie(c_name)
+{
+    if (document.cookie.length > 0)
+    {
+        var c_start = document.cookie.indexOf(c_name + "=");
+        var c_end;
+        if (c_start != -1)
+        {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return unescape(document.cookie.substring(c_start,c_end));
+        }
+    }
+    return "";
+ }
 
-function sendForm() {
-    let emptyfield = false
-    let form = document.getElementById("whiteBox");
-    form.setAttribute("method", "POST");
-    form.setAttribute("action", "/professor/train/save_scenario");
+ function sendForm() {
+     /*let emptyfield = false
+     let form = document.getElementById("whiteBox");
+     form.setAttribute("method", "POST");
+     form.setAttribute("action", "/professor/train/save_scenario");
 
      let listOfIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
      for(let key in listOfIDfield){
@@ -232,7 +223,7 @@ function sendForm() {
      };
 
  }
-
+ 
 function editForm(){
     var pathTab = window.location.pathname.split("/")
     var id = pathTab[pathTab.length - 1]
