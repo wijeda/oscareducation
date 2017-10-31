@@ -29,7 +29,7 @@ def edit_scenario(request, id):
 
     dico = {}
 
-    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "description":s.description}
 
     return render(request, "train/editScenario.haml", dico)
 
@@ -42,7 +42,7 @@ def list_scenario(request):
     dico["scenarios"]=[]
     # test d recup de date dans la db
     for s in Scenario.objects.all():
-        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.instructions, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.description, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
@@ -60,7 +60,7 @@ def student_list_scenario(request):
     dico["scenarios"]=[]
     # test d recup de date dans la db
     for s in Scenario.objects.all():
-        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.instructions, "topic":s.topic, "grade":s.grade_level})
+        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.description, "topic":s.topic, "grade":s.grade_level})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire"]
@@ -90,11 +90,9 @@ def save_scenario(request):
             skill = request.POST.get('skill', '')
             topic = request.POST.get('topic', '')
             grade_level = request.POST.get('grade_level', '')
-            instructions = request.POST.get('instructions', '')
+            description = request.POST.get('description', '')
             public = request.POST.get('public', '')
-            print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            print(public)
-            scena_obj = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
+            scena_obj = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, description= description, public = public)
             scena_obj.save()
             print("end")
         else:
