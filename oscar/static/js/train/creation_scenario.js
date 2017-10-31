@@ -2,7 +2,7 @@
 
 class ScenarioCreation {
 
-    constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, loadImgID, loadImgButtonID, mcqBlockElemID, mcqButtonID){
+    constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, deleteImgButtonId, mcqBlockElemID, mcqButtonID){
         this.anchor = document.getElementById(anchorID);
         this.btnPlus = document.getElementById(btnPlusID);
         this.addElementDiv = document.getElementById(addElementDivID);
@@ -20,6 +20,8 @@ class ScenarioCreation {
         this.imgBlockElem = document.getElementById(imgBlockElemID);
         this.imgButton = document.getElementById(imgButtonID);
         document.getElementById(imgButtonID).addEventListener("click", this.makeBlockElemImg.bind(this), true);
+        this.deleteImgButtonId = document.getElementById(deleteImgButtonId);
+        document.getElementById(deleteImgButtonId).addEventListener("click", this.deleteBlockElemImg.bind(this), true);
         // this.loadImage = document.getElementById(loadImgID);
         // this.loadImgButton = document.getElementById(loadImgButtonID);
         // document.getElementById(loadImgButtonID).addEventListener("click", this.loadImage.bind(this), true);
@@ -38,9 +40,9 @@ class ScenarioCreation {
     }
 
     makeBlockElemText(){
-        let newelem = document.createElement("textarea");
-        newelem.value=''
-        newelem.setAttribute("placeholder", "Tapez votre texte");
+        let newelem = document.createElement("div");
+        // newelem.value=''
+        // newelem.setAttribute("placeholder", "Tapez votre texte");
         newelem.innerHTML = this.textBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
@@ -54,6 +56,10 @@ class ScenarioCreation {
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
         newelem.style.width = "100%";
+    }
+
+    deleteBlockElemImg(){
+        this.anchor.removeChild(document.getElementById(deleteImgButtonId));
     }
 
     makeBlockElemVideo(){
@@ -131,6 +137,8 @@ window.onload = function(){
 
     let imgBlockElemID = "imgBlockElem";
     let imgButtonID = "addElementImg";
+    let deleteImgButtonId = "deleteElementImg";
+
     let loadImgID = "loadImage";
     let loadImgButtonID = "addImg";
 
@@ -147,6 +155,7 @@ window.onload = function(){
 
                         imgBlockElemID,
                         imgButtonID,
+                        deleteImgButtonId,
                         loadImgID,
                         loadImgButtonID,
 
@@ -161,42 +170,68 @@ function sendForm() {
     form.setAttribute("method", "POST");
     form.setAttribute("action", "/professor/train/save_scenario");
 
-    let listOfIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
-    for(let key in listOfIDfield){
-        console.log("key : " + listOfIDfield[key]);
-        let elem = document.getElementById(listOfIDfield[key])
-        if(elem){
+     let listOfIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
+     for(let key in listOfIDfield){
+         console.log("key : " + listOfIDfield[key]);
+         let elem = document.getElementById(listOfIDfield[key])
+         if(elem){
 
-            let hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", listOfIDfield[key]);
+             let hiddenField = document.createElement("input");
+             hiddenField.setAttribute("type", "hidden");
+             hiddenField.setAttribute("name", listOfIDfield[key]);
 
-            if (elem.type == "checkbox"){
-              //hiddenField.setAttribute("type", "checkbox");
-              //hiddenField.setAttribute("checked", elem.checked);
-              //hiddenField.setAttribute("value", (elem.checked?"True":"False"));
-              hiddenField.setAttribute("value", "True");
-              //hiddenField.setAttribute("required", false);
-              console.log(elem.checked)
-            }else{
-              console.log(elem.value)
-              hiddenField.setAttribute("value", elem.value);
-            }
+             if (elem.type == "checkbox"){
+               //hiddenField.setAttribute("type", "checkbox");
+               //hiddenField.setAttribute("checked", elem.checked);
+               //hiddenField.setAttribute("value", (elem.checked?"True":"False"));
+               hiddenField.setAttribute("value", "True");
+               //hiddenField.setAttribute("required", false);
+               console.log(elem.checked)
+             }else{
+               console.log(elem.value)
+               hiddenField.setAttribute("value", elem.value);
+             }
 
-            if(!elem.value || elem.value == ""){
-                emptyfield = true
-            }
+             if(!elem.value || elem.value == ""){
+                 emptyfield = true
+             }
 
-            form.appendChild(hiddenField);
-        }
-    }
-    if (!emptyfield) {
-        form.submit();
-    }else {
-        console.error("Empty field");
-    }
+             form.appendChild(hiddenField);
+         }
+     }
+     if (!emptyfield) {
+         form.submit();
+     }else {
+         console.error("Empty field");
+     }*/
 
-}
+
+     var data = {"creator": "super_creator",
+                 "titre": "super_titre",
+                 "skill": "super_skill",
+                 "topic": "super_topic",
+                 "grade_level": "super grade",
+                 "instructions": "super_instructions",
+                 "public": "False",
+                 "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
+                             {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
+         }
+         // construct an HTTP request
+     var xhr = new XMLHttpRequest();
+
+     xhr.open("POST", "/professor/train/save_scenario", true);
+     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+     xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+     // send the collected data as JSON
+     xhr.send(JSON.stringify(data));
+
+     xhr.onloadend = function () {
+         // done
+         console.log(data);
+         console.log("done");
+     };
+
+ }
 
 function editForm(){
     var pathTab = window.location.pathname.split("/")

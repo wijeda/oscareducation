@@ -24,9 +24,6 @@ def create_scenario(request):
     for s in Scenario.objects.all():
         print(s)
 
-    for e in TextElem.objects.all():
-        print(e)
-
     return render(request, "train/creationScenarion.haml")
 
 def edit_scenario(request, id):
@@ -83,11 +80,12 @@ def make_scenario(request, id):
     return render(request, "train/st_begin_scenario.haml", dico)
 
 def save_scenario(request):
-
     if request.method == "POST":
 
         # loading the json
         parsed_json = json.loads(request.body)
+
+        print('raw_data : "%s"' % request.body)
 
         # parsing the parameters of the json
         creator = parsed_json['creator']
@@ -127,45 +125,12 @@ def save_scenario(request):
                 elem.save()
 
     return HttpResponse("OK")
-
-
-        # form = ScenarioForm(request.POST)
-        # print(form.errors)
-        # print("form :")
-        # print(form)
-        # if form.is_valid():
-        #     print("----form valid")
-        #     creator = request.POST.get('creator', '')
-        #     title = request.POST.get('title', '')
-        #     skill = request.POST.get('skill', '')
-        #     topic = request.POST.get('topic', '')
-        #     grade_level = request.POST.get('grade_level', '')
-        #     instructions = request.POST.get('instructions', '')
-        #     public = request.POST.get('public', '')
-        #     print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-        #     print(public)
-        #     scena_obj = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
-        #     scena_obj.save()
-        #     print("end")
-        # else:
-        #     print("----form non valid")
-
-
-    # form = ScenarioForm(request.POST) if request.method == "POST" else ScenarioForm()
-    # print("meth : "+ request.method)
-    # print(request)
-    # if form.is_valid():
-    #     scenario = form.save()
-    #     return redirect("creationScenarion.haml")
-    #
-
-    return HttpResponseRedirect('/professor/train/list_scenario/')
+    # return HttpResponseRedirect('/professor/train/list_scenario/')
 
 def delete_scenario(request, id):
     # print("Voici mon print :D :",request)
     # print(id)
     Scenario.objects.get(id=id).delete()
-    
     return TemplateResponse(request, "train/listScenario.haml", {})
 
     '''return TemplateResponse(request, "home.haml", {})'''
