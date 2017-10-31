@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import json
 from django.db import models
 import random
 from django.db.models import Count
@@ -23,8 +24,7 @@ class Professor(models.Model):
     nbr_4_star_res = models.IntegerField()
     status = JSONField()
     status_changed = models.BooleanField(default=False)
-    #user_id = models.IntegerField()
-
+    id = models.IntegerField(primary_key = True)
     def print_something(self):
         print(self.nbr_4_star_res)
 
@@ -36,23 +36,42 @@ class Professor(models.Model):
         self.user.first_name, self.user.last_name)) if self.user.first_name or self.user.last_name else self.user.username
 
     def update_status(self):
-        top = Top_contributor.objects.get()
-        top_prof = Professor.objects.get(user_id=top.prof_id)
-        if top_prof.nbr_4_star_res < self.nbr_4_star_res:
-            self.status = Status("Top Contributor", "icon.png")
-            #top.prof_id = self.user_id
-            top_prof.update_status()
-            top_prof.status_changed = True
+        print("update stat")
+        is_top = False
+        top = None
+        if Top_contributor.objects.filter():
+            top = Top_contributor.objects.get()
+
+
+        if (top is None):
+            if self.nbr_4_star_res > 4:
+                top = Top_contributor.objects.create(id = self.id)
+                self.status = json.dumps(Status("Top Contributor", "icon.png").__dict__)
+                is_top = True
+                self.save()
         else:
+            top_prof = Professor.objects.get(user_id=top.id)
+            if top_prof.nbr_4_star_res < self.nbr_4_star_res:
+                print("update top prof")
+                self.status = json.dumps(Status("Top Contributor", "icon.png").__dict__)
+                top.delete()
+                is_top = True
+                self.save()
+                Top_contributor.objects.create(id = self.id)
+
+        if not is_top:
             if self.nbr_4_star_res >= 1 and self.nbr_4_star_res < 4:
-                self.status = Status("Contributor", "icon.png")
+                self.status = json.dumps(Status("Contributor", "icon.png").__dict__)
             elif self.nbr_4_star_res >= 4 and self.nbr_4_star_res < 9:
-                self.status = Status("Motivated Contributor", "icon.png")
+                self.status = json.dumps(Status("Motivated Contributor", "icon.png").__dict__)
             elif self.nbr_4_star_res >= 9 and self.nbr_4_star_res < 19:
-                self.status = Status("Advanced Contributor", "icon.png")
+                self.status = json.dumps(Status("Advanced Contributor", "icon.png").__dict__)
             elif self.nbr_4_star_res >= 19:
-                self.status = Status("Super Contributor", "icon.png")
-        self.save()
+                self.status = json.dumps(Status("Super Contributor", "icon.png").__dict__)
+            self.save()
+
+
+
 
     # augments the number of 4-5 star ratings
     def inc(self):

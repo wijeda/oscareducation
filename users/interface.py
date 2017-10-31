@@ -1,4 +1,4 @@
-
+import json
 from django.db import models
 
 class Status:
@@ -12,6 +12,6 @@ class Status:
 
 class Top_contributor(models.Model):
 
-    def __init__(self):
-        pass
-    #prof_id = models.id
+    #def __init__(self):
+    #    pass
+    id = models.IntegerField(primary_key = True)
