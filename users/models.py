@@ -52,10 +52,12 @@ class Professor(models.Model):
                 self.status = Status("Advanced Contributor", "icon.png")
             elif self.nbr_4_star_res >= 19:
                 self.status = Status("Super Contributor", "icon.png")
+        self.save()
 
     # augments the number of 4-5 star ratings
     def inc(self):
         self.nbr_4_star_res += 1
+        self.save()
 
     class Meta:
         ordering = ['user__last_name', 'user__first_name']
