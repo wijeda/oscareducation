@@ -7,8 +7,5 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     #whiteBox
         #parameters.blk
-            %h1 Scenario
+            %h1{:dico => "tab"} #{descriptif.0}
             %p #{dico}
-
-        #Tools.blk
-            %a.btn.btn-primary#nextElement{:href => "/professor/train/scenario/?"} Creer un autre exercice
