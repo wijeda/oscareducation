@@ -10,7 +10,3 @@ class ScenarioForm(forms.Form):
     grade_level = forms.CharField()
     instructions = forms.CharField() # ("Instructions", max_length = 755)
     public = forms.BooleanField()
-
-#class TextElement(forms.Form):
-
-#    content = content.CharField()
