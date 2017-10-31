@@ -49,8 +49,10 @@
         Les QCMS ne sont pas encore fait, lol
 
     #textBlockElem{:style => "display: none"}
-        %p coucou
-        %input{:type => "textarea", :placeholder => "Tapez votre texte"}
+        .panel-body
+            %label{:for => 'title_txt'} Texte:
+            %br
+            %textarea{:rows => "3", :placeholder => "Tapez votre texte"}
 
     #imgBlockElem{:style => "display: none"}
         .panel-body
@@ -62,8 +64,12 @@
                 %br
                 %label Image (Entrez ici l'url de l'image)
                 %input{:id => 'img_url', :type => "text"}
-                %button.btn.btn-primary#addImg{:action => "#", :onclick => "return loadImage(this)"} Please
+                -# %a{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image"}
+                %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
                 -# #loadImage{:style => "display: none"}
+            .form-group
+                %label{:for => 'description_img'} Description:
+                %input{:id => 'description_img', :placeholder => 'Optionnel'}
 
     #Tools.blk
         %br
