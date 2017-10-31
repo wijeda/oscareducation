@@ -3,99 +3,24 @@
 -load static
 -load compress
 
--load bootstrap3
-
 -block content
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
-    %form#whiteBox{:methode => "POST"}
-                    -# , :action => "save_scenario"}
-        {% csrf_token %}
-        {{ form.errors }}
-        {{ form.non_field_errors }}
+    %form#whiteBox{:methode => "post", :action => "professor/train/save_scenario"}
         #parameters.blk
-            %h1 Parametre
-            %p Entrez les differents parametres pour l'exercice
+            %h1 parameters
+            %p Here is the different parameters for the exercise
 
-            %label{:for => 'creator'} Créateur
-            %input{:id => 'creator', :placeholder => 'Createur'}
-            %br
-            %label{:for => 'title'} Titre :
+            %label{:for => 'title'} Title :
             %input{:id => 'title', :placeholder => 'Ex: Sequence 1'}
             %br
-            %label{:for => 'skill'} Compétences :
-            %input{:id => 'skill', :placeholder => 'Indiquez les compétences requises pour le scénario'}
+            %label{:for => 'instructions'} Instructions :
+            %input{:id => 'instructions', :placeholder => 'Explain your question'}
+
+        #Tools.blk
             %br
-            %label{:for => 'topic'} Sujet :
-            %input{:id => 'topic', :placeholder => 'Indiquez le sujet du scénario'}
-            %br
-            %label{:for => 'grade_level'} Niveau :
-            %input{:id => 'grade_level', :placeholder => "Indiquez le niveau d&rsquo;étude requis pour le scénario"}
-            %br
-            %label{:for => 'description'} description :
-            %input{:id => 'description', :placeholder => 'Expliquez votre question'}
-            %br
-            %label{:for => 'public'} Public :
-            %input{:id => 'public', :type => 'checkbox'}
-            %br
+            %input.btn.btn-primary#submit{:type => "submit", :value => "Sauver"}
 
-
-
-    #videoBlockElem{:style => "display: none"}
-        URL de votre vidéo :
-        video
-
-    #mcqBlockElem{:style => "display: none"}
-        Les QCMS ne sont pas encore fait, lol
-
-    #textBlockElem{:style => "display: none"}
-        text
-
-    #Tools.blk
-        %br
-        -# %input.btn.btn-primary#submit{:type => "submit"}
-        {% buttons %}
-            %button.btn.btn-primary#addElement
-                Ajouter un element
-            #addElementDiv{:style => "display: none"}
-                %button.btn.btn-primary#addElementVideo
-                    Ajouter vidéo
-                %button.btn.btn-primary#addElementTxt
-                    Ajouter d'un text
-                %button.btn.btn-primary#addElementMcq
-                    Ajouter d'un QCM
-
-            %br
-            %button.btn.btn-primary#saveScenario{:onclick=> "sendForm()"}
-                Save
-        {% endbuttons %}
-
-
-    %script
-        -# function post(path, params, method) {
-        -#     method = method || "post"; // Set method to post by default if not specified.
-        -#
-        -#     // The rest of this code assumes you are not using a library.
-        -#     // It can be made less wordy if you use one.
-        -#     var form = document.createElement("form");
-        -#     form.setAttribute("method", method);
-        -#     form.setAttribute("action", path);
-        -#
-        -#     for(var key in params) {
-        -#         if(params.hasOwnProperty(key)) {
-        -#             var hiddenField = document.createElement("input");
-        -#             hiddenField.setAttribute("type", "hidden");
-        -#             hiddenField.setAttribute("name", key);
-        -#             hiddenField.setAttribute("value", params[key]);
-        -#
-        -#             form.appendChild(hiddenField);
-        -#         }
-        -#     }
-        -#
-        -#     document.body.appendChild(form);
-        -#     form.submit();
-        -# }
-        -# post('/contact/', {name: 'Johnny Bravo'});
 
 
 
