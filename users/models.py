@@ -23,7 +23,7 @@ class Professor(models.Model):
     nbr_4_star_res = models.IntegerField()
     status = JSONField()
     status_changed = models.BooleanField(default=False)
-    user_id = models.IntegerField()
+    #user_id = models.IntegerField()
 
     def print_something(self):
         print(self.nbr_4_star_res)
@@ -40,7 +40,7 @@ class Professor(models.Model):
         top_prof = Professor.objects.get(user_id=top.prof_id)
         if top_prof.nbr_4_star_res < self.nbr_4_star_res:
             self.status = Status("Top Contributor", "icon.png")
-            top.prof_id = self.user_id
+            #top.prof_id = self.user_id
             top_prof.update_status()
             top_prof.status_changed = True
         else:

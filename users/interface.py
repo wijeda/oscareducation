@@ -11,4 +11,7 @@ class Status:
 
 
 class Top_contributor(models.Model):
-    prof_id = models.id
+
+    def __init__(self):
+        pass
+    #prof_id = models.id
