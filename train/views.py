@@ -21,8 +21,6 @@ def home(request):
 def create_scenario(request):
 
     # test d recup de date dans la db
-    for s in Scenario.objects.all():
-        print(s)
 
     return render(request, "train/creationScenarion.haml")
 
