@@ -2,7 +2,7 @@
 
 class ScenarioCreation {
 
-    constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, deleteImgButtonId, mcqBlockElemID, mcqButtonID){
+    constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
         this.anchor = document.getElementById(anchorID);
         this.btnPlus = document.getElementById(btnPlusID);
         this.addElementDiv = document.getElementById(addElementDivID);
@@ -20,8 +20,8 @@ class ScenarioCreation {
         this.imgBlockElem = document.getElementById(imgBlockElemID);
         this.imgButton = document.getElementById(imgButtonID);
         document.getElementById(imgButtonID).addEventListener("click", this.makeBlockElemImg.bind(this), true);
-        this.deleteImgButtonId = document.getElementById(deleteImgButtonId);
-        document.getElementById(deleteImgButtonId).addEventListener("click", this.deleteBlockElemImg.bind(this), true);
+        // this.deleteImgButtonId = document.getElementById(deleteImgButtonId);
+        // document.getElementById(deleteImgButtonId).addEventListener("click", this.deleteBlockElemImg.bind(this), true);
         // this.loadImage = document.getElementById(loadImgID);
         // this.loadImgButton = document.getElementById(loadImgButtonID);
         // document.getElementById(loadImgButtonID).addEventListener("click", this.loadImage.bind(this), true);
@@ -31,13 +31,6 @@ class ScenarioCreation {
         document.getElementById(mcqButtonID).addEventListener("click", this.makeBlockElemMcq.bind(this), true);
 
 
-    }
-
-    loadImage(){
-        let newelem = document.createElement("image");
-        console.log(this);
-        newelem.setAttribute("url", this.value);
-        this.anchor.appendChild(newelem);
     }
 
     makeBlockElemText(){
@@ -59,19 +52,23 @@ class ScenarioCreation {
         newelem.style.width = "100%";
     }
 
-    deleteBlockElemImg(){
-        this.anchor.removeChild(document.getElementById(deleteImgButtonId));
-    }
+    // makeBlockElemVideo(){
+    //     //TODO : adapter les liens
+    //     let newelem = document.createElement("input");
+    //     newelem.setAttribute("placeholder", "URL de votre vidéo");
+    //     newelem.innerHTML = this.videoBlockElem.innerHTML;
+    //     this.anchor.appendChild(newelem);
+    //     newelem.style.display = "block";
+    //     newelem.style.width = "100%";
+    //
+    // }
 
     makeBlockElemVideo(){
-        //TODO : adapter les liens
-        let newelem = document.createElement("input");
-        newelem.setAttribute("placeholder", "URL de votre vidéo");
+        let newelem = document.createElement("div");
         newelem.innerHTML = this.videoBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
         newelem.style.width = "100%";
-
     }
 
     makeBlockElemMcq(){
@@ -100,6 +97,33 @@ function loadImage(elem){
     return false;
 }
 
+function loadVideo(elem){
+    var root = elem.parentNode.childNodes;
+    var ID = getVideoId(root[7].value);
+    var embedURL = "//www.youtube.com/embed/" + ID
+    root[1].setAttribute("src", embedURL);
+    return false;
+}
+
+function getVideoId(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        console.log("ERROR with video URL !")
+        return 'error';
+    }
+}
+
+function removeImage(elem){
+    var root = elem.parentNode.parentNode;
+    console.log(root);
+    root.parentNode.removeChild(root);
+    return false;
+}
+
 // initiation
 window.onload = function(){
     let btnPlusID = "addElement"; //document.getElementById("addElement");
@@ -111,16 +135,19 @@ window.onload = function(){
 
     let videoBlockElemID = "videoBlockElem";
     let videoButtonID = "addElementVideo";
+    let loadVidID = "loadVideo";
+    let loadVidButtonID = "addVid";
 
     let mcqBlockElemID = "mcqBlockElem";
     let mcqButtonID = "addElementMcq";
 
     let imgBlockElemID = "imgBlockElem";
     let imgButtonID = "addElementImg";
-    let deleteImgButtonId = "deleteElementImg";
 
     let loadImgID = "loadImage";
     let loadImgButtonID = "addImg";
+
+    let removeImageID = "removeImage";
 
     new ScenarioCreation(anchorID,
                         btnPlusID,
@@ -131,9 +158,6 @@ window.onload = function(){
                         videoButtonID,
                         imgBlockElemID,
                         imgButtonID,
-                        deleteImgButtonId,
-                        loadImgID,
-                        loadImgButtonID,
                         mcqBlockElemID,
                         mcqButtonID);
 };
@@ -223,7 +247,7 @@ function getCookie(c_name)
      };
 
  }
- 
+
 function editForm(){
     var pathTab = window.location.pathname.split("/")
     var id = pathTab[pathTab.length - 1]
