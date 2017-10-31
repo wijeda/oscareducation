@@ -46,28 +46,23 @@ class SampleTest(unittest.TestCase):
 
         self.fill_field("title", scenario_title)
         self.click_element_id("saveScenario")
-
         self.driver.get(URL_LIST_SCENARIO)
         body_text = self.driver.find_element_by_tag_name('body').text
         self.assertFalse(scenario_title in body_text)
         self.click_element_id("addElement")
 
-        self.fill_field("creator", "creator")
         self.fill_field("title", scenario_title)
-        self.fill_field("skill", "compétences")
-        self.fill_field("topic", "sujet")
-        self.fill_field("instructions", "instructions")
-        self.fill_field("grade_level", "niveau")
-
+        self.fill_field("instructions", "test")
         self.click_element_id("saveScenario")
         self.driver.get(URL_LIST_SCENARIO)
         body_text = self.driver.find_element_by_tag_name('body').text
         self.assertTrue(scenario_title in body_text)
         self.click_element_css("img[alt='Supprimer la question']")
 
-    def tearDown(self):
+        # def tearDown(self):
         # close the browser window
-        self.driver.quit()
+
+    #   self.driver.quit()
 
     def is_element_present(self, how, what):
         """
