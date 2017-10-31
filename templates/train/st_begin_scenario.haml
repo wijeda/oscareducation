@@ -6,10 +6,10 @@
   %script{src: "{% static 'js/mermaid.full.js' %}"}
 
 -block content
-  %h3 Title
+  %h3{:dico => "tab"} #{descriptif.0}
     -# =id.title
   %hr
-  %h4 Author
+  %h4{:dico => "tab"} #{descriptif.1}
     -# =id.instructions
 
   .ligneorange
@@ -21,7 +21,6 @@
   .ligneorangefine
 
   .boxclasse.container-fluid
-        %p
-          %b Commencer
+          %p{:dico => "tab"} #{descriptif.2}
 
-        %h3 Questions
+  %a.btn.btn-primary#begin{:href => "/professor/train/scenario/#{descriptif.3}"} Creer un autre exercice
