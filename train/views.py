@@ -70,6 +70,12 @@ def student_list_scenario(request):
     # to access the values passed to dico, you need to call the key not dico itself, here it is "scenarios" or "headlines"
     return render(request, "train/studentListScenario.haml", dico)
 
+def make_scenario(request, id):
+    dico = {}
+    dico["descriptif"]=["Titre d'un exo", " Autheur de l'exo", "Voici le descriptif d'un cours pris en random dans la liste", id]
+
+    return render(request, "train/st_begin_scenario.haml", dico)
+
 def save_scenario(request):
 
     if request.method == "POST":
@@ -112,4 +118,7 @@ def delete_scenario(request, id):
     '''return TemplateResponse(request, "home.haml", {})'''
 
 def scenario(request, id):
-    return render(request, "train/scenario.haml")
+    dico = {}
+    dico["descriptif"]=["Titre d'un exo", " Autheur de l'exo", "Voici le descriptif d'un cours pris en random dans la liste", id]
+    dico["scenario"]=[]
+    return render(request, "train/scenario.haml", dico)
