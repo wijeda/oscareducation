@@ -47,3 +47,16 @@ class VidElem(models.Model):
     title = models.CharField("Titre", max_length = 500)
     url = models.CharField("url", max_length = 500)
     description = models.CharField("description", max_length = 500)
+
+class MCQElem(models.Model):
+
+    id_scenario = models.IntegerField()
+    order = models.IntegerField()
+    consigne = models.CharField("Consigne", max_length = 500)
+    question = models.CharField("Question", max_length = 500)
+    reponse1 = models.CharField("Reponse", max_length = 500)
+    reponse2 = models.CharField("Reponse", max_length = 500)
+    reponse3 = models.CharField("Reponse", max_length = 500)
+    reponse4 = models.CharField("Reponse", max_length = 500)
+
+
