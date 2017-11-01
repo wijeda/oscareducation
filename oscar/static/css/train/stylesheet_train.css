@@ -2,7 +2,7 @@
 	background-color: white;
 }*/
 
-#parameters label {
+#parameters label, .mcqBlockElem label {
 	width: 140px;
 	height: 35px;
 }
@@ -27,12 +27,12 @@
 	color: #f58025;
 }
 
-#parameters, .imgBlockElem, .videoBlockElem, .textBlockElem {
+#parameters, .imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem {
 	background-color: white;
 	margin-bottom: 20px;
 }
 
-.imgBlockElem, .videoBlockElem, .textBlockElem {
+.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem {
 	width: 100%;
 	position: relative;
 }

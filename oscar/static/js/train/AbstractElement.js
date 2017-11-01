@@ -27,8 +27,7 @@ class ScenarioCreation {
         this.mcqButton = document.getElementById(param.mcqButtonID);
         this.mcqButton.addEventListener("click", this.makeBlockElemMcq.bind(this), true);
 
-        this.saveScenarioButton = document.getElementById(param.saveScenarioButtonID);
-        this.saveScenarioButton.addEventListener("click", this.sendForm.bind(this), true);
+
     }
 
     makeBlockElemText(){
@@ -65,8 +64,7 @@ class ScenarioCreation {
 
     makeBlockElemMcq(){
         //TODO remplacer par QCM
-        let newelem = document.createElement("div");
-        newelem.classList.add('mcqBlockElem');
+        let newelem = document.createElement("input");
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
@@ -82,115 +80,6 @@ class ScenarioCreation {
         this.addElementOption = !this.addElementOption
 
     }
-
-    getElemInputBlockText(elemText){
-        let title = "Titre par defaut"; // TODO ajouter cet input
-        let content = elemText.childNodes[1].childNodes[7].value;
-        return {"type":"TextElem", "data":{"title": title, "content": content}}
-    }
-
-    getElemInputBlockImage(elemImage){
-        let title = elemImage.childNodes[1].childNodes[3].value;
-        let url = elemImage.childNodes[1].childNodes[9].childNodes[7].value
-        let description = elemImage.childNodes[1].childNodes[11].childNodes[3].value;
-        return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
-    }
-
-    getElemInputBlockVideo(elemVideo){
-
-
-        let title = elemVideo.childNodes[1].childNodes[3].value;
-        let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
-        let description = "description"
-        return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
-    }
-
-    getElemInputBlockMCQ(elemMCQ){
-
-        let consigne = elemMCQ.childNodes[1].childNodes[3].value;
-        let question = elemMCQ.childNodes[1].childNodes[9].value;
-        let rep = [];
-        for (let elem of elemMCQ.childNodes[1].childNodes){
-            if (elem.className == "repLine"){
-                let reponse = elem.childNodes[3].value;
-                let checked = elem.childNodes[5].checked;
-                rep.push({"answer": reponse, "solution": checked});
-            }
-        }
-        return {"type":"MCQElem", "data":{"consigne": consigne, "question": question, "rep" : rep}}
-
-    }
-
-    sendForm() {
-
-        let data = {};
-        let listOfParamIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
-
-        for(let id of listOfParamIDfield){
-            let elem = document.getElementById(id);
-            data[id] = elem.value;
-        }
-
-        data["elements"] = []
-
-        for(let i = 5; i < this.anchor.childNodes.length; i++)
-        {
-
-            let classElem = this.anchor.childNodes[i].className
-
-            console.log(classElem);
-
-            if(classElem == "textBlockElem")
-            {
-                data["elements"].push(this.getElemInputBlockText(this.anchor.childNodes[i]));
-            }
-            else if(classElem == "videoBlockElem")
-            {
-                data["elements"].push(this.getElemInputBlockVideo(this.anchor.childNodes[i]));
-            }
-            else if(classElem == "imgBlockElem")
-            {
-                data["elements"].push(this.getElemInputBlockImage(this.anchor.childNodes[i]));
-            }
-            else if(classElem =="mcqBlockElem")
-            {
-                data["elements"].push(this.getElemInputBlockMCQ(this.anchor.childNodes[i]));
-            }
-
-
-        }
-
-        console.log(data);
-
-
-        let data3 = {"creator": "super_creator",
-                    "titre": "super_titre",
-                    "skill": "super_skill",
-                    "topic": "super_topic",
-                    "grade_level": "super grade",
-                    "instructions": "super_instructions",
-                    "public": "False",
-                    "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-                                {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
-            }
-            // construct an HTTP request
-        let xhr = new XMLHttpRequest();
-
-        xhr.open("POST", "/professor/train/save_scenario", true);
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-        // send the collected data as JSON
-        xhr.send(JSON.stringify(data));
-
-        xhr.onloadend = function () {
-            // done
-            console.log(data);
-            console.log("done");
-        };
-
-    }
-
-
 }
 
 function loadImage(elem){
@@ -227,31 +116,6 @@ function removeElem(elem){
     return false;
 }
 
-function addReponse(elem){
-    var root = elem.parentNode.parentNode;
-    let count = 0;
-    let repLineElem = null;
-    for(let subElem of root.childNodes[1].childNodes){
-        if (subElem.className == "repLine"){
-            count++;
-            if(repLineElem == null){
-                repLineElem = subElem;
-            }
-        }
-    }
-    if (count < 4) {
-        let newelem = document.createElement("div");
-        newelem.classList.add('repLine');
-        newelem.innerHTML = repLineElem.innerHTML;
-        let txt = repLineElem.childNodes[1].innerHTML;
-        newelem.childNodes[1].innerHTML = txt.substring(0,txt.length -2) + (count +1);
-        root.childNodes[1].appendChild(newelem);
-    }
-
-    //root.parentNode.removeChild(root);
-    return false;
-}
-
 // initiation
 window.onload = function(){
     let btnPlusID = "addElement"; //document.getElementById("addElement");
@@ -277,8 +141,6 @@ window.onload = function(){
 
     let removeImageID = "removeImage";
 
-    let saveScenarioButtonID = "saveScenario";
-
     let param = {
         "btnPlusID":"addElement",
         "anchorID":"whiteBox",
@@ -296,7 +158,6 @@ window.onload = function(){
 
         "imgBlockElemID": "imgBlockElem",
         "imgButtonID": "addElementImg",
-        "saveScenarioButtonID": "saveScenario"
 
         /*"loadImgID": "loadImage",
         "loadImgButtonID": "addImg",
@@ -336,7 +197,84 @@ function getCookie(c_name)
     return "";
  }
 
+ function sendForm() {
+     /*let emptyfield = false
+     let form = document.getElementById("whiteBox");
+     form.setAttribute("method", "POST");
+     form.setAttribute("action", "/professor/train/save_scenario");
 
+     let listOfIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
+     for(let key in listOfIDfield){
+         console.log("key : " + listOfIDfield[key]);
+         let elem = document.getElementById(listOfIDfield[key])
+         if(elem){
+
+             let hiddenField = document.createElement("input");
+             hiddenField.setAttribute("type", "hidden");
+             hiddenField.setAttribute("name", listOfIDfield[key]);
+
+             if (elem.type == "checkbox"){
+               //hiddenField.setAttribute("type", "checkbox");
+               //hiddenField.setAttribute("checked", elem.checked);
+               //hiddenField.setAttribute("value", (elem.checked?"True":"False"));
+               hiddenField.setAttribute("value", "True");
+               //hiddenField.setAttribute("required", false);
+               console.log(elem.checked)
+             }else{
+               console.log(elem.value)
+               hiddenField.setAttribute("value", elem.value);
+             }
+
+             if(!elem.value || elem.value == ""){
+                 emptyfield = true
+             }
+
+             form.appendChild(hiddenField);
+         }
+     }
+     if (!emptyfield) {
+         form.submit();
+     }else {
+         console.error("Empty field");
+     }*/
+
+     let data = {}
+     let listOfParamIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
+
+     for(let id of listOfParamIDfield){
+         let elem = document.getElementById(id);
+         data[id] = elem.value;
+     }
+
+     console.log(data);
+
+
+     let data3 = {"creator": "super_creator",
+                 "titre": "super_titre",
+                 "skill": "super_skill",
+                 "topic": "super_topic",
+                 "grade_level": "super grade",
+                 "instructions": "super_instructions",
+                 "public": "False",
+                 "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
+                             {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
+         }
+         // construct an HTTP request
+     let xhr = new XMLHttpRequest();
+
+     xhr.open("POST", "/professor/train/save_scenario", true);
+     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+     xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+     // send the collected data as JSON
+     //xhr.send(JSON.stringify(data));
+
+     xhr.onloadend = function () {
+         // done
+         console.log(data);
+         console.log("done");
+     };
+
+ }
 
 function editForm(){
     var pathTab = window.location.pathname.split("/")
