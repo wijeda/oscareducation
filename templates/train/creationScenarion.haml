@@ -49,7 +49,7 @@
         .panel-body
             %label{:for => 'title_video'} Titre:
             %input{:id => 'title_video', :placeholder => '(Optionnel)'}
-            %button.btn.btn-danger.deleteElementImg{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
             %br
             .form-group
@@ -66,7 +66,7 @@
     #textBlockElem{:style => "display: none"}
         .panel-body
             %label{:for => 'title_txt'} Texte:
-            %button.btn.btn-danger.deleteElementImg{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
             %br
             %textarea{:rows => "3", :placeholder => "Tapez votre texte"}
@@ -75,7 +75,7 @@
         .panel-body
             %label{:for => 'title_img'} Titre:
             %input{:id => 'title_img', :placeholder => 'Optionnel'}
-            %button.btn.btn-danger.deleteElementImg{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
             %br
             .form-group
