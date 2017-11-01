@@ -61,7 +61,27 @@
                 -# #loadVid{:style => "display: none"}
 
     #mcqBlockElem{:style => "display: none"}
-        Les QCMS ne sont pas encore fait, lol
+        .panel-body
+            %label{:for => 'consigne'} Consigne:
+            %input{:id => 'consigne', :placeholder => 'Consigne'}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                %span.glyphicon.glyphicon-remove
+            %br
+            %label{:for => 'question'} Question:
+            %input{:id => 'question', :placeholder => 'Question'}
+            %button.btn.btn-danger.addReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une réponse",:action => "#", :onclick => "return addReponse(this)"}
+                                              %span.glyphicon.glyphicon-plus
+            %br
+            %div.repLine
+                %label{:for => 'reponse1'} Réponse 1:
+                %input{:id => 'reponse1', :placeholder => 'Veuillez rentrer une réponse'}
+                %input{:id => 'button1', :type => "radio"}
+            %br
+            %div.repLine
+                %label{:for => 'reponse2'} Réponse 2:
+                %input{:id => 'reponse2', :placeholder => 'Veuillez rentrer une réponse'}
+                %input{:id => 'button2', :type => "radio"}
+            %br
 
     #textBlockElem{:style => "display: none"}
         .panel-body

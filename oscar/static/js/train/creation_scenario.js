@@ -65,7 +65,8 @@ class ScenarioCreation {
 
     makeBlockElemMcq(){
         //TODO remplacer par QCM
-        let newelem = document.createElement("input");
+        let newelem = document.createElement("div");
+        newelem.classList.add('mcqBlockElem');
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
@@ -186,6 +187,31 @@ function getVideoId(url) {
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
     root.parentNode.removeChild(root);
+    return false;
+}
+
+function addReponse(elem){
+    var root = elem.parentNode.parentNode;
+    let count = 0;
+    let repLineElem = null;
+    for(let subElem of root.childNodes[1].childNodes){
+        if (subElem.className == "repLine"){
+            count++;
+            if(repLineElem == null){
+                repLineElem = subElem;
+            }
+        }
+    }
+    if (count < 4) {
+        let newelem = document.createElement("div");
+        newelem.classList.add('repLine');
+        newelem.innerHTML = repLineElem.innerHTML;
+        let txt = repLineElem.childNodes[1].innerHTML;
+        newelem.childNodes[1].innerHTML = txt.substring(0,txt.length -2) + (count +1);
+        root.childNodes[1].appendChild(newelem);
+    }
+
+    //root.parentNode.removeChild(root);
     return false;
 }
 
