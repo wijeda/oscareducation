@@ -105,6 +105,21 @@ class ScenarioCreation {
         return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
+    getElemInputBlockMCQ(elemMCQ){
+
+        let consigne = elemMCQ.childNodes[1].childNodes[3].value;
+        let question = elemMCQ.childNodes[1].childNodes[9].value;
+        let rep = [];
+        for (let elem of elemMCQ.childNodes[1].childNodes){
+            if (elem.className == "repLine"){
+                let reponse = elem.childNodes[3].value;
+                let checked = elem.childNodes[5].checked;
+                rep.push({"answer": reponse, "solution": checked});
+            }
+        }
+        return {"type":"MCQElem", "data":{"consigne": consigne, "question": question, "rep" : rep}}
+
+    }
 
     sendForm() {
 
@@ -136,6 +151,10 @@ class ScenarioCreation {
             else if(classElem == "imgBlockElem")
             {
                 data["elements"].push(this.getElemInputBlockImage(this.anchor.childNodes[i]));
+            }
+            else if(classElem =="mcqBlockElem")
+            {
+                data["elements"].push(this.getElemInputBlockMCQ(this.anchor.childNodes[i]));
             }
 
 
