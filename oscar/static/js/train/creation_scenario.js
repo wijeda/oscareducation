@@ -90,9 +90,11 @@ function loadImage(elem){
 
 function loadVideo(elem){
     var root = elem.parentNode.childNodes;
+    console.log(root);
     var ID = getVideoId(root[7].value);
     var embedURL = "//www.youtube.com/embed/" + ID
     root[1].setAttribute("src", embedURL);
+    root[1].style.display = "block"
     return false;
 }
 
@@ -108,7 +110,7 @@ function getVideoId(url) {
     }
 }
 
-function removeImage(elem){
+function removeElem(elem){
     var root = elem.parentNode.parentNode;
     console.log(root);
     root.parentNode.removeChild(root);

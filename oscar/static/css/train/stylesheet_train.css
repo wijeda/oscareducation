@@ -32,7 +32,7 @@
 	margin-bottom: 20px;
 }
 
-.imgBlockElem, .videoBlockElem {
+.imgBlockElem, .videoBlockElem, .textBlockElem {
 	width: 100%;
 	position: relative;
 }
