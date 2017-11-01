@@ -32,7 +32,15 @@ class TextElem(models.Model):
     def __str__(self):
         return("titre:"+ self.title+" and content :" + self.content)
 
-class PicElem(models.Model):
+class ImgElem(models.Model):
+
+    id_scenario = models.IntegerField()
+    order = models.IntegerField()
+    title = models.CharField("Titre", max_length = 500)
+    url = models.CharField("url", max_length = 500)
+    description = models.CharField("description", max_length = 500)
+
+class VidElem(models.Model):
 
     id_scenario = models.IntegerField()
     order = models.IntegerField()

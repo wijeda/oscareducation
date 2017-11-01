@@ -2,15 +2,22 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.shortcuts import render, redirect
+from django.views.generic.base import RedirectView
+from django.http import HttpResponse
+
 from promotions.models import Lesson, Stage
 from skills.models import Skill, StudentSkill, CodeR, Section, Relations, CodeR_relations
 from resources.models import KhanAcademy, Sesamath, Resource
+
 from .models import Scenario
 from .models import TextElem
+from .models import ImgElem
+from .models import VidElem
+
 from .forms import ScenarioForm
-from django.views.generic.base import RedirectView
-from django.http import HttpResponse
+
 import json
+
 def root_redirection(request):
 
     return HttpResponseRedirect(reverse("username_login"))
@@ -36,6 +43,7 @@ def edit_scenario(request, id):
 
 
 def list_scenario(request):
+
     # "dico" is a dictionnary variable that will store the database information for the scenarios
     # the request need to ask the database for scenario's title, skill, topic and grade level
     # for now, the actions are represented by character e for "edit", d for "delete" and s for "see"
@@ -87,15 +95,20 @@ def save_scenario(request):
 
         # parsing the parameters of the json
         creator = parsed_json['creator']
-        title = parsed_json['titre']
+        title = parsed_json['title']
         skill =parsed_json['skill']
         topic = parsed_json['topic']
         grade_level = parsed_json['grade_level']
         instructions = parsed_json['instructions']
         public = parsed_json['public']
 
+
+
+        print("@@@@@@@@@@@@@@@@")
+        print(public)
+
         # creating the object
-        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
+        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = True)
 
         # saving the object
         scena.save()
@@ -105,6 +118,7 @@ def save_scenario(request):
             if parsed_json['elements'][i]['type'] == "TextElem":
                 id_scenario = scena.id
                 order = i
+                print(parsed_json['elements'][i]['data'])
                 title_elem = parsed_json['elements'][i]['data']['title']
                 content_elem = parsed_json['elements'][i]['data']['content']
 
@@ -112,13 +126,25 @@ def save_scenario(request):
 
                 elem.save()
 
-            elif parsed_json['elements'][i]['type'] == "PicElem":
+            elif parsed_json['elements'][i]['type'] == "ImgElem":
                 id_scenario = scena.id
                 order = i
                 title_elem = parsed_json['elements'][i]['data']['title']
-                content_elem = parsed_json['elements'][i]['data']['content']
+                url_elem = parsed_json['elements'][i]['data']['url']
+                description_elem = parsed_json['elements'][i]['data']['description']
 
-                elem = PicElem(id_scenario = id_scenario, order = i, title = title_elem, content = content_elem)
+                elem = ImgElem(id_scenario = id_scenario, order = i, title = title_elem, url = url_elem, description = description_elem)
+
+                elem.save()
+
+            elif parsed_json['elements'][i]['type'] == "VidElem":
+                id_scenario = scena.id
+                order = i
+                title_elem = parsed_json['elements'][i]['data']['title']
+                url_elem = parsed_json['elements'][i]['data']['url']
+                description_elem = parsed_json['elements'][i]['data']['description']
+
+                elem = VidElem(id_scenario = id_scenario, order = i, title = title_elem, url = url_elem, description = description_elem)
 
                 elem.save()
 
