@@ -88,7 +88,22 @@ class ScenarioCreation {
         return {"type":"TextElem", "data":{"title": title, "content": content}}
     }
 
-    
+    getElemInputBlockImage(elemImage){
+        let title = elemImage.childNodes[1].childNodes[3].value;
+        let url = elemImage.childNodes[1].childNodes[9].childNodes[7].value
+        let description = elemImage.childNodes[1].childNodes[11].childNodes[3].value;
+        return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
+    }
+
+    getElemInputBlockVideo(elemVideo){
+
+
+        let title = elemVideo.childNodes[1].childNodes[3].value;
+        let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
+        let description = "description"
+        return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
+    }
+
 
     sendForm() {
 
@@ -104,19 +119,22 @@ class ScenarioCreation {
 
         for(let i = 5; i < this.anchor.childNodes.length; i++)
         {
+
             let classElem = this.anchor.childNodes[i].className
+
+            console.log(classElem);
 
             if(classElem == "textBlockElem")
             {
-                data["elements"].append(this.getElemInputBlockText(this.anchor.childNodes[i]));
+                data["elements"].push(this.getElemInputBlockText(this.anchor.childNodes[i]));
             }
-            else if(classElem == videoBlockElem)
+            else if(classElem == "videoBlockElem")
             {
-                data["elements"].append(this.getElemInputBlockVideo(this.anchor.childNodes[i]))
+                data["elements"].push(this.getElemInputBlockVideo(this.anchor.childNodes[i]));
             }
-            else if(classElem == imgBlockElem)
+            else if(classElem == "imgBlockElem")
             {
-                data["elements"].append(this.getElemInputBlockImage(this.anchor.childNodes[i]))
+                data["elements"].push(this.getElemInputBlockImage(this.anchor.childNodes[i]));
             }
 
 
@@ -142,7 +160,7 @@ class ScenarioCreation {
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
         xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
         // send the collected data as JSON
-        //xhr.send(JSON.stringify(data));
+        xhr.send(JSON.stringify(data));
 
         xhr.onloadend = function () {
             // done
