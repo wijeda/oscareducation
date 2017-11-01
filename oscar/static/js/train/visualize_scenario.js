@@ -3,24 +3,17 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(param){
-        this.nextButton = document.getElementById(param.nextButtonID);
+    constructor(json,nextButtonID,previousButtonID){
+        this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextBlockElement.bind(this), true);
-        this.previousButton =  document.getElementById(param.previousButtonID);
+        this.previousButton =  document.getElementById(previousButtonID);
         this.previousButton.addEventListener("click", this.previousBlockElement.bind(this), true);
         this.index = 0;
-        this.data = {"creator": "super_creator",
-                    "titre": "super_titre",
-                    "skill": "super_skill",
-                    "topic": "super_topic",
-                    "grade_level": "super grade",
-                    "instructions": "super_instructions",
-                    "public": "False",
-                    "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-                                {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
-            }
-        this.elements = data.elements;
+        this.elements = json.elements;
         this.tabElementObject = [];
+        for(let elem of this.elements){
+            if(elem.type == TextElem)
+        }
     }
 
     nextButton(){
@@ -45,7 +38,7 @@ window.onload = function(){
         "previousButtonID":"previousElem"
     }
     let json = getForm()
-    new ScenarioVisualization(param)
+    new ScenarioVisualization(json, nextButtonID, previousButtonID)
 
 };
 
