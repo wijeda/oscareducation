@@ -112,7 +112,6 @@ function getVideoId(url) {
 
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
-    console.log(root);
     root.parentNode.removeChild(root);
     return false;
 }
@@ -239,8 +238,18 @@ function getCookie(c_name)
          console.error("Empty field");
      }*/
 
+     let data = {}
+     let listOfParamIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
 
-     var data = {"creator": "super_creator",
+     for(let id of listOfParamIDfield){
+         let elem = document.getElementById(id);
+         data[id] = elem.value;
+     }
+
+     console.log(data);
+
+
+     let data3 = {"creator": "super_creator",
                  "titre": "super_titre",
                  "skill": "super_skill",
                  "topic": "super_topic",
@@ -251,13 +260,13 @@ function getCookie(c_name)
                              {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
          }
          // construct an HTTP request
-     var xhr = new XMLHttpRequest();
+     let xhr = new XMLHttpRequest();
 
      xhr.open("POST", "/professor/train/save_scenario", true);
      xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
      xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
      // send the collected data as JSON
-     xhr.send(JSON.stringify(data));
+     //xhr.send(JSON.stringify(data));
 
      xhr.onloadend = function () {
          // done
