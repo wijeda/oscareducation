@@ -1548,6 +1548,24 @@ def exercice_validation_form_submit(request, pk=None):
                     "answers": "",
                 }
 
+            #Group 7
+            elif question["type"] == "barchart":
+                answers = []
+
+                for answer in question["answers"]:
+                    if "latex" in answer:
+                        del answer["latex"]
+                    if "correct" in answer:
+                        del answer["correct"]
+                    if "text" in answer:
+                        del answer["text"]
+                    answers.append(answer)
+
+                new_question_answers = {
+                    "type": question["type"],
+                    "answers": question["answers"],
+                }
+
             else:
                 answers = CommentedMap()
                 for i in question["answers"]:
