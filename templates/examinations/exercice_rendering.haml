@@ -39,6 +39,9 @@
               -for answer in answer.answers
                 %input{type: "number", value: "", name: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-X", id: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-X"}
                 %input{type: "number", value: "", name: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y", id: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y"}
+          -# Group 7
+          -elif answer.type == "barchart"
+            -%p barchart
           -elif answer.type == "professor"
             %input.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", type: "text", autocomplete: "off"}
             -#%textarea.form-control{id: "{{ forloop.counter0 }}", name: "{{ forloop.counter0 }}", rows: "5"}

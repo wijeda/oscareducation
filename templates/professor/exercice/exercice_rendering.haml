@@ -34,7 +34,10 @@
           -for answer in question.answers
             %input.hidden{type: "number", value: "", name: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-X", id: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-X"}
             %input.hidden{type: "number", value: "", name: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y", id: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y"}
-      -elif question.type == "professor"
+      -# Group 7
+      -elif question.type == "barchart"
+        %p barchart
+       -elif question.type == "professor"
         %i A corriger par le professeur
       -else
         =question.type

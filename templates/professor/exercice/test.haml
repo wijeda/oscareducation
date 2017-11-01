@@ -113,6 +113,11 @@
                                         %br
                                         Y:
                                          =subanswer.correct_answer.Y
+                              -# Group 7
+                              -elif answer.type == "barchart"
+                                %tr
+                                  Unsupported answer type:
+                                    %i= answer.type
                               -else
                                 %tr
                                   Unsupported answer type:
