@@ -227,6 +227,12 @@ function removeElem(elem){
     return false;
 }
 
+function removeReponse(elem){
+    var root = elem.parentNode;
+    root.parentNode.removeChild(root);
+    return false;
+}
+
 function addReponse(elem){
     var root = elem.parentNode.parentNode;
     let count = 0;
@@ -245,6 +251,7 @@ function addReponse(elem){
         newelem.innerHTML = repLineElem.innerHTML;
         let txt = repLineElem.childNodes[1].innerHTML;
         newelem.childNodes[1].innerHTML = txt.substring(0,txt.length -2) + (count +1);
+        newelem.childNodes[7].style.display = "inline";
         root.childNodes[1].appendChild(newelem);
     }
 
