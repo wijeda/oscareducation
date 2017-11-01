@@ -32,7 +32,7 @@ class TextElem(models.Model):
     def __str__(self):
         return("titre:"+ self.title+" and content :" + self.content)
 
-class PicElem(models.Model):
+class ImgElem(models.Model):
 
     id_scenario = models.IntegerField()
     order = models.IntegerField()
