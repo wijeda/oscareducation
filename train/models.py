@@ -39,3 +39,11 @@ class ImgElem(models.Model):
     title = models.CharField("Titre", max_length = 500)
     url = models.CharField("url", max_length = 500)
     description = models.CharField("description", max_length = 500)
+
+class VidElem(models.Model):
+
+    id_scenario = models.IntegerField()
+    order = models.IntegerField()
+    title = models.CharField("Titre", max_length = 500)
+    url = models.CharField("url", max_length = 500)
+    description = models.CharField("description", max_length = 500)
