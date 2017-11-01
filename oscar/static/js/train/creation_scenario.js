@@ -108,7 +108,7 @@ class ScenarioCreation {
     getElemInputBlockMCQ(elemMCQ){
 
         let consigne = elemMCQ.childNodes[1].childNodes[3].value;
-        let question = elemMCQ.childNodes[1].childNodes[9].value;
+        let question = elemMCQ.childNodes[1].childNodes[11].value;
         let rep = [];
         for (let elem of elemMCQ.childNodes[1].childNodes){
             if (elem.className == "repLine"){
@@ -117,6 +117,7 @@ class ScenarioCreation {
                 rep.push({"answer": reponse, "solution": checked});
             }
         }
+
         return {"type":"MCQElem", "data":{"consigne": consigne, "question": question, "rep" : rep}}
 
     }
@@ -227,6 +228,12 @@ function removeElem(elem){
     return false;
 }
 
+function removeReponse(elem){
+    var root = elem.parentNode;
+    root.parentNode.removeChild(root);
+    return false;
+}
+
 function addReponse(elem){
     var root = elem.parentNode.parentNode;
     let count = 0;
@@ -245,6 +252,7 @@ function addReponse(elem){
         newelem.innerHTML = repLineElem.innerHTML;
         let txt = repLineElem.childNodes[1].innerHTML;
         newelem.childNodes[1].innerHTML = txt.substring(0,txt.length -2) + (count +1);
+        newelem.childNodes[7].style.display = "inline";
         root.childNodes[1].appendChild(newelem);
     }
 
