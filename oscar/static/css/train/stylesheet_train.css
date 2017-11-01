@@ -1,6 +1,6 @@
-#whiteBox {
+/*#whiteBox {
 	background-color: white;
-}
+}*/
 
 #parameters label {
 	width: 140px;
@@ -27,11 +27,24 @@
 	color: #f58025;
 }
 
+#parameters, .imgBlockElem, .videoBlockElem, .textBlockElem {
+	background-color: white;
+	margin-bottom: 20px;
+}
+
 .imgBlockElem, .videoBlockElem {
 	width: 100%;
+	position: relative;
 }
 
 .textBlockElem {
 	width: 100%;
 	height: 150px;
+}
+
+.deleteElementImg {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 5px;
 }

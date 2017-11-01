@@ -71,7 +71,7 @@
         .panel-body
             %label{:for => 'title_img'} Titre:
             %input{:id => 'title_img', :placeholder => 'Optionnel'}
-            %button.btn.btn-danger#deleteElementImg{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeImage(this)"}
+            %button.btn.btn-danger.deleteElementImg{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeImage(this)"}
                 %span.glyphicon.glyphicon-remove
             %br
             .form-group
