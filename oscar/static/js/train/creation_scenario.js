@@ -2,54 +2,46 @@
 
 class ScenarioCreation {
 
-    constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-        this.anchor = document.getElementById(anchorID);
-        this.btnPlus = document.getElementById(btnPlusID);
-        this.addElementDiv = document.getElementById(addElementDivID);
+    //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
+    constructor(param){
+        this.anchor = document.getElementById(param.anchorID);
+        this.btnPlus = document.getElementById(param.btnPlusID);
+        this.addElementDiv = document.getElementById(param.addElementDivID);
         this.addElementOption = false; // at start it is not shown
-        document.getElementById(btnPlusID).addEventListener("click", this.showDiffElements.bind(this), true);
+        this.btnPlus.addEventListener("click", this.showDiffElements.bind(this), true);
 
-        this.textBlockElem = document.getElementById(textBlockElemID);
-        this.textButton = document.getElementById(textButtonID);
-        document.getElementById(textButtonID).addEventListener("click", this.makeBlockElemText.bind(this), true);
+        this.textBlockElem = document.getElementById(param.textBlockElemID);
+        this.textButton = document.getElementById(param.textButtonID);
+        this.textButton.addEventListener("click", this.makeBlockElemText.bind(this), true);
 
-        this.videoBlockElem = document.getElementById(videoBlockElemID);
-        this.videoButton = document.getElementById(videoButtonID);
-        document.getElementById(videoButtonID).addEventListener("click", this.makeBlockElemVideo.bind(this), true);
+        this.videoBlockElem = document.getElementById(param.videoBlockElemID);
+        this.videoButton = document.getElementById(param.videoButtonID);
+        this.videoButton.addEventListener("click", this.makeBlockElemVideo.bind(this), true);
 
-        this.imgBlockElem = document.getElementById(imgBlockElemID);
-        this.imgButton = document.getElementById(imgButtonID);
-        document.getElementById(imgButtonID).addEventListener("click", this.makeBlockElemImg.bind(this), true);
-        // this.deleteImgButtonId = document.getElementById(deleteImgButtonId);
-        // document.getElementById(deleteImgButtonId).addEventListener("click", this.deleteBlockElemImg.bind(this), true);
-        // this.loadImage = document.getElementById(loadImgID);
-        // this.loadImgButton = document.getElementById(loadImgButtonID);
-        // document.getElementById(loadImgButtonID).addEventListener("click", this.loadImage.bind(this), true);
+        this.imgBlockElem = document.getElementById(param.imgBlockElemID);
+        this.imgButton = document.getElementById(param.imgButtonID);
+        this.imgButton.addEventListener("click", this.makeBlockElemImg.bind(this), true);
 
-        this.mcqBlockElem = document.getElementById(mcqBlockElemID);
-        this.mcqButton = document.getElementById(mcqButtonID);
-        document.getElementById(mcqButtonID).addEventListener("click", this.makeBlockElemMcq.bind(this), true);
+
+        this.mcqBlockElem = document.getElementById(param.mcqBlockElemID);
+        this.mcqButton = document.getElementById(param.mcqButtonID);
+        this.mcqButton.addEventListener("click", this.makeBlockElemMcq.bind(this), true);
 
 
     }
 
     makeBlockElemText(){
         let newelem = document.createElement("div");
-        // newelem.value=''
-        // newelem.setAttribute("placeholder", "Tapez votre texte");
+        newelem.classList.add('textBlockElem');
         newelem.innerHTML = this.textBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
-        newelem.style.display = "block";
-        newelem.style.width = "100%";
-        newelem.style.height = "150px";
     }
 
     makeBlockElemImg(){
         let newelem = document.createElement("div")
+        newelem.classList.add('imgBlockElem');
         newelem.innerHTML = this.imgBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
-        newelem.style.display = "block";
-        newelem.style.width = "100%";
     }
 
     // makeBlockElemVideo(){
@@ -65,10 +57,9 @@ class ScenarioCreation {
 
     makeBlockElemVideo(){
         let newelem = document.createElement("div");
+        newelem.classList.add('videoBlockElem');
         newelem.innerHTML = this.videoBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
-        newelem.style.display = "block";
-        newelem.style.width = "100%";
     }
 
     makeBlockElemMcq(){
@@ -149,7 +140,31 @@ window.onload = function(){
 
     let removeImageID = "removeImage";
 
-    new ScenarioCreation(anchorID,
+    let param = {
+        "btnPlusID":"addElement",
+        "anchorID":"whiteBox",
+        "addElementDivID": "addElementDiv",
+        "textBlockElemID": "textBlockElem",
+        "textButtonID": "addElementTxt",
+
+        "videoBlockElemID": "videoBlockElem",
+        "videoButtonID": "addElementVideo",
+        /*"loadVidID": "loadVideo",
+        "loadVidButtonID": "addVid",*/
+
+        "mcqBlockElemID": "mcqBlockElem",
+        "mcqButtonID": "addElementMcq",
+
+        "imgBlockElemID": "imgBlockElem",
+        "imgButtonID": "addElementImg",
+
+        /*"loadImgID": "loadImage",
+        "loadImgButtonID": "addImg",
+
+        "removeImageID": "removeImage",*/
+    }
+
+    /*new ScenarioCreation(anchorID,
                         btnPlusID,
                         addElementDivID,
                         textBlockElemID,
@@ -159,7 +174,9 @@ window.onload = function(){
                         imgBlockElemID,
                         imgButtonID,
                         mcqBlockElemID,
-                        mcqButtonID);
+                        mcqButtonID);*/
+    new ScenarioCreation(param)
+
 };
 
 function getCookie(c_name)
