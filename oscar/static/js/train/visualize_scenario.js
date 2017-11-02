@@ -139,20 +139,21 @@ function getVideoId(url) {
 }
 
 class AbstractElem{
-	constructor() {
+	constructor(anchor) {
         this.node = document.createElement("div");
         this.node.style.display = "block";
+        this.anchor = anchor
 		if (new.target === AbstractElem) {
 			throw new TypeError("Cannot construct Abstract instances directly");
 		}
 	}
 
     render(){
-        anchor.appendChild(this.node);
+        this.anchor.appendChild(this.node);
     }
 
     hide(){
-        anchor.removeChild(this.node);
+        this.anchor.removeChild(this.node);
     }
 
 	delete() {
@@ -164,7 +165,7 @@ class TextElem extends AbstractElem{
     constructor(elem, skull, anchor){
         // elem is the data to render
         // skull is the node element that is used as a base of this element
-        super();
+        super(anchor);
         if(elem != null)
             this.data = elem["data"];
             this.title = this.data["title"];
@@ -177,7 +178,7 @@ class TextElem extends AbstractElem{
 
 class ImageElem extends AbstractElem{
     constructor(elem, skull, anchor){
-        super();
+        super(anchor);
         if(elem != null)
             this.data = elem["data"];
             this.title = this.data["title"];
@@ -185,26 +186,32 @@ class ImageElem extends AbstractElem{
             this.description = this.data["description"];
             this.node.innerHTML = skull.innerHTML;
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
-            this.node.getElementsByClassName("content")[0].innerHTML = this.content;
+            this.node.getElementsByClassName("content")[0].setAttribute("src", this.content);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
     }
 }
 
 class VideoElem extends AbstractElem{
     constructor(elem, skull, anchor){
-        super();
+        super(anchor);
         if(elem != null)
+            // this.anchor.
             this.data = elem["data"];
             this.title = this.data["title"];
             this.content = this.data["url"];
             this.description = this.data["description"];
             this.node.innerHTML = skull.innerHTML;
-            console.log(this.node);
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
             let ID = getVideoId(this.content);
-            let embedURL = "//www.youtube.com/embed/" + ID
-            console.log(this.node.getElementsByClassName("content")[0]);
-            this.node.getElementsByClassName("content")[0].setAttribute("src", embedURL);
+            this.embedURL = "//www.youtube.com/embed/" + ID;
+            this.node.getElementsByClassName("content")[0].setAttribute("src", this.embedURL);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
     }
+
+}
+
+function loadVideo(elem, embedURL) {
+    elem.setAttribute("src", embedURL)
+    elem.style.display = "block"
+    elem.style.width = "100%"
 }
