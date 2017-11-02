@@ -50,7 +50,6 @@ def edit_scenario(request, id):
     return render(request, "train/editScenario.haml", dico)
 
 def get_data(request, id):
-
     s = Scenario.objects.get(id=id)
 
     dico = {}
@@ -88,12 +87,21 @@ def get_data(request, id):
     elements.sort(key = itemgetter('order'))
     # = sorted(elements, key=elements["order"])
     print(elements)
-    dico["element"] = elements
+    dico["element"] = elements_sorted
     print("DICO HEEEEEEEEEEEEERE")
     print(dico)
 
     return JsonResponse(dico)
 
+def view_scenario(request, id):
+
+    s = Scenario.objects.get(id=id)
+
+    dico = {}
+
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+
+    return render(request, "train/viewScenario.haml", dico)
 
 def list_scenario(request):
 
