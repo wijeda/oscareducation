@@ -20,12 +20,12 @@ class ScenarioVisualization{
                 let objectElem = new TextElem(elem, this.blockText, this.anchor);
                 this.tabElementObject.push(objectElem);
             }
-            else if(elem.type == "ImageElem"){
-                let objectElem = new ImageElem(elem);
+            else if(elem.type == "ImgElem"){
+                let objectElem = new ImageElem(elem, this.blockImage, this.anchor);
                 this.tabElementObject.push(objectElem);
             }
-            else if(elem.type == "videoBlockID"){
-                let objectElem = new VideoElem(elem);
+            else if(elem.type == "VidElem"){
+                let objectElem = new VideoElem(elem, this.blockVideo, this.anchor);
                 this.tabElementObject.push(objectElem);
             }
         }
@@ -126,6 +126,18 @@ function editForm(){
     sendForm();
 }
 
+function getVideoId(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        console.log("ERROR with video URL !")
+        return 'error';
+    }
+}
+
 class AbstractElem{
 	constructor() {
         this.node = document.createElement("div");
@@ -164,31 +176,35 @@ class TextElem extends AbstractElem{
 }
 
 class ImageElem extends AbstractElem{
-    constructor(elem){
+    constructor(elem, skull, anchor){
         super();
         if(elem != null)
             this.data = elem["data"];
             this.title = this.data["title"];
-            this.url = this.data["url"];
+            this.content = this.data["url"];
             this.description = this.data["description"];
             this.node.innerHTML = skull.innerHTML;
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
-            this.node.getElementsByClassName("url")[0].innerHTML = this.content;
+            this.node.getElementsByClassName("content")[0].innerHTML = this.content;
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
     }
 }
 
 class VideoElem extends AbstractElem{
-    constructor(elem){
+    constructor(elem, skull, anchor){
         super();
         if(elem != null)
             this.data = elem["data"];
             this.title = this.data["title"];
-            this.url = this.data["url"];
+            this.content = this.data["url"];
             this.description = this.data["description"];
             this.node.innerHTML = skull.innerHTML;
+            console.log(this.node);
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
-            this.node.getElementsByClassName("url")[0].innerHTML = this.url;
+            let ID = getVideoId(this.content);
+            let embedURL = "//www.youtube.com/embed/" + ID
+            console.log(this.node.getElementsByClassName("content")[0]);
+            this.node.getElementsByClassName("content")[0].setAttribute("src", embedURL);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
     }
 }

@@ -91,10 +91,6 @@ def get_data(request, id):
     # print(dico)
 
     print("fin de get_data")
-    print(elements)
-    dico["elements"] = elements
-    print("DICO HEEEEEEEEEEEEERE")
-    print(dico)
 
     return JsonResponse(dico)
 
