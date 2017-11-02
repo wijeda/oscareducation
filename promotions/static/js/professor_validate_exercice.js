@@ -114,11 +114,10 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             }, 100);
         }
 
-        if (question.type.startsWith("barchart")) {
-            setTimeout(function() {
-                graph_refresh();
-            }, 100);
-        }
+        setTimeout(function() {
+            chart_refresh();
+        }, 100);
+        
     }
 
     $scope.onChangeRadio = function(question, answer) {
