@@ -5,6 +5,7 @@ from django.contrib.postgres.fields import JSONField
 from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from Rating.models import Star_rating
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
@@ -23,6 +24,9 @@ class Resource(models.Model):
     added_by = models.ForeignKey(User, null=True)
 
     def add_star(self, rate, user):
+        f = Star_rating.objects.create()
+        f.add_stars(star,rate,self,user)
+
         if isinstance(user, Professor):
             pass
         elif isinstance(user, Student):
@@ -35,7 +39,6 @@ class Resource(models.Model):
 
     def average_student(self):
         pass
-
 
 
 #khanAcademy video reference data parsed from source url
