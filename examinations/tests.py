@@ -1,4 +1,5 @@
 from generation import needs_to_be_generated, get_variable_list, render
+from hamcrest import *
 
 
 class IntInRange():
@@ -55,3 +56,8 @@ def test_render_always_lower_case():
     a, a2 = render("{a} {A}", {"a": 1}).split(" ")
 
     assert a == a2
+#Groupe 7
+def test_data_type(self):
+    contains_string("barchart")
+    assert_that("barchart",is_("barchart"))
+
