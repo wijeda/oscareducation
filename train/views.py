@@ -148,14 +148,30 @@ def save_scenario(request):
 
                 elem.save()
 
-    return HttpResponse("OK")
+    return list_scenario(request)
     # return HttpResponseRedirect('/professor/train/list_scenario/')
 
 def delete_scenario(request, id):
     # print("Voici mon print :D :",request)
     # print(id)
+    # textelement = TextElem.objects.get(id_scenario = id)
+
+    textes = TextElem.objects.filter(id_scenario=id)
+    for t in textes:
+        t.delete()
+
+    videos = VidElem.objects.filter(id_scenario=id)
+    for v in videos:
+        v.delete()
+
+    images = ImgElem.objects.filter(id_scenario=id)
+    for i in images:
+        i.delete()
+
     Scenario.objects.get(id=id).delete()
-    return TemplateResponse(request, "train/listScenario.haml", {})
+
+    return list_scenario(request)
+    # return TemplateResponse(request, "train/listScenario.haml", {})
 
     '''return TemplateResponse(request, "home.haml", {})'''
 
