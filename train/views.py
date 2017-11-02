@@ -92,7 +92,7 @@ def get_data(request, id):
 
     print("fin de get_data")
     print(elements)
-    dico["elements"] = elements_sorted
+    dico["elements"] = elements
     print("DICO HEEEEEEEEEEEEERE")
     print(dico)
 
