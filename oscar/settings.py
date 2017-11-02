@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'oscar',  # hack: add self for templates dir
     'promotions',
-    'Rating',
+    'rating',
     'skills',
     'planification',
     'examinations',

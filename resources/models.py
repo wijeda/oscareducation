@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import JSONField
 from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from Rating.models import Star_rating
+from rating.models import Star_rating
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 

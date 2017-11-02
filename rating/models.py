@@ -29,20 +29,20 @@ class Star_rating(models.Model):
 
 
 class Rating(models.Model):
-    resource = models.ManyToManyField('resources.Resource')
+    resource = models.ForeignKey('resources.Resource')
     """The Resources linked to this rating. A Resource can be linked to several ratings"""
 
     question = models.ForeignKey('Question')
-    """The Question answered for this Rating"""
+    """The Question answered for this rating"""
 
     answer = models.ForeignKey('Answer')
     """The Answer given to this rating"""
 
-    user = models.ForeignKey(User)
+    rated_by = models.ForeignKey(User)
     """The User who rated"""
 
-    rated_on = models.DateField()
-    """Date of Rating"""
+    rated_on = models.DateTimeField()
+    """Date of rating"""
 
     def add_rating(self,resource,user,stars):
         """Add rating to a resource
@@ -68,10 +68,10 @@ class Rating(models.Model):
         answer = Answer.objects.get(answer_statement=stars)
         question = Question.objects.get(id=0)
 
-        self.resource = resource.id
-        self.question = question.id
-        self.answer = answer.id
-        self.user = user.id
+        self.resource = resource
+        self.question = question
+        self.answer = answer
+        self.user = user
         self.rated_on = datetime.date
 
         '''We should implement a inc() function in Resource that increments and saves'''
@@ -80,7 +80,7 @@ class Rating(models.Model):
 
     def number_votes_answer(self,resource,question,answer):
         """Get the number of votes for answer at a question from a resource"""
-        r = Rating.objects.get(resource=resource.id,question=question.id,answer=answer.id)
+        r = Rating.objects.get(resource=resource,question=question,answer=answer)
         return r.entry_set.count()
 
 

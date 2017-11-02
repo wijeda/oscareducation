@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from Rating.models import *
+from rating.models import *
 from django.test import TestCase
 from resources.models import *
 
@@ -52,3 +52,32 @@ class Question_TestCase(TestCase):
         self.assertEqual(ques2.question_statement, "Can we do this ?")    # False
         self.assertEqual(ques2.type, 1)
         # False
+
+class Quetionnaire_TestCase(TestCase):
+    def setUp(self):
+        self.q1 = Question.objects.create(question_statement = "abba baba", type = 0)
+        self.a1 = Answer.objects.create(answer_statement = "Yeah")
+        self.qaire = Questionnaire.objects.create(question=self.q1,answer=self.a1)
+
+    def test_questionnaire_id(self):
+        qaire_t = Questionnaire.objects.get(pk=1)
+        self.assertEqual(qaire_t.question.question_statement,self.q1.question_statement)
+        self.assertEqual(qaire_t.answer.answer_statement,self.a1.answer_statement)
+
+    def test_questionnaire_question(self):
+        qaire_t = Questionnaire.objects.get(question=self.q1)
+        self.assertEqual(2, qaire_t.pk)
+        '''id=2 because test is called before each test function'''
+
+class Rating_TestCase(TestCase):
+    def setUp(self):
+        self.q1 = Question.objects.create(question_statement = "abba baba", type = 0)
+        self.a1 = Answer.objects.create(answer_statement = "Yeah")
+        self.u = User.objects.create()
+        self.r1 = Resource.objects.create(section="test",content='{"kind": "lesson", "title": "Fonctions de référence", "author": "Paul Robaux"}  ')
+        self.d1 = "2017-02-18 10:10"
+        self.ra1 = Rating.objects.create(resource=self.r1,question=self.q1,answer=self.a1,rated_by=self.u,rated_on=self.d1)
+
+    def test_rating(self):
+        q = Rating.objects.get(pk=1)
+        self.assertEqual(q.answer.answer_statement,self.a1.answer_statement)
