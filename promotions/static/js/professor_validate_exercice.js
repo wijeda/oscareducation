@@ -11,8 +11,9 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
     $scope.validateExercice = function() {
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
-            .error(function() {
+            .error(function(data) {
                 console.log("error")
+                alert(data)
                 $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-danger">Une erreur s\'est produite, nous en avons été alerté.</div>');
             })
             .success(function(data) {
