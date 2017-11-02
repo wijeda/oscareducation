@@ -15,17 +15,52 @@
     %h4{:dico => "tab"} #{descriptif.1}
     -# =id.instructions
 
-    .ligneorange
+    %div#anchor
+        #textBlockElem{:style => "display: none"}
+            .ligneorange
 
-    .container-fluid.boxclassetitle
-        .pull-right
-            %div Ressources
+            .container-fluid.boxclassetitle
+                %h2.titre
 
-    .ligneorangefine
+            .ligneorangefine
 
-    .boxclasse.container-fluid
-        %h2
-        %div{:name => "contentBlock"}
+            .boxclasse.container-fluid
+                %p.content
+
+        #imgBlockElem{:style => "display: none"}
+            .ligneorange
+
+            .container-fluid.boxclassetitle
+                %h2.titre
+
+            .ligneorangefine
+
+            .boxclasse.container-fluid
+                %div.content
+                %p.description
+
+        #videoBlockElem{:style => "display: none"}
+            .ligneorange
+
+            .container-fluid.boxclassetitle
+                %h2
+
+            .ligneorangefine
+
+            .boxclasse.container-fluid
+                %div
+                %p
+
+        #mcqBlockElem{:style => "display: none"}
+            .ligneorange
+
+            .container-fluid.boxclassetitle
+                %h1
+
+            .ligneorangefine
+
+            .boxclasse.container-fluid
+                %div
 
     #Tools.blk
         %br
