@@ -11,7 +11,8 @@
           Compétences
           %br
           et ressources     
-      
+     
+    
       
     .col-md-7
       %ul.nav.orange.nav-tabs
@@ -40,3 +41,11 @@
 
           -empty
             Vous n'avez pas encore de classe, <a href="{% url 'professor:lesson_add' %}">cliquez ici pour en ajouter une</a>.
+
+
+	.col-md-30
+        %img{src: "http://simpleicon.com/wp-content/uploads/trophy-256x256.png"}
+	 .txt
+            votre statut est : "#{test.status}"
+
+
