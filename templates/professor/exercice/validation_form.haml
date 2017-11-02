@@ -125,7 +125,7 @@
                       %input.form-control{type: "checkbox", ng-change: "question.type == \"radio\" && answer.correct === true && onChangeRadio(question, answer)", ng-model: "answer.correct"}
 
                 .form-horizontal{ng-if: "question.type == \"barchart\""}
-                  .jxgbox.graphQuestion#jxgbox{:style=>"width:500px; height:200px;"}
+                  .jxgbox.graphQuestion#jxgbox{style:"width:100%; height:676px;",data-graph-type:"pie chart"}
 
                 .form-horizontal{ng-if: "question.type == \"graph\""}
                   .form-group
