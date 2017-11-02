@@ -48,6 +48,9 @@ class VidElem(models.Model):
     url = models.CharField("url", max_length = 500)
     description = models.CharField("description", max_length = 500)
 
+    def __str__(self):
+        return("titre:"+ self.title+" and description :" + self.description)
+
 class MCQElem(models.Model):
 
     id_scenario = models.IntegerField()
@@ -58,5 +61,3 @@ class MCQElem(models.Model):
     reponse2 = models.CharField("Reponse", max_length = 500)
     reponse3 = models.CharField("Reponse", max_length = 500)
     reponse4 = models.CharField("Reponse", max_length = 500)
-
-

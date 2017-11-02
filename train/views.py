@@ -4,6 +4,9 @@ from django.template.response import TemplateResponse
 from django.shortcuts import render, redirect
 from django.views.generic.base import RedirectView
 from django.http import HttpResponse
+from django.http import JsonResponse
+
+from operator import itemgetter
 
 from promotions.models import Lesson, Stage
 from skills.models import Skill, StudentSkill, CodeR, Section, Relations, CodeR_relations
@@ -13,7 +16,6 @@ from .models import Scenario
 from .models import TextElem
 from .models import ImgElem
 from .models import VidElem
-from .models import MCQElem
 
 from .forms import ScenarioForm
 
@@ -34,13 +36,62 @@ def create_scenario(request):
 
 def edit_scenario(request, id):
 
+    # we get the id of the scenario we want to edit
+    s = Scenario.objects.get(id=id)
+
+    # we create a dictionary in which we put all the parameters
+    # and element from the scenario in order to pass it to the haml so it can be re-rendered
+    dico = {}
+
+    # filling the parameters
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+
+
+    return render(request, "train/editScenario.haml", dico)
+
+def get_data(request, id):
     s = Scenario.objects.get(id=id)
 
     dico = {}
 
-    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+    dico["element"] = []
 
-    return render(request, "train/editScenario.haml", dico)
+    elements = []
+
+    textes = TextElem.objects.filter(id_scenario=id)
+
+    for t in textes:
+        elem = {"type" : "TextElem","order": t.order, "data":{"id_scenario": id, "title":t.title, "content" : t.content }}
+        elements.append(elem)
+
+    # filling the videos elements
+    videos = VidElem.objects.filter(id_scenario=id)
+
+    for v in videos:
+        elem = {"type" : "TextElem", "order": v.order, "data":{"id_scenario": id, "title":v.title, "url": v.url, "description":v.description }}
+        elements.append(elem)
+
+    # filling the images elements
+
+    images = ImgElem.objects.filter(id_scenario=id)
+
+    for i in images:
+        elem = {"type" : "TextElem", "order": i.order, "data":{"id_scenario": id, "title":i.title, "url": i.url, "description":i.description }}
+        elements.append(elem)
+
+    # for element in elements:
+    #     print(element["data"]['order'])
+
+    print("LOOOOOOOOOOOOOOOL")
+    print(elements)
+    elements.sort(key = itemgetter('order'))
+    # = sorted(elements, key=elements["order"])
+    print(elements)
+    dico["element"] = elements_sorted
+    print("DICO HEEEEEEEEEEEEERE")
+    print(dico)
+
+    return JsonResponse(dico)
 
 def view_scenario(request, id):
 
@@ -51,7 +102,6 @@ def view_scenario(request, id):
     dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
 
     return render(request, "train/viewScenario.haml", dico)
-
 
 def list_scenario(request):
 
@@ -112,6 +162,8 @@ def save_scenario(request):
 
         # parsing the parameters of the json
         creator = parsed_json['creator']
+        if creator == '':
+            print("c'est null")
         title = parsed_json['title']
         skill =parsed_json['skill']
         topic = parsed_json['topic']
@@ -165,30 +217,7 @@ def save_scenario(request):
 
                 elem.save()
 
-            elif parsed_json['elements'][i]['type'] == "MCQElem":
-                id_scenario = scena.id
-                order = i
-                consigne_elem = parsed_json['elements'][i]['data']['consigne']
-                question_elem = parsed_json['elements'][i]['data']['question']
-                reponse_elem = []
-                for reponse in parsed_json['elements'][i]['data']['rep']:
-                    reponse_elem.append(reponse)
-                reponse1 = reponse_elem[0]
-                reponse2 = reponse_elem[1]
-                if len(reponse_elem) == 3 :
-                    reponse3 = reponse_elem[2]
-                else:
-                    reponse3= ''
-                if len(reponse_elem) == 4 :
-                    reponse4 = reponse_elem[3]
-                else:
-                    reponse4 = ''
-
-                elem = MCQElem(id_scenario = id_scenario, order = i, consigne = consigne_elem, question = question_elem, reponse1 = reponse1, reponse2 = reponse2, reponse3 = reponse3, reponse4 = reponse4)
-                elem.save()
-
-
-    return HttpResponse("OK")
+    return list_scenario(request)
     # return HttpResponseRedirect('/professor/train/list_scenario/')
 
 def delete_scenario(request, id):
