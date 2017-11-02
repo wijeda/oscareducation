@@ -3,7 +3,8 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(json,nextButtonID,previousButtonID){
+    constructor(json,anchorID,nextButtonID,previousButtonID){
+        this.anchor = document.getElementById(anchorID);
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
         this.previousButton =  document.getElementById(previousButtonID);
@@ -17,6 +18,7 @@ class ScenarioVisualization{
             if(elem.type == "TextElem"){
                 let objectElem = new TextElem(elem);
                 this.tabElementObject.push(objectElem);
+                this.anchor.appendChild(objectElem.node);
             }
             else if(elem.type == "ImageElem"){
                 let objectElem = new ImageElem(elem);
@@ -29,9 +31,10 @@ class ScenarioVisualization{
     nextButtonElement(){
         console.log("Check next Button");
         // this.tabElementObject[this.index].hide();
-        if(this.index < this.tabElementObject.lenght
-        this.index++;
-        this.tabElementObject[this.index].render();
+        if(this.index < this.tabElementObject.length){
+            this.index++;
+            this.tabElementObject[this.index].render();
+        }
     }
 
     previousButtonElement(){
@@ -46,12 +49,13 @@ class ScenarioVisualization{
 
 // initiation
 window.onload = function(){
+    let anchorID = "anchor";
     let nextButtonID = "nextElement";
     let previousButtonID = "previousElement";
 
     console.log("Check");
     let json = getForm();
-    new ScenarioVisualization(json, nextButtonID, previousButtonID);
+    new ScenarioVisualization(json, anchor, nextButtonID, previousButtonID);
 
 };
 
@@ -128,6 +132,26 @@ class TextElem extends AbstractElem{
             this.data = elem["data"];
             this.title = this.data["title"];
             this.content = this.data["content"];
+            this.node = document.createElement("div");
+            this.node.getElementsByTagName("h2").innerHTML = this.title;
+            this.node.getElementsByTagName("p").innerHTML = this.content;
+    }
+
+    render(){
+        this.node.style.display = "block";
+    }
+}
+
+class ImageElem extends AbstractElem{
+    constructor(elem){
+        super();
+        if(elem != null)
+            console.log(elem);
+            console.log(elem["data"]);
+            this.data = elem["data"];
+            this.title = this.data["title"];
+            this.url = this.data["url"];
+            this.description = this.data["description"];
     }
 
     render(){
@@ -138,5 +162,6 @@ class TextElem extends AbstractElem{
         let newContent = document.getElementsByName("contentBlock")[0];
         console.log(newContent);
         newContent.innerHTML = this.content;
+        newContent.style.display = "block";
     }
 }

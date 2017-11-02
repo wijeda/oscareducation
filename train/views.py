@@ -91,8 +91,14 @@ def student_list_scenario(request):
     return render(request, "train/studentListScenario.haml", dico)
 
 def make_scenario(request, id):
+    # dico = {}
+    # dico["descriptif"]=["Titre d'un exo", " Autheur de l'exo", "Voici le descriptif d'un cours pris en random dans la liste", id]
+
+    s = Scenario.objects.get(id=id)
+
     dico = {}
-    dico["descriptif"]=["Titre d'un exo", " Autheur de l'exo", "Voici le descriptif d'un cours pris en random dans la liste", id]
+
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
 
     return render(request, "train/st_begin_scenario.haml", dico)
 
