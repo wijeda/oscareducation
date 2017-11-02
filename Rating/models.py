@@ -4,6 +4,30 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User
 
+
+class Star_rating(models.Model):
+    resource = models.ManyToManyField('resources.Resource')
+    """The resource linked to this star rating"""
+
+    star = models.FloatField()
+    """Number of stars given"""
+
+    rated_by = models.ForeignKey(User)
+    """The user that starred the resource"""
+
+    rated_on = models.DateField()
+    """The date when the star rating was given"""
+
+    def add_stars(self,stars,resource,user):
+        """Add stars and saves all info to DB"""
+        self.star = stars
+        self.resource = resource
+        self.rated_by = user
+        self.date = datetime.date
+        self.save()
+        return
+
+
 class Rating(models.Model):
     resource = models.ManyToManyField('resources.Resource')
     """The Resources linked to this rating. A Resource can be linked to several ratings"""
@@ -17,7 +41,7 @@ class Rating(models.Model):
     user = models.ForeignKey(User)
     """The User who rated"""
 
-    date = models.DateField()
+    rated_on = models.DateField()
     """Date of Rating"""
 
     def add_rating(self,resource,user,stars):
@@ -48,7 +72,7 @@ class Rating(models.Model):
         self.question = question.id
         self.answer = answer.id
         self.user = user.id
-        self.date = datetime.date
+        self.rated_on = datetime.date
 
         '''We should implement a inc() function in Resource that increments and saves'''
         resource.save()
@@ -63,20 +87,20 @@ class Rating(models.Model):
 
 
 class Answer(models.Model):
-    answer_statement = models.CharField(max_length=300)
+    answer_statement = models.TextField()
     """The Answer statement"""
 
 
 class Question(models.Model):
-    question_statement = models.CharField(max_length=300)
+    question_statement = models.TextField()
     """The Question statement"""
 
     type = models.IntegerField()
     """The type of question (user for prof vs student)"""
 
 class Questionnaire(models.Model):
-    question = models.ManyToManyField('Question', null=True)
+    question = models.ForeignKey('Question', null=True)
     """The question"""
 
-    answer = models.ManyToManyField('Answer', null=True)
+    answer = models.ForeignKey('Answer', null=True)
     """The Answer"""
