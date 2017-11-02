@@ -54,6 +54,9 @@
                 %input.url{:id => 'vid_url', :type => "text"}
                 %button.btn.btn-primary#addVid.addVid{:action => "#", :onclick => "return loadVideo(this)"} Ajouter
                 -# #loadVid{:style => "display: none"}
+            .form-group
+                %label{:for => 'description_vid'} Description:
+                %input.description{:id => 'description_vid', :placeholder => 'Optionnel'}
 
     #mcqBlockElem{:style => "display: none"}
         .panel-body
