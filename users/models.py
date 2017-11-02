@@ -36,11 +36,11 @@ class Professor(models.Model):
         self.user.first_name, self.user.last_name)) if self.user.first_name or self.user.last_name else self.user.username
 
     def update_status(self):
-        print("update stat")
         is_top = False
         top = None
         if Top_contributor.objects.filter():
             top = Top_contributor.objects.get()
+            print(top.id)
 
 
         if (top is None):
@@ -50,7 +50,8 @@ class Professor(models.Model):
                 is_top = True
                 self.save()
         else:
-            top_prof = Professor.objects.get(user_id=top.id)
+            top_prof = Professor.objects.get(id=top.id)
+            print("top prof: " + str(top_prof.nbr_4_star_res) + "    me: " + str(self.nbr_4_star_res))
             if top_prof.nbr_4_star_res < self.nbr_4_star_res:
                 print("update top prof")
                 self.status = json.dumps(Status("Top Contributor", "icon.png").__dict__)
@@ -58,6 +59,8 @@ class Professor(models.Model):
                 is_top = True
                 self.save()
                 Top_contributor.objects.create(id = self.id)
+            if self.id == top.id:
+                is_top = True
 
         if not is_top:
             if self.nbr_4_star_res >= 1 and self.nbr_4_star_res < 4:
