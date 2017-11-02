@@ -114,6 +114,12 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                     $scope.renderMathquil(topIndex, i, question)
             }, 100);
         }
+
+        if (question.type.startsWith("barchart")) {
+            setTimeout(function() {
+                graph_refresh();
+            }, 100);
+        }
     }
 
     $scope.onChangeRadio = function(question, answer) {
