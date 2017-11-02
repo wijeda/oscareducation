@@ -3,25 +3,29 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(json,anchorID,nextButtonID,previousButtonID){
+    constructor(json,anchorID,nextButtonID,previousButtonID, blockID){
         this.anchor = document.getElementById(anchorID);
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
         this.previousButton =  document.getElementById(previousButtonID);
         this.previousButton.addEventListener("click", this.previousButtonElement.bind(this), true);
+        this.blockText = document.getElementById(blockID["textBlockID"]);
+        this.blockImage = document.getElementById(blockID["imgBlockID"]);
+        this.blockVideo = document.getElementById(blockID["videoBlockID"]);
         this.index = 0;
         this.elements = json.elements;
         this.tabElementObject = [];
-        console.log("Check");
         for(let elem of this.elements){
-            console.log(elem);
             if(elem.type == "TextElem"){
-                let objectElem = new TextElem(elem);
+                let objectElem = new TextElem(elem, this.blockText, this.anchor);
                 this.tabElementObject.push(objectElem);
-                this.anchor.appendChild(objectElem.node);
             }
             else if(elem.type == "ImageElem"){
                 let objectElem = new ImageElem(elem);
+                this.tabElementObject.push(objectElem);
+            }
+            else if(elem.type == "videoBlockID"){
+                let objectElem = new VideoElem(elem);
                 this.tabElementObject.push(objectElem);
             }
         }
@@ -29,23 +33,40 @@ class ScenarioVisualization{
     }
 
     nextButtonElement(){
-        console.log("Check next Button");
-        // this.tabElementObject[this.index].hide();
         if(this.index < this.tabElementObject.length){
+            this.tabElementObject[this.index].hide();
             this.index++;
             this.tabElementObject[this.index].render();
         }
     }
 
     previousButtonElement(){
-        // this.tabElementObject[this.index].hide();
         if(this.index > 0){
+            this.tabElementObject[this.index].hide();
             this.index--;
             this.tabElementObject[this.index].render();
         }
     }
 }
 
+function getJsonData(){
+
+    var pathTab = window.location.pathname.split("/")
+    var id = pathTab[pathTab.length - 1]
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "/professor/train/data/"+id, false);
+
+    xhr.send(null);
+    // done
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        var myArr = JSON.parse(xhr.responseText);
+        console.log(myArr);
+
+        return myArr;
+    }
+}
 
 // initiation
 window.onload = function(){
@@ -53,9 +74,10 @@ window.onload = function(){
     let nextButtonID = "nextElement";
     let previousButtonID = "previousElement";
 
-    console.log("Check");
-    let json = getForm();
-    new ScenarioVisualization(json, anchor, nextButtonID, previousButtonID);
+    let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","mcqBlockID":"mcqBlockElem"};
+    let json = getJsonData();
+    console.log(json);
+    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, blockID);
 
 };
 
@@ -76,6 +98,7 @@ function getCookie(c_name)
     return "";
  }
 
+
  function getForm() {
      let data = {'creator': 'super_creator',
                  "titre": "super_titre",
@@ -85,7 +108,7 @@ function getCookie(c_name)
                  "instructions": "super_instructions",
                  "public": "False",
                  "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-                             {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
+                             {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my new content"}}],
          };
      return data;
 
@@ -105,40 +128,38 @@ function editForm(){
 
 class AbstractElem{
 	constructor() {
+        this.node = document.createElement("div");
+        this.node.style.display = "block";
 		if (new.target === AbstractElem) {
 			throw new TypeError("Cannot construct Abstract instances directly");
 		}
 	}
 
-	render() {
-		throw new Error('You have to implement the method render');
-	}
+    render(){
+        anchor.appendChild(this.node);
+    }
+
+    hide(){
+        anchor.removeChild(this.node);
+    }
 
 	delete() {
 		throw new Error('You have to implement the method delete');
 	}
-
-	hide(){
-		throw new Error('You have to implement the method hide');
-    }
 }
 
 class TextElem extends AbstractElem{
-    constructor(elem){
+    constructor(elem, skull, anchor){
+        // elem is the data to render
+        // skull is the node element that is used as a base of this element
         super();
         if(elem != null)
-            console.log(elem);
-            console.log(elem["data"]);
             this.data = elem["data"];
             this.title = this.data["title"];
             this.content = this.data["content"];
-            this.node = document.createElement("div");
-            this.node.getElementsByTagName("h2").innerHTML = this.title;
-            this.node.getElementsByTagName("p").innerHTML = this.content;
-    }
-
-    render(){
-        this.node.style.display = "block";
+            this.node.innerHTML = skull.innerHTML;
+            this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
+            this.node.getElementsByClassName("content")[0].innerHTML = this.content;
     }
 }
 
@@ -146,22 +167,28 @@ class ImageElem extends AbstractElem{
     constructor(elem){
         super();
         if(elem != null)
-            console.log(elem);
-            console.log(elem["data"]);
             this.data = elem["data"];
             this.title = this.data["title"];
             this.url = this.data["url"];
             this.description = this.data["description"];
+            this.node.innerHTML = skull.innerHTML;
+            this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
+            this.node.getElementsByClassName("url")[0].innerHTML = this.content;
+            this.node.getElementsByClassName("description")[0].innerHTML = this.description;
     }
+}
 
-    render(){
-        let newTitle = document.getElementsByTagName("h2");
-        console.log(newTitle);
-        newTitle[0].innerHTML = this.title;
-        // there is too much div, so we take the name "contentBlock" of our block div
-        let newContent = document.getElementsByName("contentBlock")[0];
-        console.log(newContent);
-        newContent.innerHTML = this.content;
-        newContent.style.display = "block";
+class VideoElem extends AbstractElem{
+    constructor(elem){
+        super();
+        if(elem != null)
+            this.data = elem["data"];
+            this.title = this.data["title"];
+            this.url = this.data["url"];
+            this.description = this.data["description"];
+            this.node.innerHTML = skull.innerHTML;
+            this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
+            this.node.getElementsByClassName("url")[0].innerHTML = this.url;
+            this.node.getElementsByClassName("description")[0].innerHTML = this.description;
     }
 }

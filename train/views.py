@@ -54,7 +54,7 @@ def get_data(request, id):
 
     dico = {}
 
-    dico["element"] = []
+    dico["elements"] = []
 
     elements = []
 
@@ -87,7 +87,7 @@ def get_data(request, id):
     elements.sort(key = itemgetter('order'))
     # = sorted(elements, key=elements["order"])
     print(elements)
-    dico["element"] = elements_sorted
+    dico["elements"] = elements_sorted
     print("DICO HEEEEEEEEEEEEERE")
     print(dico)
 
