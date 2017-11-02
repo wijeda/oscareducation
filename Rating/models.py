@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
 
 from django.db import models
-import datetime
+from datetime import datetime
 from django.contrib.auth.models import User
 
 
 class Star_rating(models.Model):
-    resource = models.ManyToManyField('resources.Resource')
+    resource = models.ForeignKey('resources.Resource')
     """The resource linked to this star rating"""
 
     star = models.FloatField()
@@ -15,7 +15,7 @@ class Star_rating(models.Model):
     rated_by = models.ForeignKey(User)
     """The user that starred the resource"""
 
-    rated_on = models.DateField()
+    rated_on = models.DateTimeField()
     """The date when the star rating was given"""
 
     def add_stars(self,stars,resource,user):
