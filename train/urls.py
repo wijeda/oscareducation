@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^list_scenario/', views.list_scenario, name='student_dashboard'),
     url(r'^student_list_scenario/', views.student_list_scenario, name='student_dashboard'),
     url(r'^make_scenario/(?P<id>\d+)', views.make_scenario, name='student_dashboard'),
+    url(r'^view_scenario/(?P<id>\d+)', views.view_scenario, name='student_dashboard'),
 ]

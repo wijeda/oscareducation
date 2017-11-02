@@ -13,6 +13,7 @@ from .models import Scenario
 from .models import TextElem
 from .models import ImgElem
 from .models import VidElem
+from .models import MCQElem
 
 from .forms import ScenarioForm
 
@@ -40,6 +41,16 @@ def edit_scenario(request, id):
     dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
 
     return render(request, "train/editScenario.haml", dico)
+
+def view_scenario(request, id):
+
+    s = Scenario.objects.get(id=id)
+
+    dico = {}
+
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+
+    return render(request, "train/viewScenario.haml", dico)
 
 
 def list_scenario(request):
@@ -148,7 +159,30 @@ def save_scenario(request):
 
                 elem.save()
 
-    return list_scenario(request)
+            elif parsed_json['elements'][i]['type'] == "MCQElem":
+                id_scenario = scena.id
+                order = i
+                consigne_elem = parsed_json['elements'][i]['data']['consigne']
+                question_elem = parsed_json['elements'][i]['data']['question']
+                reponse_elem = []
+                for reponse in parsed_json['elements'][i]['data']['rep']:
+                    reponse_elem.append(reponse)
+                reponse1 = reponse_elem[0]
+                reponse2 = reponse_elem[1]
+                if len(reponse_elem) == 3 :
+                    reponse3 = reponse_elem[2]
+                else:
+                    reponse3= ''
+                if len(reponse_elem) == 4 :
+                    reponse4 = reponse_elem[3]
+                else:
+                    reponse4 = ''
+
+                elem = MCQElem(id_scenario = id_scenario, order = i, consigne = consigne_elem, question = question_elem, reponse1 = reponse1, reponse2 = reponse2, reponse3 = reponse3, reponse4 = reponse4)
+                elem.save()
+
+
+    return HttpResponse("OK")
     # return HttpResponseRedirect('/professor/train/list_scenario/')
 
 def delete_scenario(request, id):
