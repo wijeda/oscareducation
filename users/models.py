@@ -59,6 +59,8 @@ class Professor(models.Model):
                 is_top = True
                 self.save()
                 Top_contributor.objects.create(id = self.id)
+            if self.id == top.id:
+                is_top = True
 
         if not is_top:
             if self.nbr_4_star_res >= 1 and self.nbr_4_star_res < 4:
