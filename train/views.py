@@ -85,19 +85,12 @@ def get_data(request, id):
     # print(elements)
     elements.sort(key = itemgetter('order'))
     # = sorted(elements, key=elements["order"])
-<<<<<<< HEAD
     # print(elements)
     dico["elements"] = elements
     # print("DICO HEEEEEEEEEEEEERE")
     # print(dico)
 
     print("fin de get_data")
-=======
-    print(elements)
-    dico["elements"] = elements_sorted
-    print("DICO HEEEEEEEEEEEEERE")
-    print(dico)
->>>>>>> bdd33a010118bc9162114e7235c3b115892d87e1
 
     return JsonResponse(dico)
 

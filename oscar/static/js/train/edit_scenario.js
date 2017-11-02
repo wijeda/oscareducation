@@ -157,6 +157,7 @@ class EditScenario {
         newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('url')[0].value = this.data["elements"][index]["data"]["url"]
         newelem.getElementsByClassName('description')[0].value = this.data["elements"][index]["data"]["description"]
+        newelem.getElementsByClassName('image')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
         this.anchor.appendChild(newelem);
     }
 
@@ -164,8 +165,9 @@ class EditScenario {
         let newelem = document.createElement("div");
         newelem.classList.add('videoBlockElem');
         newelem.innerHTML = this.videoBlockElem.innerHTML;
-        newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('title_vid')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('url')[0].value = this.data["elements"][index]["data"]["url"]
+        loadVideo(newelem.getElementsByClassName('addVid')[0])
         this.anchor.appendChild(newelem);
     }
 
@@ -179,24 +181,22 @@ class EditScenario {
 
     fillPage()
     {
-        console.log(this.data["elements"].length);
         for(let i = 0;i<this.data["elements"].length;i++)
         {
-            console.log(this.data["elements"][i]["type"]);
-            if(this.data["elements"][i]["type"] = "TextElem")
+            if(this.data["elements"][i]["type"] == "TextElem")
             {
 
                 this.makeFilledText(i);
             }
-            else if(this.data["elements"][i]["type"] = "ImgElem")
+            else if(this.data["elements"][i]["type"] == "ImgElem")
             {
                 this.makeFilledImg(i);
             }
-            else if(this.data["elements"][i]["type"] = "VidElem")
+            else if(this.data["elements"][i]["type"] == "VidElem")
             {
                 this.makeFilledVid(i);
             }
-            else if(this.data["elements"][i]["type"] = "McqElem")
+            else if(this.data["elements"][i]["type"] == "McqElem")
             {
                 this.makeFilledMcq(i);
             }
