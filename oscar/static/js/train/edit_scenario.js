@@ -4,6 +4,10 @@ class EditScenario {
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
     constructor(param){
+        this.data = this.getJsonData();
+
+        console.log(this.data);
+
         this.anchor = document.getElementById(param.anchorID);
         this.btnPlus = document.getElementById(param.btnPlusID);
         this.addElementDiv = document.getElementById(param.addElementDivID);
@@ -29,7 +33,12 @@ class EditScenario {
 
         this.saveScenarioButton = document.getElementById(param.saveScenarioButtonID);
         this.saveScenarioButton.addEventListener("click", this.sendForm.bind(this), true);
+
+        console.log("before storm");
+        this.fillPage();
     }
+
+    //Creation of empty blocks
 
     makeBlockElemText(){
         let newelem = document.createElement("div");
@@ -44,17 +53,6 @@ class EditScenario {
         newelem.innerHTML = this.imgBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
     }
-
-    // makeBlockElemVideo(){
-    //     //TODO : adapter les liens
-    //     let newelem = document.createElement("input");
-    //     newelem.setAttribute("placeholder", "URL de votre vidéo");
-    //     newelem.innerHTML = this.videoBlockElem.innerHTML;
-    //     this.anchor.appendChild(newelem);
-    //     newelem.style.display = "block";
-    //     newelem.style.width = "100%";
-    //
-    // }
 
     makeBlockElemVideo(){
         let newelem = document.createElement("div");
@@ -72,6 +70,8 @@ class EditScenario {
         newelem.style.display = "block";
     }
 
+    //shows add buttons on click
+
     showDiffElements(){
         if(this.addElementOption) {
             this.addElementDiv.style.display = "none";
@@ -82,6 +82,8 @@ class EditScenario {
         this.addElementOption = !this.addElementOption
 
     }
+
+    // get the input by the user
 
     getElemInputBlockText(elemText){
         let title = "Titre par defaut"; // TODO ajouter cet input
@@ -97,8 +99,6 @@ class EditScenario {
     }
 
     getElemInputBlockVideo(elemVideo){
-
-
         let title = elemVideo.childNodes[1].childNodes[3].value;
         let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
         let description = "description"
@@ -119,7 +119,88 @@ class EditScenario {
         }
 
         return {"type":"MCQElem", "data":{"consigne": consigne, "question": question, "rep" : rep}}
+    }
 
+    // get the JSON data when editing in order to retrieve the elements
+    getJsonData(){
+
+        var pathTab = window.location.pathname.split("/")
+        var id = pathTab[pathTab.length - 1]
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "/professor/train/data/"+id, false);
+
+        xhr.send(null);
+        // done
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var myArr = JSON.parse(xhr.responseText);
+            console.log(myArr);
+
+            return myArr;
+        }
+    }
+
+    // make a filled element
+    makeFilledText(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('textBlockElem');
+        newelem.innerHTML = this.textBlockElem.innerHTML;
+        newelem.getElementsByClassName('content')[0].value = this.data["elements"][index]["data"]["content"]
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledImg(index){
+        let newelem = document.createElement("div")
+        newelem.classList.add('imgBlockElem');
+        newelem.innerHTML = this.imgBlockElem.innerHTML;
+        newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url')[0].value = this.data["elements"][index]["data"]["url"]
+        newelem.getElementsByClassName('description')[0].value = this.data["elements"][index]["data"]["description"]
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledVid(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('videoBlockElem');
+        newelem.innerHTML = this.videoBlockElem.innerHTML;
+        newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url')[0].value = this.data["elements"][index]["data"]["url"]
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledMcq(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('mcqBlockElem');
+        newelem.innerHTML = this.mcqBlockElem.innerHTML;
+        this.anchor.appendChild(newelem);
+        newelem.style.display = "block";
+    }
+
+    fillPage()
+    {
+        console.log(this.data["elements"].length);
+        for(let i = 0;i<this.data["elements"].length;i++)
+        {
+            console.log(this.data["elements"][i]["type"]);
+            if(this.data["elements"][i]["type"] = "TextElem")
+            {
+
+                this.makeFilledText(i);
+            }
+            else if(this.data["elements"][i]["type"] = "ImgElem")
+            {
+                this.makeFilledImg(i);
+            }
+            else if(this.data["elements"][i]["type"] = "VidElem")
+            {
+                this.makeFilledVid(i);
+            }
+            else if(this.data["elements"][i]["type"] = "McqElem")
+            {
+                this.makeFilledMcq(i);
+            }
+        }
     }
 
     sendForm() {
@@ -292,7 +373,7 @@ window.onload = function(){
 
         "imgBlockElemID": "imgBlockElem",
         "imgButtonID": "addElementImg",
-        "saveScenarioButtonID": "saveScenario"
+        "saveScenarioButtonID": "saveScenario",
 
         /*"loadImgID": "loadImage",
         "loadImgButtonID": "addImg",
@@ -311,7 +392,7 @@ window.onload = function(){
                         imgButtonID,
                         mcqBlockElemID,
                         mcqButtonID);*/
-    new ScenarioCreation(param)
+    new EditScenario(param)
 
 };
 

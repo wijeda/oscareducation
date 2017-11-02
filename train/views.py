@@ -54,7 +54,7 @@ def get_data(request, id):
 
     dico = {}
 
-    dico["element"] = []
+    dico["elements"] = []
 
     elements = []
 
@@ -68,7 +68,7 @@ def get_data(request, id):
     videos = VidElem.objects.filter(id_scenario=id)
 
     for v in videos:
-        elem = {"type" : "TextElem", "order": v.order, "data":{"id_scenario": id, "title":v.title, "url": v.url, "description":v.description }}
+        elem = {"type" : "VidElem", "order": v.order, "data":{"id_scenario": id, "title":v.title, "url": v.url, "description":v.description }}
         elements.append(elem)
 
     # filling the images elements
@@ -76,20 +76,21 @@ def get_data(request, id):
     images = ImgElem.objects.filter(id_scenario=id)
 
     for i in images:
-        elem = {"type" : "TextElem", "order": i.order, "data":{"id_scenario": id, "title":i.title, "url": i.url, "description":i.description }}
+        elem = {"type" : "ImgElem", "order": i.order, "data":{"id_scenario": id, "title":i.title, "url": i.url, "description":i.description }}
         elements.append(elem)
 
     # for element in elements:
     #     print(element["data"]['order'])
 
-    print("LOOOOOOOOOOOOOOOL")
-    print(elements)
+    # print(elements)
     elements.sort(key = itemgetter('order'))
     # = sorted(elements, key=elements["order"])
-    print(elements)
-    dico["element"] = elements_sorted
-    print("DICO HEEEEEEEEEEEEERE")
-    print(dico)
+    # print(elements)
+    dico["elements"] = elements
+    # print("DICO HEEEEEEEEEEEEERE")
+    # print(dico)
+
+    print("fin de get_data")
 
     return JsonResponse(dico)
 

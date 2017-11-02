@@ -96,8 +96,6 @@ class ScenarioCreation {
     }
 
     getElemInputBlockVideo(elemVideo){
-
-
         let title = elemVideo.childNodes[1].childNodes[3].value;
         let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
         let description = "description"

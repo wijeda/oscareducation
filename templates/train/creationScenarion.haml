@@ -98,7 +98,7 @@
     #imgBlockElem{:style => "display: none"}
         .panel-body
             %label{:for => 'title_img'} Titre:
-            %input{:id => 'title_img', :placeholder => 'Optionnel'}
+            %input#title_img.title_img{:placeholder => 'Optionnel'}
             %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
             %br
