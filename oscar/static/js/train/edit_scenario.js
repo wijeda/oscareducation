@@ -93,15 +93,15 @@ class EditScenario {
 
     getElemInputBlockImage(elemImage){
         let title = elemImage.childNodes[1].childNodes[3].value;
-        let url = elemImage.childNodes[1].childNodes[9].childNodes[7].value
+        let url = elemImage.childNodes[1].childNodes[9].childNodes[7].value;
         let description = elemImage.childNodes[1].childNodes[11].childNodes[3].value;
         return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
     getElemInputBlockVideo(elemVideo){
         let title = elemVideo.childNodes[1].childNodes[3].value;
-        let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
-        let description = "description"
+        let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value;
+        let description = elemVideo.getElementsByClassName('description')[0].value;
         return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
@@ -167,6 +167,7 @@ class EditScenario {
         newelem.innerHTML = this.videoBlockElem.innerHTML;
         newelem.getElementsByClassName('title_vid')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('url')[0].value = this.data["elements"][index]["data"]["url"]
+        newelem.getElementsByClassName('description')[0].value = this.data["elements"][index]["data"]["description"]
         loadVideo(newelem.getElementsByClassName('addVid')[0])
         this.anchor.appendChild(newelem);
     }

@@ -96,9 +96,11 @@ class ScenarioCreation {
     }
 
     getElemInputBlockVideo(elemVideo){
+        console.log("MDRRRRRRRR");
         let title = elemVideo.childNodes[1].childNodes[3].value;
         let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
-        let description = "description"
+        let description = elemVideo.getElementsByClassName('description')[0].value
+        console.log(description);
         return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
