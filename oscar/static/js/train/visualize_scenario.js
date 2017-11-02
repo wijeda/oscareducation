@@ -5,40 +5,53 @@ class ScenarioVisualization{
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
     constructor(json,nextButtonID,previousButtonID){
         this.nextButton = document.getElementById(nextButtonID);
-        this.nextButton.addEventListener("click", this.nextBlockElement.bind(this), true);
+        this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
         this.previousButton =  document.getElementById(previousButtonID);
-        this.previousButton.addEventListener("click", this.previousBlockElement.bind(this), true);
+        this.previousButton.addEventListener("click", this.previousButtonElement.bind(this), true);
         this.index = 0;
         this.elements = json.elements;
         this.tabElementObject = [];
+        console.log("Check");
         for(let elem of this.elements){
-            if(elem.type == TextElem)
+            console.log(elem);
+            if(elem.type == "TextElem"){
+                let objectElem = new TextElem(elem);
+                this.tabElementObject.push(objectElem);
+            }
+            else if(elem.type == "ImageElem"){
+                let objectElem = new ImageElem(elem);
+                this.tabElementObject.push(objectElem);
+            }
+        }
+        this.tabElementObject[this.index].render();
+    }
+
+    nextButtonElement(){
+        console.log("Check next Button");
+        // this.tabElementObject[this.index].hide();
+        if(this.index < this.tabElementObject.lenght
+        this.index++;
+        this.tabElementObject[this.index].render();
+    }
+
+    previousButtonElement(){
+        // this.tabElementObject[this.index].hide();
+        if(this.index > 0){
+            this.index--;
+            this.tabElementObject[this.index].render();
         }
     }
+}
 
-    nextButton(){
-        this.tabElementObject[this.index].hide();
-        this.index++;
-        this.tabElementObject[this.index].show();
-    }
-
-    previousButton(){
-        this.tabElementObject[this.index].hide();
-        this.index--;
-        this.tabElementObject[this.index].show();
-    }
 
 // initiation
 window.onload = function(){
-    let nextButtonID = "nextElem";
-    let previousButtonID = "previousElem"
+    let nextButtonID = "nextElement";
+    let previousButtonID = "previousElement";
 
-    let param = {
-        "nextButtonID":"nextElem"
-        "previousButtonID":"previousElem"
-    }
-    let json = getForm()
-    new ScenarioVisualization(json, nextButtonID, previousButtonID)
+    console.log("Check");
+    let json = getForm();
+    new ScenarioVisualization(json, nextButtonID, previousButtonID);
 
 };
 
@@ -71,41 +84,6 @@ function getCookie(c_name)
                              {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
          };
      return data;
-    //  let data = {}
-    //  let listOfParamIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
-     //
-    //  for(let id of listOfParamIDfield){
-    //      let elem = document.getElementById(id);
-    //      data[id] = elem.value;
-    //  }
-     //
-    //  console.log(data);
-     //
-     //
-    //  let data3 = {"creator": "super_creator",
-    //              "titre": "super_titre",
-    //              "skill": "super_skill",
-    //              "topic": "super_topic",
-    //              "grade_level": "super grade",
-    //              "instructions": "super_instructions",
-    //              "public": "False",
-    //              "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-    //                          {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
-    //      }
-    //      // construct an HTTP request
-    //  let xhr = new XMLHttpRequest();
-     //
-    //  xhr.open("POST", "/professor/train/save_scenario", true);
-    //  xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    //  xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
-    //  // send the collected data as JSON
-    //  //xhr.send(JSON.stringify(data));
-     //
-    //  xhr.onloadend = function () {
-    //      // done
-    //      console.log(data);
-    //      console.log("done");
-    //  };
 
  }
 
@@ -123,7 +101,7 @@ function editForm(){
 
 class AbstractElem{
 	constructor() {
-		if (new.target === Abstract) {
+		if (new.target === AbstractElem) {
 			throw new TypeError("Cannot construct Abstract instances directly");
 		}
 	}
@@ -136,5 +114,29 @@ class AbstractElem{
 		throw new Error('You have to implement the method delete');
 	}
 
-	hide()
+	hide(){
+		throw new Error('You have to implement the method hide');
+    }
+}
+
+class TextElem extends AbstractElem{
+    constructor(elem){
+        super();
+        if(elem != null)
+            console.log(elem);
+            console.log(elem["data"]);
+            this.data = elem["data"];
+            this.title = this.data["title"];
+            this.content = this.data["content"];
+    }
+
+    render(){
+        let newTitle = document.getElementsByTagName("h2");
+        console.log(newTitle);
+        newTitle[0].innerHTML = this.title;
+        // there is too much div, so we take the name "contentBlock" of our block div
+        let newContent = document.getElementsByName("contentBlock")[0];
+        console.log(newContent);
+        newContent.innerHTML = this.content;
+    }
 }

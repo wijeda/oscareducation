@@ -1,31 +1,35 @@
 -extends "base.haml"
 
 -load static
+-load compress
 
--block javascript
-  %script{src: "{% static 'js/mermaid.full.js' %}"}
+-load bootstrap3
 
 -block content
-  %h3{:dico => "tab"} #{descriptif.0}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
+    %script{:src => "/static/js/train/visualize_scenario.js"}
+
+    %h3{:dico => "tab"} #{descriptif.0}
     -# =id.title
-  %hr
-  %h4{:dico => "tab"} #{descriptif.1}
+    %hr
+    %h4{:dico => "tab"} #{descriptif.1}
     -# =id.instructions
 
-  .ligneorange
+    .ligneorange
 
-  .container-fluid.boxclassetitle
-    .pull-right
-      %p Ressources
+    .container-fluid.boxclassetitle
+        .pull-right
+            %div Ressources
 
-  .ligneorangefine
+    .ligneorangefine
 
-  .boxclasse.container-fluid
-    %p Ici résiderons les questions, vidéos, ...
+    .boxclasse.container-fluid
+        %h2
+        %div{:name => "contentBlock"}
 
-  #Tools.blk
-    %br
-    %button.btn.btn-primary#previousElement{}
-        Previous
-    %button.btn.btn-primary#nextElement{}
-        Next
+    #Tools.blk
+        %br
+        %button.btn.btn-primary#previousElement
+            Previous
+        %button.btn.btn-primary#nextElement
+            Next
