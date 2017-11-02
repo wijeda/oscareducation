@@ -1,6 +1,6 @@
 "use strict";
 
-class ScenarioCreation {
+class EditScenario {
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
     constructor(param){
@@ -65,7 +65,8 @@ class ScenarioCreation {
 
     makeBlockElemMcq(){
         //TODO remplacer par QCM
-        let newelem = document.createElement("input");
+        let newelem = document.createElement("div");
+        newelem.classList.add('mcqBlockElem');
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
@@ -104,6 +105,22 @@ class ScenarioCreation {
         return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
+    getElemInputBlockMCQ(elemMCQ){
+
+        let consigne = elemMCQ.childNodes[1].childNodes[3].value;
+        let question = elemMCQ.childNodes[1].childNodes[11].value;
+        let rep = [];
+        for (let elem of elemMCQ.childNodes[1].childNodes){
+            if (elem.className == "repLine"){
+                let reponse = elem.childNodes[3].value;
+                let checked = elem.childNodes[5].checked;
+                rep.push({"answer": reponse, "solution": checked});
+            }
+        }
+
+        return {"type":"MCQElem", "data":{"consigne": consigne, "question": question, "rep" : rep}}
+
+    }
 
     sendForm() {
 
@@ -136,24 +153,16 @@ class ScenarioCreation {
             {
                 data["elements"].push(this.getElemInputBlockImage(this.anchor.childNodes[i]));
             }
+            else if(classElem =="mcqBlockElem")
+            {
+                data["elements"].push(this.getElemInputBlockMCQ(this.anchor.childNodes[i]));
+            }
 
 
         }
 
         console.log(data);
 
-
-        let data3 = {"creator": "super_creator",
-                    "titre": "super_titre",
-                    "skill": "super_skill",
-                    "topic": "super_topic",
-                    "grade_level": "super grade",
-                    "instructions": "super_instructions",
-                    "public": "False",
-                    "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-                                {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
-            }
-            // construct an HTTP request
         let xhr = new XMLHttpRequest();
 
         xhr.open("POST", "/professor/train/save_scenario", true);
@@ -204,6 +213,38 @@ function getVideoId(url) {
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
     root.parentNode.removeChild(root);
+    return false;
+}
+
+function removeReponse(elem){
+    var root = elem.parentNode;
+    root.parentNode.removeChild(root);
+    return false;
+}
+
+function addReponse(elem){
+    var root = elem.parentNode.parentNode;
+    let count = 0;
+    let repLineElem = null;
+    for(let subElem of root.childNodes[1].childNodes){
+        if (subElem.className == "repLine"){
+            count++;
+            if(repLineElem == null){
+                repLineElem = subElem;
+            }
+        }
+    }
+    if (count < 4) {
+        let newelem = document.createElement("div");
+        newelem.classList.add('repLine');
+        newelem.innerHTML = repLineElem.innerHTML;
+        let txt = repLineElem.childNodes[1].innerHTML;
+        newelem.childNodes[1].innerHTML = txt.substring(0,txt.length -2) + (count +1);
+        newelem.childNodes[7].style.display = "inline";
+        root.childNodes[1].appendChild(newelem);
+    }
+
+    //root.parentNode.removeChild(root);
     return false;
 }
 
