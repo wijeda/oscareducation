@@ -124,6 +124,9 @@
                     .col-sm-1
                       %input.form-control{type: "checkbox", ng-change: "question.type == \"radio\" && answer.correct === true && onChangeRadio(question, answer)", ng-model: "answer.correct"}
 
+                .form-horizontal{ng-if: "question.type == \"barchart\""}
+                  .jxgbox#jxgbox{:style=>"width:500px; height:200px;"}
+                  
                 .form-horizontal{ng-if: "question.type == \"graph\""}
                   .form-group
                     %label.control-label.col-sm-2 Type
