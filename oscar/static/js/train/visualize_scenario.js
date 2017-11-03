@@ -72,7 +72,14 @@ class ScenarioVisualization{
     }
 
     endButtonElement(){
-        window.location.href = "http://127.0.0.1:8000/student/train/list_scenario/";
+        var pathTab = window.location.pathname.split("/");
+        var user_type = pathTab[1];
+        if(user_type == "student"){
+            window.location.href = "/student/train/student_list_scenario/";
+        }else{
+            window.location.href = "/professor/train/list_scenario/";
+        }
+
     }
 }
 

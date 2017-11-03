@@ -3,7 +3,7 @@
 -load static
 
 -block javascript
-  %script{src: "{% static 'js/mermaid.full.js' %}"}
+  -# %script{src: "{% static 'js/mermaid.full.js' %}"}
 
 -block content
   %h3{:dico => "tab"} #{scenario.title}
@@ -19,4 +19,17 @@
   .boxclasse.container-fluid
           %p{:dico => "tab"} #{scenario.instructions}
 
-  %a.btn.btn-primary#begin{:href => "/student/train/scenario/#{scenario.id}"} Commencer l'exercice
+  %a.btn.btn-primary#begin{:onclick => "return nextButton(this)"} Commencer l'exercice
+
+  %script
+    function nextButton(){
+        var pathTab = window.location.pathname.split("/");
+        var user_type = pathTab[1];
+        var id = pathTab[pathTab.length - 1];
+        if(user_type == "student"){
+            window.location.href = "/student/train/scenario/"+id;
+        }else{
+            window.location.href = "/professor/train/scenario/"+id;
+        }
+
+    }
