@@ -3,18 +3,19 @@ from __future__ import unicode_literals
 from rating.models import *
 from django.test import TestCase
 from resources.models import *
+from django.utils import timezone
 
-
+# Tests for the classe Star_rating
 class Star_rating_TestCase(TestCase):
     def setUp(self):
-        d = datetime
+        d = timezone.now()
         u = User.objects.create()
         r = Resource.objects.create(section="test",content='{"kind": "lesson", "title": "Fonctions de référence", "author": "Paul Robaux"}  ')
         o = Star_rating.objects.create(
             star=2,
             resource=r,
             rated_by=u,
-            rated_on="2017-02-18 10:10",
+            rated_on=d,
         )
         self.date = d
         self.id= o.id
@@ -75,7 +76,7 @@ class Rating_TestCase(TestCase):
         self.a1 = Answer.objects.create(answer_statement = "Yeah")
         self.u = User.objects.create()
         self.r1 = Resource.objects.create(section="test",content='{"kind": "lesson", "title": "Fonctions de référence", "author": "Paul Robaux"}  ')
-        self.d1 = "2017-02-18 10:10"
+        self.d1 = timezone.now()
         self.ra1 = Rating.objects.create(resource=self.r1,question=self.q1,answer=self.a1,rated_by=self.u,rated_on=self.d1)
 
     def test_rating(self):
