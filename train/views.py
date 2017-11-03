@@ -16,6 +16,8 @@ from .models import Scenario
 from .models import TextElem
 from .models import ImgElem
 from .models import VidElem
+from .models import MCQElem
+from .models import MCQReponse
 
 from .forms import ScenarioForm
 
@@ -217,6 +219,43 @@ def save_scenario(request):
                 elem = VidElem(id_scenario = id_scenario, order = i, title = title_elem, url = url_elem, description = description_elem)
 
                 elem.save()
+
+            elif parsed_json['elements'][i]['type'] == "MCQElem":
+                id_scenario = scena.id
+                order = i
+                title_elem = parsed_json['elements'][i]['data']['title']
+                instruction_elem = parsed_json['elements'][i]['data']['instruction']
+                question_elem = parsed_json['elements'][i]['data']['question']
+                reponse_elem = []
+                #for reponse in parsed_json['elements'][i]['data']['rep']:
+                #    reponse_elem.append(reponse)
+                #reponse1 = reponse_elem[0]
+                #reponse2 = reponse_elem[1]
+                #if len(reponse_elem) == 3 :
+                #    reponse3 = reponse_elem[2]
+                #else:
+                #    reponse3= ''
+                #if len(reponse_elem) == 4 :
+                #    reponse4 = reponse_elem[3]
+                #else:
+                #    reponse4 = ''
+
+
+                elem = MCQElem(id_scenario = id_scenario, order = i, title = title_elem, instruction = instruction_elem, question = question_elem)
+                elem.save()
+                id_MCQ_Elem = elem.id
+                for rep in parsed_json['elements'][i]['data']['answers']:
+                    ans = MCQReponse(id_question = id_MCQ_Elem, answer = rep['answer'], is_answer = rep['solution'] )
+                    print(rep['solution'])
+                    ans.save()
+
+
+
+    return HttpResponse("OK")
+    # return HttpResponseRedirect('/professor/train/list_scenario/')
+
+
+
 
     return list_scenario(request)
     # return HttpResponseRedirect('/professor/train/list_scenario/')

@@ -55,9 +55,12 @@ class MCQElem(models.Model):
 
     id_scenario = models.IntegerField()
     order = models.IntegerField()
-    consigne = models.CharField("Consigne", max_length = 500)
+    title = models.CharField("Title", max_length = 500)
+    instruction = models.CharField("Instruction", max_length = 500)
     question = models.CharField("Question", max_length = 500)
-    reponse1 = models.CharField("Reponse", max_length = 500)
-    reponse2 = models.CharField("Reponse", max_length = 500)
-    reponse3 = models.CharField("Reponse", max_length = 500)
-    reponse4 = models.CharField("Reponse", max_length = 500)
+
+class MCQReponse(models.Model):
+    id_question = models.IntegerField()
+    answer = models.CharField("Reponse", max_length = 500)
+    is_answer = models.BooleanField()
+
