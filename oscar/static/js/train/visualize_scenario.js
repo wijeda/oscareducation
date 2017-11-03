@@ -279,12 +279,22 @@ class MCQElem extends AbstractElem{
         for(let answer of this.answers){
             if(answer["solution"] != this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isAnswer")[0].checked){
                 error_number++;
-                console.log(this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse"));
+                this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
+            }
+            else{
+                this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "none";
             }
             count++;
         }
         if(error_number > 0){
+            this.node.getElementsByClassName("succededMCQ")[0].style.display = "none";
             window.alert("Il y a quelques erreurs dans votre réponse!");
+        }
+        else{
+            for(let i = 0; i< count-2; i++){
+                this.node.getElementsByClassName("blocanswer")[i].getElementsByClassName("isFalse")[0].style.display = "none";
+            }
+            this.node.getElementsByClassName("succededMCQ")[0].style.display = "block";
         }
     }
 }
