@@ -181,6 +181,7 @@ function loadVideo(elem){
     return false;
 }
 
+// Transforms the video URL into its embed version for better hosting support
 function getVideoId(url) {
     var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
