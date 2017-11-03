@@ -67,15 +67,17 @@
                         %li
                             .answer
                             %input.isAnswer{:type => "checkbox"}
-                            %img.isFalse{:style => "display: none", :height => "4%", :src => "/static/img/icons/delete.png", :width => "4%"}/
+                            %img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
 
-
+                %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)!
 
     #Tools.blk
       .container-fluid.box-options
         %button.btn-fixed-previous#previousElement
-            Previous
+            Précédent
         %button.btn-fixed-validate#validateElement
             Valider
         %button.btn-fixed-next#nextElement
-            Next
+            Suivant
+        %button.btn-fixed-next#endElement{:style => "display: none", :href => "/professor/train/list_scenario"}
+            Terminer
