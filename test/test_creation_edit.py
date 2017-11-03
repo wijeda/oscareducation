@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 # Run with "python3.5 *test name*.py"
 
@@ -26,37 +27,11 @@ class SampleTest(unittest.TestCase):
         self.fill_field("id_password", "professor")
         self.click_element_css("input[value='Connexion']")
 
-    def test_creation_deletion(self):
-
-        driver = self.driver
-        driver.get(URL_LIST_SCENARIO)
-
-        self.click_element_id("addElement")
-
-        # Generation of a random scenario name
-        scenario_title = ''.join(random.choice(string.ascii_lowercase) for _ in range(6))
-        #
-        #     # Check if a wrongly created scenario is in the list
-        #     self.fill_field("title", scenario_title)
-        #     self.click_element_id("saveScenario")
-        #     driver.get(URL_LIST_SCENARIO)
-        #     body_text = self.driver.find_element_by_tag_name('body').text
-        #     self.assertFalse(scenario_title in body_text)
-        #
-        # Check if a rightly created scenario is in the list
-        self.click_element_id("addElement")
-        self.fill_field("title", scenario_title)
-        self.fill_field("instructions", "test")
-        self.click_element_id("saveScenario")
-        driver.get(URL_LIST_SCENARIO)
-        body_text = self.driver.find_element_by_tag_name('body').text
-        self.assertTrue(scenario_title in body_text)
-
     def test_edit_scenario(self):
         driver = self.driver
         driver.get(URL_LIST_SCENARIO)
 
-        scenario_title = ''.join(random.choice(string.ascii_lowercase) for _ in range(6))
+        scenario_title = "old_title"
 
         self.click_element_id("addElement")
         self.fill_field("title", scenario_title)
@@ -76,6 +51,8 @@ class SampleTest(unittest.TestCase):
         self.fill_field("vid_url", "https://www.youtube.com/watch?v=2bjk26RwjyU")
         self.click_element_id("addVid")
 
+        self.scroll_bottom()
+
         self.click_element_id("addElementImg")
         self.fill_field("img_url", "https://i.imgur.com/UkiM2YH.jpg")
         self.click_element_id("addImg")
@@ -91,11 +68,39 @@ class SampleTest(unittest.TestCase):
         self.assertTrue(self.fieldText("skill") == "new skill")
         self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "iframe[class = 'video']"))
 
+    def test_creation(self):
+
+        driver = self.driver
+        driver.get(URL_LIST_SCENARIO)
+
+        self.click_element_id("addElement")
+
+        scenario_title = "title"
+
+        #
+        #     # Check if a wrongly created scenario is in the list
+        #     self.fill_field("title", scenario_title)
+        #     self.click_element_id("saveScenario")
+        #     driver.get(URL_LIST_SCENARIO)
+        #     body_text = self.driver.find_element_by_tag_name('body').text
+        #     self.assertFalse(scenario_title in body_text)
+        #
+
+        # Check if a rightly created scenario is in the list
+        self.click_element_id("addElement")
+        self.fill_field("title", scenario_title)
+        self.fill_field("instructions", "test")
+        self.click_element_id("saveScenario")
+        driver.get(URL_LIST_SCENARIO)
+        body_text = self.driver.find_element_by_tag_name('body').text
+        self.assertTrue(scenario_title in body_text)
+
     def tearDown(self):
         # close the browser window and clear test scenarios
         self.driver.get(URL_LIST_SCENARIO)
         if self.is_element_present(By.CSS_SELECTOR, "img[alt = 'Supprimer la question']"):
             self.click_element_css("img[alt = 'Supprimer la question']")
+            self.driver.switch_to.alert.accept()
         self.driver.quit()
 
     def is_element_present(self, how, what):

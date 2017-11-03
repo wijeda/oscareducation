@@ -12,6 +12,8 @@ URL_LOGIN = "http://127.0.0.1:8000/accounts/usernamelogin/"
 URL_SCENARIO_CREATION = "http://127.0.0.1:8000/professor/train/create_scenario/"
 URL_LIST_SCENARIO = "http://127.0.0.1:8000/professor/train/list_scenario/"
 URL_LIST_STUDENT = "http://127.0.0.1:8000/professor/train/student_list_scenario/"
+URL_IMG = "https://i.imgur.com/UkiM2YH.jpg"
+URL_VIDEO = "https://www.youtube.com/watch?v=2bjk26RwjyU"
 
 
 class SampleTest(unittest.TestCase):
@@ -26,7 +28,7 @@ class SampleTest(unittest.TestCase):
         self.fill_field("id_password", "professor")
         self.click_element_css("input[value='Connexion']")
 
-    def test_creation_deletion(self):
+    def test_student_view(self):
 
         driver = self.driver
         driver.get(URL_LIST_SCENARIO)
@@ -34,17 +36,17 @@ class SampleTest(unittest.TestCase):
         self.click_element_id("addElement")
 
         self.fill_field("title", "test_title")
-        self.fill_field("instructions", "test")
+        self.fill_field("instructions", "test_instructions")
 
         self.click_element_id("addElement")
         self.click_element_id("addElementVideo")
-        self.fill_field("vid_url", "https://www.youtube.com/watch?v=2bjk26RwjyU")
+        self.fill_field("vid_url", URL_VIDEO)
         self.click_element_id("addVid")
 
         self.scroll_bottom()
 
         self.click_element_id("addElementImg")
-        self.fill_field("img_url", "https://i.imgur.com/UkiM2YH.jpg")
+        self.fill_field("img_url", URL_IMG)
         self.click_element_id("addImg")
 
         time.sleep(1)
@@ -56,6 +58,7 @@ class SampleTest(unittest.TestCase):
         self.fill_field_css("input[class='question_MCQ_Elem']", "question")
         self.fill_field_css("input[class='answer1']", "Réponse 1")
         self.fill_field_css("input[class='answer2']", "Réponse 2")
+        # self.click_element_css("input[class='answer1_is_valid']")
         # self.scroll_bottom()
         # self.click_element_css("button[title='Ajouter une réponse']")
         # self.fill_field_css("input[class='answer3']", "Réponse 3")
@@ -63,20 +66,34 @@ class SampleTest(unittest.TestCase):
         self.scroll_bottom()
 
         self.click_element_id("saveScenario")
-
+        time.sleep(1)
         driver.get(URL_LIST_STUDENT)
 
         body_text = self.driver.find_element_by_tag_name('body').text
         self.assertTrue("test_title" in body_text)
 
-        self.click_element_css("a[href='*'")
+        self.click_element_css("a[href^='/student/train/make_scenario/'")
+        self.click_element_id("begin")
+        self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "iframe[src='//www.youtube.com/embed/2bjk26RwjyU']"))
+        self.click_element_id("nextElement")
+
+        self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "img[src='https://i.imgur.com/UkiM2YH.jpg']"))
+        self.click_element_id("nextElement")
+
+        self.click_element_id("validateElement")
+        self.assertTrue(self.is_text_in_body("Bonne(s) Réponse(s)!"))
 
     def tearDown(self):
         # close the browser window and clear test scenarios
         self.driver.get(URL_LIST_SCENARIO)
-        # if self.is_element_present(By.CSS_SELECTOR, "img[alt = 'Supprimer la question']"):
-        #     self.click_element_css("img[alt = 'Supprimer la question']")
-        # self.driver.quit()
+        if self.is_element_present(By.CSS_SELECTOR, "img[alt = 'Supprimer la question']"):
+            self.click_element_css("img[alt = 'Supprimer la question']")
+            self.driver.switch_to.alert.accept()
+        self.driver.quit()
+
+    def is_text_in_body(self, text):
+        body_text = self.driver.find_element_by_tag_name('body').text
+        return text in body_text
 
     def is_element_present(self, how, what):
         """
