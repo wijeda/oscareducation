@@ -24,7 +24,6 @@ class Resource_TestCase(TestCase):
     def test_resource_add_rating(self):
         t = self.r.add_star(2,self.u)
         star_rating = Star_rating.objects.get(id=t.id)
-        print(str(t.id)+"BB")
         self.assertEqual(star_rating.star,2)
         self.assertEqual(star_rating.rated_by,self.u)
 
