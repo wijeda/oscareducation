@@ -52,6 +52,7 @@ def edit_scenario(request, id):
     return render(request, "train/editScenario.haml", dico)
 
 def get_data(request, id):
+
     s = Scenario.objects.get(id=id)
 
     dico = {}
@@ -80,6 +81,10 @@ def get_data(request, id):
     for i in images:
         elem = {"type" : "ImgElem", "order": i.order, "data":{"id_scenario": id, "title":i.title, "url": i.url, "description":i.description }}
         elements.append(elem)
+
+    mcq = MCQElem.objects.filter(id_scenario=id)
+    for m in mcq:
+        elem = {"type" : "MCQElem", "order": m.order, "title": m.title, "data":{"id_scenario": id, "instruction": m.instruction, "question": m.question}}
 
     # for element in elements:
     #     print(element["data"]['order'])

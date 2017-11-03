@@ -107,18 +107,19 @@ class EditScenario {
 
     getElemInputBlockMCQ(elemMCQ){
 
-        let consigne = elemMCQ.childNodes[1].childNodes[3].value;
-        let question = elemMCQ.childNodes[1].childNodes[11].value;
-        let rep = [];
+        let title = elemMCQ.getElementsByClassName('titre_MCQ_Elem')[0].value;
+        let instruction = elemMCQ.getElementsByClassName('instruction_MCQ_Elem')[0].value;
+        let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
+        let answers = [];
         for (let elem of elemMCQ.childNodes[1].childNodes){
-            if (elem.className == "repLine"){
-                let reponse = elem.childNodes[3].value;
-                let checked = elem.childNodes[5].checked;
-                rep.push({"answer": reponse, "solution": checked});
-            }
+             if (elem.className == "repLine"){
+                 let reponse = elem.childNodes[3].value;
+                 let checked = elem.childNodes[5].checked;
+                 answers.push({"answer": reponse, "solution": checked});
+             }
         }
+        return {"type":"MCQElem", "data":{"title": title, "instruction": instruction, "question": question, "answers" : answers}}
 
-        return {"type":"MCQElem", "data":{"consigne": consigne, "question": question, "rep" : rep}}
     }
 
     // get the JSON data when editing in order to retrieve the elements
@@ -176,6 +177,25 @@ class EditScenario {
         let newelem = document.createElement("div");
         newelem.classList.add('mcqBlockElem');
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
+        console.log(this.data["elements"][index]);
+        // filling the instructions and the question
+        newelem.getElementsByClassName('titre_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('instruction')[0].value = this.data["elements"][index]["data"]["instruction"]
+        newelem.getElementsByClassName('question')[0].value = this.data["elements"][index]["data"]["question"]
+
+        // filling the first and the second answer of the mcq (because they are mandatory)
+        newelem.getElementsByClassName('answer1')[0].value = this.data["elements"][index]["data"]["answers"][0]["answer"]
+        newelem.getElementsByClassName('answer1_is_valid')[0].checked = this.data["elements"][index]["data"]["answers"][0]["solution"]
+
+        newelem.getElementsByClassName('answer2')[0].value = this.data["elements"][index]["data"]["answers"][1]["answer"]
+        newelem.getElementsByClassName('answer2_is_valid')[0].checked = this.data["elements"][index]["data"]["answers"][1]["solution"]
+
+        // optionally filling the other answers
+        for(let i = 2;i<this.data["elements"][index]["data"]["answers"].length;i++)
+        {
+            addReponseFilled(newelem.getElementsByClassName('panel-body')[0], this.data["elements"][index]["data"]["answers"][i]);
+        }
+
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
     }
@@ -186,7 +206,6 @@ class EditScenario {
         {
             if(this.data["elements"][i]["type"] == "TextElem")
             {
-
                 this.makeFilledText(i);
             }
             else if(this.data["elements"][i]["type"] == "ImgElem")
@@ -197,7 +216,7 @@ class EditScenario {
             {
                 this.makeFilledVid(i);
             }
-            else if(this.data["elements"][i]["type"] == "McqElem")
+            else if(this.data["elements"][i]["type"] == "MCQElem")
             {
                 this.makeFilledMcq(i);
             }
@@ -215,6 +234,7 @@ class EditScenario {
         }
 
         data["elements"] = []
+
 
         for(let i = 5; i < this.anchor.childNodes.length; i++)
         {
@@ -305,7 +325,7 @@ function removeReponse(elem){
     return false;
 }
 
-function addReponse(elem){
+function addReponse(elem, answer){
     var root = elem.parentNode.parentNode;
     let count = 0;
     let repLineElem = null;
@@ -330,6 +350,37 @@ function addReponse(elem){
     //root.parentNode.removeChild(root);
     return false;
 }
+
+function addReponseFilled(root, answer){
+    let count = 0;
+    let repLineElem = null;
+    for(let subElem of root.childNodes){
+        console.log("SUBELEM : "  +subElem);
+        console.log(subElem);
+        if (subElem.className == "repLine"){
+            count++;
+            if(repLineElem == null){
+                repLineElem = subElem;
+            }
+        }
+    }
+    if (count < 4) {
+        let newelem = document.createElement("div");
+        newelem.classList.add('repLine');
+        newelem.innerHTML = repLineElem.innerHTML;
+        let txt = repLineElem.childNodes[1].innerHTML;
+        newelem.childNodes[1].innerHTML = txt.substring(0,txt.length -2) + (count +1);
+        newelem.childNodes[7].style.display = "inline";
+        newelem.getElementsByClassName('answer1')[0].value = answer["answer"]
+        newelem.getElementsByClassName('answer1_is_valid')[0].checked = answer["solution"]
+
+        root.appendChild(newelem);
+    }
+
+    //root.parentNode.removeChild(root);
+    return false;
+}
+
 
 // initiation
 window.onload = function(){

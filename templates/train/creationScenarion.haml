@@ -80,15 +80,15 @@
             %br
             %div.repLine
                 %label{:for => 'reponse'} Réponse 1:
-                %input{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
-                %input{:id => 'button', :type => "checkbox"}
+                %input.answer1{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
+                %input.answer1_is_valid{:id => 'button', :type => "checkbox"}
                 %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)", :style => "display : none"}
                                 %span.glyphicon.glyphicon-remove
             %br
             %div.repLine
                 %label{:for => 'reponse'} Réponse 2:
-                %input{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
-                %input{:id => 'button', :type => "checkbox"}
+                %input.answer2{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
+                %input.answer2_is_valid{:id => 'button', :type => "checkbox"}
                 %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)"}
                                 %span.glyphicon.glyphicon-remove
             %br
