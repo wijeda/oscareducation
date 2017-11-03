@@ -15,6 +15,16 @@ function chart_refresh()
 
 }
 
+function chart_saveInJson(questions)
+{
+    for(var i = 0; i<questions.length;i++){
+        //alert(JSON.stringify(questions[i], null, 4));
+        if(questions[i].startsWith('chart')){
+
+        }
+    }
+}
+
 function chart_createChart(element)
 {
     console.log('created a chart !');
@@ -22,7 +32,7 @@ function chart_createChart(element)
     var type = $(element).data( "chart-type" );
     var dataArr = $(element).data("chart-percent");
 
-    if(type == "piechart")
+    if(type.includes("piechart"))
     {
         let board = JXG.JSXGraph.initBoard(element.id, {showNavigation:false, showCopyright:false, boundingbox: [-5, 5, 5, -5]});
         board.containerObj.style.backgroundColor = 'white';
@@ -40,7 +50,7 @@ function chart_createChart(element)
         );
         board.unsuspendUpdate();
     }
-    if(type == "barchart")
+    if(type.includes("barchart"))
     {
 
         let board = JXG.JSXGraph.initBoard(element.id, { axis:true,showCopyright:false, boundingbox: [-1, 5, 5, -1]});

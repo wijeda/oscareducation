@@ -60,6 +60,8 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
         $("#submit-pull-request").addClass("disabled");
 
+        chart_saveInJson($scope.questions);
+
         $http.post("submit/", {"questions": $scope.questions, "html": html, "skill_code": skill_code, "image": $scope.base64img, "testable_online": $scope.testable_online})
             .success(function(data) {
                 if ($scope.forTestExercice && inUpdateMode) {
