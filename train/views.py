@@ -85,6 +85,19 @@ def get_data(request, id):
     #     print(element["data"]['order'])
 
     # print(elements)
+    # filling the qcm elements
+
+    qcm = MCQElem.objects.filter(id_scenario=id)
+
+    for q in qcm:
+        answers = []
+        answer_fromDB = MCQReponse.objects.filter(id_question=q.id)
+        for a in answer_fromDB:
+            answers.append({"answer": a.answer, "solution": a.is_answer})
+
+        elem = {"type" : "MCQElem", "order": q.order, "data":{"id_scenario": id, "title":q.title, "instruction": q.instruction, "question":q.question, "answers": answers}}
+        elements.append(elem)
+
     elements.sort(key = itemgetter('order'))
     # = sorted(elements, key=elements["order"])
     # print(elements)
@@ -93,6 +106,7 @@ def get_data(request, id):
     # print(dico)
 
     print("fin de get_data")
+
 
     return JsonResponse(dico)
 
@@ -226,23 +240,9 @@ def save_scenario(request):
                 title_elem = parsed_json['elements'][i]['data']['title']
                 instruction_elem = parsed_json['elements'][i]['data']['instruction']
                 question_elem = parsed_json['elements'][i]['data']['question']
-                reponse_elem = []
-                #for reponse in parsed_json['elements'][i]['data']['rep']:
-                #    reponse_elem.append(reponse)
-                #reponse1 = reponse_elem[0]
-                #reponse2 = reponse_elem[1]
-                #if len(reponse_elem) == 3 :
-                #    reponse3 = reponse_elem[2]
-                #else:
-                #    reponse3= ''
-                #if len(reponse_elem) == 4 :
-                #    reponse4 = reponse_elem[3]
-                #else:
-                #    reponse4 = ''
-
-
                 elem = MCQElem(id_scenario = id_scenario, order = i, title = title_elem, instruction = instruction_elem, question = question_elem)
                 elem.save()
+
                 id_MCQ_Elem = elem.id
                 for rep in parsed_json['elements'][i]['data']['answers']:
                     ans = MCQReponse(id_question = id_MCQ_Elem, answer = rep['answer'], is_answer = rep['solution'] )
