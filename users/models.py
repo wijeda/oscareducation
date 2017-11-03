@@ -21,10 +21,10 @@ class Professor(models.Model):
     user = models.OneToOneField(User)
     is_pending = models.BooleanField(default=True)
     code = models.BigIntegerField(null=True,blank=True)
-    nbr_4_star_res = models.IntegerField()
+    nbr_4_star_res = models.IntegerField(null=True)
     status = JSONField()
     status_changed = models.BooleanField(default=False)
-    id = models.IntegerField(primary_key = True)
+
     def print_something(self):
         print(self.nbr_4_star_res)
 

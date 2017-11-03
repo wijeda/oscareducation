@@ -6,6 +6,9 @@ from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from rating.models import Star_rating
+from django.utils import timezone
+from users.models import Professor,Student
+from django.db.models import Sum
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
@@ -23,22 +26,43 @@ class Resource(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     added_by = models.ForeignKey(User, null=True)
 
+
     def add_star(self, rate, user):
-        f = Star_rating.objects.create()
-        f.add_stars(star,rate,self,user)
+        f = Star_rating.objects.create(resource=self,star=rate,rated_by=user,rated_on=timezone.now())
+        return f
 
-        if isinstance(user, Professor):
-            pass
-        elif isinstance(user, Student):
-            pass
+    def average(self):
+        all = Star_rating.objects.filter(resource=self)
+        prof_nb = 0
+        student_nb = 0
+        star_prof = 0
+        star_student = 0
+        for e in all:
+            try:
+                prof = Professor.objects.get(user=e.rated_by)
+            except Professor.DoesNotExist:
+                prof = None
+            try:
+                student = Student.objects.get(user=e.rated_by)
+            except Student.DoesNotExist:
+                student = None
+            if prof != None:
+                prof_nb = prof_nb + 1
+                star_prof = star_prof + e.star
+            if student != None:
+                student_nb = student_nb + 1
+                star_student = star_student + e.star
+
+        if student_nb==0:
+            if prof_nb==0:
+                return (-1,-1)
+            else:
+                return (-1, star_prof / prof_nb)
         else:
-            pass
-
-    def average_prof(self):
-        pass
-
-    def average_student(self):
-        pass
+            if prof_nb==0:
+                return (star_student / student_nb,-1)
+            else:
+                return (star_student / student_nb, star_prof / prof_nb)
 
 
 #khanAcademy video reference data parsed from source url
