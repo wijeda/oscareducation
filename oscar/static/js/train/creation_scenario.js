@@ -72,6 +72,7 @@ class ScenarioCreation {
 
     }
 
+
     getElemInputBlockText(elemText){
         let title = "Titre par defaut"; // TODO ajouter cet input
         let content = elemText.childNodes[1].childNodes[7].value;
@@ -324,4 +325,3 @@ function editForm(){
     //return xmlHttp.responseText;
     sendForm();
 }
-

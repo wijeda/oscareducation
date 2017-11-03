@@ -3,7 +3,7 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, blockID){
+    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, endButtonID, blockID){
         this.anchor = document.getElementById(anchorID);
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
@@ -97,10 +97,11 @@ window.onload = function(){
     let nextButtonID = "nextElement";
     let previousButtonID = "previousElement";
     let validateButtonID = "validateElement";
+    let endButtonID = "endElement";
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","mcqBlockID":"mcqBlockElem"};
     let json = getJsonData();
-    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, blockID);
+    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID);
 
 };
 
@@ -119,31 +120,6 @@ function getCookie(c_name)
         }
     }
     return "";
- }
-
-
- function getForm() {
-    //  let data = {'creator': 'super_creator',
-    //              "titre": "super_titre",
-    //              "skill": "super_skill",
-    //              "topic": "super_topic",
-    //              "grade_level": "super grade",
-    //              "instructions": "super_instructions",
-    //              "public": "False",
-    //              "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-    //                          {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my new content"}}],
-    //      };
-
-     let data_mcq = {"elements": [{"type": "MCQElem", "data":{"title": "MCQ_test_title", "instruction": "MCQ_test_instruction",
-                                                            "question": "MCQ_test_question", "answers":[{"answer":"MCQ_test_answer_1"},
-                                                                                                        {"answer":"MCQ_test_answer_2"},
-                                                                                                        {"answer":"MCQ_test_answer_3"}
-                                                                                                        ]
-                                                            }
-                                }]
-                    };
-     return data_mcq;
-
  }
 
 function editForm(){
