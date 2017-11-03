@@ -80,6 +80,16 @@
 	height: 35px;
 }
 
+.btn-fixed-validate {
+	background-color: #f58025;
+	border-color: #d86e1c;
+	position: absolute;
+	right: 315px;
+	top: 15%;
+	width: 100px;
+	height: 35px;
+}
+
 .box-options{
 		position: fixed;
     padding: 25px;
