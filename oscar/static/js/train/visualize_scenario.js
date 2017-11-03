@@ -72,7 +72,7 @@ class ScenarioVisualization{
     }
 
     endButtonElement(){
-        window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
+        window.location.href = "http://127.0.0.1:8000/student/train/list_scenario/";
     }
 }
 

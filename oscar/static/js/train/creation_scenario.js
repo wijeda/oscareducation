@@ -73,8 +73,8 @@ class ScenarioCreation {
     }
 
     getElemInputBlockText(elemText){
-        let title = "Titre par defaut"; // TODO ajouter cet input
-        let content = elemText.childNodes[1].childNodes[7].value;
+        let title = elemText.childNodes[1].childNodes[3].value;
+        let content = elemText.childNodes[1].childNodes[9].value;
         return {"type":"TextElem", "data":{"title": title, "content": content}}
     }
 
@@ -181,6 +181,7 @@ function loadVideo(elem){
     return false;
 }
 
+// Transforms the video URL into its embed version for better hosting support
 function getVideoId(url) {
     var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
