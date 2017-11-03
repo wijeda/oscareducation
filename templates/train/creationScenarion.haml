@@ -58,29 +58,29 @@
 
     #mcqBlockElem{:style => "display: none"}
         .panel-body
-            %label{:for => 'title'} Titre:
-            %input.titre_MCQ_Elem{:id => 'title', :placeholder => 'Title'}
+            %label Titre:
+            %input.titre_MCQ_Elem{:placeholder => 'Title'}
             %br
-            %label{:for => 'instruction'} Consigne:
-            %input.instruction_MCQ_Elem{:id => 'instruction', :placeholder => 'Instruction'}
+            %label Consigne:
+            %input.instruction_MCQ_Elem{:placeholder => 'Instruction'}
             %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
             %br
-            %label{:for => 'question'} Question:
-            %input.question_MCQ_Elem{:id => 'question', :placeholder => 'Question'}
+            %label Question:
+            %input.question_MCQ_Elem{:placeholder => 'Question'}
             %br
             %div.list_answers
                 %div.repLine
-                    %label.labelanswer{:for => 'reponse'} Réponse 1:
-                    %input.answer1{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
-                    %input.answer1isvalid{:id => 'button', :type => "checkbox"}
+                    %label.labelanswer Réponse 1:
+                    %input.answer1{:placeholder => 'Veuillez rentrer une réponse'}
+                    %input.answer1isvalid{:type => "checkbox"}
                     %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)", :style => "display : none"}
                                     %span.glyphicon.glyphicon-remove
                 %br
                 %div.repLine
-                    %label{:for => 'reponse'} Réponse 2:
-                    %input.answer2{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
-                    %input.answer2isvalid{:id => 'button', :type => "checkbox"}
+                    %label Réponse 2:
+                    %input.answer2{:placeholder => 'Veuillez rentrer une réponse'}
+                    %input.answer2isvalid{:type => "checkbox"}
                     %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)"}
                                     %span.glyphicon.glyphicon-remove
                 %br
