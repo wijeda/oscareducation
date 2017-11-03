@@ -1,6 +1,5 @@
 /*
     Every function must follow the format chart_nameInCamelCase
-
 */
 
 $( document ).ready(function() {
