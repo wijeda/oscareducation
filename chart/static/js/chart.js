@@ -2,32 +2,28 @@
     Every function must follow the format chart_nameInCamelCase
 */
 
+var chart_data = undefined;
+chart_data.boards = []
+chart_data.data = []
+
 $( document ).ready(function() {
     chart_refresh();
 });
 
 function chart_refresh()
 {
-    boardList = [];
     graphics = document.getElementsByClassName("chartQuestion");  //find all charts on the page
     for(var i = 0;i<graphics.length;i++){
-        boardList.push(chart_createChart(graphics[i]));  //create the element founded
+        chart_createChart(graphics[i]);  //create the element founded
     }
-    return boardList;
 }
 
-function chart_saveInJson(questions, boardList)
+function chart_saveInJson(questions)
 {
-    var graphNum = 0;
     for(var i = 0; i<questions.length && graphNum<boardList.length;i++){
         //alert(JSON.stringify(questions[i], null, 4));
         if(questions[i].type.startsWith('chart')){
-            var graphObjs = boardList[graphNum].objectsList
-            for(var j = 0; j<graphObjs.length;j++){
 
-            }
-
-            graphNum ++;
         }
     }
 }
@@ -67,5 +63,5 @@ function chart_createChart(element)
 
 
     }
-    return board;
+    chart_data.bords.push(board)
 }

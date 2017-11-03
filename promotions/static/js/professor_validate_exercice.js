@@ -10,7 +10,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     }
 
     $scope.validateExercice = function() {
-        chart_saveInJson($scope.questions, $scope.boardList);
+        chart_saveInJson($scope.questions);
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
             .error(function() {
                 console.log("error")
@@ -116,7 +116,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         }
 
         setTimeout(function() {
-            $scope.boardList = chart_refresh();
+            chart_refresh();
         }, 100);
         
     }
