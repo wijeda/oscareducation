@@ -313,11 +313,11 @@ function removeReponse(elem){
     return false;
 }
 
-function addReponse(elem, answer){
+function addReponse(elem){
     var root = elem.parentNode.parentNode;
     let count = 0;
     let repLineElem = null;
-    for(let subElem of root.childNodes[1].childNodes){
+    for(let subElem of root.getElementsByClassName('list_answers')[0].childNodes){
         if (subElem.className == "repLine"){
             count++;
             if(repLineElem == null){
@@ -329,10 +329,10 @@ function addReponse(elem, answer){
         let newelem = document.createElement("div");
         newelem.classList.add('repLine');
         newelem.innerHTML = repLineElem.innerHTML;
-        let txt = repLineElem.childNodes[1].innerHTML;
-        newelem.childNodes[1].innerHTML = txt.substring(0,txt.length -2) + (count +1);
-        newelem.childNodes[7].style.display = "inline";
-        root.childNodes[1].appendChild(newelem);
+        let txt = repLineElem.getElementsByClassName('labelanswer')[0].innerHTML;
+        newelem.getElementsByClassName('labelanswer')[0].innerHTML = txt.substring(0,txt.length -2) + (count +1) +':';
+        newelem.getElementsByClassName('removeReponse')[0].style.display = "inline";
+        root.getElementsByClassName('list_answers')[0].appendChild(newelem);
     }
 
     //root.parentNode.removeChild(root);

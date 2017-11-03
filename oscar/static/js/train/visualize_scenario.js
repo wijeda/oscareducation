@@ -8,11 +8,11 @@ class ScenarioVisualization{
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
         this.previousButton =  document.getElementById(previousButtonID);
-        console.log(this.previousButton);
         this.previousButton.addEventListener("click", this.previousButtonElement.bind(this), true);
         this.validateButton = document.getElementById(validateButtonID);
-        console.log(this.validateButton);
         this.validateButton.addEventListener("click", this.validateButtonElement.bind(this), true);
+        this.endButton = document.getElementById(endButtonID);
+        this.endButton.addEventListener("click", this.endButtonElement.bind(this), true);
         this.blockText = document.getElementById(blockID["textBlockID"]);
         this.blockImage = document.getElementById(blockID["imgBlockID"]);
         this.blockVideo = document.getElementById(blockID["videoBlockID"]);
