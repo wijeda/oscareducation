@@ -60,7 +60,13 @@
             .ligneorangefine
 
             .boxclasse.container-fluid
-                %div.content
+                %p.instruction
+                %div.question
+                %ul.answers
+                    .blocanswer{:style => "display: none"}
+                        %li
+                            .answer
+                            %input.isAnswer{:type => "checkbox"}
 
     #Tools.blk
       .container-fluid.box-options

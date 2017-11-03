@@ -58,6 +58,7 @@
 	height: 420px;
 }
 
+
 .btn-fixed-previous {
   background-color: #f58025;
   border-color: #d86e1c;
@@ -85,4 +86,9 @@
     background-color:white;
 		top: 80%;
 		width: 39%;
+
+.blocanswer li div{
+	display: inline-block;
+	width: 80px;
+
 }

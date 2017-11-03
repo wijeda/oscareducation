@@ -45,17 +45,6 @@ class ScenarioCreation {
         this.anchor.appendChild(newelem);
     }
 
-    // makeBlockElemVideo(){
-    //     //TODO : adapter les liens
-    //     let newelem = document.createElement("input");
-    //     newelem.setAttribute("placeholder", "URL de votre vidéo");
-    //     newelem.innerHTML = this.videoBlockElem.innerHTML;
-    //     this.anchor.appendChild(newelem);
-    //     newelem.style.display = "block";
-    //     newelem.style.width = "100%";
-    //
-    // }
-
     makeBlockElemVideo(){
         let newelem = document.createElement("div");
         newelem.classList.add('videoBlockElem');
@@ -97,11 +86,9 @@ class ScenarioCreation {
     }
 
     getElemInputBlockVideo(elemVideo){
-        console.log("MDRRRRRRRR");
         let title = elemVideo.childNodes[1].childNodes[3].value;
         let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
         let description = elemVideo.getElementsByClassName('description')[0].value
-        console.log(description);
         return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
     }
     getElemInputBlockMCQ(elemMCQ){
@@ -119,7 +106,7 @@ class ScenarioCreation {
         }
         return {"type":"MCQElem", "data":{"title": title, "instruction": instruction, "question": question, "answers" : answers}}
 
-        }
+    }
 
 
     sendForm() {
@@ -138,8 +125,6 @@ class ScenarioCreation {
         {
 
             let classElem = this.anchor.childNodes[i].className
-
-            console.log(classElem);
 
             if(classElem == "textBlockElem")
             {
@@ -162,20 +147,8 @@ class ScenarioCreation {
 
         }
 
-        console.log(data);
+        // construct an HTTP request
 
-
-        let data3 = {"creator": "super_creator",
-                    "titre": "super_titre",
-                    "skill": "super_skill",
-                    "topic": "super_topic",
-                    "grade_level": "super grade",
-                    "instructions": "super_instructions",
-                    "public": "False",
-                    "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-                                {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
-            }
-            // construct an HTTP request
         let xhr = new XMLHttpRequest();
 
         xhr.open("POST", "/professor/train/save_scenario", true);
@@ -185,9 +158,7 @@ class ScenarioCreation {
         xhr.send(JSON.stringify(data));
 
         xhr.onloadend = function () {
-            // done
-            console.log(data);
-            console.log("done");
+            window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
         };
 
     }
@@ -203,7 +174,6 @@ function loadImage(elem){
 
 function loadVideo(elem){
     var root = elem.parentNode.childNodes;
-    console.log(root);
     var ID = getVideoId(root[7].value);
     var embedURL = "//www.youtube.com/embed/" + ID
     root[1].setAttribute("src", embedURL);
@@ -218,7 +188,6 @@ function getVideoId(url) {
     if (match && match[2].length == 11) {
         return match[2];
     } else {
-        console.log("ERROR with video URL !")
         return 'error';
     }
 }
@@ -349,11 +318,9 @@ function getCookie(c_name)
 function editForm(){
     var pathTab = window.location.pathname.split("/")
     var id = pathTab[pathTab.length - 1]
-    console.log("hello")
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
     xmlHttp.send( null );
     //return xmlHttp.responseText;
-    console.log("hello")
     sendForm();
 }
