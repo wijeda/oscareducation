@@ -3,6 +3,9 @@
 
 */
 
+
+
+var bar
 $( document ).ready(function() {
     chart_refresh();
 });
@@ -37,7 +40,23 @@ function chart_createBarChartFromForm()
 	
 	var maxX = $("#maxX").val();
 	var maxY = $("#maxY").val();
-	let board = JXG.JSXGraph.initBoard(element.id,{ axis:true,showCopyright:false, boundingbox: [zeroX, maxY, maxX, zeroY]});
+	let board = JXG.JSXGraph.initBoard(element.id,{ axis:false,showCopyright:false, boundingbox: [zeroX, maxY, maxX, zeroY]});
+	xaxis = board.create('axis', [[0,0],[1,0]],
+				{name:barGraphX,
+				withLabel:true,
+				label: {
+					position:'rt',
+					offset:[-15,20]
+					}
+				});
+	yaxis = board.create('axis', [[0,0],[0,1]],
+				{name:barGraphY,
+				withLabel:true,
+				label: {
+					position:'rt',
+					offset:[20,0]
+					}
+				});
     let chart = board.create('chart', [],
                 {chartStyle:'bar', width:1, labels:[],
                  colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
@@ -81,5 +100,15 @@ function chart_createChart(element)
 }
 function chart_add(bar)
 {
+	alert("yo")
+	graphics = document.getElementsByClassName("chartQuestion"); 
+	var element;
+	for(var i = 0;i<graphics.length;i++){
+  		var type = $(graphics[i]).data( "chart-type" );
+		if(type == "barchart") element = graphics[i];
+	}
+	
+	alert(element.id);
+	
 	console.log('added a bar to the chart !');
 }
