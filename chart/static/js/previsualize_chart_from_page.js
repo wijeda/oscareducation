@@ -10,7 +10,9 @@ function clone_chart()
    if (chart !== null)
    {
       let previsualization = document.getElementById("previsualized-chart");
-
-      previsualization.innerHTML = chart.innerHTML
+      if (previsualization !== null)
+      {
+         previsualization.innerHTML = chart.innerHTML
+      }
    }
 }
