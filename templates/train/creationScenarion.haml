@@ -49,29 +49,63 @@
         .panel-body
             %label{:for => 'title_video'} Titre:
             %input{:id => 'title_video', :placeholder => '(Optionnel)'}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                %span.glyphicon.glyphicon-remove
             %br
             .form-group
-                %iframe{:width => "420", :height => "315"}
+                %iframe{:width => "420", :height => "315", :style => "display: none"}
                 %br
                 %label URL de votre vidéo (Youtube)
                 %input{:id => 'vid_url', :type => "text"}
                 %button.btn.btn-primary#addVid{:action => "#", :onclick => "return loadVideo(this)"} Ajouter
                 -# #loadVid{:style => "display: none"}
+            .form-group
+                %label{:for => 'description_vid'} Description:
+                %input.description{:id => 'description_vid', :placeholder => 'Optionnel'}
 
     #mcqBlockElem{:style => "display: none"}
-        Les QCMS ne sont pas encore fait, lol
+        .panel-body
+            %label{:for => 'title'} Titre:
+            %input.titre_MCQ_Elem{:id => 'title', :placeholder => 'Title'}
+            %br
+            %label{:for => 'instruction'} Consigne:
+            %input.instruction_MCQ_Elem{:id => 'instruction', :placeholder => 'Instruction'}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                %span.glyphicon.glyphicon-remove
+            %br
+            %label{:for => 'question'} Question:
+            %input.question_MCQ_Elem{:id => 'question', :placeholder => 'Question'}
+            %button.btn.btn-danger.addReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une réponse",:action => "#", :onclick => "return addReponse(this)"}
+                                              %span.glyphicon.glyphicon-plus
+            %br
+            %div.repLine
+                %label{:for => 'reponse'} Réponse 1:
+                %input{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
+                %input{:id => 'button', :type => "checkbox"}
+                %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)", :style => "display : none"}
+                                %span.glyphicon.glyphicon-remove
+            %br
+            %div.repLine
+                %label{:for => 'reponse'} Réponse 2:
+                %input{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
+                %input{:id => 'button', :type => "checkbox"}
+                %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)"}
+                                %span.glyphicon.glyphicon-remove
+            %br
 
     #textBlockElem{:style => "display: none"}
         .panel-body
             %label{:for => 'title_txt'} Texte:
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                %span.glyphicon.glyphicon-remove
             %br
             %textarea{:rows => "3", :placeholder => "Tapez votre texte"}
 
     #imgBlockElem{:style => "display: none"}
         .panel-body
             %label{:for => 'title_img'} Titre:
-            %input{:id => 'title_img', :placeholder => 'Optionnel'}
-            %button.btn.btn-danger#deleteElementImg{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeImage(this)"}
+            %input#title_img.title_img{:placeholder => 'Optionnel'}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
             %br
             .form-group
@@ -103,6 +137,6 @@
                     Ajouter un QCM
 
             %br
-            %button.btn.btn-primary#saveScenario{:onclick=> "sendForm()"}
+            %button.btn.btn-primary#saveScenario
                 Save
         {% endbuttons %}

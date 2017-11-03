@@ -1,8 +1,8 @@
-#whiteBox {
+/*#whiteBox {
 	background-color: white;
-}
+}*/
 
-#parameters label {
+#parameters label, .mcqBlockElem label {
 	width: 140px;
 	height: 35px;
 }
@@ -25,4 +25,35 @@
 
 #contentlist {
 	color: #f58025;
+}
+
+#parameters, .imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem {
+	background-color: white;
+	margin-bottom: 20px;
+}
+
+.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem {
+	width: 100%;
+	position: relative;
+}
+
+.textBlockElem {
+	width: 100%;
+	height: 150px;
+}
+
+.deleteElement {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 5px;
+}
+
+.img_scenario {
+	width: 100%;
+}
+
+.video_scenario{
+	width: 100%;
+	height: 420px;
 }

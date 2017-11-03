@@ -32,10 +32,35 @@ class TextElem(models.Model):
     def __str__(self):
         return("titre:"+ self.title+" and content :" + self.content)
 
-class PicElem(models.Model):
+class ImgElem(models.Model):
 
     id_scenario = models.IntegerField()
     order = models.IntegerField()
     title = models.CharField("Titre", max_length = 500)
     url = models.CharField("url", max_length = 500)
     description = models.CharField("description", max_length = 500)
+
+class VidElem(models.Model):
+
+    id_scenario = models.IntegerField()
+    order = models.IntegerField()
+    title = models.CharField("Titre", max_length = 500)
+    url = models.CharField("url", max_length = 500)
+    description = models.CharField("description", max_length = 500)
+
+    def __str__(self):
+        return("titre:"+ self.title+" and description :" + self.description)
+
+class MCQElem(models.Model):
+
+    id_scenario = models.IntegerField()
+    order = models.IntegerField()
+    title = models.CharField("Title", max_length = 500)
+    instruction = models.CharField("Instruction", max_length = 500)
+    question = models.CharField("Question", max_length = 500)
+
+class MCQReponse(models.Model):
+    id_question = models.IntegerField()
+    answer = models.CharField("Reponse", max_length = 500)
+    is_answer = models.BooleanField()
+

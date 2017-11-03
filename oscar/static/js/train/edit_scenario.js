@@ -1,9 +1,13 @@
 "use strict";
 
-class ScenarioCreation {
+class EditScenario {
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
     constructor(param){
+        this.data = this.getJsonData();
+
+        console.log(this.data);
+
         this.anchor = document.getElementById(param.anchorID);
         this.btnPlus = document.getElementById(param.btnPlusID);
         this.addElementDiv = document.getElementById(param.addElementDivID);
@@ -29,7 +33,12 @@ class ScenarioCreation {
 
         this.saveScenarioButton = document.getElementById(param.saveScenarioButtonID);
         this.saveScenarioButton.addEventListener("click", this.sendForm.bind(this), true);
+
+        console.log("before storm");
+        this.fillPage();
     }
+
+    //Creation of empty blocks
 
     makeBlockElemText(){
         let newelem = document.createElement("div");
@@ -44,17 +53,6 @@ class ScenarioCreation {
         newelem.innerHTML = this.imgBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
     }
-
-    // makeBlockElemVideo(){
-    //     //TODO : adapter les liens
-    //     let newelem = document.createElement("input");
-    //     newelem.setAttribute("placeholder", "URL de votre vidéo");
-    //     newelem.innerHTML = this.videoBlockElem.innerHTML;
-    //     this.anchor.appendChild(newelem);
-    //     newelem.style.display = "block";
-    //     newelem.style.width = "100%";
-    //
-    // }
 
     makeBlockElemVideo(){
         let newelem = document.createElement("div");
@@ -72,6 +70,8 @@ class ScenarioCreation {
         newelem.style.display = "block";
     }
 
+    //shows add buttons on click
+
     showDiffElements(){
         if(this.addElementOption) {
             this.addElementDiv.style.display = "none";
@@ -83,6 +83,8 @@ class ScenarioCreation {
 
     }
 
+    // get the input by the user
+
     getElemInputBlockText(elemText){
         let title = "Titre par defaut"; // TODO ajouter cet input
         let content = elemText.childNodes[1].childNodes[7].value;
@@ -91,36 +93,116 @@ class ScenarioCreation {
 
     getElemInputBlockImage(elemImage){
         let title = elemImage.childNodes[1].childNodes[3].value;
-        let url = elemImage.childNodes[1].childNodes[9].childNodes[7].value
+        let url = elemImage.childNodes[1].childNodes[9].childNodes[7].value;
         let description = elemImage.childNodes[1].childNodes[11].childNodes[3].value;
         return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
     getElemInputBlockVideo(elemVideo){
-        console.log("MDRRRRRRRR");
         let title = elemVideo.childNodes[1].childNodes[3].value;
-        let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
-        let description = elemVideo.getElementsByClassName('description')[0].value
-        console.log(description);
+        let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value;
+        let description = elemVideo.getElementsByClassName('description')[0].value;
         return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
     }
+
     getElemInputBlockMCQ(elemMCQ){
 
-        let title = elemMCQ.getElementsByClassName('titre_MCQ_Elem')[0].value;
-        let instruction = elemMCQ.getElementsByClassName('instruction_MCQ_Elem')[0].value;
-        let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
-        let answers = [];
+        let consigne = elemMCQ.childNodes[1].childNodes[3].value;
+        let question = elemMCQ.childNodes[1].childNodes[11].value;
+        let rep = [];
         for (let elem of elemMCQ.childNodes[1].childNodes){
-             if (elem.className == "repLine"){
-                 let reponse = elem.childNodes[3].value;
-                 let checked = elem.childNodes[5].checked;
-                 answers.push({"answer": reponse, "solution": checked});
-             }
-        }
-        return {"type":"MCQElem", "data":{"title": title, "instruction": instruction, "question": question, "answers" : answers}}
-
+            if (elem.className == "repLine"){
+                let reponse = elem.childNodes[3].value;
+                let checked = elem.childNodes[5].checked;
+                rep.push({"answer": reponse, "solution": checked});
+            }
         }
 
+        return {"type":"MCQElem", "data":{"consigne": consigne, "question": question, "rep" : rep}}
+    }
+
+    // get the JSON data when editing in order to retrieve the elements
+    getJsonData(){
+
+        var pathTab = window.location.pathname.split("/")
+        var id = pathTab[pathTab.length - 1]
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "/professor/train/data/"+id, false);
+
+        xhr.send(null);
+        // done
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var myArr = JSON.parse(xhr.responseText);
+            console.log(myArr);
+
+            return myArr;
+        }
+    }
+
+    // make a filled element
+    makeFilledText(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('textBlockElem');
+        newelem.innerHTML = this.textBlockElem.innerHTML;
+        newelem.getElementsByClassName('content')[0].value = this.data["elements"][index]["data"]["content"]
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledImg(index){
+        let newelem = document.createElement("div")
+        newelem.classList.add('imgBlockElem');
+        newelem.innerHTML = this.imgBlockElem.innerHTML;
+        newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url')[0].value = this.data["elements"][index]["data"]["url"]
+        newelem.getElementsByClassName('description')[0].value = this.data["elements"][index]["data"]["description"]
+        newelem.getElementsByClassName('image')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledVid(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('videoBlockElem');
+        newelem.innerHTML = this.videoBlockElem.innerHTML;
+        newelem.getElementsByClassName('title_vid')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url')[0].value = this.data["elements"][index]["data"]["url"]
+        newelem.getElementsByClassName('description')[0].value = this.data["elements"][index]["data"]["description"]
+        loadVideo(newelem.getElementsByClassName('addVid')[0])
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledMcq(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('mcqBlockElem');
+        newelem.innerHTML = this.mcqBlockElem.innerHTML;
+        this.anchor.appendChild(newelem);
+        newelem.style.display = "block";
+    }
+
+    fillPage()
+    {
+        for(let i = 0;i<this.data["elements"].length;i++)
+        {
+            if(this.data["elements"][i]["type"] == "TextElem")
+            {
+
+                this.makeFilledText(i);
+            }
+            else if(this.data["elements"][i]["type"] == "ImgElem")
+            {
+                this.makeFilledImg(i);
+            }
+            else if(this.data["elements"][i]["type"] == "VidElem")
+            {
+                this.makeFilledVid(i);
+            }
+            else if(this.data["elements"][i]["type"] == "McqElem")
+            {
+                this.makeFilledMcq(i);
+            }
+        }
+    }
 
     sendForm() {
 
@@ -159,23 +241,10 @@ class ScenarioCreation {
             }
 
 
-
         }
 
         console.log(data);
 
-
-        let data3 = {"creator": "super_creator",
-                    "titre": "super_titre",
-                    "skill": "super_skill",
-                    "topic": "super_topic",
-                    "grade_level": "super grade",
-                    "instructions": "super_instructions",
-                    "public": "False",
-                    "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-                                {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
-            }
-            // construct an HTTP request
         let xhr = new XMLHttpRequest();
 
         xhr.open("POST", "/professor/train/save_scenario", true);
@@ -223,6 +292,18 @@ function getVideoId(url) {
     }
 }
 
+function removeElem(elem){
+    var root = elem.parentNode.parentNode;
+    root.parentNode.removeChild(root);
+    return false;
+}
+
+function removeReponse(elem){
+    var root = elem.parentNode;
+    root.parentNode.removeChild(root);
+    return false;
+}
+
 function addReponse(elem){
     var root = elem.parentNode.parentNode;
     let count = 0;
@@ -246,17 +327,6 @@ function addReponse(elem){
     }
 
     //root.parentNode.removeChild(root);
-    return false;
-}
-
-function removeElem(elem){
-    var root = elem.parentNode.parentNode;
-    root.parentNode.removeChild(root);
-    return false;
-}
-function removeReponse(elem){
-    var root = elem.parentNode;
-    root.parentNode.removeChild(root);
     return false;
 }
 
@@ -304,7 +374,7 @@ window.onload = function(){
 
         "imgBlockElemID": "imgBlockElem",
         "imgButtonID": "addElementImg",
-        "saveScenarioButtonID": "saveScenario"
+        "saveScenarioButtonID": "saveScenario",
 
         /*"loadImgID": "loadImage",
         "loadImgButtonID": "addImg",
@@ -323,7 +393,7 @@ window.onload = function(){
                         imgButtonID,
                         mcqBlockElemID,
                         mcqButtonID);*/
-    new ScenarioCreation(param)
+    new EditScenario(param)
 
 };
 

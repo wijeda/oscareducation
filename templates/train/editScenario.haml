@@ -7,7 +7,7 @@
 
 -block content
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
-    %script{:src => "/static/js/train/creation_scenario.js"}
+    %script{:src => "/static/js/train/edit_scenario.js"}
     %form#whiteBox{:methode => "POST"}
                     -# , :action => "save_scenario"}
         {% csrf_token %}
@@ -40,17 +40,78 @@
             %input{:id => 'public', :type => 'checkbox'}
             %br
 
-
-
     #videoBlockElem{:style => "display: none"}
-        URL de votre vidéo :
-        video
+        .panel-body
+            %label{:for => 'title_video'} Titre:
+            %input.title_vid{:id => 'title_video', :placeholder => '(Optionnel)'}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                %span.glyphicon.glyphicon-remove
+            %br
+            .form-group
+                %iframe.video{:width => "420", :height => "315", :style => "display: none"}
+                %br
+                %label URL de votre vidéo (Youtube)
+                %input.url{:id => 'vid_url', :type => "text"}
+                %button.btn.btn-primary#addVid.addVid{:action => "#", :onclick => "return loadVideo(this)"} Ajouter
+                -# #loadVid{:style => "display: none"}
+            .form-group
+                %label{:for => 'description_vid'} Description:
+                %input.description{:id => 'description_vid', :placeholder => 'Optionnel'}
 
     #mcqBlockElem{:style => "display: none"}
-        Les QCMS ne sont pas encore fait, lol
+        .panel-body
+            %label{:for => 'consigne'} Consigne:
+            %input{:id => 'consigne', :placeholder => 'Consigne'}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                %span.glyphicon.glyphicon-remove
+            %br
+            %label{:for => 'question'} Question:
+            %input{:id => 'question', :placeholder => 'Question'}
+            %button.btn.btn-danger.addReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une réponse",:action => "#", :onclick => "return addReponse(this)"}
+                                              %span.glyphicon.glyphicon-plus
+            %br
+            %div.repLine
+                %label{:for => 'reponse'} Réponse 1:
+                %input{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
+                %input{:id => 'button', :type => "checkbox"}
+                %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)", :style => "display : none"}
+                                %span.glyphicon.glyphicon-remove
+            %br
+            %div.repLine
+                %label{:for => 'reponse'} Réponse 2:
+                %input{:id => 'reponse', :placeholder => 'Veuillez rentrer une réponse'}
+                %input{:id => 'button', :type => "checkbox"}
+                %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)"}
+                                %span.glyphicon.glyphicon-remove
+            %br
 
     #textBlockElem{:style => "display: none"}
-        text
+        .panel-body
+            %label{:for => 'title_txt'} Texte:
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                %span.glyphicon.glyphicon-remove
+            %br
+            %textarea.content{:rows => "3", :placeholder => "Tapez votre texte"}
+
+    #imgBlockElem{:style => "display: none"}
+        .panel-body
+            %label{:for => 'title_img'} Titre:
+            %input#title_img.title_img{:placeholder => 'Optionnel'}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                %span.glyphicon.glyphicon-remove
+            %br
+            .form-group
+                %img.image{:width => "50%"}
+                %br
+                %label Image (Entrez ici l'url de l'image)
+                %input.url{:id => 'img_url', :type => "text"}
+                -# %a{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image"}
+                %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
+                -# #loadImage{:style => "display: none"}
+            .form-group
+                %label{:for => 'description_img'} Description:
+                %input.description{:id => 'description_img', :placeholder => 'Optionnel'}
+
 
     #Tools.blk
         %br
@@ -65,6 +126,8 @@
                     Ajouter d'un text
                 %button.btn.btn-primary#addElementMcq
                     Ajouter d'un QCM
+                %button.btn.btn-primary#addElementImg
+                    Ajout d'une image
 
             %br
             %button.btn.btn-primary#saveScenario{:onclick=> "editForm()"}

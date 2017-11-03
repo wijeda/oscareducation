@@ -8,7 +8,7 @@ from . import viewsStu
 
 urlpatterns = [
     url(r'^scenario/(?P<id>\d+)', views.scenario, name='student_dashboard'),
-    url(r'^data/', views.home),
+    url(r'^data/(?P<id>\d+)', views.get_data),
     url(r'^edit_scenario/(?P<id>\d+)', views.edit_scenario, name='student_dashboard'),
     url(r'^create_scenario', views.create_scenario, name='student_dashboard'),
     url(r'^save_scenario', views.save_scenario, name='student_dashboard'),
@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^list_scenario/', views.list_scenario, name='student_dashboard'),
     url(r'^student_list_scenario/', views.student_list_scenario, name='student_dashboard'),
     url(r'^make_scenario/(?P<id>\d+)', views.make_scenario, name='student_dashboard'),
+    url(r'^view_scenario/(?P<id>\d+)', views.view_scenario, name='student_dashboard'),
 ]
