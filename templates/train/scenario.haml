@@ -66,10 +66,12 @@
                     .blocanswer{:style => "display: none"}
                         %li
                             %input.isAnswer{:type => "checkbox"}
-                            %img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
                             .answer
-                            
-                %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)!
+                            %img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
+
+
+                %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)! :)
+                %p.failedMCQ{:style => "display: none"} Il y a eu une ou plusieurs erreurs :/
 
     #Tools.blk
       .container-fluid.box-options

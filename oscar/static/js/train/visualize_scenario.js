@@ -259,21 +259,30 @@ class MCQElem extends AbstractElem{
         for(let answer of this.answers){
             if(answer["solution"] != this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isAnswer")[0].checked){
                 error_number++;
+                if (answer["solution"]){
+                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].setAttribute("src", "/static/img/icons/correct.png");
+                }else{
+                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].src = "/static/img/icons/delete.png"
+                }
                 this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
             }
             else{
-                this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "none";
+                if (answer["solution"]){
+                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
+                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].setAttribute("src", "/static/img/icons/correct.png");
+                }else {
+                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "none";
+                }
+
             }
             count++;
         }
         if(error_number > 0){
             this.node.getElementsByClassName("succededMCQ")[0].style.display = "none";
-            window.alert("Il y a quelques erreurs dans votre réponse!");
+            this.node.getElementsByClassName("failedMCQ")[0].style.display = "block";
         }
         else{
-            for(let i = 0; i< count-2; i++){
-                this.node.getElementsByClassName("blocanswer")[i].getElementsByClassName("isFalse")[0].style.display = "none";
-            }
+            this.node.getElementsByClassName("failedMCQ")[0].style.display = "none";
             this.node.getElementsByClassName("succededMCQ")[0].style.display = "block";
         }
     }
