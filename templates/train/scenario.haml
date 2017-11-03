@@ -66,10 +66,12 @@
                     .blocanswer{:style => "display: none"}
                         %li
                             %input.isAnswer{:type => "checkbox"}
-                            %img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
                             .answer
+                            %img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
 
-                %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)!
+
+                %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)! :)
+                %p.failedMCQ{:style => "display: none"} Il y a eu une ou plusieurs erreurs :/
 
     #Tools.blk
       .container-fluid.box-options
@@ -79,5 +81,5 @@
             Valider
         %button.btn-fixed-next#nextElement
             Suivant
-        %button.btn-fixed-next#endElement{:style => "display: none", :href => "/professor/train/list_scenario"}
+        %button.btn-fixed-next#endElement{:style => "display: none", :href => "/student/train/student_list_scenario"}
             Terminer
