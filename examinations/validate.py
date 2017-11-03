@@ -92,8 +92,8 @@ def validate_exercice_yaml_structure(exercice):
             pass
 
         # Group 7
-        elif data["type"] == "barchart":
-            # return (u"barchart: %s" % (data)).encode("Utf-8")  # test
+        elif data["type"] == "chart-barchart":
+            # return (u"chart-barchart: %s" % (data)).encode("Utf-8")  # test
             pass  # For the moment TODO make checks if necessary
 
         else:

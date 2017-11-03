@@ -6,12 +6,15 @@ $(document).ready(function() {
 
 function clone_chart()
 {
+   console.log("inside")
    let chart = document.getElementById("jxgbox");
    if (chart !== null)
    {
+      console.log("inside")
       let previsualization = document.getElementById("previsualized-chart");
       if (previsualization !== null)
       {
+         console.log("inside")
          previsualization.innerHTML = chart.innerHTML
       }
    }
