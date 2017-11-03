@@ -58,7 +58,38 @@
 	height: 420px;
 }
 
+
+.btn-fixed-previous {
+  background-color: #f58025;
+  border-color: #d86e1c;
+  position: absolute;
+  right: 640px;
+	top: 15%;
+  width: 100px;
+	height: 35px;
+}
+
+
+.btn-fixed-next {
+	background-color: #f58025;
+	border-color: #d86e1c;
+	position: absolute;
+	right: 5px;
+	top: 15%;
+	width: 100px;
+	height: 35px;
+}
+
+.box-options{
+		position: fixed;
+    padding: 25px;
+    background-color:white;
+		top: 80%;
+		width: 750px;
+}
+
 .blocanswer li div{
 	display: inline-block;
 	width: 80px;
+
 }

@@ -72,9 +72,8 @@
                 Valider
 
     #Tools.blk
-        %br
-        %span
-            %button.btn.btn-primary#previousElement{:style => "display: none"}
-                Previous
-            %button.btn.btn-primary#nextElement{:style => "display: inline", :foal => "right"}
-                Next
+      .container-fluid.box-options
+        %button.btn-fixed-previous#previousElement
+            Previous
+        %button.btn-fixed-next#nextElement
+            Next
