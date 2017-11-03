@@ -21,10 +21,11 @@ function chart_saveInJson(questions, boardList)
     var graphNum = 0;
     for(var i = 0; i<questions.length && graphNum<boardList.length;i++){
         //alert(JSON.stringify(questions[i], null, 4));
-        if(questions[i].startsWith('chart')){
+        if(questions[i].type.startsWith('chart')){
             var graphObjs = boardList[graphNum].objectsList
-            for(var j = 0; j<graphObjs.length;j++)
+            for(var j = 0; j<graphObjs.length;j++){
 
+            }
 
             graphNum ++;
         }
