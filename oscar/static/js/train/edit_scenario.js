@@ -83,8 +83,9 @@ class EditScenario {
     // get the input by the user
 
     getElemInputBlockText(elemText){
-        let title = "Titre par defaut"; // TODO ajouter cet input
-        let content = elemText.childNodes[1].childNodes[7].value;
+        let title = elemText.childNodes[1].childNodes[3].value;
+        console.log(title);
+        let content = elemText.childNodes[1].childNodes[9].value;
         return {"type":"TextElem", "data":{"title": title, "content": content}}
     }
 
@@ -143,6 +144,7 @@ class EditScenario {
         let newelem = document.createElement("div");
         newelem.classList.add('textBlockElem');
         newelem.innerHTML = this.textBlockElem.innerHTML;
+        newelem.getElementsByClassName('titre_text_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('content')[0].value = this.data["elements"][index]["data"]["content"]
         this.anchor.appendChild(newelem);
     }

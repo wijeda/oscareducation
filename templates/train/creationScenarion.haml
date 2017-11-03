@@ -91,6 +91,7 @@
     #textBlockElem{:style => "display: none"}
         .panel-body
             %label{:for => 'title_txt'} Texte:
+            %input.titre_text_Elem{:placeholder => 'Title'}
             %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
             %br
