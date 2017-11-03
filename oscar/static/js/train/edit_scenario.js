@@ -6,8 +6,6 @@ class EditScenario {
     constructor(param){
         this.data = this.getJsonData();
 
-        console.log(this.data);
-
         this.anchor = document.getElementById(param.anchorID);
         this.btnPlus = document.getElementById(param.btnPlusID);
         this.addElementDiv = document.getElementById(param.addElementDivID);
@@ -34,7 +32,6 @@ class EditScenario {
         this.saveScenarioButton = document.getElementById(param.saveScenarioButtonID);
         this.saveScenarioButton.addEventListener("click", this.sendForm.bind(this), true);
 
-        console.log("before storm");
         this.fillPage();
     }
 
@@ -136,7 +133,6 @@ class EditScenario {
         // done
         if (xhr.readyState == 4 && xhr.status == 200) {
             var myArr = JSON.parse(xhr.responseText);
-            console.log(myArr);
 
             return myArr;
         }
@@ -177,7 +173,6 @@ class EditScenario {
         let newelem = document.createElement("div");
         newelem.classList.add('mcqBlockElem');
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
-        console.log(this.data["elements"][index]);
         // filling the instructions and the question
         newelem.getElementsByClassName('titre_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('instruction')[0].value = this.data["elements"][index]["data"]["instruction"]
@@ -241,8 +236,6 @@ class EditScenario {
 
             let classElem = this.anchor.childNodes[i].className
 
-            console.log(classElem);
-
             if(classElem == "textBlockElem")
             {
                 data["elements"].push(this.getElemInputBlockText(this.anchor.childNodes[i]));
@@ -263,8 +256,6 @@ class EditScenario {
 
         }
 
-        console.log(data);
-
         let xhr = new XMLHttpRequest();
 
         xhr.open("POST", "/professor/train/save_scenario", true);
@@ -273,11 +264,7 @@ class EditScenario {
         // send the collected data as JSON
         xhr.send(JSON.stringify(data));
 
-        xhr.onloadend = function () {
-            // done
-            console.log(data);
-            console.log("done");
-        };
+        xhr.onloadend = function () {};
 
     }
 
@@ -292,7 +279,6 @@ function loadImage(elem){
 
 function loadVideo(elem){
     var root = elem.parentNode.childNodes;
-    console.log(root);
     var ID = getVideoId(root[7].value);
     var embedURL = "//www.youtube.com/embed/" + ID
     root[1].setAttribute("src", embedURL);
@@ -307,7 +293,6 @@ function getVideoId(url) {
     if (match && match[2].length == 11) {
         return match[2];
     } else {
-        console.log("ERROR with video URL !")
         return 'error';
     }
 }
@@ -354,8 +339,6 @@ function addReponseFilled(root, answer){
     let count = 0;
     let repLineElem = null;
     for(let subElem of root.childNodes){
-        console.log("SUBELEM : "  +subElem);
-        console.log(subElem);
         if (subElem.className == "repLine"){
             count++;
             if(repLineElem == null){
@@ -470,11 +453,9 @@ function getCookie(c_name)
 function editForm(){
     var pathTab = window.location.pathname.split("/")
     var id = pathTab[pathTab.length - 1]
-    console.log("hello")
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
     xmlHttp.send( null );
     //return xmlHttp.responseText;
-    console.log("hello")
     sendForm();
 }

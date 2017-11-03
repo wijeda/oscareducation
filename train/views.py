@@ -86,12 +86,6 @@ def get_data(request, id):
     for m in mcq:
         elem = {"type" : "MCQElem", "order": m.order, "title": m.title, "data":{"id_scenario": id, "instruction": m.instruction, "question": m.question}}
 
-    # for element in elements:
-    #     print(element["data"]['order'])
-
-    # print(elements)
-    # filling the qcm elements
-
     qcm = MCQElem.objects.filter(id_scenario=id)
 
     for q in qcm:
@@ -104,14 +98,8 @@ def get_data(request, id):
         elements.append(elem)
 
     elements.sort(key = itemgetter('order'))
-    # = sorted(elements, key=elements["order"])
-    # print(elements)
+
     dico["elements"] = elements
-    # print("DICO HEEEEEEEEEEEEERE")
-    # print(dico)
-
-    print("fin de get_data")
-
 
     return JsonResponse(dico)
 
@@ -180,23 +168,14 @@ def save_scenario(request):
         # loading the json
         parsed_json = json.loads(request.body)
 
-        print('raw_data : "%s"' % request.body)
-
         # parsing the parameters of the json
         creator = parsed_json['creator']
-        if creator == '':
-            print("c'est null")
         title = parsed_json['title']
-        skill =parsed_json['skill']
+        skill = parsed_json['skill']
         topic = parsed_json['topic']
         grade_level = parsed_json['grade_level']
         instructions = parsed_json['instructions']
         public = parsed_json['public']
-
-
-
-        print("@@@@@@@@@@@@@@@@")
-        print(public)
 
         # creating the object
         scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = True)
@@ -209,7 +188,6 @@ def save_scenario(request):
             if parsed_json['elements'][i]['type'] == "TextElem":
                 id_scenario = scena.id
                 order = i
-                print(parsed_json['elements'][i]['data'])
                 title_elem = parsed_json['elements'][i]['data']['title']
                 content_elem = parsed_json['elements'][i]['data']['content']
 
@@ -251,24 +229,12 @@ def save_scenario(request):
                 id_MCQ_Elem = elem.id
                 for rep in parsed_json['elements'][i]['data']['answers']:
                     ans = MCQReponse(id_question = id_MCQ_Elem, answer = rep['answer'], is_answer = rep['solution'] )
-                    print(rep['solution'])
                     ans.save()
-
-
 
     return HttpResponse("OK")
     # return HttpResponseRedirect('/professor/train/list_scenario/')
 
-
-
-
-    return list_scenario(request)
-    # return HttpResponseRedirect('/professor/train/list_scenario/')
-
 def delete_scenario(request, id):
-    # print("Voici mon print :D :",request)
-    # print(id)
-    # textelement = TextElem.objects.get(id_scenario = id)
 
     textes = TextElem.objects.filter(id_scenario=id)
     for t in textes:
@@ -285,9 +251,6 @@ def delete_scenario(request, id):
     Scenario.objects.get(id=id).delete()
 
     return list_scenario(request)
-    # return TemplateResponse(request, "train/listScenario.haml", {})
-
-    '''return TemplateResponse(request, "home.haml", {})'''
 
 def scenario(request, id):
     dico = {}

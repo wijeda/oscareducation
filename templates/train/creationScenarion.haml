@@ -9,7 +9,6 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
     %form#whiteBox{:methode => "POST"}
-                    -# , :action => "save_scenario"}
         {% csrf_token %}
         {{ form.errors }}
         {{ form.non_field_errors }}
@@ -38,12 +37,6 @@
             %label{:for => 'public'} Public :
             %input{:id => 'public', :type => 'checkbox'}
             %br
-
-
-
-    -# #videoBlockElem{:style => "display: none"}
-    -#     URL de votre vidéo :
-    -#     video
 
     #videoBlockElem{:style => "display: none"}
         .panel-body
