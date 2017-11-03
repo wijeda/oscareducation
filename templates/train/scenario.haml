@@ -63,9 +63,10 @@
                 %p.instruction
                 %div.question
                 %ul.answers
-                    .blocanswer
-                        %li.answer
-                        %input.isAnswer{:type => "checkbox"}
+                    .blocanswer{:style => "display: none"}
+                        %li
+                            .answer
+                            %input.isAnswer{:type => "checkbox"}
 
     #Tools.blk
         %br
