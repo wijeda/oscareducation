@@ -253,7 +253,10 @@ def delete_scenario(request, id):
     return list_scenario(request)
 
 def scenario(request, id):
+    s = Scenario.objects.get(id=id)
+
     dico = {}
-    dico["descriptif"]=["Titre d'un exo", " Autheur de l'exo", "Voici le descriptif d'un cours pris en random dans la liste", id]
-    dico["scenario"]=[]
+
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+
     return render(request, "train/scenario.haml", dico)
