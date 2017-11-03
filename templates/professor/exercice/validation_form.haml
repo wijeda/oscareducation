@@ -125,6 +125,23 @@
                       %input.form-control{type: "checkbox", ng-change: "question.type == \"radio\" && answer.correct === true && onChangeRadio(question, answer)", ng-model: "answer.correct"}
 
                 .form-horizontal{ng-if: "question.type == \"barchart\""}
+            	 .form-group
+            	   %label.control-label.col-sm-3 Nom de l'axe des abscisses
+           		   .col-sm-9
+            	    %input.form-control{type: "text", ng-model: "barGraphX", ng-required: "false"}
+            	 .form-group
+            	   %label.control-label.col-sm-3 Nom de l'axe des ordonnées
+           		   .col-sm-9
+            	    %input.form-control{type: "text", ng-model: "barGraphY", ng-required: "false"}
+            	 .form-group
+            	   %label.control-label.col-sm-3 Définir le pas des abscisses
+           		   .col-sm-9
+            		%input.form-control{type: "text", ng-model: "stepY", ng-required: "false"}
+            	 .form-group
+            	   %label.control-label.col-sm-3 Définir le pas des ordonnées
+           		   .col-sm-9
+            		%input.form-control{type: "text", ng-model: "stepX", ng-required: "false"}
+            		
                   .jxgbox.chartQuestion#jxgbox{style:"width:100%; height:676px;",data-chart-type:"barchart"}
                   -# = .jxgbox.chartQuestion#jxgbox{style:"width:100%; height:676px;",data-chart-type:"piechart",data-chart-percent:'[20,30,50]',data-chart-label:'["math","francais","Sciences"]'}
 
