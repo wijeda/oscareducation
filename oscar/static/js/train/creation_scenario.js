@@ -164,17 +164,6 @@ class ScenarioCreation {
 
         console.log(data);
 
-
-        let data3 = {"creator": "super_creator",
-                    "titre": "super_titre",
-                    "skill": "super_skill",
-                    "topic": "super_topic",
-                    "grade_level": "super grade",
-                    "instructions": "super_instructions",
-                    "public": "False",
-                    "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-                                {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my content"}}],
-            }
             // construct an HTTP request
         let xhr = new XMLHttpRequest();
 
@@ -188,6 +177,7 @@ class ScenarioCreation {
             // done
             console.log(data);
             console.log("done");
+            //window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
         };
 
     }

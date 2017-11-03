@@ -257,6 +257,7 @@ class EditScenario {
             // done
             console.log(data);
             console.log("done");
+            window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
         };
 
     }
