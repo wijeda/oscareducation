@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.views.generic import TemplateView
 
 from utils import user_is_student
@@ -12,4 +12,6 @@ urlpatterns = [
     url(r'^test/(?P<pk>\d+)/$', views.pass_test, name='student_pass_test'),
     url(r'^test/(?P<pk>\d+)/start/$', views.start_test, name='student_start_test'),
     url(r'^pedagogical/(?P<type>.+)/(?P<slug>[a-zA-Z0-9_-]+)/$', user_is_student(views.skill_pedagogic_ressources), name='student_skill_pedagogic_ressources'),
+
+    url(r'^train/', include('train.urls')),
 ]
