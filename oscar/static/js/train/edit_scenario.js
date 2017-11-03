@@ -264,7 +264,9 @@ class EditScenario {
         // send the collected data as JSON
         xhr.send(JSON.stringify(data));
 
-        xhr.onloadend = function () {};
+        xhr.onloadend = function () {
+          window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
+        };
 
     }
 
