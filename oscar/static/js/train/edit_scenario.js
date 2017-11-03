@@ -400,8 +400,6 @@ window.onload = function(){
 
         "videoBlockElemID": "videoBlockElem",
         "videoButtonID": "addElementVideo",
-        /*"loadVidID": "loadVideo",
-        "loadVidButtonID": "addVid",*/
 
         "mcqBlockElemID": "mcqBlockElem",
         "mcqButtonID": "addElementMcq",
@@ -410,23 +408,7 @@ window.onload = function(){
         "imgButtonID": "addElementImg",
         "saveScenarioButtonID": "saveScenario",
 
-        /*"loadImgID": "loadImage",
-        "loadImgButtonID": "addImg",
-
-        "removeImageID": "removeImage",*/
     }
-
-    /*new ScenarioCreation(anchorID,
-                        btnPlusID,
-                        addElementDivID,
-                        textBlockElemID,
-                        textButtonID,
-                        videoBlockElemID,
-                        videoButtonID,
-                        imgBlockElemID,
-                        imgButtonID,
-                        mcqBlockElemID,
-                        mcqButtonID);*/
     new EditScenario(param)
 
 };
