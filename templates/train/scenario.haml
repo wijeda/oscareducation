@@ -9,10 +9,10 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/visualize_scenario.js"}
 
-    %h3#title{:dico => "tab"}
+    %h3#title{:dico => "tab"} #{scenario.title}
     -# =id.title
     %hr
-    %h4#instructions{:dico => "tab"}
+    %h4#instructions{:dico => "tab"} #{scenario.instructions}
     -# =id.instructions
 
     %div#anchor
@@ -68,7 +68,7 @@
                             %input.isAnswer{:type => "checkbox"}
                             %img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
                             .answer
-                            
+
                 %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)!
 
     #Tools.blk
