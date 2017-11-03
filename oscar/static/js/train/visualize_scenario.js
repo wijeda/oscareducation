@@ -237,14 +237,12 @@ class MCQElem extends AbstractElem{
             this.node.getElementsByClassName("instruction")[0].innerHTML = this.instruction;
             this.node.getElementsByClassName("question")[0].innerHTML = this.question;
             this.Ul = this.node.getElementsByClassName("answers");
-            console.log(this.answers[0]);
-            for(let answer in this.answers){
+            for(let answer of this.answers){
                 let blocanswer = document.createElement("div");
                 blocanswer.innerHTML = this.node.getElementsByClassName("blocanswer")[0].innerHTML;
-                console.log(answer[0]);
-                blocanswer.getElementsByClassName("answer").innerHTML = answer["answer"];
-                blocanswer.getElementsByClassName("isAnswer").checked = false;
-                console.log(this.Ul);
+                blocanswer.classList.add('blocanswer');
+                blocanswer.getElementsByClassName("answer")[0].innerHTML = answer["answer"];
+                //blocanswer.getElementsByClassName("isAnswer")[0].checked = false;
                 this.Ul[0].appendChild(blocanswer);
             }
         }
