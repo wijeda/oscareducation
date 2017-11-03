@@ -29,7 +29,7 @@ class ScenarioVisualization{
                 let objectElem = new VideoElem(elem, this.blockVideo, this.anchor);
                 this.tabElementObject.push(objectElem);
             }
-            else if(elem.type == "mcqElem"){
+            else if(elem.type == "MCQElem"){
                 let objectElem = new MCQElem(elem, this.blockMCQ, this.anchor);
                 this.tabElementObject.push(objectElem);
             }
@@ -236,17 +236,18 @@ class MCQElem extends AbstractElem{
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
             this.node.getElementsByClassName("instruction")[0].innerHTML = this.instruction;
             this.node.getElementsByClassName("question")[0].innerHTML = this.question;
-            this.Ul = this.node.getElementsByClassName("ul");
-            for(answer in this.answers){
-                let newLi = document.createElement("li");
-                newLi.innerHTML = answer;
-                this.Ul.appendChild(newLi);
+            this.Ul = this.node.getElementsByClassName("answers");
+            console.log(this.answers[0]);
+            for(let answer in this.answers){
+                let blocanswer = document.createElement("div");
+                blocanswer.innerHTML = this.node.getElementsByClassName("blocanswer")[0].innerHTML;
+                console.log(answer[0]);
+                blocanswer.getElementsByClassName("answer").innerHTML = answer["answer"];
+                blocanswer.getElementsByClassName("isAnswer").checked = false;
+                console.log(this.Ul);
+                this.Ul[0].appendChild(blocanswer);
             }
         }
-    }
-
-    render(){
-        this.anchor.appendChild(this.node);
     }
 }
 
