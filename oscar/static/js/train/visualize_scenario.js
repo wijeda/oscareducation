@@ -12,6 +12,7 @@ class ScenarioVisualization{
         this.blockText = document.getElementById(blockID["textBlockID"]);
         this.blockImage = document.getElementById(blockID["imgBlockID"]);
         this.blockVideo = document.getElementById(blockID["videoBlockID"]);
+        this.blockMCQ = document.getElementById(blockID["mcqBlockID"]);
         this.index = 0;
         this.elements = json.elements;
         this.tabElementObject = [];
@@ -26,6 +27,10 @@ class ScenarioVisualization{
             }
             else if(elem.type == "VidElem"){
                 let objectElem = new VideoElem(elem, this.blockVideo, this.anchor);
+                this.tabElementObject.push(objectElem);
+            }
+            else if(elem.type == "MCQElem"){
+                let objectElem = new MCQElem(elem, this.blockMCQ, this.anchor);
                 this.tabElementObject.push(objectElem);
             }
         }
@@ -76,7 +81,6 @@ window.onload = function(){
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","mcqBlockID":"mcqBlockElem"};
     let json = getJsonData();
-    console.log(json);
     new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, blockID);
 
 };
@@ -100,17 +104,26 @@ function getCookie(c_name)
 
 
  function getForm() {
-     let data = {'creator': 'super_creator',
-                 "titre": "super_titre",
-                 "skill": "super_skill",
-                 "topic": "super_topic",
-                 "grade_level": "super grade",
-                 "instructions": "super_instructions",
-                 "public": "False",
-                 "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
-                             {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my new content"}}],
-         };
-     return data;
+    //  let data = {'creator': 'super_creator',
+    //              "titre": "super_titre",
+    //              "skill": "super_skill",
+    //              "topic": "super_topic",
+    //              "grade_level": "super grade",
+    //              "instructions": "super_instructions",
+    //              "public": "False",
+    //              "elements":[{"type": "TextElem", "data":{"title": "JHKNLJHKNL", "content": "my content"}},
+    //                          {"type": "TextElem", "data":{"title": "PPPPPPPPPPPPPP", "content": "my new content"}}],
+    //      };
+
+     let data_mcq = {"elements": [{"type": "MCQElem", "data":{"title": "MCQ_test_title", "instruction": "MCQ_test_instruction",
+                                                            "question": "MCQ_test_question", "answers":[{"answer":"MCQ_test_answer_1"},
+                                                                                                        {"answer":"MCQ_test_answer_2"},
+                                                                                                        {"answer":"MCQ_test_answer_3"}
+                                                                                                        ]
+                                                            }
+                                }]
+                    };
+     return data_mcq;
 
  }
 
@@ -179,7 +192,7 @@ class TextElem extends AbstractElem{
 class ImageElem extends AbstractElem{
     constructor(elem, skull, anchor){
         super(anchor);
-        if(elem != null)
+        if(elem != null){
             this.data = elem["data"];
             this.title = this.data["title"];
             this.content = this.data["url"];
@@ -188,14 +201,14 @@ class ImageElem extends AbstractElem{
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
             this.node.getElementsByClassName("content")[0].setAttribute("src", this.content);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
+        }
     }
 }
 
 class VideoElem extends AbstractElem{
     constructor(elem, skull, anchor){
         super(anchor);
-        if(elem != null)
-            // this.anchor.
+        if(elem != null){
             this.data = elem["data"];
             this.title = this.data["title"];
             this.content = this.data["url"];
@@ -206,8 +219,36 @@ class VideoElem extends AbstractElem{
             this.embedURL = "//www.youtube.com/embed/" + ID;
             this.node.getElementsByClassName("content")[0].setAttribute("src", this.embedURL);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
+        }
     }
+}
 
+class MCQElem extends AbstractElem{
+    constructor(elem, skull, anchor){
+        super(anchor);
+        if(elem != null){
+            this.data = elem["data"];
+            this.title = this.data["title"];
+            this.instruction = this.data["instruction"];
+            this.question = this.data["question"];
+            this.answers = this.data["answers"];
+            this.node.innerHTML = skull.innerHTML;
+            this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
+            this.node.getElementsByClassName("instruction")[0].innerHTML = this.instruction;
+            this.node.getElementsByClassName("question")[0].innerHTML = this.question;
+            this.Ul = this.node.getElementsByClassName("answers");
+            console.log(this.answers[0]);
+            for(let answer in this.answers){
+                let blocanswer = document.createElement("div");
+                blocanswer.innerHTML = this.node.getElementsByClassName("blocanswer")[0].innerHTML;
+                console.log(answer[0]);
+                blocanswer.getElementsByClassName("answer").innerHTML = answer["answer"];
+                blocanswer.getElementsByClassName("isAnswer").checked = false;
+                console.log(this.Ul);
+                this.Ul[0].appendChild(blocanswer);
+            }
+        }
+    }
 }
 
 function loadVideo(elem, embedURL) {

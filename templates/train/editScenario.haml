@@ -60,6 +60,9 @@
 
     #mcqBlockElem{:style => "display: none"}
         .panel-body
+            %label{:for => 'title'} Titre:
+            %input.titre_MCQ_Elem{:id => 'title', :placeholder => 'Title'}
+            %br
             %label{:for => 'consigne'} Consigne:
             %input.instruction{:id => 'consigne', :placeholder => 'Consigne'}
             %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
