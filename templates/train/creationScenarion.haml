@@ -65,13 +65,16 @@
 
     #mcqBlockElem{:style => "display: none"}
         .panel-body
-            %label{:for => 'consigne'} Consigne:
-            %input{:id => 'consigne', :placeholder => 'Consigne'}
+            %label{:for => 'title'} Titre:
+            %input.titre_MCQ_Elem{:id => 'title', :placeholder => 'Title'}
+            %br
+            %label{:for => 'instruction'} Consigne:
+            %input.instruction_MCQ_Elem{:id => 'instruction', :placeholder => 'Instruction'}
             %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
             %br
             %label{:for => 'question'} Question:
-            %input{:id => 'question', :placeholder => 'Question'}
+            %input.question_MCQ_Elem{:id => 'question', :placeholder => 'Question'}
             %button.btn.btn-danger.addReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une réponse",:action => "#", :onclick => "return addReponse(this)"}
                                               %span.glyphicon.glyphicon-plus
             %br

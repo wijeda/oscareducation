@@ -16,6 +16,8 @@ from .models import Scenario
 from .models import TextElem
 from .models import ImgElem
 from .models import VidElem
+from .models import MCQElem
+from .models import MCQReponse
 
 from .forms import ScenarioForm
 
@@ -83,6 +85,19 @@ def get_data(request, id):
     #     print(element["data"]['order'])
 
     # print(elements)
+    # filling the qcm elements
+
+    qcm = MCQElem.objects.filter(id_scenario=id)
+
+    for q in qcm:
+        answers = []
+        answer_fromDB = MCQReponse.objects.filter(id_question=q.id)
+        for a in answer_fromDB:
+            answers.append({"answer": a.answer, "solution": a.is_answer})
+
+        elem = {"type" : "MCQElem", "order": q.order, "data":{"id_scenario": id, "title":q.title, "instruction": q.instruction, "question":q.question, "answers": answers}}
+        elements.append(elem)
+
     elements.sort(key = itemgetter('order'))
     # = sorted(elements, key=elements["order"])
     # print(elements)
@@ -91,6 +106,7 @@ def get_data(request, id):
     # print(dico)
 
     print("fin de get_data")
+
 
     return JsonResponse(dico)
 
@@ -217,6 +233,29 @@ def save_scenario(request):
                 elem = VidElem(id_scenario = id_scenario, order = i, title = title_elem, url = url_elem, description = description_elem)
 
                 elem.save()
+
+            elif parsed_json['elements'][i]['type'] == "MCQElem":
+                id_scenario = scena.id
+                order = i
+                title_elem = parsed_json['elements'][i]['data']['title']
+                instruction_elem = parsed_json['elements'][i]['data']['instruction']
+                question_elem = parsed_json['elements'][i]['data']['question']
+                elem = MCQElem(id_scenario = id_scenario, order = i, title = title_elem, instruction = instruction_elem, question = question_elem)
+                elem.save()
+
+                id_MCQ_Elem = elem.id
+                for rep in parsed_json['elements'][i]['data']['answers']:
+                    ans = MCQReponse(id_question = id_MCQ_Elem, answer = rep['answer'], is_answer = rep['solution'] )
+                    print(rep['solution'])
+                    ans.save()
+
+
+
+    return HttpResponse("OK")
+    # return HttpResponseRedirect('/professor/train/list_scenario/')
+
+
+
 
     return list_scenario(request)
     # return HttpResponseRedirect('/professor/train/list_scenario/')
