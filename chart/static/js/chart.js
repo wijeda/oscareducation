@@ -9,11 +9,38 @@ $( document ).ready(function() {
 
 function chart_refresh()
 {
+	console.log('refreshed the chart !');
     graphics = document.getElementsByClassName("chartQuestion");  //find all charts on the page
     for(var i = 0;i<graphics.length;i++){
         chart_createChart(graphics[i]);  //create the element founded
     }
 
+}
+
+function chart_createBarChartFromForm()
+{
+	graphics = document.getElementsByClassName("chartQuestion"); 
+	var element;
+	for(var i = 0;i<graphics.length;i++){
+  		var type = $(graphics[i]).data( "chart-type" );
+		if(type == "barchart") element = graphics[i];
+	}
+	
+	var barGraphX = $("#barGraphX").val();
+	var barGraphY = $("#barGraphY").val();
+	
+	var stepX = $("#stepX").val();
+	var stepY = $("#stepY").val();
+	
+	var zeroX = $("#zeroX").val();
+	var zeroY = $("#zeroY").val();
+	
+	var maxX = $("#maxX").val();
+	var maxY = $("#maxY").val();
+	let board = JXG.JSXGraph.initBoard(element.id,{ axis:true,showCopyright:false, boundingbox: [zeroX, maxY, maxX, zeroY]});
+    let chart = board.create('chart', [],
+                {chartStyle:'bar', width:1, labels:[],
+                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
 }
 
 function chart_createChart(element)
@@ -51,4 +78,8 @@ function chart_createChart(element)
 
 
     }
+}
+function chart_add(bar)
+{
+	console.log('added a bar to the chart !');
 }

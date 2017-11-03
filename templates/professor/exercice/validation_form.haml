@@ -125,24 +125,54 @@
                       %input.form-control{type: "checkbox", ng-change: "question.type == \"radio\" && answer.correct === true && onChangeRadio(question, answer)", ng-model: "answer.correct"}
 
                 .form-horizontal{ng-if: "question.type == \"barchart\""}
-            	 .form-group
-            	   %label.control-label.col-sm-3 Nom de l'axe des abscisses
-           		   .col-sm-9
-            	    %input.form-control{type: "text", ng-model: "barGraphX", ng-required: "false"}
-            	 .form-group
-            	   %label.control-label.col-sm-3 Nom de l'axe des ordonnées
-           		   .col-sm-9
-            	    %input.form-control{type: "text", ng-model: "barGraphY", ng-required: "false"}
-            	 .form-group
-            	   %label.control-label.col-sm-3 Définir le pas des abscisses
-           		   .col-sm-9
-            		%input.form-control{type: "text", ng-model: "stepY", ng-required: "false"}
-            	 .form-group
-            	   %label.control-label.col-sm-3 Définir le pas des ordonnées
-           		   .col-sm-9
-            		%input.form-control{type: "text", ng-model: "stepX", ng-required: "false"}
-            		
-                  .jxgbox.chartQuestion#jxgbox{style:"width:100%; height:676px;",data-chart-type:"barchart"}
+                  .form-group
+                    %label.control-label.col-sm-3 Nom de l'axe des abscisses
+                    .col-sm-9
+                      %input.form-control{id: "barGraphX",type: "text", ng-model: "barGraphX", ng-required: "false"}
+                  .form-group
+                    %label.control-label.col-sm-3 Nom de l'axe des ordonnées
+                    .col-sm-9
+                       %input.form-control{id: "barGraphY",type: "text", ng-model: "barGraphY", ng-required: "false"}
+                  .form-group
+                    %label.control-label.col-sm-3 Définir le pas des abscisses
+                    .col-sm-9
+                      %input.form-control{id: "stepX",type: "text", ng-model: "stepX", ng-required: "false"}
+                  .form-group
+                    %label.control-label.col-sm-3 Définir le pas des ordonnées
+                    .col-sm-9
+                      %input.form-control{id: "stepY",type: "text", ng-model: "stepY", ng-required: "false"}
+                  .form-group
+                    %label.control-label.col-sm-3 Abscisse minimale
+                    .col-sm-9
+                      %input.form-control{id: "zeroX",type: "text", ng-model: "zeroX", ng-required: "false"}
+                  .form-group
+                    %label.control-label.col-sm-3 Ordonnée minimale
+                    .col-sm-9
+                      %input.form-control{id: "zeroY",type: "text", ng-model: "zeroY", ng-required: "false"}
+                  .form-group
+                    %label.control-label.col-sm-3 Abscisse maximale
+                    .col-sm-9
+                      %input.form-control{id: "maxX",type: "text", ng-model: "maxX", ng-required: "false"}
+                  .form-group
+                    %label.control-label.col-sm-3 Ordonnée maximale
+                    .col-sm-9
+                      %input.form-control{id: "maxY",type: "text", ng-model: "maxY", ng-required: "false"}
+                  %button.btn.btn-success.btn-sm{ng-model: "createBarChart", onclick: "chart_createBarChartFromForm()", type: "button"}
+                    %span.glyphicon.glyphicon-ok
+                    Créer le graphique
+                  .jxgbox.chartQuestion#jxgbox{id:barChartForm,style:"width:100%; height:676px;",data-chart-type:"barchart",value:"barchart"}
+                  .form-group
+                    %label.control-label.col-sm-3 Nouvelle ordonnée :
+                    .col-sm-3
+                      %input.form-control{type: "text", ng-model: "BarY", ng-required: "false"}
+                    .col-sm-2
+                      %button.btn.btn-success{ng-click: "chart_add()", type: "button"}
+                        %span.glyphicon.glyphicon-plus
+                        Ajouter
+                    .col-sm-2
+                      %button.btn.btn-danger{ng-click: "chart_deleteLast()", type: "button"}
+                        %span.glyphicon.glyphicon-minus
+                        Supprimer la dernière
                   -# = .jxgbox.chartQuestion#jxgbox{style:"width:100%; height:676px;",data-chart-type:"piechart",data-chart-percent:'[20,30,50]',data-chart-label:'["math","francais","Sciences"]'}
 
                 .form-horizontal{ng-if: "question.type == \"graph\""}
