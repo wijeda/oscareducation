@@ -67,10 +67,14 @@
                         %li
                             .answer
                             %input.isAnswer{:type => "checkbox"}
+            %br
+            %button.btn.btn-primary#validateScenario{:style => "display: block", :foal => "right"}
+                Valider
 
     #Tools.blk
         %br
-        %button.btn.btn-primary#previousElement
-            Previous
-        %button.btn.btn-primary#nextElement
-            Next
+        %span
+            %button.btn.btn-primary#previousElement{:style => "display: none"}
+                Previous
+            %button.btn.btn-primary#nextElement{:style => "display: inline", :foal => "right"}
+                Next
