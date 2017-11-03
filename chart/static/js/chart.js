@@ -2,7 +2,7 @@
     Every function must follow the format chart_nameInCamelCase
 */
 
-var chart_data = undefined;
+var chart_data = {};
 chart_data.boards = []
 chart_data.data = []
 
@@ -20,7 +20,7 @@ function chart_refresh()
 
 function chart_saveInJson(questions)
 {
-    for(var i = 0; i<questions.length && graphNum<boardList.length;i++){
+    for(var i = 0; i<questions.length;i++){
         //alert(JSON.stringify(questions[i], null, 4));
         if(questions[i].type.startsWith('chart')){
 
@@ -63,5 +63,5 @@ function chart_createChart(element)
 
 
     }
-    chart_data.bords.push(board)
+    chart_data.boards.push(board)
 }
