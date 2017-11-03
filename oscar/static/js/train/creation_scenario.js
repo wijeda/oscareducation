@@ -119,7 +119,7 @@ class ScenarioCreation {
         }
         return {"type":"MCQElem", "data":{"title": title, "instruction": instruction, "question": question, "answers" : answers}}
 
-        }
+    }
 
 
     sendForm() {

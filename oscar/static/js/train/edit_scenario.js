@@ -106,18 +106,20 @@ class EditScenario {
     }
 
     getElemInputBlockMCQ(elemMCQ){
-        let consigne = elemMCQ.childNodes[1].childNodes[3].value;
-        let question = elemMCQ.childNodes[1].childNodes[11].value;
-        let rep = [];
-        for (let elem of elemMCQ.childNodes[1].childNodes){
-            if (elem.className == "repLine"){
-                let reponse = elem.childNodes[3].value;
-                let checked = elem.childNodes[5].checked;
-                rep.push({"answer": reponse, "solution": checked});
-            }
-        }
 
-        return {"type":"MCQElem", "data":{"consigne": consigne, "question": question, "rep" : rep}}
+        let title = elemMCQ.getElementsByClassName('titre_MCQ_Elem')[0].value;
+        let instruction = elemMCQ.getElementsByClassName('instruction_MCQ_Elem')[0].value;
+        let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
+        let answers = [];
+        for (let elem of elemMCQ.childNodes[1].childNodes){
+             if (elem.className == "repLine"){
+                 let reponse = elem.childNodes[3].value;
+                 let checked = elem.childNodes[5].checked;
+                 answers.push({"answer": reponse, "solution": checked});
+             }
+        }
+        return {"type":"MCQElem", "data":{"title": title, "instruction": instruction, "question": question, "answers" : answers}}
+
     }
 
     // get the JSON data when editing in order to retrieve the elements
@@ -177,6 +179,7 @@ class EditScenario {
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
         console.log(this.data["elements"][index]);
         // filling the instructions and the question
+        newelem.getElementsByClassName('titre_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('instruction')[0].value = this.data["elements"][index]["data"]["instruction"]
         newelem.getElementsByClassName('question')[0].value = this.data["elements"][index]["data"]["question"]
 
