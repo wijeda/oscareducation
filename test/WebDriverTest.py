@@ -35,15 +35,19 @@ class SampleTest(unittest.TestCase):
     def test_scenario_DB(self):
         driver = self.driver
         driver.get(URL_LOGIN)
+
+        # Here we fill the data to login, then click on "Connexion"
         self.fill_field("id_username", "professor")
         self.click_element_css("input[value='Connexion']")
         self.fill_field("id_password", "professor")
         self.click_element_css("input[value='Connexion']")
         self.driver.get("http://127.0.0.1:8000/professor/train/list_scenario/")
+        #Then we want to add an element by clicking on add
         self.click_element_id("addElement")
 
         scenario_title = ''.join(random.choice(string.ascii_lowercase) for _ in range(6))
 
+        #Creation of different scenarios
         self.fill_field("title", scenario_title)
         self.click_element_id("saveScenario")
         self.driver.get(URL_LIST_SCENARIO)
@@ -51,12 +55,14 @@ class SampleTest(unittest.TestCase):
         self.assertFalse(scenario_title in body_text)
         self.click_element_id("addElement")
 
+        #Filling the instructions field and saving the scenario
         self.fill_field("title", scenario_title)
         self.fill_field("instructions", "test")
         self.click_element_id("saveScenario")
         self.driver.get(URL_LIST_SCENARIO)
         body_text = self.driver.find_element_by_tag_name('body').text
         self.assertTrue(scenario_title in body_text)
+        #We end the test by deleting the question
         self.click_element_css("img[alt='Supprimer la question']")
 
         # def tearDown(self):
