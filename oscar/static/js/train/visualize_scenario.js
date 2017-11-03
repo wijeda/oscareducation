@@ -46,10 +46,11 @@ class ScenarioVisualization{
             this.tabElementObject[this.index].hide();
             this.index++;
             this.tabElementObject[this.index].render();
-            this.previousButton.style.display = "inline"
+            this.previousButton.style.display = "inline";
         }
         if(this.index == this.tabElementObject.length-1){
             this.nextButton.style.display = "none";
+            this.endButton.style.display = "inline";
         }
     }
 
@@ -59,7 +60,7 @@ class ScenarioVisualization{
             this.index--;
             this.tabElementObject[this.index].render();
             this.nextButton.style.display = "inline";
-
+            this.endButton.style.display = "none";
         }
         if(this.index == 0){
             this.previousButton.style.display = "none"
@@ -67,8 +68,11 @@ class ScenarioVisualization{
     }
 
     validateButtonElement(){
-        console.log("check");
         this.tabElementObject[this.index].validate();
+    }
+
+    endButtonElement(){
+        window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
     }
 }
 
