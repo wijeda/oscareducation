@@ -3,12 +3,14 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(json,anchorID,nextButtonID,previousButtonID, blockID){
+    constructor(json,anchorID,nextButtonID,previousButtonID, validateScenarioID, blockID){
         this.anchor = document.getElementById(anchorID);
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
         this.previousButton =  document.getElementById(previousButtonID);
         this.previousButton.addEventListener("click", this.previousButtonElement.bind(this), true);
+        this.validateScenario = document.getElementById(validateScenarioID);
+        this.validateScenario.addEventListener("click", this.validateScenarioButton.bind(this), true);
         this.blockText = document.getElementById(blockID["textBlockID"]);
         this.blockImage = document.getElementById(blockID["imgBlockID"]);
         this.blockVideo = document.getElementById(blockID["videoBlockID"]);
@@ -38,10 +40,14 @@ class ScenarioVisualization{
     }
 
     nextButtonElement(){
-        if(this.index < this.tabElementObject.length){
+        if(this.index < this.tabElementObject.length-1){
             this.tabElementObject[this.index].hide();
             this.index++;
             this.tabElementObject[this.index].render();
+            this.previousButton.style.display = "inline"
+        }
+        if(this.index == this.tabElementObject.length-1){
+            this.nextButton.style.display = "none";
         }
     }
 
@@ -50,7 +56,16 @@ class ScenarioVisualization{
             this.tabElementObject[this.index].hide();
             this.index--;
             this.tabElementObject[this.index].render();
+            this.nextButton.style.display = "inline";
+
         }
+        if(this.index == 0){
+            this.previousButton.style.display = "none"
+        }
+    }
+
+    validateScenarioButton(){
+
     }
 }
 
@@ -78,10 +93,11 @@ window.onload = function(){
     let anchorID = "anchor";
     let nextButtonID = "nextElement";
     let previousButtonID = "previousElement";
+    let validateScenarioID = "validateScenario";
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","mcqBlockID":"mcqBlockElem"};
     let json = getJsonData();
-    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, blockID);
+    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateScenarioID, blockID);
 
 };
 
