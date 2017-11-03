@@ -7,10 +7,12 @@
 	height: 35px;
 }
 
+#parameters input, .answer1, .answer2{
+	width: 270px;
+}
 .blk {
 	padding: 10px;
 }
-
 /*	list scenario's part	*/
 #headline {
 	background-color: #f58025;
