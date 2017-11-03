@@ -3,14 +3,16 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(json,anchorID,nextButtonID,previousButtonID, validateScenarioID, blockID){
+    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, blockID){
         this.anchor = document.getElementById(anchorID);
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
         this.previousButton =  document.getElementById(previousButtonID);
+        console.log(this.previousButton);
         this.previousButton.addEventListener("click", this.previousButtonElement.bind(this), true);
-        this.validateScenario = document.getElementById(validateScenarioID);
-        this.validateScenario.addEventListener("click", this.validateScenarioButton.bind(this), true);
+        this.validateButton = document.getElementById(validateButtonID);
+        console.log(this.validateButton);
+        this.validateButton.addEventListener("click", this.validateButtonElement.bind(this), true);
         this.blockText = document.getElementById(blockID["textBlockID"]);
         this.blockImage = document.getElementById(blockID["imgBlockID"]);
         this.blockVideo = document.getElementById(blockID["videoBlockID"]);
@@ -64,8 +66,9 @@ class ScenarioVisualization{
         }
     }
 
-    validateScenarioButton(){
-
+    validateButtonElement(){
+        console.log("check");
+        this.tabElementObject[this.index].validate();
     }
 }
 
@@ -93,11 +96,11 @@ window.onload = function(){
     let anchorID = "anchor";
     let nextButtonID = "nextElement";
     let previousButtonID = "previousElement";
-    let validateScenarioID = "validateScenario";
+    let validateButtonID = "validateElement";
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","mcqBlockID":"mcqBlockElem"};
     let json = getJsonData();
-    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateScenarioID, blockID);
+    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, blockID);
 
 };
 
@@ -179,6 +182,7 @@ class AbstractElem{
 
     render(){
         this.anchor.appendChild(this.node);
+        document.getElementById("validateElement").style.display = "none";
     }
 
     hide(){
@@ -261,6 +265,36 @@ class MCQElem extends AbstractElem{
                 //blocanswer.getElementsByClassName("isAnswer")[0].checked = false;
                 this.Ul[0].appendChild(blocanswer);
             }
+        }
+    }
+
+    render(){
+        this.anchor.appendChild(this.node);
+        document.getElementById("validateElement").style.display = "block";
+    }
+
+    validate(){
+        let count = 1;
+        let error_number = 0;
+        for(let answer of this.answers){
+            if(answer["solution"] != this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isAnswer")[0].checked){
+                error_number++;
+                this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
+            }
+            else{
+                this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "none";
+            }
+            count++;
+        }
+        if(error_number > 0){
+            this.node.getElementsByClassName("succededMCQ")[0].style.display = "none";
+            window.alert("Il y a quelques erreurs dans votre réponse!");
+        }
+        else{
+            for(let i = 0; i< count-2; i++){
+                this.node.getElementsByClassName("blocanswer")[i].getElementsByClassName("isFalse")[0].style.display = "none";
+            }
+            this.node.getElementsByClassName("succededMCQ")[0].style.display = "block";
         }
     }
 }

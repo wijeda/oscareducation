@@ -97,11 +97,11 @@ class ScenarioCreation {
         let instruction = elemMCQ.getElementsByClassName('instruction_MCQ_Elem')[0].value;
         let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
         let answers = [];
-        for (let elem of elemMCQ.childNodes[1].childNodes){
-             if (elem.className == "repLine"){
-                 let reponse = elem.childNodes[3].value;
-                 let checked = elem.childNodes[5].checked;
-                 answers.push({"answer": reponse, "solution": checked});
+        for (let elem of elemMCQ.childNodes[1].childNodes[21].childNodes){
+             if(elem.className == "repLine"){
+                    let reponse = elem.childNodes[3].value;
+                    let checked = elem.childNodes[5].checked;
+                    answers.push({"answer": reponse, "solution": checked});
              }
         }
         return {"type":"MCQElem", "data":{"title": title, "instruction": instruction, "question": question, "answers" : answers}}
@@ -324,3 +324,4 @@ function editForm(){
     //return xmlHttp.responseText;
     sendForm();
 }
+

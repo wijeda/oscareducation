@@ -108,11 +108,11 @@ class EditScenario {
         let instruction = elemMCQ.getElementsByClassName('instruction_MCQ_Elem')[0].value;
         let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
         let answers = [];
-        for (let elem of elemMCQ.childNodes[1].childNodes){
-             if (elem.className == "repLine"){
-                 let reponse = elem.childNodes[3].value;
-                 let checked = elem.childNodes[5].checked;
-                 answers.push({"answer": reponse, "solution": checked});
+        for (let elem of elemMCQ.childNodes[1].childNodes[21].childNodes){
+             if(elem.className == "repLine"){
+                    let reponse = elem.childNodes[3].value;
+                    let checked = elem.childNodes[5].checked;
+                    answers.push({"answer": reponse, "solution": checked});
              }
         }
         return {"type":"MCQElem", "data":{"title": title, "instruction": instruction, "question": question, "answers" : answers}}
@@ -175,8 +175,8 @@ class EditScenario {
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
         // filling the instructions and the question
         newelem.getElementsByClassName('titre_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["title"]
-        newelem.getElementsByClassName('instruction')[0].value = this.data["elements"][index]["data"]["instruction"]
-        newelem.getElementsByClassName('question')[0].value = this.data["elements"][index]["data"]["question"]
+        newelem.getElementsByClassName('instruction_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["instruction"]
+        newelem.getElementsByClassName('question_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["question"]
 
         // filling the first and the second answer of the mcq (because they are mandatory)
         newelem.getElementsByClassName('answer1')[0].value = this.data["elements"][index]["data"]["answers"][0]["answer"]
@@ -190,6 +190,8 @@ class EditScenario {
         {
             addReponseFilled(newelem.getElementsByClassName('panel-body')[0], this.data["elements"][index]["data"]["answers"][i]);
         }
+
+        // this.anchor.getElementsByClassName("list_answers")[0].appendChild(newelem);
 
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
@@ -340,7 +342,7 @@ function addReponse(elem, answer){
 function addReponseFilled(root, answer){
     let count = 0;
     let repLineElem = null;
-    for(let subElem of root.childNodes){
+    for(let subElem of root.getElementsByClassName('list_answers')[0].childNodes){
         if (subElem.className == "repLine"){
             count++;
             if(repLineElem == null){
@@ -357,8 +359,7 @@ function addReponseFilled(root, answer){
         newelem.childNodes[7].style.display = "inline";
         newelem.getElementsByClassName('answer1')[0].value = answer["answer"]
         newelem.getElementsByClassName('answer1_is_valid')[0].checked = answer["solution"]
-
-        root.appendChild(newelem);
+        root.getElementsByClassName('list_answers')[0].appendChild(newelem);
     }
 
     //root.parentNode.removeChild(root);

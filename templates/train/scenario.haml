@@ -20,7 +20,7 @@
             .ligneorange
 
             .container-fluid.boxclassetitle
-                %h2.titre
+                %h1.titre
 
             .ligneorangefine
 
@@ -31,7 +31,7 @@
             .ligneorange
 
             .container-fluid.boxclassetitle
-                %h2.titre
+                %h1.titre
 
             .ligneorangefine
 
@@ -43,7 +43,7 @@
             .ligneorange
 
             .container-fluid.boxclassetitle
-                %h2.titre
+                %h1.titre
 
             .ligneorangefine
 
@@ -67,13 +67,15 @@
                         %li
                             .answer
                             %input.isAnswer{:type => "checkbox"}
-            %br
-            %button.btn.btn-primary#validateScenario{:style => "display: block", :foal => "right"}
-                Valider
+                            %img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
+
+                %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)!
 
     #Tools.blk
       .container-fluid.box-options
         %button.btn-fixed-previous#previousElement
             Previous
+        %button.btn-fixed-validate#validateElement
+            Valider
         %button.btn-fixed-next#nextElement
             Next
