@@ -175,22 +175,22 @@ class EditScenario {
         let newelem = document.createElement("div");
         newelem.classList.add('mcqBlockElem');
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
-
+        console.log(this.data["elements"][index]);
         // filling the instructions and the question
         newelem.getElementsByClassName('instruction')[0].value = this.data["elements"][index]["data"]["instruction"]
         newelem.getElementsByClassName('question')[0].value = this.data["elements"][index]["data"]["question"]
 
         // filling the first and the second answer of the mcq (because they are mandatory)
-        newelem.getElementsByClassName('answer1')[0].value = this.data["elements"][index]["data"]["answer"][0]["answer"]
-        newelem.getElementsByClassName('answer1_is_valid')[0].checked = this.data["elements"][index]["data"]["answer"][0]["solution"]
+        newelem.getElementsByClassName('answer1')[0].value = this.data["elements"][index]["data"]["answers"][0]["answer"]
+        newelem.getElementsByClassName('answer1_is_valid')[0].checked = this.data["elements"][index]["data"]["answers"][0]["solution"]
 
-        newelem.getElementsByClassName('answer2')[0].value = this.data["elements"][index]["data"]["answer"][1]["answer"]
-        newelem.getElementsByClassName('answer2_is_valid')[0].checked = this.data["elements"][index]["data"]["answer"][1]["solution"]
+        newelem.getElementsByClassName('answer2')[0].value = this.data["elements"][index]["data"]["answers"][1]["answer"]
+        newelem.getElementsByClassName('answer2_is_valid')[0].checked = this.data["elements"][index]["data"]["answers"][1]["solution"]
 
         // optionally filling the other answers
-        for(let i = 2;i<this.data["elements"][index]["data"]["anwers"].length;i++)
+        for(let i = 2;i<this.data["elements"][index]["data"]["answers"].length;i++)
         {
-            addReponse(newelem, this.data["elements"][index]["data"]["answer"][i]);
+            addReponseFilled(newelem.getElementsByClassName('panel-body')[0], this.data["elements"][index]["data"]["answers"][i]);
         }
 
         this.anchor.appendChild(newelem);
@@ -213,7 +213,7 @@ class EditScenario {
             {
                 this.makeFilledVid(i);
             }
-            else if(this.data["elements"][i]["type"] == "McqElem")
+            else if(this.data["elements"][i]["type"] == "MCQElem")
             {
                 this.makeFilledMcq(i);
             }
@@ -347,11 +347,12 @@ function addReponse(elem, answer){
     return false;
 }
 
-function addReponseFilled(elem, answer){
-    var root = elem.parentNode.parentNode;
+function addReponseFilled(root, answer){
     let count = 0;
     let repLineElem = null;
-    for(let subElem of root.childNodes[1].childNodes){
+    for(let subElem of root.childNodes){
+        console.log("SUBELEM : "  +subElem);
+        console.log(subElem);
         if (subElem.className == "repLine"){
             count++;
             if(repLineElem == null){
@@ -369,7 +370,7 @@ function addReponseFilled(elem, answer){
         newelem.getElementsByClassName('answer1')[0].value = answer["answer"]
         newelem.getElementsByClassName('answer1_is_valid')[0].checked = answer["solution"]
 
-        root.childNodes[1].appendChild(newelem);
+        root.appendChild(newelem);
     }
 
     //root.parentNode.removeChild(root);

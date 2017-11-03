@@ -84,7 +84,7 @@ def get_data(request, id):
 
     mcq = MCQElem.objects.filter(id_scenario=id)
     for m in mcq:
-        elem = {"type" : "MCQElem", "order": m.order, "data":{"id_scenario": id, "consigne": m.consigne, "question": m.question}}
+        elem = {"type" : "MCQElem", "order": m.order, "data":{"id_scenario": id, "instruction": m.instruction, "question": m.question}}
 
     # for element in elements:
     #     print(element["data"]['order'])
