@@ -10,6 +10,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     }
 
     $scope.validateExercice = function() {
+        chart_saveInJson($scope.questions, $scope.boardList);
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
             .error(function() {
                 console.log("error")
@@ -59,8 +60,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         }
 
         $("#submit-pull-request").addClass("disabled");
-
-        chart_saveInJson($scope.questions);
 
         $http.post("submit/", {"questions": $scope.questions, "html": html, "skill_code": skill_code, "image": $scope.base64img, "testable_online": $scope.testable_online})
             .success(function(data) {
@@ -117,7 +116,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         }
 
         setTimeout(function() {
-            chart_refresh();
+            $scope.boardList = chart_refresh();
         }, 100);
         
     }
