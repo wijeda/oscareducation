@@ -3,9 +3,14 @@
 
 */
 
-
-
-var bar
+var bars;
+var AxisX;
+var AxisY;
+var boardBarChart;
+var zeroX;
+var zeroY;
+var maxX;
+var maxY;
 $( document ).ready(function() {
     chart_refresh();
 });
@@ -18,6 +23,31 @@ function chart_refresh()
         chart_createChart(graphics[i]);  //create the element founded
     }
 
+}
+
+function chart_setBars()
+{
+	this.bars = [];
+}
+
+
+function chart_addBar(bar)
+{
+	this.bars.push(bar);
+}
+
+function chart_setAxis(AxisX,AxisY)
+{
+	this.AxisX = AxisX;
+	this.AxisY = AxisY;
+}
+
+function chart_setOrigin(zX,zY,mX,mY)
+{
+	this.zeroX = zX;
+	this.zeroY = zY;
+	this.maxX = mX;
+	this.maxY = mY;	
 }
 
 function chart_createBarChartFromForm()
@@ -35,14 +65,18 @@ function chart_createBarChartFromForm()
 	var stepX = $("#stepX").val();
 	var stepY = $("#stepY").val();
 	
-	var zeroX = $("#zeroX").val();
-	var zeroY = $("#zeroY").val();
+	var zX = $("#zeroX").val();
+	var zY = $("#zeroY").val();
 	
-	var maxX = $("#maxX").val();
-	var maxY = $("#maxY").val();
-	let board = JXG.JSXGraph.initBoard(element.id,{ axis:false,showCopyright:false, boundingbox: [zeroX, maxY, maxX, zeroY]});
+	var mX = $("#maxX").val();
+	var mY = $("#maxY").val();
+	chart_setBars();
+	chart_setAxis(barGraphX,barGraphY);
+	chart_setOrigin(zX,zY,mX,mY);
+	let board = JXG.JSXGraph.initBoard(element.id,{ id:"barChartFromForm",axis:false,showCopyright:false, boundingbox: [this.zeroX, this.maxY, this.maxX, this.zeroY]});
+    this.boardBarChart = board;
 	xaxis = board.create('axis', [[0,0],[1,0]],
-				{name:barGraphX,
+				{name:AxisX,
 				withLabel:true,
 				label: {
 					position:'rt',
@@ -50,15 +84,15 @@ function chart_createBarChartFromForm()
 					}
 				});
 	yaxis = board.create('axis', [[0,0],[0,1]],
-				{name:barGraphY,
+				{name:AxisY,
 				withLabel:true,
 				label: {
 					position:'rt',
 					offset:[20,0]
 					}
 				});
-    let chart = board.create('chart', [],
-                {chartStyle:'bar', width:1, labels:[],
+    let chart = board.create('chart', this.bars,
+                {chartStyle:'bar', width:1, labels:this.bars,
                  colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
 }
 
@@ -95,20 +129,25 @@ function chart_createChart(element)
                 {chartStyle:'bar', width:0.8, labels:[12,23],
                  colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:true});
 
-
     }
 }
-function chart_add(bar)
+function chart_add()
 {
-	alert("yo")
-	graphics = document.getElementsByClassName("chartQuestion"); 
+	var newBarY = parseInt($("#newBarY").val());
 	var element;
 	for(var i = 0;i<graphics.length;i++){
   		var type = $(graphics[i]).data( "chart-type" );
 		if(type == "barchart") element = graphics[i];
 	}
 	
-	alert(element.id);
+	chart_addBar(newBarY);
 	
+	this.boardBarChart.update();
+	
+	this.boardBarChart.suspendUpdate();
+    let chart = this.boardBarChart.create('chart', this.bars,
+                {chartStyle:'bar', width:1, labels:this.bars,
+                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
+    this.boardBarChart.unsuspendUpdate();
 	console.log('added a bar to the chart !');
 }
