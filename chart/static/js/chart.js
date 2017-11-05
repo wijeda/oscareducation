@@ -3,7 +3,7 @@
 
 */
 
-var bars;
+var bars= [];
 var AxisX;
 var AxisY;
 var boardBarChart;
@@ -27,13 +27,17 @@ function chart_refresh()
 
 function chart_setBars()
 {
-	this.bars = [];
 }
 
 
 function chart_addBar(bar)
 {
 	this.bars.push(bar);
+}
+
+function chart_removeBar(bar)
+{
+	this.bars.pop();
 }
 
 function chart_setAxis(AxisX,AxisY)
@@ -47,27 +51,31 @@ function chart_setOrigin(zX,zY,mX,mY)
 	this.zeroX = zX;
 	this.zeroY = zY;
 	this.maxX = mX;
-	this.maxY = mY;	
+	this.maxY = mY;
 }
 
 function chart_createBarChartFromForm()
 {
-	graphics = document.getElementsByClassName("chartQuestion"); 
+	graphics = document.getElementsByClassName("chartQuestion");
 	var element;
 	for(var i = 0;i<graphics.length;i++){
   		var type = $(graphics[i]).data( "chart-type" );
 		if(type == "barchart") element = graphics[i];
 	}
-	
+
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+
 	var barGraphX = $("#barGraphX").val();
 	var barGraphY = $("#barGraphY").val();
-	
+
 	var stepX = $("#stepX").val();
 	var stepY = $("#stepY").val();
-	
+
 	var zX = $("#zeroX").val();
 	var zY = $("#zeroY").val();
-	
+
 	var mX = $("#maxX").val();
 	var mY = $("#maxY").val();
 	chart_setBars();
@@ -134,20 +142,31 @@ function chart_createChart(element)
 function chart_add()
 {
 	var newBarY = parseInt($("#newBarY").val());
-	var element;
-	for(var i = 0;i<graphics.length;i++){
-  		var type = $(graphics[i]).data( "chart-type" );
-		if(type == "barchart") element = graphics[i];
-	}
-	
 	chart_addBar(newBarY);
-	
+    chart_update();
+}
+
+function chart_update()
+{
+/*
+    var element;
+    for(var i = 0;i<graphics.length;i++){
+        var type = $(graphics[i]).data( "chart-type" );
+        if(type == "barchart") element = graphics[i];
+    }
 	this.boardBarChart.update();
-	
+
 	this.boardBarChart.suspendUpdate();
     let chart = this.boardBarChart.create('chart', this.bars,
                 {chartStyle:'bar', width:1, labels:this.bars,
                  colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
     this.boardBarChart.unsuspendUpdate();
-	console.log('added a bar to the chart !');
+	console.log('added a bar to the chart !');*/
+    chart_createBarChartFromForm();
+
+}
+function chart_deleteLast()
+{
+    chart_removeBar();
+    chart_update();
 }
