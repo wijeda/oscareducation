@@ -170,3 +170,29 @@ function chart_deleteLast()
     chart_removeBar();
     chart_update();
 }
+
+function char_getJSON()
+{
+    return JSON.stringify({
+        "bars":bars,
+        "AxisX":AxisX,
+        "AxisY":AxisY,
+        "zeroX":zeroX,
+        "zeroY":zeroY,
+        "maxX":maxX,
+        "maxY":maxY
+    });
+}
+
+function char_loadFromJSON(string )
+{
+    var object = JSON.parse(string);
+    bars = object.bars;
+    AxisX = object.AxisX;
+    AxisY = object.AxisY;
+    zeroX = object.zeroX;
+    zeroY = object.zeroY;
+    maxX = object.maxX;
+    maxY = object.maxY;
+    chart_update();
+}
