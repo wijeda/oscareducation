@@ -38,6 +38,8 @@ function chart_refresh()
         chart_createChart(graphics[i]);  //create the element founded
     }
 
+
+    chart_createBarChartFromForm();
 }
 
 function chart_setBars()

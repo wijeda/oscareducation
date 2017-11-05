@@ -160,9 +160,9 @@
                   %button.btn.btn-success.btn-sm{ng-model: "createBarChart", onclick: "chart_createBarChartFromForm()", type: "button"}
                     %span.glyphicon.glyphicon-ok
                     Créer le graphique
-                  .jxgbox.chartQuestion#jxgbox{id:barChartForm,style:"width:100%; height:676px;",data-chart-type:"barchart",value:"barchart"}
+                  .jxgbox.chartQuestion#jxgbox{id:barChartForm,style:"width:100%; height:676px;margin-top:20px;margin-bottom:20px;",data-chart-type:"barchart",value:"barchart"}
                   .form-group
-                    %label.control-label.col-sm-3 Nouvelle ordonnée :
+                    %label.control-label.col-sm-3 Ajouter une nouvelle ordonnée
                     .col-sm-3
                       %input.form-control{id: "newBarY",type: "number", ng-model: "newBarY", ng-required: "false"}
                     .col-sm-2
