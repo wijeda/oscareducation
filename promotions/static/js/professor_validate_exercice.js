@@ -9,6 +9,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         })
     }
 
+    chart_changeInput($scope);
     $scope.validateExercice = function() {
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
             .error(function() {
@@ -117,7 +118,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         setTimeout(function() {
             chart_refresh();
         }, 100);
-        
+
     }
 
     $scope.onChangeRadio = function(question, answer) {

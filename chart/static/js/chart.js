@@ -13,8 +13,23 @@ var maxX;
 var maxY;
 $( document ).ready(function() {
     chart_refresh();
+
 });
 
+
+function chart_changeInput($scope)
+{
+
+    $scope.barGraphX = "abscisses";
+    $scope.barGraphY = "ordonnées";
+    $scope.stepX = 1;
+    $scope.stepY = 1;
+
+    $scope.zeroX = -1;
+    $scope.zeroY = -1;
+    $scope.maxX = 10;
+    $scope.maxY = 10;
+}
 function chart_refresh()
 {
 	console.log('refreshed the chart !');
