@@ -1400,6 +1400,11 @@ def exercice_validation_form_validate_exercice(request):
                 "answers": question["answers"],
             }
 
+        elif question["type"].startswith("chart") or question["type"] == "barchart" :
+            questions[question["instructions"]] = {
+                "type": question["type"],
+                "answers": question["answers"],
+            }
         # No provided answer if corrected by a Professor
         elif question["type"] == "professor":
             questions[question["instructions"]] = {
