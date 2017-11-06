@@ -93,7 +93,7 @@ function chart_createBarChartFromForm()
   		var type = $(graphics[i]).data( "chart-type" );
 		if(type == "barchart") element = graphics[i];
 	}
-
+    if(element == undefined)return;
 
 	var barGraphX = $("#barGraphX").val();
 	var barGraphY = $("#barGraphY").val();
@@ -181,7 +181,7 @@ function chart_createChart(element)
        	var bar = [];
        	p = [];
         for(var i = 0;i<l.length;i++){
-        	var point = board.createElement('point', [i+1,l[i]],{name:'',size:7,face:'^'});
+        	var point = board.create('point', [i+1,l[i]],{name:'',size:7,face:'^'});
         	p.push(point);
         }
 
