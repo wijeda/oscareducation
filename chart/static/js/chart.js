@@ -3,7 +3,7 @@
 
 */
 
-var bars= [];
+var bars;
 var AxisX;
 var AxisY;
 var boardBarChart;
@@ -11,11 +11,10 @@ var zeroX;
 var zeroY;
 var maxX;
 var maxY;
+var points;
 $( document ).ready(function() {
     chart_refresh();
-
 });
-
 
 function chart_changeInput($scope)
 {
@@ -30,6 +29,7 @@ function chart_changeInput($scope)
     $scope.maxX = 10;
     $scope.maxY = 10;
 }
+
 function chart_refresh()
 {
 	console.log('refreshed the chart !');
@@ -38,23 +38,35 @@ function chart_refresh()
         chart_createChart(graphics[i]);  //create the element founded
     }
 
-
-    chart_createBarChartFromForm();
 }
 
 function chart_setBars()
 {
+	this.bars = [];
 }
 
+function chart_setPoints()
+{
+	this.points = [];
+}
 
 function chart_addBar(bar)
 {
 	this.bars.push(bar);
 }
 
-function chart_removeBar(bar)
+function chart_addPoint(point)
+{
+	this.points.push(point);
+}
+function chart_removeBar()
 {
 	this.bars.pop();
+}
+
+function chart_removePoint()
+{
+	this.points.pop();
 }
 
 function chart_setAxis(AxisX,AxisY)
@@ -68,40 +80,41 @@ function chart_setOrigin(zX,zY,mX,mY)
 	this.zeroX = zX;
 	this.zeroY = zY;
 	this.maxX = mX;
-	this.maxY = mY;
+	this.maxY = mY;	
 }
 
 function chart_createBarChartFromForm()
 {
-	graphics = document.getElementsByClassName("chartQuestion");
+	graphics = document.getElementsByClassName("chartQuestion"); 
 	var element;
 	for(var i = 0;i<graphics.length;i++){
   		var type = $(graphics[i]).data( "chart-type" );
 		if(type == "barchart") element = graphics[i];
 	}
 
-    while (element.firstChild) {
-        element.removeChild(element.firstChild);
-    }
-
+	
 	var barGraphX = $("#barGraphX").val();
 	var barGraphY = $("#barGraphY").val();
-
+	
 	var stepX = $("#stepX").val();
 	var stepY = $("#stepY").val();
-
-	var zX = $("#zeroX").val();
-	var zY = $("#zeroY").val();
-
-	var mX = $("#maxX").val();
-	var mY = $("#maxY").val();
+	
+	var zX = parseInt($("#zeroX").val());
+	var zY = parseInt($("#zeroY").val());
+	
+	var mX = parseInt($("#maxX").val());
+	var mY = parseInt($("#maxY").val());
+	if(this.points == undefined && this.bars == undefined)
+	{
+		chart_setPoints();
+	}
 	chart_setBars();
 	chart_setAxis(barGraphX,barGraphY);
 	chart_setOrigin(zX,zY,mX,mY);
 	let board = JXG.JSXGraph.initBoard(element.id,{ id:"barChartFromForm",axis:false,showCopyright:false, boundingbox: [this.zeroX, this.maxY, this.maxX, this.zeroY]});
     this.boardBarChart = board;
 	xaxis = board.create('axis', [[0,0],[1,0]],
-				{name:AxisX,
+				{name:this.AxisX,
 				withLabel:true,
 				label: {
 					position:'rt',
@@ -109,14 +122,25 @@ function chart_createBarChartFromForm()
 					}
 				});
 	yaxis = board.create('axis', [[0,0],[0,1]],
-				{name:AxisY,
+				{name:this.AxisY,
 				withLabel:true,
 				label: {
 					position:'rt',
 					offset:[20,0]
 					}
 				});
-    let chart = board.create('chart', this.bars,
+	var temp =[];
+	for(var i = 0;i<this.points.length;i++)
+	{
+		let p = this.boardBarChart.create('point',[i+1,this.points[i].Y()],{name:'',size:7,face:'^'});
+		temp.push(p);
+	}
+	this.points = temp;
+	for(var i = 0;i<this.points.length;i++)
+	{ 
+        this.bars.push(getPointValue(this.points,i));
+    }
+    let chart = board.create('chart', [this.bars],
                 {chartStyle:'bar', width:1, labels:this.bars,
                  colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
 }
@@ -150,16 +174,63 @@ function chart_createChart(element)
     {
 
         let board = JXG.JSXGraph.initBoard(element.id, { axis:true,showCopyright:false, boundingbox: [-1, 5, 5, -1]});
-        let chart = board.create('chart', [12,23],
-                {chartStyle:'bar', width:0.8, labels:[12,23],
+       	var l = [5,6,9];
+       	var bar = [];
+       	p = [];
+        for(var i = 0;i<l.length;i++){
+        	var point = board.createElement('point', [i+1,l[i]],{name:'',size:7,face:'^'});
+        	p.push(point);
+        }
+        
+        for(var i = 0;i<p.length;i++){ 
+        	bar.push(getPointValue(p,i));
+        }
+               //	f = function(){ return p.Value();
+        	//let chart = board.create('chart',function(){ return p.Value();}
+        let chart = board.create('chart', [bar],
+                {chartStyle:'bar', width:0.8, labels:bar,
                  colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:true});
 
     }
 }
+
+function getPointValue(points,index)
+{
+	return function(){
+		return points[index].Y();
+	}
+}
+/*
+
 function chart_add()
 {
 	var newBarY = parseInt($("#newBarY").val());
-	chart_addBar(newBarY);
+	var element;
+	for(var i = 0;i<graphics.length;i++){
+  		var type = $(graphics[i]).data( "chart-type" );
+		if(type == "barchart") element = graphics[i];
+	}
+	
+	var p = this.boardBarChart.create('point',[this.bars.length+1,newBarY],{name:'',size:7,face:'^'});
+	chart_addPoint(p);
+	chart_addBar(getPointValue(this.points,this.bars.length));
+	
+	this.boardBarChart.update();
+	
+	this.boardBarChart.suspendUpdate();
+    let chart = this.boardBarChart.create('chart', [this.bars],
+                {chartStyle:'bar', width:1, labels:this.bars,
+                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
+
+    this.boardBarChart.unsuspendUpdate();
+	console.log('added a bar to the chart !');
+}*/
+function chart_add()
+{
+	var newBarY = parseInt($("#newBarY").val());
+	var p = this.boardBarChart.create('point',[this.bars.length+1,newBarY],{name:'',size:7,face:'^'});
+	chart_addBar(newBarY);	
+	chart_addPoint(p);
     chart_update();
 }
 
@@ -172,7 +243,6 @@ function chart_update()
         if(type == "barchart") element = graphics[i];
     }
 	this.boardBarChart.update();
-
 	this.boardBarChart.suspendUpdate();
     let chart = this.boardBarChart.create('chart', this.bars,
                 {chartStyle:'bar', width:1, labels:this.bars,
@@ -182,9 +252,12 @@ function chart_update()
     chart_createBarChartFromForm();
 
 }
+
+
 function chart_deleteLast()
 {
     chart_removeBar();
+    chart_removePoint();
     chart_update();
 }
 
