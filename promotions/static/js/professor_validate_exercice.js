@@ -19,10 +19,14 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             })
             .success(function(data) {
                 console.log("success");
+                console.log("WTF??");
                 if (data.yaml.result == "error") {
+                console.log("error");
                     $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-danger"> <b>Erreur:</b> ' + data.yaml.message + '</b></div>');
                     $scope.exerciceIsValid = false;
                 } else {
+
+                    console.log("no error");
                     $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-success">' + data.yaml.message + '</b></div>');
 
                     $scope.yamlRendering = $sce.trustAsHtml(data.rendering);
@@ -45,6 +49,8 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                     }, 0);
 
                     $scope.exerciceIsValid = true;
+                    console.log("testing");
+                    $timeout(chart_refresh,100);
                 }
             })
 

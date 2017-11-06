@@ -118,7 +118,7 @@ function chart_createBarChartFromForm()
         	chart_setOrigin(zX,zY,mX,mY,i);
 
             element.id = "board"+i;
-            let board = JXG.JSXGraph.initBoard(element.id,{ id:"barChartFromForm",axis:false,showCopyright:false, boundingbox: [this.zeroX[i], this.maxY[i], this.maxX[i], this.zeroY[i]]});
+            let board = JXG.JSXGraph.initBoard(element.id,{ id:"barChartFromForm-"+i,axis:false,showCopyright:false, boundingbox: [this.zeroX[i], this.maxY[i], this.maxX[i], this.zeroY[i]]});
             this.boardBarChart[i] = board;
             console.log(this.boardBarChart.length)
         	xaxis = board.create('axis', [[0,0],[1,0]],
@@ -189,7 +189,7 @@ function chart_createChart(element)
     {
 
         let board = JXG.JSXGraph.initBoard(element.id, { axis:true,showCopyright:false, boundingbox: [-1, 5, 5, -1]});
-       	var l = [5,6,9];
+       	var l = [];
        	var bar = [];
        	p = [];
         for(var i = 0;i<l.length;i++){
@@ -202,9 +202,9 @@ function chart_createChart(element)
         }
                //	f = function(){ return p.Value();
         	//let chart = board.create('chart',function(){ return p.Value();}
-        let chart = board.create('chart', [bar],
+        /*let chart = board.create('chart', [bar],
                 {chartStyle:'bar', width:0.8, labels:bar,
-                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:true});
+                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:true});*/
 
     }
 }
