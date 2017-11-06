@@ -37,6 +37,7 @@ function chart_refresh()
     for(var i = 0;i<graphics.length;i++){
         chart_createChart(graphics[i]);  //create the element founded
     }
+    chart_createBarChartFromForm()
 
 }
 
