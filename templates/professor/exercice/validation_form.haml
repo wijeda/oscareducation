@@ -126,7 +126,7 @@
                     .col-sm-1
                       %input.form-control{type: "checkbox", ng-change: "question.type == \"radio\" && answer.correct === true && onChangeRadio(question, answer)", ng-model: "answer.correct"}
 
-                .form-horizontal{ng-if: "question.type == \"barchart\""}
+                .form-horizontal{ng-if: "question.type == \"chart-barchart\""}
                   .form-group
                     %label.control-label.col-sm-3 Nom de l'axe des abscisses
                     .col-sm-9
