@@ -19,7 +19,6 @@ $( document ).ready(function() {
 
 function chart_changeInput($scope)
 {
-
     $scope.barGraphX = "abscisses";
     $scope.barGraphY = "ordonnees";
     $scope.stepX = 1;
@@ -34,7 +33,6 @@ function chart_changeInput($scope)
 
 function chart_refresh()
 {
-	console.log('refreshed the chart !');
     graphics = document.getElementsByClassName("chartQuestion");  //find all charts on the page
     for(var i = 0;i<graphics.length;i++){
         chart_createChart(graphics[i]);  //create the element founded
@@ -93,7 +91,6 @@ function chart_createBarChartFromForm()
 	for(var i = 0;i<graphics.length;i++)
     {
   		var type = $(graphics[i]).data( "chart-type" );
-        console.log(i+' '+graphics.length+' '+type )
 		if(type == "barchart")
         {
             var barGraphX = $(".barGraphX").eq(i).val();
@@ -111,8 +108,6 @@ function chart_createBarChartFromForm()
             var mY = parseInt($(".maxY").eq(i).val());
             element = graphics[i];
 
-            console.log("test" +i);
-
         	if(this.points == undefined && this.bars == undefined)
         	{
         		chart_setPoints(i);
@@ -124,7 +119,6 @@ function chart_createBarChartFromForm()
             element.id = "board"+i;
             let board = JXG.JSXGraph.initBoard(element.id,{ id:"barChartFromForm-"+i,axis:false,showCopyright:false, boundingbox: [this.zeroX[i], this.maxY[i], this.maxX[i], this.zeroY[i]]});
             this.boardBarChart[i] = board;
-            console.log(this.boardBarChart.length)
         	xaxis = board.create('axis', [[0,0],[1,0]],
         				{name:this.AxisX[i],
         				withLabel:true,
@@ -152,7 +146,7 @@ function chart_createBarChartFromForm()
         	this.points[i] = temp;
         	for(var j = 0;j<this.points[i].length;j++)
         	{
-                this.bars[i].push(getPointValue(this.points[i],j));
+                this.bars[i].push(chart_getPointValue(this.points[i],j));
             }
             let chart;
             if(this.bars[i] != undefined)
@@ -170,8 +164,6 @@ function chart_createBarChartFromForm()
 
 function chart_createChart(element)
 {
-    console.log('created a chart !');
-
     var type = $(element).data( "chart-type" );
 
     var rawData = $(element).data( "chart-raw" );
@@ -198,20 +190,20 @@ function chart_createChart(element)
     if(type.includes("barchart"))
     {
         var box = [-1, 5, 5, -1];
+
+        /*
+            if there is data given from the server, we must parse it.
+            We all write bad code, but if it works, it works.
+            Don't judge, morty.
+        */
         if(rawData != undefined)
         {
             var test =String(rawData);
-            for(var temp = 0;temp<100;temp++)
+            for(var temp = 0;temp<100;temp++) // I don't know why, but we must pass the regex as much as there answers
                 test = test.replace(/u'(?=[^:]+')/g, "'").replace(/'/g, '"').replace('u"', '"').replace("False", 'false').replace("True", 'true').replace('"{', '{').replace('}"', '}').replace('u"', '"')
-
-
-            console.log(test);
             var parsed =  JSON.parse(test);
-            console.log(parsed);
             let r = parsed[0].chart;
-            console.log(r);
             box = [r.zeroX, r.maxY,r.maxX,r.zeroY];
-            console.log(box);
         }
 
         let board = JXG.JSXGraph.initBoard(element.id, { axis:true,showCopyright:false, boundingbox: box,showNavigation : false});
@@ -224,52 +216,23 @@ function chart_createChart(element)
         }
 
         for(var i = 0;i<p.length;i++){
-        	bar.push(getPointValue(p,i));
+        	bar.push(chart_getPointValue(p,i));
         }
-               //	f = function(){ return p.Value();
-        	//let chart = board.create('chart',function(){ return p.Value();}
-        /*let chart = board.create('chart', [bar],
-                {chartStyle:'bar', width:0.8, labels:bar,
-                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:true});*/
 
     }
 }
 
-function getPointValue(points,index)
+function chart_getPointValue(points,index)
 {
 	return function(){
 		return chart_roundToStep(points[index].Y(),precisionValue);
 	}
 }
-/*
 
-function chart_add()
-{
-	var newBarY = parseInt($("#newBarY").val());
-	var element;
-	for(var i = 0;i<graphics.length;i++){
-  		var type = $(graphics[i]).data( "chart-type" );
-		if(type == "barchart") element = graphics[i];
-	}
 
-	var p = this.boardBarChart.create('point',[this.bars.length+1,newBarY],{name:'',size:7,face:'^'});
-	chart_addPoint(p);
-	chart_addBar(getPointValue(this.points,this.bars.length));
-
-	this.boardBarChart.update();
-
-	this.boardBarChart.suspendUpdate();
-    let chart = this.boardBarChart.create('chart', [this.bars],
-                {chartStyle:'bar', width:1, labels:this.bars,
-                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
-
-    this.boardBarChart.unsuspendUpdate();
-	console.log('added a bar to the chart !');
-}*/
 function chart_add(element)
 {
     var index = $(".btn-addBar").index(element);
-    console.log(index+" "+$(".btn-addBar").length);
 	var newBarY = parseInt($(".newBarY").eq(index).val());
 	var p = this.boardBarChart[index].create('point',[this.bars[index].length+1,newBarY],{name:'',size:7,face:'^'});
 	chart_addBar(newBarY,index);
@@ -286,19 +249,6 @@ function chart_btnUpdate(element)
 }
 function chart_update()
 {
-/*
-    var element;
-    for(var i = 0;i<graphics.length;i++){
-        var type = $(graphics[i]).data( "chart-type" );
-        if(type == "barchart") element = graphics[i];
-    }
-	this.boardBarChart.update();
-	this.boardBarChart.suspendUpdate();
-    let chart = this.boardBarChart.create('chart', this.bars,
-                {chartStyle:'bar', width:1, labels:this.bars,
-                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
-    this.boardBarChart.unsuspendUpdate();
-	console.log('added a bar to the chart !');*/
     chart_createBarChartFromForm();
 
 }
@@ -320,8 +270,6 @@ function chart_changeScopeQuestions(questions)
             }
         }
     }
-
-    console.log(questions)
     return questions;
 }
 
@@ -336,7 +284,6 @@ function chart_deleteLast(element)
 
 function chart_saveInJson()
 {
-    console.log(char_getJSON());
     return  char_getJSON();
 
 }
@@ -358,19 +305,6 @@ function chart_getJSON(index)
         "maxY":maxY[index],
         "precisionValue":precisionValue[index]
     });
-}
-
-function char_loadFromJSON(string )
-{
-    var object = JSON.parse(string);
-    bars = object.bars;
-    AxisX = object.AxisX;
-    AxisY = object.AxisY;
-    zeroX = object.zeroX;
-    zeroY = object.zeroY;
-    maxX = object.maxX;
-    maxY = object.maxY;
-    chart_update();
 }
 
 function chart_roundToStep(number,step)
