@@ -80,28 +80,28 @@ function chart_setOrigin(zX,zY,mX,mY)
 	this.zeroX = zX;
 	this.zeroY = zY;
 	this.maxX = mX;
-	this.maxY = mY;	
+	this.maxY = mY;
 }
 
 function chart_createBarChartFromForm()
 {
-	graphics = document.getElementsByClassName("chartQuestion"); 
+	graphics = document.getElementsByClassName("chartQuestion");
 	var element;
 	for(var i = 0;i<graphics.length;i++){
   		var type = $(graphics[i]).data( "chart-type" );
 		if(type == "barchart") element = graphics[i];
 	}
 
-	
+
 	var barGraphX = $("#barGraphX").val();
 	var barGraphY = $("#barGraphY").val();
-	
+
 	var stepX = $("#stepX").val();
 	var stepY = $("#stepY").val();
-	
+
 	var zX = parseInt($("#zeroX").val());
 	var zY = parseInt($("#zeroY").val());
-	
+
 	var mX = parseInt($("#maxX").val());
 	var mY = parseInt($("#maxY").val());
 	if(this.points == undefined && this.bars == undefined)
@@ -137,7 +137,7 @@ function chart_createBarChartFromForm()
 	}
 	this.points = temp;
 	for(var i = 0;i<this.points.length;i++)
-	{ 
+	{
         this.bars.push(getPointValue(this.points,i));
     }
     let chart = board.create('chart', [this.bars],
@@ -181,8 +181,8 @@ function chart_createChart(element)
         	var point = board.createElement('point', [i+1,l[i]],{name:'',size:7,face:'^'});
         	p.push(point);
         }
-        
-        for(var i = 0;i<p.length;i++){ 
+
+        for(var i = 0;i<p.length;i++){
         	bar.push(getPointValue(p,i));
         }
                //	f = function(){ return p.Value();
@@ -197,7 +197,7 @@ function chart_createChart(element)
 function getPointValue(points,index)
 {
 	return function(){
-		return points[index].Y();
+		return Math.round(points[index].Y());
 	}
 }
 /*
@@ -210,13 +210,13 @@ function chart_add()
   		var type = $(graphics[i]).data( "chart-type" );
 		if(type == "barchart") element = graphics[i];
 	}
-	
+
 	var p = this.boardBarChart.create('point',[this.bars.length+1,newBarY],{name:'',size:7,face:'^'});
 	chart_addPoint(p);
 	chart_addBar(getPointValue(this.points,this.bars.length));
-	
+
 	this.boardBarChart.update();
-	
+
 	this.boardBarChart.suspendUpdate();
     let chart = this.boardBarChart.create('chart', [this.bars],
                 {chartStyle:'bar', width:1, labels:this.bars,
@@ -229,7 +229,7 @@ function chart_add()
 {
 	var newBarY = parseInt($("#newBarY").val());
 	var p = this.boardBarChart.create('point',[this.bars.length+1,newBarY],{name:'',size:7,face:'^'});
-	chart_addBar(newBarY);	
+	chart_addBar(newBarY);
 	chart_addPoint(p);
     chart_update();
 }
