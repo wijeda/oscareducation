@@ -200,9 +200,9 @@ function chart_createChart(element)
         var box = [-1, 5, 5, -1];
         if(rawData != undefined)
         {
-            var test = rawData.replace(/u'(?=[^:]+')/g, "'").replace(/'/g, '"').replace('u"', '"').replace("False", 'false').replace("True", 'true').replace('"{', '{').replace('}"', '}').replace('u"', '"');
-
-
+            var test =String(rawData);
+            for(var temp = 0;temp<100;temp++)
+                test = test.replace(/u'(?=[^:]+')/g, "'").replace(/'/g, '"').replace('u"', '"').replace("False", 'false').replace("True", 'true').replace('"{', '{').replace('}"', '}').replace('u"', '"')
 
 
             console.log(test);
