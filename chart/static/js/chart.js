@@ -11,6 +11,7 @@ var zeroY;
 var maxX;
 var maxY;
 var points;
+var precisionValue;
 $( document ).ready(function() {
     chart_refresh();
 });
@@ -22,6 +23,7 @@ function chart_changeInput($scope)
     $scope.barGraphY = "ordonnées";
     $scope.stepX = 1;
     $scope.stepY = 1;
+    $scope.precisionValue = 1;
 
     $scope.zeroX = -1;
     $scope.zeroY = -1;
@@ -101,6 +103,7 @@ function chart_createBarChartFromForm()
 
 	var zX = parseInt($("#zeroX").val());
 	var zY = parseInt($("#zeroY").val());
+    precisionValue = parseInt($("#precisionValue").val());
 
 	var mX = parseInt($("#maxX").val());
 	var mY = parseInt($("#maxY").val());
@@ -197,7 +200,7 @@ function chart_createChart(element)
 function getPointValue(points,index)
 {
 	return function(){
-		return Math.round(points[index].Y());
+		return chart_roundToStep(points[index].Y(),precisionValue);
 	}
 }
 /*
@@ -274,7 +277,8 @@ function char_getJSON()
         "zeroX":zeroX,
         "zeroY":zeroY,
         "maxX":maxX,
-        "maxY":maxY
+        "maxY":maxY,
+        "precisionValue":precisionValue
     });
 }
 
@@ -289,4 +293,12 @@ function char_loadFromJSON(string )
     maxX = object.maxX;
     maxY = object.maxY;
     chart_update();
+}
+
+function chart_roundToStep(number,step)
+{
+    var lowest = step * Math.floor(number/step);
+    var highest = step * Math.ceil(number/step);
+    if(number-lowest > highest-number)return highest;
+    return lowest;
 }

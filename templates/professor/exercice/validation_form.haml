@@ -159,6 +159,10 @@
                     %label.control-label.col-sm-3 Ordonnée maximale
                     .col-sm-9
                       %input.form-control{id: "maxY",type: "number", ng-model: "maxY", ng-required: "false"}
+                  .form-group
+                    %label.control-label.col-sm-3 precision des barres
+                    .col-sm-9
+                      %input.form-control{id: "precisionValue",type: "number", ng-model: "precisionValue", ng-required: "false"}
                   %button.btn.btn-success.btn-sm{ng-model: "createBarChart", onclick: "chart_createBarChartFromForm()", type: "button"}
                     %span.glyphicon.glyphicon-ok
                     Mettre à jour le graphique
