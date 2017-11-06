@@ -2,16 +2,16 @@
     Every function must follow the format chart_nameInCamelCase
 */
 
-var bars;
-var AxisX;
-var AxisY;
-var boardBarChart;
-var zeroX;
-var zeroY;
-var maxX;
-var maxY;
-var points;
-var precisionValue;
+var bars = [[]];
+var AxisX = [];
+var AxisY = [];
+var boardBarChart = [];
+var zeroX = [];
+var zeroY = [];
+var maxX = [];
+var maxY = [];
+var points = [[]];
+var precisionValue = [];
 $( document ).ready(function() {
     chart_refresh();
 });
@@ -44,108 +44,120 @@ function chart_refresh()
 
 function chart_setBars()
 {
-	this.bars = [];
+	this.bars = [[]];
 }
 
 function chart_setPoints()
 {
-	this.points = [];
+	this.points = [[]];
 }
 
-function chart_addBar(bar)
+function chart_addBar(bar,which)
 {
-	this.bars.push(bar);
+	this.bars[which].push(bar);
 }
 
-function chart_addPoint(point)
+function chart_addPoint(point,which)
 {
-	this.points.push(point);
+	this.points[which].push(point);
 }
-function chart_removeBar()
+function chart_removeBar(which)
 {
-	this.bars.pop();
-}
-
-function chart_removePoint()
-{
-	this.points.pop();
+	this.bars[which].pop();
 }
 
-function chart_setAxis(AxisX,AxisY)
+function chart_removePoint(which)
 {
-	this.AxisX = AxisX;
-	this.AxisY = AxisY;
+	this.points[which].pop();
 }
 
-function chart_setOrigin(zX,zY,mX,mY)
+function chart_setAxis(AxisX,AxisY,which)
 {
-	this.zeroX = zX;
-	this.zeroY = zY;
-	this.maxX = mX;
-	this.maxY = mY;
+	this.AxisX[which] = AxisX;
+	this.AxisY[which] = AxisY;
+}
+
+function chart_setOrigin(zX,zY,mX,mY,which)
+{
+	this.zeroX[which] = zX;
+	this.zeroY[which]= zY;
+	this.maxX[which]= mX;
+	this.maxY[which] = mY;
 }
 
 function chart_createBarChartFromForm()
 {
-	graphics = document.getElementsByClassName("chartQuestion");
+	graphics = document.getElementsByClassName("chartQuestionValidation");
 	var element;
-	for(var i = 0;i<graphics.length;i++){
+	for(var i = 0;i<graphics.length;i++)
+    {
   		var type = $(graphics[i]).data( "chart-type" );
-		if(type == "barchart") element = graphics[i];
+		if(type == "barchart"){
+            var barGraphX = $(".barGraphX").eq(i).val();
+            var barGraphY = $(".barGraphY").eq(i).val();
+
+            var stepX = $(".stepX").eq(i).val();
+            var stepY = $(".stepY").eq(i).val();
+
+            var zX = parseInt($(".zeroX").eq(i).val());
+            var zY = parseInt($(".zeroY").eq(i).val());
+            precisionValue = parseInt($(".precisionValue").eq(i).val());
+
+            var mX = parseInt($(".maxX").eq(i).val());
+            var mY = parseInt($(".maxY").eq(i).val());
+            element = graphics[i];
+
+            console.log("test" +i);
+
+        	if(this.points == undefined && this.bars == undefined)
+        	{
+        		chart_setPoints(i);
+        	}
+        	chart_setBars(i);
+        	chart_setAxis(barGraphX,barGraphY,i);
+        	chart_setOrigin(zX,zY,mX,mY,i);
+
+            element.id = "board"+i;
+            let board = JXG.JSXGraph.initBoard(element.id,{ id:"barChartFromForm",axis:false,showCopyright:false, boundingbox: [this.zeroX[i], this.maxY[i], this.maxX[i], this.zeroY[i]]});
+            this.boardBarChart[i] = board;
+            console.log(this.boardBarChart.length)
+        	xaxis = board.create('axis', [[0,0],[1,0]],
+        				{name:this.AxisX[i],
+        				withLabel:true,
+        				label: {
+        					position:'rt',
+        					offset:[-15,20]
+        					}
+        				});
+        	yaxis = board.create('axis', [[0,0],[0,1]],
+        				{name:this.AxisY[i],
+        				withLabel:true,
+        				label: {
+        					position:'rt',
+        					offset:[20,0]
+        					}
+        				});
+        	var temp =[];
+            if(this.points[i] == undefined) this.points[i] = [];
+            if(this.bars[i] == undefined) this.bars[i] = [];
+        	for(var j = 0;j<this.points[i].length;j++)
+        	{
+        		let p = this.boardBarChart[i].create('point',[j+1,this.points[i][j].Y()],{name:'',size:7,face:'^'});
+        		temp.push(p);
+        	}
+        	this.points[i] = temp;
+        	for(var j = 0;j<this.points[i].length;j++)
+        	{
+                this.bars[i].push(getPointValue(this.points[i],j));
+            }
+            let chart = board.create('chart', [this.bars[i]],
+                        {chartStyle:'bar', width:1, labels:this.bars[i],
+                         colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
+        }
 	}
-    if(element == undefined)return;
 
-	var barGraphX = $("#barGraphX").val();
-	var barGraphY = $("#barGraphY").val();
 
-	var stepX = $("#stepX").val();
-	var stepY = $("#stepY").val();
 
-	var zX = parseInt($("#zeroX").val());
-	var zY = parseInt($("#zeroY").val());
-    precisionValue = parseInt($("#precisionValue").val());
-
-	var mX = parseInt($("#maxX").val());
-	var mY = parseInt($("#maxY").val());
-	if(this.points == undefined && this.bars == undefined)
-	{
-		chart_setPoints();
-	}
-	chart_setBars();
-	chart_setAxis(barGraphX,barGraphY);
-	chart_setOrigin(zX,zY,mX,mY);
-	let board = JXG.JSXGraph.initBoard(element.id,{ id:"barChartFromForm",axis:false,showCopyright:false, boundingbox: [this.zeroX, this.maxY, this.maxX, this.zeroY]});
-    this.boardBarChart = board;
-	xaxis = board.create('axis', [[0,0],[1,0]],
-				{name:this.AxisX,
-				withLabel:true,
-				label: {
-					position:'rt',
-					offset:[-15,20]
-					}
-				});
-	yaxis = board.create('axis', [[0,0],[0,1]],
-				{name:this.AxisY,
-				withLabel:true,
-				label: {
-					position:'rt',
-					offset:[20,0]
-					}
-				});
-	var temp =[];
-	for(var i = 0;i<this.points.length;i++)
-	{
-		let p = this.boardBarChart.create('point',[i+1,this.points[i].Y()],{name:'',size:7,face:'^'});
-		temp.push(p);
-	}
-	this.points = temp;
-	for(var i = 0;i<this.points.length;i++)
-	{
-        this.bars.push(getPointValue(this.points,i));
-    }
-    let chart = board.create('chart', [this.bars],
-                {chartStyle:'bar', width:1, labels:this.bars,
-                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
 }
 
 function chart_createChart(element)
@@ -228,15 +240,24 @@ function chart_add()
     this.boardBarChart.unsuspendUpdate();
 	console.log('added a bar to the chart !');
 }*/
-function chart_add()
+function chart_add(element)
 {
-	var newBarY = parseInt($("#newBarY").val());
-	var p = this.boardBarChart.create('point',[this.bars.length+1,newBarY],{name:'',size:7,face:'^'});
-	chart_addBar(newBarY);
-	chart_addPoint(p);
+    var index = $(".btn-addBar").index(element);
+    console.log(index+" "+$(".btn-addBar").length);
+	var newBarY = parseInt($(".newBarY").eq(index).val());
+	var p = this.boardBarChart[index].create('point',[this.bars[index].length+1,newBarY],{name:'',size:7,face:'^'});
+	chart_addBar(newBarY,index);
+	chart_addPoint(p,index);
     chart_update();
 }
 
+
+function chart_btnUpdate(element)
+{
+    var index = $(".btn-updateBar").index(element);
+    chart_createBarChartFromForm();
+
+}
 function chart_update()
 {
 /*
@@ -257,10 +278,11 @@ function chart_update()
 }
 
 
-function chart_deleteLast()
+function chart_deleteLast(element)
 {
-    chart_removeBar();
-    chart_removePoint();
+    var index = $(".btn-deleteBar").index(element);
+    chart_removeBar(index);
+    chart_removePoint(index);
     chart_update();
 }
 
