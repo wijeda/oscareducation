@@ -3,7 +3,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         var reader = new FileReader();
         reader.readAsDataURL(files[0]);
         reader.addEventListener("load", function() {
-            console.log("yay")
             $scope.base64img = reader.result;
             $scope.$digest();
         })
@@ -14,19 +13,13 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
         chart_saveInJson($scope.questions);
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
             .error(function() {
-                console.log("error")
                 $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-danger">Une erreur s\'est produite, nous en avons été alerté.</div>');
             })
             .success(function(data) {
-                console.log("success");
-                console.log("WTF??");
                 if (data.yaml.result == "error") {
-                console.log("error");
                     $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-danger"> <b>Erreur:</b> ' + data.yaml.message + '</b></div>');
                     $scope.exerciceIsValid = false;
                 } else {
-
-                    console.log("no error");
                     $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-success">' + data.yaml.message + '</b></div>');
 
                     $scope.yamlRendering = $sce.trustAsHtml(data.rendering);
@@ -47,9 +40,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                         })
 
                     }, 0);
-
                     $scope.exerciceIsValid = true;
-                    console.log("testing");
                     $timeout(chart_refresh,100);
                 }
             })
@@ -162,7 +153,6 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
         if (question.type.startsWith("math")) {
             $timeout(function() {
-                console.log("b");
                 $scope.renderMathquil(topIndex, question.answers.length - 1, question);
             }, 100);
         }
@@ -225,27 +215,19 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
     }
 
     $scope.renderMathquil = function(topIndex, answerIndex, question) {
-        console.log("topIndex: " + topIndex);
-        console.log("answerIndex: " + answerIndex);
         if (answerIndex != null) {
             query = $(".mathquill-" + topIndex + "-" + answerIndex);
         } else {
             query = $(".mathquill-" + topIndex);
         }
-        console.log(query);
         renderMathquil(query, function(MQ, index, mq) {
             var mathquill = MQ.MathField(mq, {
                 handlers: {
                     edit: function() {
-                        console.log("======> " + answerIndex);
-                        question.answers[answerIndex].latex = mathquill.latex();
-                        console.log(question.answers[answerIndex].latex);
-                        console.log($scope.questions);
+                        question.answers[answerIndex].latex = mathquill.latex()
                     }
                 }
             });
-
-            console.log(question.answers);
             if (question.answers[answerIndex].text) {
                 mathquill.latex(question.answers[answerIndex].text);
             }
