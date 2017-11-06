@@ -1639,7 +1639,7 @@ def exercice_validation_form_validate_exercice_yaml(request):
     return HttpResponse(json.dumps({
         "yaml": {
             "result": "success",
-            "message": "L'exercice semble valide",
+            "message": "L'exercice semble valide ",
         },
         "rendering": rendering.content,
     }, indent=4), content_type="application/json")

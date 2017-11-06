@@ -21,7 +21,7 @@ function chart_changeInput($scope)
 {
 
     $scope.barGraphX = "abscisses";
-    $scope.barGraphY = "ordonnées";
+    $scope.barGraphY = "ordonnees";
     $scope.stepX = 1;
     $scope.stepY = 1;
     $scope.precisionValue = 1;
@@ -173,6 +173,8 @@ function chart_createChart(element)
     console.log('created a chart !');
 
     var type = $(element).data( "chart-type" );
+
+    var rawData = $(element).data( "chart-raw" );
     var dataArr = $(element).data("chart-percent");
     var board;
     if(type.includes("piechart"))
@@ -195,8 +197,24 @@ function chart_createChart(element)
     }
     if(type.includes("barchart"))
     {
+        var box = [-1, 5, 5, -1];
+        if(rawData != undefined)
+        {
+            var test = rawData.replace(/u'(?=[^:]+')/g, "'").replace(/'/g, '"').replace('u"', '"').replace("False", 'false').replace("True", 'true').replace('"{', '{').replace('}"', '}').replace('u"', '"');
 
-        let board = JXG.JSXGraph.initBoard(element.id, { axis:true,showCopyright:false, boundingbox: [-1, 5, 5, -1]});
+
+
+
+            console.log(test);
+            var parsed =  JSON.parse(test);
+            console.log(parsed);
+            let r = parsed[0].chart;
+            console.log(r);
+            box = [r.zeroX, r.maxY,r.maxX,r.zeroY];
+            console.log(box);
+        }
+
+        let board = JXG.JSXGraph.initBoard(element.id, { axis:true,showCopyright:false, boundingbox: box,showNavigation : false});
        	var l = [];
        	var bar = [];
        	p = [];

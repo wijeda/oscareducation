@@ -45,13 +45,15 @@
           %tr
             %td= answer.graph.coordinates.X
             %td= answer.graph.coordinates.Y
-    -elif answer.type == "barchart"
+    -elif answer.type == "barchart" or  answer.type == "chart-barchart"
         -# Group 7
         %p (Group 07) File 'templates/professor/exercice/exercice_with_answers_rendering.haml' doesn't contain information to display here.
         {{ forloop.counter0 }}
         {{ name }}
-        -for answer in answer.answers
-           %li= answer
+        {{answer}}
+        iotgnroin
+        -for ans in answers
+           %li= ans
         %p Réponses :
     -elif answer.type == "professor"
       %span

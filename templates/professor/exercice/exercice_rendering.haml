@@ -36,8 +36,8 @@
             %input.hidden{type: "number", value: "", name: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y", id: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y"}
       -elif question.type == "chart-barchart"
         -# Group 7
-        {{question.answers}}
-        .jxgbox.chartQuestion#jxgboxPreview{id:barChartForm,style:"width:100%; height:676px;margin-top:20px;margin-bottom:20px;",data-chart-type:"barchart",value:"barchart"}
+
+        .jxgbox.chartQuestion#jxgboxPreview{id:barChartForm,style:"width:100%; height:676px;margin-top:20px;margin-bottom:20px;",data-chart-type:"barchart",value:"barchart",data-chart-raw:"{{question.answers}}"}
         .form-group{style :"overflow: hidden;"}
           %label.control-label.col-sm-3 Ajouter une nouvelle ordonnée
           .col-sm-3
