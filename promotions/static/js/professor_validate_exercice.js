@@ -10,7 +10,8 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
     chart_changeInput($scope);
     $scope.validateExercice = function() {
-        chart_saveInJson($scope.questions);
+        //$scope.questions = chart_saveInJson();
+        $scope.questions = chart_changeScopeQuestions($scope.questions)
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
             .error(function() {
                 $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-danger">Une erreur s\'est produite, nous en avons été alerté.</div>');
@@ -20,6 +21,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                     $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-danger"> <b>Erreur:</b> ' + data.yaml.message + '</b></div>');
                     $scope.exerciceIsValid = false;
                 } else {
+                    console.log(data);
                     $scope.yamlValidationResult = $sce.trustAsHtml('<div class="alert alert-success">' + data.yaml.message + '</b></div>');
 
                     $scope.yamlRendering = $sce.trustAsHtml(data.rendering);
@@ -148,6 +150,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
             text: "",
             latex: "",
             graph: {type: ""},
+            chart: {},
             correct: false
         })
 
@@ -170,6 +173,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
                 "text": "",
                 latex: "",
                 graph: {type: ""},
+                chart: {},
                 "correct": false
             }],
             "source": "",

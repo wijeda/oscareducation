@@ -1,5 +1,6 @@
 /*
     Every function must follow the format chart_nameInCamelCase
+    TODO ; il faut gerer qund plusieurs questions sont posee; on peut avoir plusieurs reponses, mais pas plusieurs questions
 */
 
 var bars = [[]];
@@ -92,7 +93,9 @@ function chart_createBarChartFromForm()
 	for(var i = 0;i<graphics.length;i++)
     {
   		var type = $(graphics[i]).data( "chart-type" );
-		if(type == "barchart"){
+        console.log(i+' '+graphics.length+' '+type )
+		if(type == "barchart")
+        {
             var barGraphX = $(".barGraphX").eq(i).val();
             var barGraphY = $(".barGraphY").eq(i).val();
 
@@ -150,9 +153,13 @@ function chart_createBarChartFromForm()
         	{
                 this.bars[i].push(getPointValue(this.points[i],j));
             }
-            let chart = board.create('chart', [this.bars[i]],
-                        {chartStyle:'bar', width:1, labels:this.bars[i],
-                         colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
+            let chart;
+            if(this.bars[i] != undefined)
+                if(this.bars[i].length >0)
+                     char = board.create('chart', [this.bars[i]],
+                                {chartStyle:'bar', width:1, labels:this.bars[i],
+                                 colorArray:['#8E1B77','#BE1679','#DC1765','#DA2130','#DB311B','#DF4917','#E36317','#E87F1A','#F1B112','#FCF302','#C1E212'], shadow:false});
+
         }
 	}
 
@@ -278,6 +285,28 @@ function chart_update()
 }
 
 
+
+function chart_changeScopeQuestions(questions)
+{
+    var counter = 0;
+    for(var i = 0;i<questions.length;i++)
+    {
+        if(questions[i].type == "chart-barchart")
+        {
+
+            for(var j = 0;j<questions[i].answers.length;j++)
+            {
+                questions[i].answers[j].chart = chart_getJSON(counter);
+                counter++;
+            }
+        }
+    }
+
+    console.log(questions)
+    return questions;
+}
+
+
 function chart_deleteLast(element)
 {
     var index = $(".btn-deleteBar").index(element);
@@ -288,19 +317,27 @@ function chart_deleteLast(element)
 
 function chart_saveInJson()
 {
-    return char_getJSON();
+    console.log(char_getJSON());
+    return  char_getJSON();
+
 }
-function char_getJSON()
+function chart_getJSON(index)
 {
+    pointValue = [];
+    if(bars[index] == undefined)bars[index] = [];
+    for(var i = 0;i<bars[index].length;i++)
+    {
+        pointValue.push(bars[index][i]());
+    }
     return JSON.stringify({
-        "bars":bars,
-        "AxisX":AxisX,
-        "AxisY":AxisY,
-        "zeroX":zeroX,
-        "zeroY":zeroY,
-        "maxX":maxX,
-        "maxY":maxY,
-        "precisionValue":precisionValue
+        "point":pointValue,
+        "AxisX":AxisX[index],
+        "AxisY":AxisY[index],
+        "zeroX":zeroX[index],
+        "zeroY":zeroY[index],
+        "maxX":maxX[index],
+        "maxY":maxY[index],
+        "precisionValue":precisionValue[index]
     });
 }
 
