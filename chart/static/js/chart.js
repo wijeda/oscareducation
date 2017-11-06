@@ -104,7 +104,8 @@ function chart_createBarChartFromForm()
 
             var zX = parseInt($(".zeroX").eq(i).val());
             var zY = parseInt($(".zeroY").eq(i).val());
-            precisionValue = parseInt($(".precisionValue").eq(i).val());
+            precisionValue = parseFloat($(".precisionValue").eq(i).val());
+            if(precisionValue<=0)precisionValue = 1;
 
             var mX = parseInt($(".maxX").eq(i).val());
             var mY = parseInt($(".maxY").eq(i).val());
