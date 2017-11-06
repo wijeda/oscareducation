@@ -11,6 +11,7 @@ function validateExerciceController($scope, $http, $sce, $timeout, $location) {
 
     chart_changeInput($scope);
     $scope.validateExercice = function() {
+        chart_saveInJson($scope.questions);
         $http.post("validate/", {"questions": $scope.questions, "testable_online": $scope.testable_online})
             .error(function() {
                 console.log("error")

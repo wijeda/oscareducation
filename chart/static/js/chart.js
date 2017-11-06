@@ -1,6 +1,5 @@
 /*
     Every function must follow the format chart_nameInCamelCase
-
 */
 
 var bars;
@@ -152,10 +151,10 @@ function chart_createChart(element)
 
     var type = $(element).data( "chart-type" );
     var dataArr = $(element).data("chart-percent");
-
-    if(type == "piechart")
+    var board;
+    if(type.includes("piechart"))
     {
-        let board = JXG.JSXGraph.initBoard(element.id, {showNavigation:false, showCopyright:false, boundingbox: [-5, 5, 5, -5]});
+        board = JXG.JSXGraph.initBoard(element.id, {showNavigation:false, showCopyright:false, boundingbox: [-5, 5, 5, -5]});
         board.containerObj.style.backgroundColor = 'white';
         board.options.label.strokeColor = 'black';
         board.suspendUpdate();
@@ -171,7 +170,7 @@ function chart_createChart(element)
         );
         board.unsuspendUpdate();
     }
-    if(type == "barchart")
+    if(type.includes("barchart"))
     {
 
         let board = JXG.JSXGraph.initBoard(element.id, { axis:true,showCopyright:false, boundingbox: [-1, 5, 5, -1]});
@@ -262,6 +261,10 @@ function chart_deleteLast()
     chart_update();
 }
 
+function chart_saveInJson()
+{
+    return char_getJSON();
+}
 function char_getJSON()
 {
     return JSON.stringify({

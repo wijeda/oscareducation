@@ -6,6 +6,7 @@
   -compress js
     %script{type: "text/javascript", src: "{% static 'js/professor_validate_exercice.js' %}"}
     %script{type: "text/javascript", src: "{% static 'js/chart.js' %}"}
+    %script{type: "text/javascript", src: "{% static 'js/previsualize_chart_from_page.js' %}"}
 -block breadcrumb
   %ol.breadcrumb
     %li
@@ -91,9 +92,10 @@
                     %option{value: "math-advanced"} Réponse mathématique avancée
                     %option{value: "radio"} Une seule réponse unique possible parmi toutes (radio)
                     %option{value: "checkbox"} Question à choix multiples (checkbox)
-                    %option{value: "graph"} Réponse sur un graphique
+                    %option{value: "graph"} Réponse sur un graphe
                     -# Group 7
-                    %option{value: "barchart"} Réponse sur un graphique en bâtonnets
+                    %optgroup{label: "Graphiques"}
+                      %option{value: "chart-barchart"} Réponse sur un graphique en bâtonnets
                     %option{value: "professor"} Réponse corrigée par le professeur
               .form-group
                 %label.control-label.col-sm-2 Source(s)

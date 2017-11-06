@@ -25,7 +25,7 @@ def validate_exercice_yaml_structure(exercice):
         if "type" not in data:
             return (u"chaque question doit avoir un type, or la question '%s' n'a pas de type" % (question)).encode("Utf-8")
 
-        if data["type"] not in ("radio", "text", "checkbox", "math", "math-simple", "math-advanced", "graph", "professor", "barchart"):
+        if data["type"] not in ("radio", "text", "checkbox", "math", "math-simple", "math-advanced", "graph", "professor", "chart-barchart"):
             return (u"la question '%s' possède un type invalide: '%s'\nLes types valides sont : 'text', 'checkbox', 'math', 'math-simple', 'math-advanced', 'graph', 'radio' et 'barchart' " % (question, data["type"])).encode("Utf-8")
 
         if "answers" not in data:
@@ -92,8 +92,8 @@ def validate_exercice_yaml_structure(exercice):
             pass
 
         # Group 7
-        elif data["type"] == "barchart":
-            # return (u"barchart: %s" % (data)).encode("Utf-8")  # test
+        elif data["type"] == "chart-barchart":
+            # return (u"chart-barchart: %s" % (data)).encode("Utf-8")  # test
             pass  # For the moment TODO make checks if necessary
 
         else:
