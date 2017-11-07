@@ -64,10 +64,7 @@ def username(request, template_name='registration/login_username.haml',
         return HttpResponseRedirect("/admin/")
 
     if hasattr(request.user, "professor"):
-        dico = {}
-        dico["test"] = {"status": "top_contributor"}
-        return render(request, "professor/dashboard.haml", dico)
-        # return HttpResponseRedirect(reverse("professor:dashboard"))
+         return HttpResponseRedirect(reverse("professor:dashboard"))
 
     if hasattr(request.user, "student"):
         return HttpResponseRedirect(reverse("student_dashboard"))

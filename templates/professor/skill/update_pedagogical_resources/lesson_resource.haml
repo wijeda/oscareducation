@@ -164,7 +164,7 @@
 %ul.list-group
   -for resource in lesson_resources
     %li.list-group-item
-      %h5=resource.content.title
+      %h5=resource.id
         -#%small.badge= resource.content.kind
       %p.list-group-text
         -if resource.content.comment

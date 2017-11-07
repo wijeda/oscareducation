@@ -49,6 +49,7 @@ from .forms import LessonForm, StudentAddForm, SyntheseForm, KhanAcademyForm, St
 from .utils import generate_random_password, user_is_professor, force_encoding
 import csv
 from django.http import JsonResponse
+from users.models import Student, Professor
 
 
 @user_is_professor
@@ -59,11 +60,22 @@ def dashboard(request):
     :param request:
     :return:
     """
+    prof = None
+    if Professor.objects.filter(user_id=request.user.id):
+        prof = Professor.objects.get(user_id=request.user.id)
+
+    if prof is not None:
+        if prof.status is not None:
+            obj = json.loads(prof.status)
+        else:
+            obj = {}
+            obj["name"] = None
     return render(request, "professor/dashboard.haml", {
         "lessons": Lesson.objects.filter(professors=request.user.professor).annotate(Count("students")).select_related(
             "stage"),
         "no_menu": True,
-    })
+        "name": obj["name"],
+        })
 
 
 @user_is_professor
