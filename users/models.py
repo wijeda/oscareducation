@@ -40,7 +40,7 @@ class Professor(models.Model):
         top = None
         if Top_contributor.objects.filter():
             top = Top_contributor.objects.get()
-            print(top.id)
+            #print(top.id)
 
 
         if (top is None):
@@ -51,9 +51,9 @@ class Professor(models.Model):
                 self.save()
         else:
             top_prof = Professor.objects.get(id=top.id)
-            print("top prof: " + str(top_prof.nbr_4_star_res) + "    me: " + str(self.nbr_4_star_res))
+            #print("top prof: " + str(top_prof.nbr_4_star_res) + "    me: " + str(self.nbr_4_star_res))
             if top_prof.nbr_4_star_res < self.nbr_4_star_res:
-                print("update top prof")
+                #print("update top prof")
                 self.status = json.dumps(Status("Top Contributor", "icon.png").__dict__)
                 top.delete()
                 is_top = True
