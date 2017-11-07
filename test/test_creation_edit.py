@@ -1,6 +1,7 @@
 import unittest
 import string
 import random
+import time
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
@@ -18,7 +19,7 @@ URL_LIST_SCENARIO = "http://127.0.0.1:8000/professor/train/list_scenario/"
 class SampleTest(unittest.TestCase):
     def setUp(self):
         # create a new Chrome session
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
         self.driver.maximize_window()
         self.driver.get(URL_LOGIN)
@@ -87,7 +88,7 @@ class SampleTest(unittest.TestCase):
         #
 
         # Check if a rightly created scenario is in the list
-        self.click_element_id("addElement")
+
         self.fill_field("title", scenario_title)
         self.fill_field("instructions", "test")
         self.click_element_id("saveScenario")
@@ -98,9 +99,9 @@ class SampleTest(unittest.TestCase):
     def tearDown(self):
         # close the browser window and clear test scenarios
         self.driver.get(URL_LIST_SCENARIO)
-        if self.is_element_present(By.CSS_SELECTOR, "img[alt = 'Supprimer la question']"):
-            self.click_element_css("img[alt = 'Supprimer la question']")
-            self.driver.switch_to.alert.accept()
+        self.click_element_css("img[alt = 'Supprimer la question']")
+        time.sleep(1)
+        self.driver.switch_to.alert.accept()
         self.driver.quit()
 
     def is_element_present(self, how, what):
@@ -117,11 +118,13 @@ class SampleTest(unittest.TestCase):
 
     def click_element_id(self, el_id):
         el = self.driver.find_element_by_id(el_id)
-        ActionChains(self.driver).move_to_element(el).click(el).perform()
+        el.click()
+        # ActionChains(self.driver).move_to_element(el).click(el).perform()
 
     def click_element_css(self, selector):
         el = self.driver.find_element_by_css_selector(selector)
-        ActionChains(self.driver).move_to_element(el).click(el).perform()
+        el.click()
+        # ActionChains(self.driver).move_to_element(el).click(el).perform()
 
     def scroll_bottom(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")

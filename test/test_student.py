@@ -19,7 +19,7 @@ URL_VIDEO = "https://www.youtube.com/watch?v=2bjk26RwjyU"
 class SampleTest(unittest.TestCase):
     def setUp(self):
         # create a new Chrome session
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
         self.driver.maximize_window()
         self.driver.get(URL_LOGIN)
@@ -86,9 +86,9 @@ class SampleTest(unittest.TestCase):
     def tearDown(self):
         # close the browser window and clear test scenarios
         self.driver.get(URL_LIST_SCENARIO)
-        if self.is_element_present(By.CSS_SELECTOR, "img[alt = 'Supprimer la question']"):
-            self.click_element_css("img[alt = 'Supprimer la question']")
-            self.driver.switch_to.alert.accept()
+        self.click_element_css("img[alt = 'Supprimer la question']")
+        time.sleep(1)
+        self.driver.switch_to.alert.accept()
         self.driver.quit()
 
     def is_text_in_body(self, text):
