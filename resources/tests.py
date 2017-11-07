@@ -32,4 +32,3 @@ class Resource_TestCase(TestCase):
         self.r.add_star(1, self.prof2.user)
         self.r.add_star(3,self.stud.user)
         self.assertEqual(self.r.average(),(3.0,3.0))
-

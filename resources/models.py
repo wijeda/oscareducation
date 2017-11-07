@@ -2,13 +2,11 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.postgres.fields import JSONField
-from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from rating.models import Star_rating
 from django.utils import timezone
 from users.models import Professor,Student
-from django.db.models import Sum
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
@@ -28,10 +26,12 @@ class Resource(models.Model):
 
 
     def add_star(self, rate, user):
+        """Add stars to a resource"""
         f = Star_rating.objects.create(resource=self,star=rate,rated_by=user,rated_on=timezone.now())
         return f
 
     def average(self):
+        """Returns a tuple containing the average stars for student and professors of this resource"""
         all = Star_rating.objects.filter(resource=self)
         prof_nb = 0
         student_nb = 0

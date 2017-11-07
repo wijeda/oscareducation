@@ -65,7 +65,11 @@ def dashboard(request):
         prof = Professor.objects.get(user_id=request.user.id)
 
     if prof is not None:
-        obj = json.loads(prof.status)
+        if prof.status is not None:
+            obj = json.loads(prof.status)
+        else:
+            obj = {}
+            obj["name"] = None
     return render(request, "professor/dashboard.haml", {
         "lessons": Lesson.objects.filter(professors=request.user.professor).annotate(Count("students")).select_related(
             "stage"),

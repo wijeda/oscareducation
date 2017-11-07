@@ -22,7 +22,7 @@ class Professor(models.Model):
     is_pending = models.BooleanField(default=True)
     code = models.BigIntegerField(null=True,blank=True)
     nbr_4_star_res = models.IntegerField(null=True)
-    status = JSONField()
+    status = JSONField(null=True,blank=True)
     status_changed = models.BooleanField(default=False)
 
     def print_something(self):
