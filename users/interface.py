@@ -10,10 +10,3 @@ class Status:
 
     def deserved_status(self):
         pass
-
-
-class Top_contributor(models.Model):
-
-    #def __init__(self):
-    #    pass
-    id = models.IntegerField(primary_key = True)

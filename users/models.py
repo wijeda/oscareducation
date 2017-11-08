@@ -7,7 +7,7 @@ import random
 from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
-from interface import *
+from interface import Status
 
 class AuthUserManager(models.Manager):
     def get_queryset(self):
@@ -38,28 +38,27 @@ class Professor(models.Model):
     def update_status(self):
         is_top = False
         top = None
-        if Top_contributor.objects.filter():
-            top = Top_contributor.objects.get()
-            #print(top.id)
+        if Top_contributor.objects.count() != 0:
+            top = Top_contributor.objects.get(id=1)
 
 
         if (top is None):
             if self.nbr_4_star_res > 4:
-                top = Top_contributor.objects.create(id = self.id)
+                top = Top_contributor.objects.create(professor=self)
                 self.status = json.dumps(Status("Top Contributor", "icon.png").__dict__)
                 is_top = True
                 self.save()
         else:
-            top_prof = Professor.objects.get(id=top.id)
+            top_prof = top.professor
             #print("top prof: " + str(top_prof.nbr_4_star_res) + "    me: " + str(self.nbr_4_star_res))
             if top_prof.nbr_4_star_res < self.nbr_4_star_res:
                 #print("update top prof")
                 self.status = json.dumps(Status("Top Contributor", "icon.png").__dict__)
-                top.delete()
+                top.professor = self
+                top.save()
                 is_top = True
                 self.save()
-                Top_contributor.objects.create(id = self.id)
-            if self.id == top.id:
+            if self == top.professor:
                 is_top = True
 
         if not is_top:
@@ -134,3 +133,7 @@ class Student(models.Model):
                 return True
 
         return False
+
+class Top_contributor(models.Model):
+
+    professor = models.ForeignKey(Professor,null=True)

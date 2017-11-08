@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.test import TestCase
 from resources.models import *
 from users.interface import Status
+from users.models import Top_contributor
 import json
 
 
@@ -39,7 +40,7 @@ class ProfessorTestCase(TestCase):
         self.assertEqual(prof.nbr_4_star_res, 4)
 
     def test_update_status(self):
-        top = json.dumps(Status("Top Contributor", "icon.png").__dict__)
+        top_stat = json.dumps(Status("Top Contributor", "icon.png").__dict__)
         low = json.dumps(Status("Contributor", "icon.png").__dict__)
         mid = json.dumps(Status("Motivated Contributor", "icon.png").__dict__)
         prof1 = Professor.objects.get(pk=self.prof1.id)
@@ -48,16 +49,26 @@ class ProfessorTestCase(TestCase):
         self.assertEqual(prof1.status,None)
         prof1.update_status()
         self.assertEqual(prof1.status, low)
+        top_nb = Top_contributor.objects.count()
+        self.assertEqual(top_nb,0)
         prof1.inc()
         prof1.inc()
         prof1.inc()
         prof1.inc()
         prof1.update_status()
-        self.assertEqual(prof1.status, top)
+        top_nb = Top_contributor.objects.count()
+        top = Top_contributor.objects.get(pk=1)
+        self.assertEqual(top_nb, 1)
+        self.assertEqual(prof1.status, top_stat)
+        self.assertEqual(top.professor, prof1)
         self.assertEqual(prof1.nbr_4_star_res,5)
         prof2.nbr_4_star_res = 10
         prof2.save()
         prof2.update_status()
         prof1.update_status() # IF not update done, prof1 keeps top contrib like the prof2 => BUG?
         self.assertEqual(prof1.status, mid)
-        self.assertEqual(prof2.status, top)
+        self.assertEqual(prof2.status, top_stat)
+        top = Top_contributor.objects.get(pk=1)
+        self.assertEqual(top.professor, prof2)
+        top_nb = Top_contributor.objects.count()
+        self.assertEqual(top_nb, 1)
