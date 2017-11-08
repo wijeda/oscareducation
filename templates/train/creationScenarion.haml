@@ -12,8 +12,11 @@
         {% csrf_token %}
         {{ form.errors }}
         {{ form.non_field_errors }}
+        %div#headline
+            %span.glyphicon.glyphicon-cog
+            %label Parametre
         #parameters.blk
-            %h1 Parametre
+
             %p Entrez les differents parametres pour l'exercice
 
             %label{:for => 'creator'} Créateur
@@ -39,12 +42,13 @@
             %br
 
     #videoBlockElem{:style => "display: none"}
-        .panel-body
-            %label{:for => 'title_video'} Titre:
-            %input{:id => 'title_video', :placeholder => '(Optionnel)'}
+        %div#headline
+            %span.glyphicon.glyphicon-facetime-video
+            %label{:for => 'title_video'} Video:
+            %input{:id => 'title_video', :placeholder => 'Tapez votre titre'}
             %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
-            %br
+        .panel-body
             .form-group
                 %iframe{:width => "420", :height => "315", :style => "display: none"}
                 %br
@@ -57,14 +61,15 @@
                 %input.description{:id => 'description_vid', :placeholder => 'Optionnel'}
 
     #mcqBlockElem{:style => "display: none"}
+        %div#headline
+            %span.glyphicon.glyphicon-list
+            %label{:for => 'title_mcq'} MCQ:
+            %input.titre_MCQ_Elem{:placeholder => 'Tapez votre titre'}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer le QCM",:action => "#", :onclick => "return removeElem(this)"}
+                %span.glyphicon.glyphicon-remove
         .panel-body
-            %label Titre:
-            %input.titre_MCQ_Elem{:placeholder => 'Title'}
-            %br
             %label Consigne:
             %input.instruction_MCQ_Elem{:placeholder => 'Instruction'}
-            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
-                %span.glyphicon.glyphicon-remove
             %br
             %label Question:
             %input.question_MCQ_Elem{:placeholder => 'Question'}
@@ -89,21 +94,24 @@
             %br
 
     #textBlockElem{:style => "display: none"}
-        .panel-body
-            %label{:for => 'title_txt'} Texte:
-            %input.titre_text_Elem{:placeholder => 'Title'}
-            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+        %div#headline
+            %span.glyphicon.glyphicon-font
+            %label{:for => 'title_txt'} Text:
+            %input.titre_text_Elem{:placeholder => 'Tapez votre titre'}
+            %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer le texte",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
-            %br
-            %textarea{:rows => "3", :placeholder => "Tapez votre texte"}
+
+        .panel-body
+            %textarea{:rows => "3%", :cols => "80%", :placeholder => "Tapez votre texte"}
 
     #imgBlockElem{:style => "display: none"}
-        .panel-body
-            %label{:for => 'title_img'} Titre:
-            %input#title_img.title_img{:placeholder => 'Optionnel'}
+        %div#headline
+            %span.glyphicon.glyphicon-picture
+            %label{:for => 'title_img'} Image:
+            %input#title_img.title_img{:placeholder => 'Tapez votre titre'}
             %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
-            %br
+        .panel-body
             .form-group
                 %img{:width => "50%"}
                 %br

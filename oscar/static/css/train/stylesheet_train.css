@@ -21,6 +21,10 @@
 	text-transform: uppercase;
 }
 
+#headline span {
+	padding: 13px
+}
+
 #headline td p {
 	color: white;
 }
@@ -48,7 +52,8 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	margin: 5px;
+	margin-right: 5px;
+	padding: 0;
 }
 
 .img_scenario {
