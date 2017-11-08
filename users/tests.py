@@ -65,7 +65,7 @@ class ProfessorTestCase(TestCase):
         prof2.nbr_4_star_res = 10
         prof2.save()
         prof2.update_status()
-        prof1.update_status() # IF not update done, prof1 keeps top contrib like the prof2 => BUG?
+        prof1.update_status()
         self.assertEqual(prof1.status, mid)
         self.assertEqual(prof2.status, top_stat)
         top = Top_contributor.objects.get(pk=1)
