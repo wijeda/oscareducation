@@ -16,8 +16,19 @@
             %span.glyphicon.glyphicon-cog
             %label Paramètres
         #parameters.blk
+    #OurContainer
+        %section#sectionElements
+            #whiteBox{:methode => "POST"}
+                {% csrf_token %}
+                {{ form.errors }}
+                {{ form.non_field_errors }}
+                %div#headline
+                    %span.glyphicon.glyphicon-cog
+                    %label Parametre
+                #parameters.blk
 
             %p Entrez les différents paramètres pour le scénario
+                    %p Entrez les differents parametres pour l'exercice
 
             %label{:for => 'creator'} Créateur
             %input{:id => 'creator', :placeholder => 'Créateur'}
@@ -40,6 +51,26 @@
             %label{:for => 'public'} Public :
             %input{:id => 'public', :type => 'checkbox'}
             %br
+                    %label{:for => 'creator'} Créateur
+                    %input{:id => 'creator', :placeholder => 'Createur'}
+                    %br
+                    %label{:for => 'title'} Titre :
+                    %input{:id => 'title', :placeholder => 'Ex: Sequence 1'}
+                    %br
+                    %label{:for => 'skill'} Compétences :
+                    %input{:id => 'skill', :placeholder => 'Indiquez les compétences requises'}
+                    %br
+                    %label{:for => 'topic'} Sujet :
+                    %input{:id => 'topic', :placeholder => 'Indiquez le sujet du scénario'}
+                    %br
+                    %label{:for => 'grade_level'} Niveau :
+                    %input{:id => 'grade_level', :placeholder => "Indiquez le niveau d&rsquo;étude requis "}
+                    %br
+                    %label{:for => 'instructions'} Instructions :
+                    %input{:id => 'instructions', :placeholder => 'Expliquez votre scénario'}
+                    %br
+                    %label{:for => 'public'} Public :
+                    %input{:id => 'public', :type => 'checkbox'}
 
     #videoBlockElem{:style => "display: none"}
         %div#headline
@@ -58,6 +89,24 @@
             .form-group
                 %label{:for => 'description_vid'} Description:
                 %input.description{:id => 'description_vid', :placeholder => 'Optionnel'}
+            #videoBlockElem{:style => "display: none"}
+                %div#headline
+                    %span.glyphicon.glyphicon-facetime-video
+                    %label{:for => 'title_video'} Video:
+                    %input{:id => 'title_video', :placeholder => 'Tapez votre titre'}
+                    %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                        %span.glyphicon.glyphicon-remove
+                .panel-body
+                    .form-group
+                        %iframe{:width => "420", :height => "315", :style => "display: none"}
+                        %br
+                        %label URL de votre vidéo (Youtube)
+                        %input{:id => 'vid_url', :type => "text"}
+                        %button.btn.btn-primary#addVid{:action => "#", :onclick => "return loadVideo(this)"} Ajouter
+                        -# #loadVid{:style => "display: none"}
+                    .form-group
+                        %label{:for => 'description_vid'} Description:
+                        %input.description{:id => 'description_vid', :placeholder => 'Optionnel'}
 
     #mcqBlockElem{:style => "display: none"}
         %div#headline
@@ -91,6 +140,38 @@
             %button.btn.btn-primary.addReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une réponse",:action => "#", :onclick => "return addReponse(this)"}
                 %span.glyphicon.glyphicon-plus
             %br
+            #mcqBlockElem{:style => "display: none"}
+                %div#headline
+                    %span.glyphicon.glyphicon-list
+                    %label{:for => 'title_mcq'} MCQ:
+                    %input.titre_MCQ_Elem{:placeholder => 'Tapez votre titre'}
+                    %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer le QCM",:action => "#", :onclick => "return removeElem(this)"}
+                        %span.glyphicon.glyphicon-remove
+                .panel-body
+                    %label Consigne:
+                    %input.instruction_MCQ_Elem{:placeholder => 'Instruction'}
+                    %br
+                    %label Question:
+                    %input.question_MCQ_Elem{:placeholder => 'Question'}
+                    %br
+                    %div.list_answers
+                        %div.repLine
+                            %label.labelanswer Réponse 1:
+                            %input.answer1{:placeholder => 'Veuillez rentrer une réponse'}
+                            %input.answer1isvalid{:type => "checkbox"}
+                            %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)", :style => "display : none"}
+                                            %span.glyphicon.glyphicon-remove
+                        %br
+                        %div.repLine
+                            %label Réponse 2:
+                            %input.answer2{:placeholder => 'Veuillez rentrer une réponse'}
+                            %input.answer2isvalid{:type => "checkbox"}
+                            %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)"}
+                                            %span.glyphicon.glyphicon-remove
+                        %br
+                    %button.btn.btn-primary.addReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une réponse",:action => "#", :onclick => "return addReponse(this)"}
+                                                        %span.glyphicon.glyphicon-plus
+                    %br
 
     #textBlockElem{:style => "display: none"}
         %div#headline
@@ -99,9 +180,18 @@
             %input.titre_text_Elem{:placeholder => 'Tapez votre titre'}
             %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
+            #textBlockElem{:style => "display: none"}
+                %div#headline
+                    %span.glyphicon.glyphicon-font
+                    %label{:for => 'title_txt'} Text:
+                    %input.titre_text_Elem{:placeholder => 'Tapez votre titre'}
+                    %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer le texte",:action => "#", :onclick => "return removeElem(this)"}
+                        %span.glyphicon.glyphicon-remove
 
         .panel-body
             %textarea{:rows => "2%", :cols => "80%", :placeholder => "Tapez votre texte"}
+                .panel-body
+                    %textarea{:rows => "3%", :cols => "80%", :placeholder => "Tapez votre texte"}
 
     #imgBlockElem{:style => "display: none"}
         %div#headline
@@ -121,6 +211,48 @@
             .form-group
                 %label{:for => 'description_img'} Description:
                 %input{:id => 'description_img', :placeholder => 'Optionnel'}
+            #imgBlockElem{:style => "display: none"}
+                %div#headline
+                    %span.glyphicon.glyphicon-picture
+                    %label{:for => 'title_img'} Image:
+                    %input#title_img.title_img{:placeholder => 'Tapez votre titre'}
+                    %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
+                        %span.glyphicon.glyphicon-remove
+                .panel-body
+                    .form-group
+                        %img{:width => "50%"}
+                        %br
+                        %label Image (Entrez ici l'url de l'image)
+                        %input{:id => 'img_url', :type => "text"}
+                        -# %a{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image"}
+                        %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
+                        -# #loadImage{:style => "display: none"}
+                    .form-group
+                        %label{:for => 'description_img'} Description:
+                        %input{:id => 'description_img', :placeholder => 'Optionnel'}
+
+
+            #Tools.blk
+                %br
+                -# %input.btn.btn-primary#submit{:type => "submit"}
+                {% buttons %}
+                    #DiffElem
+                        %button.btn.btn-primary#addElement
+                            %span.glyphicon.glyphicon-plus
+                            Ajouter un element
+                        #addElementDiv{:style => "display: none"}
+                            %button.btn.btn-primary#addElementVideo
+                                %span.glyphicon.glyphicon-facetime-video
+                                Ajouter vidéo
+                            %button.btn.btn-primary#addElementTxt
+                                %span.glyphicon.glyphicon-font
+                                Ajouter un texte
+                            %button.btn.btn-primary#addElementImg
+                                %span.glyphicon.glyphicon-picture
+                                Ajouter une image
+                            %button.btn.btn-primary#addElementMcq
+                                %span.glyphicon.glyphicon-list
+                                Ajouter un QCM
 
     #pdfBlockElem{:style => "display: none"}
         %div#headline
@@ -139,6 +271,11 @@
             .form-group
                 %label{:for => 'description_pdf'} Description:
                 %input.description{:id => 'description_pdf', :placeholder => 'Optionnel'}
+                    %br
+                    %button.btn.btn-primary#saveScenario
+                        %span.glyphicon.glyphicon-floppy-disk
+                        Save
+                {% endbuttons %}
 
 
     #Tools.blk
@@ -171,3 +308,27 @@
                 %span.glyphicon.glyphicon-floppy-disk
                 Sauvegarder
         {% endbuttons %}
+        %nav#sideNavBar
+            #navFixed
+                .divElemNav
+                    %span.glyphicon.glyphicon-cog
+                        %label Paramètres
+                .divElemNav#idTextElemNav{:style => "display: none"}
+                    %span.glyphicon.glyphicon-font
+                        %label Texte :
+                            %span
+                .divElemNav#idImgElemNav{:style => "display: none"}
+                     %span.glyphicon.glyphicon-picture
+                        %label Image :
+                            %span
+                .divElemNav#idVideoElemNav{:style => "display: none"}
+                    %span.glyphicon.glyphicon-facetime-video
+                        %label Vidéo :
+                            %span
+                .divElemNav#idMCQElemNav{:style => "display: none"}
+                    %span.glyphicon.glyphicon-list
+                        %label QCM :
+                            %span
+
+
+

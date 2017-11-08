@@ -3,6 +3,31 @@
 }*/
 
 #parameters label, .mcqBlockElem .panel-body label {
+#OurContainer {
+    display: grid;
+    grid-template-columns: 90% 40%;
+}
+#sectionElements {
+    grid-column: 1; /* placement en colonne 1 */
+}
+#sideNavBar {
+    margin-left: 20px;
+
+    grid-column: 2; /* placement en colonne 2 */
+}
+#navFixed {
+    position:fixed;
+    overflow: auto;
+    height: 70%;
+}
+.divElemNav {
+    background-color: white;
+    padding : 6px;
+    border: 2px solid;
+    margin: 5px;
+    border-radius: 7px;`
+}
+#parameters label, .mcqBlockElem label {
 	width: 140px;
 	height: 30px;
 }
@@ -114,4 +139,9 @@
 
 .imgprev, .videoBlockElem div div iframe{
 	display: block;
+}
+
+.ligneorangefine {
+    width: 80%;
+    margin: 0px auto;
 }
