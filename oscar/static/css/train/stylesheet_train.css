@@ -4,7 +4,7 @@
 
 #parameters label, .mcqBlockElem label {
 	width: 140px;
-	height: 35px;
+	height: 30px;
 }
 
 #parameters input, .answer1, .answer2{
@@ -19,6 +19,7 @@
 	border-radius: 0px;
 	font-family: 'Open Sans', sans-serif;
 	text-transform: uppercase;
+	padding: 3px;
 }
 
 #headline span {
