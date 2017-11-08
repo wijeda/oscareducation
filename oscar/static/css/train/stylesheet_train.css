@@ -2,7 +2,7 @@
 	background-color: white;
 }*/
 
-#parameters label, .mcqBlockElem label {
+#parameters label, .mcqBlockElem .panel-body label {
 	width: 140px;
 	height: 30px;
 }
@@ -110,4 +110,8 @@
 	display: inline-block;
 	width: 80px;
 
+}
+
+.imgprev, .videoBlockElem div div iframe{
+	display: block;
 }
