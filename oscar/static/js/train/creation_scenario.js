@@ -7,8 +7,11 @@ class ScenarioCreation {
         this.anchor = document.getElementById(param.anchorID);
         this.btnPlus = document.getElementById(param.btnPlusID);
         this.addElementDiv = document.getElementById(param.addElementDivID);
+        this.DiffElem = document.getElementById(param.DiffElem);
         this.addElementOption = false; // at start it is not shown
-        this.btnPlus.addEventListener("click", this.showDiffElements.bind(this), true);
+        this.DiffElem.addEventListener("mouseover", this.showDiffElements.bind(this));
+        this.DiffElem.addEventListener("mouseout", this.hideDiffElements.bind(this));
+
 
         this.textBlockElem = document.getElementById(param.textBlockElemID);
         this.textButton = document.getElementById(param.textButtonID);
@@ -62,14 +65,11 @@ class ScenarioCreation {
     }
 
     showDiffElements(){
-        if(this.addElementOption) {
-            this.addElementDiv.style.display = "none";
-        }else {
-            this.addElementDiv.style.display = "block";
-        }
+        this.addElementDiv.style.display = "block";
+    }
 
-        this.addElementOption = !this.addElementOption
-
+    hideDiffElements(){
+        this.addElementDiv.style.display = "none";
     }
 
     getElemInputBlockText(elemText){
@@ -261,6 +261,7 @@ window.onload = function(){
         "btnPlusID":"addElement",
         "anchorID":"whiteBox",
         "addElementDivID": "addElementDiv",
+        "DiffElem": "DiffElem",
         "textBlockElemID": "textBlockElem",
         "textButtonID": "addElementTxt",
 

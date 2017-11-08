@@ -124,23 +124,31 @@
                 %label{:for => 'description_img'} Description:
                 %input{:id => 'description_img', :placeholder => 'Optionnel'}
 
+
     #Tools.blk
         %br
         -# %input.btn.btn-primary#submit{:type => "submit"}
         {% buttons %}
-            %button.btn.btn-primary#addElement
-                Ajouter un element
-            #addElementDiv{:style => "display: none"}
-                %button.btn.btn-primary#addElementVideo
-                    Ajouter vidéo
-                %button.btn.btn-primary#addElementTxt
-                    Ajouter un texte
-                %button.btn.btn-primary#addElementImg
-                    Ajouter une image
-                %button.btn.btn-primary#addElementMcq
-                    Ajouter un QCM
+            #DiffElem
+                %button.btn.btn-primary#addElement
+                    %span.glyphicon.glyphicon-plus
+                    Ajouter un element
+                #addElementDiv{:style => "display: none"}
+                    %button.btn.btn-primary#addElementVideo
+                        %span.glyphicon.glyphicon-facetime-video
+                        Ajouter vidéo
+                    %button.btn.btn-primary#addElementTxt
+                        %span.glyphicon.glyphicon-font
+                        Ajouter un texte
+                    %button.btn.btn-primary#addElementImg
+                        %span.glyphicon.glyphicon-picture
+                        Ajouter une image
+                    %button.btn.btn-primary#addElementMcq
+                        %span.glyphicon.glyphicon-list
+                        Ajouter un QCM
 
             %br
             %button.btn.btn-primary#saveScenario
+                %span.glyphicon.glyphicon-floppy-disk
                 Save
         {% endbuttons %}
