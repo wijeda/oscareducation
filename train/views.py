@@ -17,6 +17,7 @@ from .models import TextElem
 from .models import ImgElem
 from .models import VidElem
 from .models import MCQElem
+from .models import PDFElem
 from .models import MCQReponse
 
 from .forms import ScenarioForm
@@ -88,6 +89,14 @@ def get_data(request, id):
 
     qcm = MCQElem.objects.filter(id_scenario=id)
 
+    # filling the pdfs elements
+    pdfs = PDFElem.objects.filter(id_scenario=id)
+
+    for p in pdfs:
+        elem = {"type" : "PDFElem", "order": v.order, "data":{"id_scenario": id, "title":v.title, "url": v.url, "description":v.description }}
+        elements.append(elem)
+
+    # filling the MCQs elements
     for q in qcm:
         answers = []
         answer_fromDB = MCQReponse.objects.filter(id_question=q.id)
@@ -231,6 +240,17 @@ def save_scenario(request):
                     ans = MCQReponse(id_question = id_MCQ_Elem, answer = rep['answer'], is_answer = rep['solution'] )
                     ans.save()
 
+            elif parsed_json['elements'][i]['type'] == "PDFElem":
+                id_scenario = scena.id
+                order = i
+                title_elem = parsed_json['elements'][i]['data']['title']
+                url_elem = parsed_json['elements'][i]['data']['url']
+                description_elem = parsed_json['elements'][i]['data']['description']
+
+                elem = PDFlem(id_scenario = id_scenario, order = i, title = title_elem, url = url_elem, description = description_elem)
+
+                elem.save()
+
     return HttpResponse("OK")
     # return HttpResponseRedirect('/professor/train/list_scenario/')
 
@@ -247,6 +267,12 @@ def delete_scenario(request, id):
     images = ImgElem.objects.filter(id_scenario=id)
     for i in images:
         i.delete()
+
+    pdf = PDFElem.objects.filter(id_scenario=id)
+    for i in pdf:
+        i.delete()
+
+    # TODO Delete the MCQ!!!
 
     Scenario.objects.get(id=id).delete()
 

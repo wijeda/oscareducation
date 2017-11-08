@@ -30,6 +30,10 @@ class ScenarioCreation {
         this.mcqButton = document.getElementById(param.mcqButtonID);
         this.mcqButton.addEventListener("click", this.makeBlockElemMcq.bind(this), true);
 
+        this.pdfBlockElem = document.getElementById(param.pdfBlockElemID);
+        this.pdfButton = document.getElementById(param.pdfButtonID);
+        this.pdfButton.addEventListener("click", this.makeBlockElemPDF.bind(this), true);
+
         this.saveScenarioButton = document.getElementById(param.saveScenarioButtonID);
         this.saveScenarioButton.addEventListener("click", this.sendForm.bind(this), true);
     }
@@ -52,6 +56,13 @@ class ScenarioCreation {
         let newelem = document.createElement("div");
         newelem.classList.add('videoBlockElem');
         newelem.innerHTML = this.videoBlockElem.innerHTML;
+        this.anchor.appendChild(newelem);
+    }
+
+    makeBlockElemPDF(){
+        let newelem = document.createElement("div");
+        newelem.classList.add('pdfBlockElem');
+        newelem.innerHTML = this.pdfBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
     }
 
@@ -91,6 +102,14 @@ class ScenarioCreation {
         let description = elemVideo.getElementsByClassName('description')[0].value
         return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
     }
+
+    getElemInputBlockPDF(elemPDF){
+        let title = elemPDF.childNodes[1].childNodes[3].value;
+        let url = elemPDF.childNodes[1].childNodes[9].childNodes[7].value
+        let description = elemPDF.getElementsByClassName('description')[0].value
+        return {"type":"PDFElem", "data":{"title": title, "url": url, "description" : description}}
+    }
+
     getElemInputBlockMCQ(elemMCQ){
 
         let title = elemMCQ.getElementsByClassName('titre_MCQ_Elem')[0].value;
@@ -142,6 +161,10 @@ class ScenarioCreation {
             {
                 data["elements"].push(this.getElemInputBlockMCQ(this.anchor.childNodes[i]));
             }
+            else if(classElem =="pdfBlockElem")
+            {
+                data["elements"].push(this.getElemInputBlockMCQ(this.anchor.childNodes[i]));
+            }
 
 
 
@@ -169,6 +192,18 @@ class ScenarioCreation {
 function loadImage(elem){
     var root = elem.parentNode.childNodes;
     root[1].setAttribute("src", root[5].value);
+    return false;
+}
+
+function loadPDF(elem){
+    var root = elem.parentNode.childNodes;
+    var ID = root[5].value;
+    console.log(ID);
+    var embedURL = "http://docs.google.com/gview?url=" + ID + "&embedded=true";
+    console.log(embedURL);
+    root[1].setAttribute("src", embedURL);
+    root[1].setAttribute("type", "application/pdf");
+    root[1].style.display = "block";
     return false;
 }
 
@@ -241,8 +276,8 @@ window.onload = function(){
 
     let videoBlockElemID = "videoBlockElem";
     let videoButtonID = "addElementVideo";
-    let loadVidID = "loadVideo";
-    let loadVidButtonID = "addVid";
+    // let loadVidID = "loadVideo";
+    // let loadVidButtonID = "addVid";
 
     let mcqBlockElemID = "mcqBlockElem";
     let mcqButtonID = "addElementMcq";
@@ -254,6 +289,9 @@ window.onload = function(){
     let loadImgButtonID = "addImg";
 
     let removeImageID = "removeImage";
+
+    let pdfBlockElemID = "pdfBlockElem";
+    let pdfButtonID = "addElementPDF";
 
     let saveScenarioButtonID = "saveScenario";
 
@@ -275,6 +313,9 @@ window.onload = function(){
 
         "imgBlockElemID": "imgBlockElem",
         "imgButtonID": "addElementImg",
+
+        "pdfBlockElemID": "pdfBlockElem",
+        "pdfButtonID": "addElementPDF",
         "saveScenarioButtonID": "saveScenario"
 
         /*"loadImgID": "loadImage",

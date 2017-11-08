@@ -34,12 +34,12 @@
 	color: #f58025;
 }
 
-#parameters, .imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem {
+#parameters, .imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem {
 	background-color: white;
 	margin-bottom: 20px;
 }
 
-.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem {
+.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem {
 	width: 100%;
 	position: relative;
 }
