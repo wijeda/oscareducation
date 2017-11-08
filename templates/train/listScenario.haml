@@ -8,7 +8,7 @@
     %script{:src => "/static/js/train/list_scenario.js"}
     #whiteBox
         #parameters.blk
-            %h1 Exercices
+            %h1 Scénarios
             -#%p #{dico}
 
             %table.table.no-border
@@ -38,4 +38,4 @@
                                 %a{:href => "/professor/train/make_scenario/#{st.id}"}
                                     %img{:alt => "Voir la question", :height => "25%", :src => "/static/img/icons/detail.png", :width => "25%"}
         #Tools.blk
-            %a.btn.btn-primary#addElement{:href => "/professor/train/create_scenario/"} Creer un autre exercice
+            %a.btn.btn-primary#addElement{:href => "/professor/train/create_scenario/"} Creer un autre scénario
