@@ -2,7 +2,6 @@
 	background-color: white;
 }*/
 
-#parameters label, .mcqBlockElem .panel-body label {
 #OurContainer {
     display: grid;
     grid-template-columns: 90% 40%;
@@ -27,7 +26,7 @@
     margin: 5px;
     border-radius: 7px;`
 }
-#parameters label, .mcqBlockElem label {
+#parameters label, .mcqBlockElem .panel-body label {
 	width: 140px;
 	height: 30px;
 }

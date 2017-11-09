@@ -126,17 +126,19 @@ class ScenarioCreation {
     }
 
     getElemInputBlockText(elemText){
-        console.log(elemText);
-        console.log(elemText.childNodes[1].childNodes[1]);
-        let title = elemText.childNodes[1].childNodes[1].childNodes[3].value;
-        let content = elemText.childNodes[1].childNodes[2].childNodes[9].value;
+        let title = elemText.childNodes[1].childNodes[3].value;
+        let content = elemText.childNodes[1].childNodes[6].value;
         return {"type":"TextElem", "data":{"title": title, "content": content}}
     }
 
     getElemInputBlockImage(elemImage){
+        console.log(elemImage);
+        console.log(elemImage.childNodes[1].childNodes[9]);
+        console.log(elemImage.childNodes[2].value);
+        console.log(elemImage.childNodes[3]);
         let title = elemImage.childNodes[1].childNodes[3].value;
-        let url = elemImage.childNodes[1].childNodes[9].childNodes[7].value
-        let description = elemImage.childNodes[1].childNodes[11].childNodes[3].value;
+        let url = elemImage.childNodes[1].childNodes[9].value;
+        let description = elemImage.childNodes[1].childNodes[11].value;
         return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
