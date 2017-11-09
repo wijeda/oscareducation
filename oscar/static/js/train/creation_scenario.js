@@ -84,8 +84,10 @@ class ScenarioCreation {
     }
 
     getElemInputBlockText(elemText){
-        let title = elemText.childNodes[1].childNodes[3].value;
-        let content = elemText.childNodes[1].childNodes[9].value;
+        console.log(elemText);
+        console.log(elemText.childNodes[1].childNodes[1]);
+        let title = elemText.childNodes[1].childNodes[1].childNodes[3].value;
+        let content = elemText.childNodes[1].childNodes[2].childNodes[9].value;
         return {"type":"TextElem", "data":{"title": title, "content": content}}
     }
 
