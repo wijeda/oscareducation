@@ -3,6 +3,9 @@
 }*/
 
 #parameters label, .mcqBlockElem .panel-body label {
+    width: 140px;
+    height: 30px;
+}
 #OurContainer {
     display: grid;
     grid-template-columns: 90% 40%;
@@ -12,7 +15,6 @@
 }
 #sideNavBar {
     margin-left: 20px;
-
     grid-column: 2; /* placement en colonne 2 */
 }
 #navFixed {
