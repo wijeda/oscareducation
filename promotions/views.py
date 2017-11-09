@@ -1400,7 +1400,7 @@ def exercice_validation_form_validate_exercice(request):
                 "answers": question["answers"],
             }
 
-        elif question["type"].startswith("chart") or question["type"] == "barchart" :
+        elif question["type"].startswith("chart"):
             questions[question["instructions"]] = {
                 "type": question["type"],
                 "answers": question["answers"],
@@ -1554,7 +1554,7 @@ def exercice_validation_form_submit(request, pk=None):
                 }
 
             #Group 7
-            elif question["type"] == "barchart":
+            elif question["type"] == "chart-barchart":
                 answers = []
 
                 for answer in question["answers"]:

@@ -39,7 +39,7 @@
               -for answer in answer.answers
                 %input{type: "number", value: "", name: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-X", id: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-X"}
                 %input{type: "number", value: "", name: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y", id: "graph-{{ toploop_counter0 }}-{{ answer.graph.type }}-{{ forloop.counter0 }}-Y"}
-          -elif answer.type == "barchart"
+          -elif answer.type == "chart-barchart"
             -# Group 7
             %p (Group 07) File 'templates/examinations/exercice_rendering.haml' doesn't contain information to display here.
           -elif answer.type == "professor"

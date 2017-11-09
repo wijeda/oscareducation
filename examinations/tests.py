@@ -58,6 +58,6 @@ def test_render_always_lower_case():
     assert a == a2
 #Groupe 7
 def test_data_type(self):
-    contains_string("barchart")
-    assert_that("barchart",is_("barchart"))
+    contains_string("chart-barchart")
+    assert_that("chart-barchart",is_("chart-barchart"))
 

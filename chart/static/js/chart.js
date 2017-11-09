@@ -91,7 +91,7 @@ function chart_createBarChartFromForm()
 	for(var i = 0;i<graphics.length;i++)
     {
   		var type = $(graphics[i]).data( "chart-type" );
-		if(type == "barchart")
+		if(type == "chart-barchart")
         {
             var barGraphX = $(".barGraphX").eq(i).val();
             var barGraphY = $(".barGraphY").eq(i).val();
@@ -117,7 +117,7 @@ function chart_createBarChartFromForm()
         	chart_setOrigin(zX,zY,mX,mY,i);
 
             element.id = "board"+i;
-            let board = JXG.JSXGraph.initBoard(element.id,{ id:"barChartFromForm-"+i,axis:false,showCopyright:false, boundingbox: [this.zeroX[i], this.maxY[i], this.maxX[i], this.zeroY[i]]});
+            let board = JXG.JSXGraph.initBoard(element.id,{ id:"chart-barChartFromForm-"+i,axis:false,showCopyright:false, boundingbox: [this.zeroX[i], this.maxY[i], this.maxX[i], this.zeroY[i]]});
             this.boardBarChart[i] = board;
         	xaxis = board.create('axis', [[0,0],[1,0]],
         				{name:this.AxisX[i],
@@ -187,7 +187,7 @@ function chart_createChart(element)
         );
         board.unsuspendUpdate();
     }
-    if(type.includes("barchart"))
+    if(type.includes("chart-barchart"))
     {
         var box = [-1, 5, 5, -1];
 
