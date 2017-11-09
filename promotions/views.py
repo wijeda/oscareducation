@@ -1704,6 +1704,8 @@ def exercice_update_json(request, pk):
             answers = question.get_answer()["answers"]
         elif question_type == "professor":
             answers = ""
+        elif question_type.startwith("chart"):
+            answers = question.get_answer()["answers"]
         elif isinstance(question.get_answer()["answers"], list):
             answers = [{"text": key, "correct": True} for key in question.get_answer()["answers"]]
         else:  # assuming dict

@@ -282,11 +282,6 @@ function chart_deleteLast(element)
     chart_update();
 }
 
-function chart_saveInJson()
-{
-    return  char_getJSON();
-
-}
 function chart_getJSON(index)
 {
     pointValue = [];
