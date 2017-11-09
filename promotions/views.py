@@ -1403,7 +1403,8 @@ def exercice_validation_form_validate_exercice(request):
         elif question["type"].startswith("chart"):
             questions[question["instructions"]] = {
                 "type": question["type"],
-                "answers": question["answers"],
+                #GROUPE 7 on enregistre dans la BD
+                "answers": [[y for y in x["chart"]] for x in question["answers"]],
             }
         # No provided answer if corrected by a Professor
         elif question["type"] == "professor":
