@@ -1,28 +1,21 @@
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.template.response import TemplateResponse
-from django.shortcuts import render, redirect
-from django.views.generic.base import RedirectView
-from django.http import HttpResponse
-from django.http import JsonResponse
-
+import json
 from operator import itemgetter
 
-from promotions.models import Lesson, Stage
-from skills.models import Skill, StudentSkill, CodeR, Section, Relations, CodeR_relations
-from resources.models import KhanAcademy, Sesamath, Resource
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.template.response import TemplateResponse
 
+from .models import ImgElem
+from .models import MCQElem
+from .models import MCQReponse
+from .models import PDFElem
 from .models import Scenario
 from .models import TextElem
-from .models import ImgElem
 from .models import VidElem
-from .models import MCQElem
-from .models import PDFElem
-from .models import MCQReponse
 
-from .forms import ScenarioForm
-
-import json
 
 def root_redirection(request):
 
@@ -179,7 +172,8 @@ def save_scenario(request):
         parsed_json = json.loads(request.body)
 
         # parsing the parameters of the json
-        creator = parsed_json['creator']
+        # creator = parsed_json['creator']
+        creator = request.user
         title = parsed_json['title']
         skill = parsed_json['skill']
         topic = parsed_json['topic']
