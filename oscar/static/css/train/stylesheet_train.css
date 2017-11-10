@@ -144,3 +144,10 @@
     width: 80%;
     margin: 0px auto;
 }
+#progressBar{
+	position: absolute;
+	right: 315px;
+	top: 15%;
+	width: 100px;
+	height: 35px;
+}

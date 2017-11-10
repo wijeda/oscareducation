@@ -3,7 +3,7 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, endButtonID, blockID, getElemenButtonID){
+    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID){
         this.anchor = document.getElementById(anchorID);
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
@@ -18,26 +18,37 @@ class ScenarioVisualization{
         this.blockVideo = document.getElementById(blockID["videoBlockID"]);
         this.blockPDF = document.getElementById(blockID["pdfBlockID"]);
         this.blockMCQ = document.getElementById(blockID["mcqBlockID"]);
+
         this.progressBar = document.getElementById("progressBar");
-        this.gotoElement = document.getElementById(getElemenButtonID);
+
+        this.gotoText = document.getElementById(gotoTextID);
+        this.gotoImg = document.getElementById(gotoImgID);
+        this.gotoVid = document.getElementById(gotoVidID);
+        this.gotoMCQ = document.getElementById(gotoMCQID);
+
         this.index = 0;
         this.elements = json.elements;
         this.tabElementObject = [];
         for(let elem of this.elements){
+            var goto = document.createElement('button');
+            goto.setAttribute("data", elem.order);
             if(elem.type == "TextElem"){
                 let objectElem = new TextElem(elem, this.blockText, this.anchor);
                 this.tabElementObject.push(objectElem);
-                makeButtonGoToElement(elem.type);
+                goto.innerHTML = this.gotoText.innerHTML;
+                this.progressBar.appendChild(goto);
             }
             else if(elem.type == "ImgElem"){
                 let objectElem = new ImageElem(elem, this.blockImage, this.anchor);
                 this.tabElementObject.push(objectElem);
-                makeButtonGoToElement(elem.type);
+                goto.innerHTML = this.gotoImg.innerHTML;
+                this.progressBar.appendChild(goto);
             }
             else if(elem.type == "VidElem"){
                 let objectElem = new VideoElem(elem, this.blockVideo, this.anchor);
                 this.tabElementObject.push(objectElem);
-                makeButtonGoToElement(elem.type);
+                goto.innerHTML = this.gotoVid.innerHTML;
+                this.progressBar.appendChild(goto);
             }
             else if(elem.type == "PDFlem"){
                 let objectElem = new PDFElem(elem, this.blockPDF, this.anchor);
@@ -46,26 +57,38 @@ class ScenarioVisualization{
             else if(elem.type == "MCQElem"){
                 let objectElem = new MCQElem(elem, this.blockMCQ, this.anchor);
                 this.tabElementObject.push(objectElem);
-                makeButtonGoToElement(elem.type);
+                goto.innerHTML = this.gotoMCQ.innerHTML;
+                this.progressBar.appendChild(goto);
             }
+            goto.classList.add('gotoButton');
+            goto.addEventListener("click", this.gotoButtonElement.bind(this), true)
         }
         this.tabElementObject[this.index].render();
     }
 
-    makeButtonGoToElement(type){
-        let newelem = document.createElement("button")
-        newelem.classList.add('gotoElementButtonElem')
-        newelem.innertHTML = this.gotoElement.innerHTML
-
-        image = newelem.getElementsByTagName("span")
-        image.classList.add("glyphicon")
-
-        if(type=="TextElem"){
-            image.classList.add("glyphicon-font")
+    gotoButtonElement(elem){
+        this.tabElementObject[this.index].hide();
+        console.log(this);
+        console.log(elem.srcElement);
+        let button = elem.srcElement;
+        if (!elem.srcElement.classList.contains("gotoButton"))
+        {
+            button = button.parentNode;
         }
+        console.log(button.getAttribute("data"));
+        this.index = button.getAttribute("data");
+        this.tabElementObject[this.index].render();
 
-        this.progressBar.appendChild(newelem)
-        newelem.style.display="block";
+        if(this.index == 0){
+            this.previousButton.style.display = "none"
+        }
+        else {
+            this.previousButton.style.display = "inline"
+        }
+        if(this.index == this.tabElementObject.length-1){
+            this.nextButton.style.display = "none";
+            this.endButton.style.display = "inline";
+        }
     }
 
     nextButtonElement(){
@@ -79,6 +102,7 @@ class ScenarioVisualization{
             this.nextButton.style.display = "none";
             this.endButton.style.display = "inline";
         }
+
     }
 
     previousButtonElement(){
@@ -91,6 +115,9 @@ class ScenarioVisualization{
         }
         if(this.index == 0){
             this.previousButton.style.display = "none"
+        }
+        else {
+            this.previousButton.style.display = "inline"
         }
     }
 
@@ -134,13 +161,17 @@ window.onload = function(){
     let anchorID = "anchor";
     let nextButtonID = "nextElement";
     let previousButtonID = "previousElement";
-    let gotoElemenButtonID = "gotoElement";
     let validateButtonID = "validateElement";
     let endButtonID = "endElement";
 
+    let gotoTextID = "idTextElemProg";
+    let gotoImgID = "idImgElemProg";
+    let gotoVidID = "idVideoElemProg";
+    let gotoMCQID = "idMCQElemProg";
+
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","pdfBlockID":"pdfBlockElem","mcqBlockID":"mcqBlockElem"};
     let json = getJsonData();
-    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoElemenButtonID);
+    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID);
 
 };
 

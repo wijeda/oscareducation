@@ -90,8 +90,18 @@
         %button.btn-fixed-previous#previousElement
             Précédent
         #progressBar
-            %button.btn-fixed-getelem#gotoElement{:style => "display: none"}
-                %span
+            #idTextElemProg{:style => "display: none"}
+                %span.glyphicon.glyphicon-font
+                        %span
+            #idImgElemProg{:style => "display: none"}
+                 %span.glyphicon.glyphicon-picture
+                        %span
+            #idVideoElemProg{:style => "display: none"}
+                %span.glyphicon.glyphicon-facetime-video
+                        %span
+            #idMCQElemProg{:style => "display: none"}
+                %span.glyphicon.glyphicon-list
+                        %span
         %button.btn-fixed-validate#validateElement
             Valider
 
