@@ -217,8 +217,8 @@ class Question(models.Model):
             # All the correct answers are selected, all the incorrect ones not selected
             return 1
 
+        # No automatic verification to perform if corrected by a Professor
         elif evaluation_type == "professor":
-            # No automatic verification to perform if corrected by a Professor
             return -1
 
         # No automatic correction type found, not corrected by default
