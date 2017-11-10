@@ -15,12 +15,9 @@
         {{ form.non_field_errors }}
 
         #parameters.blk
-            %h1 Parametre
-            %p Entrez les differents parametres pour l'exercice
+            %h1 Paramètres
+            %p Entrez les différents paramètres pour l'exercice
 
-            %label{:for => 'creator'} Créateur :
-            %input{:id => 'creator', :value => "#{scenario.creator}"}
-            %br
             %label{:for => 'title'} Titre :
             %input{:id => 'title', :value => "#{scenario.title}"}
             %br

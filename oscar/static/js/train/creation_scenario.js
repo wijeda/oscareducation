@@ -193,7 +193,7 @@ class ScenarioCreation {
     sendForm() {
 
         let data = {};
-        let listOfParamIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
+        let listOfParamIDfield = ["title", "skill", "topic", "grade_level", "instructions", "public"];
 
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
