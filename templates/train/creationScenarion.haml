@@ -22,23 +22,20 @@
 
                     %p Entrez les différents paramètres pour le scénario
 
-                    %label{:for => 'creator'} Créateur
-                    %input{:id => 'creator', :placeholder => 'Créateur'}
-                    %br
                     %label{:for => 'title'} Titre :
-                    %input{:id => 'title', :placeholder => 'Indiquez le titre'}
+                    %input{:id => 'title', :placeholder => 'Indiquez le titre', :value => "#{scenario.title}"}
                     %br
                     %label{:for => 'skill'} Compétences :
-                    %input{:id => 'skill', :placeholder => 'Indiquez les compétences requises'}
+                    %input{:id => 'skill', :placeholder => 'Indiquez les compétences requises', :value => "#{scenario.skill}"}
                     %br
                     %label{:for => 'topic'} Sujet :
-                    %input{:id => 'topic', :placeholder => 'Indiquez le sujet du scénario'}
+                    %input{:id => 'topic', :placeholder => 'Indiquez le sujet du scénario', :value => "#{scenario.topic}"}
                     %br
                     %label{:for => 'grade_level'} Niveau :
-                    %input{:id => 'grade_level', :placeholder => "Indiquez le niveau d&rsquo;étude requis "}
+                    %input{:id => 'grade_level', :placeholder => "Indiquez le niveau d&rsquo;étude requis ", :value => "#{scenario.grade_level}"}
                     %br
                     %label{:for => 'instructions'} Instructions :
-                    %input{:id => 'instructions', :placeholder => 'Expliquez votre scénario'}
+                    %input{:id => 'instructions', :placeholder => 'Expliquez votre scénario', :value => "#{scenario.instructions}"}
                     %br
                     %label{:for => 'public'} Public :
                     %input{:id => 'public', :type => 'checkbox'}
@@ -57,7 +54,7 @@
                         %iframe{:width => "420", :height => "315", :style => "display: none"}
                         %label URL de votre vidéo (Youtube)
                         %input.url_vid_Elem{:id => 'vid_url', :type => "text"}
-                        %button.btn.btn-primary#addVid{:action => "#", :onclick => "return loadVideo(this)"} Charger la vidéo
+                        %button.btn.btn-primary#addVid.addVid{:action => "#", :onclick => "return loadVideo(this)"} Charger la vidéo
                         -# #loadVid{:style => "display: none"}
                     .form-group
                         %label{:for => 'description_vid'} Description:
@@ -105,7 +102,7 @@
                         %span.glyphicon.glyphicon-remove
 
                 .panel-body
-                    %textarea.desc_text_Elem{:rows => "2%", :cols => "80%", :placeholder => "Tapez votre texte"}
+                    %textarea.desc_text_Elem{:rows => "2%", :cols => "60%", :placeholder => "Tapez votre texte"}
 
             #imgBlockElem{:style => "display: none"}
                 %div#headline
@@ -135,7 +132,7 @@
                         %span.glyphicon.glyphicon-remove
                 .panel-body
                     .form-group
-                        %iframe{:width => "500", :height => "375", :style => "display: none"}
+                        %iframe.pdfprev{:width => "500", :height => "375", :style => "display: none"}
                         %label URL de votre pdf
                         %input.url_pdf_Elem{:id => 'pdf_url', :type => "text"}
                         %button.btn.btn-primary#addPDF{:action => "#", :onclick => "return loadPDF(this)"} Charger le PDF
@@ -170,7 +167,7 @@
                                 Ajouter un QCM
 
                     %br
-                    %button.btn.btn-primary#saveScenario
+                    %button.btn.btn-primary#saveScenario{:onclick=> "editForm()"}
                         %span.glyphicon.glyphicon-floppy-disk
                         Sauvegarder
                 {% endbuttons %}

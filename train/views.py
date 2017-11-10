@@ -1,28 +1,21 @@
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.template.response import TemplateResponse
-from django.shortcuts import render, redirect
-from django.views.generic.base import RedirectView
-from django.http import HttpResponse
-from django.http import JsonResponse
-
+import json
 from operator import itemgetter
 
-from promotions.models import Lesson, Stage
-from skills.models import Skill, StudentSkill, CodeR, Section, Relations, CodeR_relations
-from resources.models import KhanAcademy, Sesamath, Resource
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.template.response import TemplateResponse
 
+from .models import ImgElem
+from .models import MCQElem
+from .models import MCQReponse
+from .models import PDFElem
 from .models import Scenario
 from .models import TextElem
-from .models import ImgElem
 from .models import VidElem
-from .models import MCQElem
-from .models import PDFElem
-from .models import MCQReponse
 
-from .forms import ScenarioForm
-
-import json
 
 def root_redirection(request):
 
@@ -31,11 +24,25 @@ def root_redirection(request):
 def home(request):
     return TemplateResponse(request, "home.haml", {})
 
-def create_scenario(request):
+def create_scenario(request, id=None):
 
     # test d recup de date dans la db
+    if id == None:
+        dico = {}
+    else:
+        # we get the id of the scenario we want to edit
+        s = Scenario.objects.get(id=id)
 
-    return render(request, "train/creationScenarion.haml")
+        # we create a dictionary in which we put all the parameters
+        # and element from the scenario in order to pass it to the haml so it can be re-rendered
+        dico = {}
+
+        # filling the parameters
+        dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+
+    return render(request, "train/creationScenarion.haml", dico)
+    # else:
+    #     return render(request, "train/creationScenarion.haml")
 
 def edit_scenario(request, id):
 
@@ -83,18 +90,19 @@ def get_data(request, id):
         elem = {"type" : "ImgElem", "order": i.order, "data":{"id_scenario": id, "title":i.title, "url": i.url, "description":i.description }}
         elements.append(elem)
 
-    mcq = MCQElem.objects.filter(id_scenario=id)
-    for m in mcq:
-        elem = {"type" : "MCQElem", "order": m.order, "title": m.title, "data":{"id_scenario": id, "instruction": m.instruction, "question": m.question}}
-
-    qcm = MCQElem.objects.filter(id_scenario=id)
-
     # filling the pdfs elements
     pdfs = PDFElem.objects.filter(id_scenario=id)
 
     for p in pdfs:
         elem = {"type" : "PDFElem", "order": p.order, "data":{"id_scenario": id, "title":p.title, "url": p.url, "description":p.description }}
         elements.append(elem)
+
+
+    mcq = MCQElem.objects.filter(id_scenario=id)
+    for m in mcq:
+        elem = {"type" : "MCQElem", "order": m.order, "title": m.title, "data":{"id_scenario": id, "instruction": m.instruction, "question": m.question}}
+
+    qcm = MCQElem.objects.filter(id_scenario=id)
 
     # filling the MCQs elements
     for q in qcm:
@@ -178,7 +186,8 @@ def save_scenario(request):
         parsed_json = json.loads(request.body)
 
         # parsing the parameters of the json
-        creator = parsed_json['creator']
+        # creator = parsed_json['creator']
+        creator = request.user
         title = parsed_json['title']
         skill = parsed_json['skill']
         topic = parsed_json['topic']

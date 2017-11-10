@@ -4,6 +4,8 @@ class ScenarioCreation {
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
     constructor(param){
+        this.data = this.getJsonData();
+
         this.anchor = document.getElementById(param.anchorID);
         this.btnPlus = document.getElementById(param.btnPlusID);
         this.addElementDiv = document.getElementById(param.addElementDivID);
@@ -42,6 +44,8 @@ class ScenarioCreation {
         this.videoBlockNav = document.getElementById(param.idVideoElemNav);
         this.mcqBlockNav = document.getElementById(param.idMCQElemNav);
         this.imgBlockNav = document.getElementById(param.idImgElemNav);
+
+        this.fillPage();
     }
 
     makeBlockElemText(){
@@ -189,11 +193,130 @@ class ScenarioCreation {
 
     }
 
+    // get the JSON data when editing in order to retrieve the elements
+    getJsonData(){
+
+        var pathTab = window.location.pathname.split("/")
+        var id = pathTab[pathTab.length - 1]
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "/professor/train/data/"+id, false);
+
+        xhr.send(null);
+        // done
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var myArr = JSON.parse(xhr.responseText);
+
+            return myArr;
+        }
+    }
+
+    // make a filled element
+    makeFilledText(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('textBlockElem');
+        newelem.innerHTML = this.textBlockElem.innerHTML;
+        newelem.getElementsByClassName('titre_text_Elem')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('desc_text_Elem')[0].value = this.data["elements"][index]["data"]["content"]
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledImg(index){
+        let newelem = document.createElement("div")
+        newelem.classList.add('imgBlockElem');
+        newelem.innerHTML = this.imgBlockElem.innerHTML;
+        newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url_img_Elem')[0].value = this.data["elements"][index]["data"]["url"]
+        newelem.getElementsByClassName('desc_img_Elem')[0].value = this.data["elements"][index]["data"]["description"]
+        newelem.getElementsByClassName('imgprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledVid(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('videoBlockElem');
+        newelem.innerHTML = this.videoBlockElem.innerHTML;
+        newelem.getElementsByClassName('titre_vid_Elem')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url_vid_Elem')[0].value = this.data["elements"][index]["data"]["url"]
+        newelem.getElementsByClassName('desc_vid_Elem')[0].value = this.data["elements"][index]["data"]["description"]
+        loadVideo(newelem.getElementsByClassName('addVid')[0])
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledPDF(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('pdfBlockElem');
+        newelem.innerHTML = this.pdfBlockElem.innerHTML;
+        newelem.getElementsByClassName('titre_pdf_Elem')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url_pdf_Elem')[0].value = this.data["elements"][index]["data"]["url"]
+        newelem.getElementsByClassName('desc_pdf_Elem')[0].value = this.data["elements"][index]["data"]["description"]
+        newelem.getElementsByClassName('pdfprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
+        this.anchor.appendChild(newelem);
+    }
+
+    makeFilledMcq(index){
+        let newelem = document.createElement("div");
+        newelem.classList.add('mcqBlockElem');
+        newelem.innerHTML = this.mcqBlockElem.innerHTML;
+        // filling the instructions and the question
+        newelem.getElementsByClassName('titre_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('instruction_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["instruction"]
+        newelem.getElementsByClassName('question_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["question"]
+
+        // filling the first and the second answer of the mcq (because they are mandatory)
+        newelem.getElementsByClassName('answer1')[0].value = this.data["elements"][index]["data"]["answers"][0]["answer"]
+        newelem.getElementsByClassName('answer1isvalid')[0].checked = this.data["elements"][index]["data"]["answers"][0]["solution"]
+
+        newelem.getElementsByClassName('answer2')[0].value = this.data["elements"][index]["data"]["answers"][1]["answer"]
+        newelem.getElementsByClassName('answer2isvalid')[0].checked = this.data["elements"][index]["data"]["answers"][1]["solution"]
+
+        // optionally filling the other answers
+        for(let i = 2;i<this.data["elements"][index]["data"]["answers"].length;i++)
+        {
+            addReponseFilled(newelem.getElementsByClassName('panel-body')[0], this.data["elements"][index]["data"]["answers"][i]);
+        }
+
+        // this.anchor.getElementsByClassName("list_answers")[0].appendChild(newelem);
+
+        this.anchor.appendChild(newelem);
+        newelem.style.display = "block";
+    }
+
+    fillPage()
+    {
+        if(this.data){
+            for(let i = 0;i<this.data["elements"].length;i++)
+            {
+                if(this.data["elements"][i]["type"] == "TextElem")
+                {
+                    this.makeFilledText(i);
+                }
+                else if(this.data["elements"][i]["type"] == "ImgElem")
+                {
+                    this.makeFilledImg(i);
+                }
+                else if(this.data["elements"][i]["type"] == "VidElem")
+                {
+                    this.makeFilledVid(i);
+                }
+                else if(this.data["elements"][i]["type"] == "PDFElem")
+                {
+                    this.makeFilledPDF(i);
+                }
+                else if(this.data["elements"][i]["type"] == "MCQElem")
+                {
+                    this.makeFilledMcq(i);
+                }
+            }
+        }
+    }
+
 
     sendForm() {
 
         let data = {};
-        let listOfParamIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
+        let listOfParamIDfield = ["title", "skill", "topic", "grade_level", "instructions", "public"];
 
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
@@ -309,6 +432,34 @@ function addReponse(elem){
         let txt = repLineElem.getElementsByClassName('labelanswer')[0].innerHTML;
         newelem.getElementsByClassName('labelanswer')[0].innerHTML = txt.substring(0,txt.length -2) + (count +1) +':';
         newelem.getElementsByClassName('removeReponse')[0].style.display = "inline";
+        root.getElementsByClassName('list_answers')[0].appendChild(newelem);
+    }
+
+    //root.parentNode.removeChild(root);
+    return false;
+}
+
+function addReponseFilled(root, answer){
+    let count = 0;
+    let repLineElem = null;
+    for(let subElem of root.getElementsByClassName('list_answers')[0].childNodes){
+        if (subElem.className == "repLine"){
+            count++;
+            if(repLineElem == null){
+                repLineElem = subElem;
+            }
+        }
+    }
+    if (count < 4) {
+        let newelem = document.createElement("div");
+        newelem.classList.add('repLine');
+        newelem.innerHTML = repLineElem.innerHTML;
+        // TODO: virer ces childnodes
+        let txt = repLineElem.childNodes[1].innerHTML;
+        newelem.childNodes[1].innerHTML = txt.substring(0,txt.length -2) + (count +1);
+        newelem.childNodes[7].style.display = "inline";
+        newelem.getElementsByClassName('answer1')[0].value = answer["answer"]
+        newelem.getElementsByClassName('answer1isvalid')[0].checked = answer["solution"]
         root.getElementsByClassName('list_answers')[0].appendChild(newelem);
     }
 
