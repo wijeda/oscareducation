@@ -24,11 +24,25 @@ def root_redirection(request):
 def home(request):
     return TemplateResponse(request, "home.haml", {})
 
-def create_scenario(request):
+def create_scenario(request, id=None):
 
     # test d recup de date dans la db
+    if id == None:
+        dico = {}
+    else:
+        # we get the id of the scenario we want to edit
+        s = Scenario.objects.get(id=id)
 
-    return render(request, "train/creationScenarion.haml")
+        # we create a dictionary in which we put all the parameters
+        # and element from the scenario in order to pass it to the haml so it can be re-rendered
+        dico = {}
+
+        # filling the parameters
+        dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+
+    return render(request, "train/creationScenarion.haml", dico)
+    # else:
+    #     return render(request, "train/creationScenarion.haml")
 
 def edit_scenario(request, id):
 
@@ -89,7 +103,7 @@ def get_data(request, id):
         elem = {"type" : "MCQElem", "order": m.order, "title": m.title, "data":{"id_scenario": id, "instruction": m.instruction, "question": m.question}}
 
     qcm = MCQElem.objects.filter(id_scenario=id)
-    
+
     # filling the MCQs elements
     for q in qcm:
         answers = []
