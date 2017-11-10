@@ -83,12 +83,6 @@ def get_data(request, id):
         elem = {"type" : "ImgElem", "order": i.order, "data":{"id_scenario": id, "title":i.title, "url": i.url, "description":i.description }}
         elements.append(elem)
 
-    mcq = MCQElem.objects.filter(id_scenario=id)
-    for m in mcq:
-        elem = {"type" : "MCQElem", "order": m.order, "title": m.title, "data":{"id_scenario": id, "instruction": m.instruction, "question": m.question}}
-
-    qcm = MCQElem.objects.filter(id_scenario=id)
-
     # filling the pdfs elements
     pdfs = PDFElem.objects.filter(id_scenario=id)
 
@@ -96,6 +90,13 @@ def get_data(request, id):
         elem = {"type" : "PDFElem", "order": p.order, "data":{"id_scenario": id, "title":p.title, "url": p.url, "description":p.description }}
         elements.append(elem)
 
+
+    mcq = MCQElem.objects.filter(id_scenario=id)
+    for m in mcq:
+        elem = {"type" : "MCQElem", "order": m.order, "title": m.title, "data":{"id_scenario": id, "instruction": m.instruction, "question": m.question}}
+
+    qcm = MCQElem.objects.filter(id_scenario=id)
+    
     # filling the MCQs elements
     for q in qcm:
         answers = []

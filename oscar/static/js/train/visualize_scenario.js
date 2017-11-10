@@ -34,7 +34,7 @@ class ScenarioVisualization{
                 let objectElem = new VideoElem(elem, this.blockVideo, this.anchor);
                 this.tabElementObject.push(objectElem);
             }
-            else if(elem.type == "PDFlem"){
+            else if(elem.type == "PDFElem"){
                 let objectElem = new PDFElem(elem, this.blockPDF, this.anchor);
                 this.tabElementObject.push(objectElem);
             }
@@ -242,6 +242,7 @@ class PDFElem extends AbstractElem{
             this.data = elem["data"];
             this.title = this.data["title"];
             this.content = this.data["url"];
+            console.log(this.content);
             this.description = this.data["description"];
             this.node.innerHTML = skull.innerHTML;
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
