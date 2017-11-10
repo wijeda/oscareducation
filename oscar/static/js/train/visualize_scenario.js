@@ -16,6 +16,7 @@ class ScenarioVisualization{
         this.blockText = document.getElementById(blockID["textBlockID"]);
         this.blockImage = document.getElementById(blockID["imgBlockID"]);
         this.blockVideo = document.getElementById(blockID["videoBlockID"]);
+        this.blockPDF = document.getElementById(blockID["pdfBlockID"]);
         this.blockMCQ = document.getElementById(blockID["mcqBlockID"]);
         this.index = 0;
         this.elements = json.elements;
@@ -31,6 +32,10 @@ class ScenarioVisualization{
             }
             else if(elem.type == "VidElem"){
                 let objectElem = new VideoElem(elem, this.blockVideo, this.anchor);
+                this.tabElementObject.push(objectElem);
+            }
+            else if(elem.type == "PDFlem"){
+                let objectElem = new PDFElem(elem, this.blockPDF, this.anchor);
                 this.tabElementObject.push(objectElem);
             }
             else if(elem.type == "MCQElem"){
@@ -110,7 +115,7 @@ window.onload = function(){
     let validateButtonID = "validateElement";
     let endButtonID = "endElement";
 
-    let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","mcqBlockID":"mcqBlockElem"};
+    let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","pdfBlockID":"pdfBlockElem","mcqBlockID":"mcqBlockElem"};
     let json = getJsonData();
     new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID);
 
@@ -225,6 +230,22 @@ class VideoElem extends AbstractElem{
             let ID = getVideoId(this.content);
             this.embedURL = "//www.youtube.com/embed/" + ID;
             this.node.getElementsByClassName("content")[0].setAttribute("src", this.embedURL);
+            this.node.getElementsByClassName("description")[0].innerHTML = this.description;
+        }
+    }
+}
+
+class PDFElem extends AbstractElem{
+    constructor(elem, skull, anchor){
+        super(anchor);
+        if(elem != null){
+            this.data = elem["data"];
+            this.title = this.data["title"];
+            this.content = this.data["url"];
+            this.description = this.data["description"];
+            this.node.innerHTML = skull.innerHTML;
+            this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
+            this.node.getElementsByClassName("content")[0].setAttribute("src", this.content);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
         }
     }
