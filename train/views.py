@@ -93,7 +93,7 @@ def get_data(request, id):
     pdfs = PDFElem.objects.filter(id_scenario=id)
 
     for p in pdfs:
-        elem = {"type" : "PDFElem", "order": v.order, "data":{"id_scenario": id, "title":v.title, "url": v.url, "description":v.description }}
+        elem = {"type" : "PDFElem", "order": p.order, "data":{"id_scenario": id, "title":p.title, "url": p.url, "description":p.description }}
         elements.append(elem)
 
     # filling the MCQs elements
@@ -247,7 +247,7 @@ def save_scenario(request):
                 url_elem = parsed_json['elements'][i]['data']['url']
                 description_elem = parsed_json['elements'][i]['data']['description']
 
-                elem = PDFlem(id_scenario = id_scenario, order = i, title = title_elem, url = url_elem, description = description_elem)
+                elem = PDFElem(id_scenario = id_scenario, order = i, title = title_elem, url = url_elem, description = description_elem)
 
                 elem.save()
 

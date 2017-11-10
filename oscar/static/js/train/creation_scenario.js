@@ -126,33 +126,41 @@ class ScenarioCreation {
     }
 
     getElemInputBlockText(elemText){
-        let title = elemText.childNodes[1].childNodes[3].value;
-        let content = elemText.childNodes[1].childNodes[6].value;
+        // let title = elemText.childNodes[1].childNodes[3].value;
+        // let content = elemText.childNodes[1].childNodes[6].value;
+        // console.log(elemText.getElementsByClassName('titre_text_Elem'));
+        let title = elemText.getElementsByClassName('titre_text_Elem')[0].value;
+        let content = elemText.getElementsByClassName('desc_text_Elem')[0].value;
         return {"type":"TextElem", "data":{"title": title, "content": content}}
     }
 
     getElemInputBlockImage(elemImage){
-        console.log(elemImage);
-        console.log(elemImage.childNodes[1].childNodes[9]);
-        console.log(elemImage.childNodes[2].value);
-        console.log(elemImage.childNodes[3]);
-        let title = elemImage.childNodes[1].childNodes[3].value;
-        let url = elemImage.childNodes[1].childNodes[9].value;
-        let description = elemImage.childNodes[1].childNodes[11].value;
+        // let title = elemImage.childNodes[1].childNodes[3].value;
+        // let url = elemImage.childNodes[1].childNodes[9].value;
+        // let description = elemImage.childNodes[1].childNodes[11].value;
+        let title = elemImage.getElementsByClassName('title_img')[0].value;
+        let url = elemImage.getElementsByClassName('url_img_Elem')[0].value;
+        let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
         return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
     getElemInputBlockVideo(elemVideo){
-        let title = elemVideo.childNodes[1].childNodes[3].value;
-        let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
-        let description = elemVideo.getElementsByClassName('description')[0].value
+        // let title = elemVideo.childNodes[1].childNodes[3].value;
+        // let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
+        // let description = elemVideo.getElementsByClassName('description')[0].value
+        let title = elemVideo.getElementsByClassName('titre_vid_Elem')[0].value;
+        let url = elemVideo.getElementsByClassName('url_vid_Elem')[0].value;
+        let description = elemVideo.getElementsByClassName('desc_vid_Elem')[0].value;
         return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
     getElemInputBlockPDF(elemPDF){
-        let title = elemPDF.childNodes[1].childNodes[3].value;
-        let url = elemPDF.childNodes[1].childNodes[9].childNodes[7].value
-        let description = elemPDF.getElementsByClassName('description')[0].value
+        // let title = elemPDF.childNodes[1].childNodes[3].value;
+        // let url = elemPDF.childNodes[1].childNodes[9].childNodes[7].value
+        // let description = elemPDF.getElementsByClassName('description')[0].value
+        let title = elemPDF.getElementsByClassName('titre_pdf_Elem')[0].value;
+        let url = elemPDF.getElementsByClassName('url_pdf_Elem')[0].value;
+        let description = elemPDF.getElementsByClassName('desc_pdf_Elem')[0].value;
         return {"type":"PDFElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
@@ -162,7 +170,15 @@ class ScenarioCreation {
         let instruction = elemMCQ.getElementsByClassName('instruction_MCQ_Elem')[0].value;
         let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
         let answers = [];
-        for (let elem of elemMCQ.childNodes[1].childNodes[21].childNodes){
+        // for (let elem of elemMCQ.childNodes[1].childNodes[21].childNodes){
+        //      if(elem.className == "repLine"){
+        //             let reponse = elem.childNodes[3].value;
+        //             let checked = elem.childNodes[5].checked;
+        //             answers.push({"answer": reponse, "solution": checked});
+        //      }
+        // }
+
+        for (let elem of elemMCQ.getElementsByClassName('list_answers')){
              if(elem.className == "repLine"){
                     let reponse = elem.childNodes[3].value;
                     let checked = elem.childNodes[5].checked;
@@ -209,7 +225,7 @@ class ScenarioCreation {
             }
             else if(classElem =="pdfBlockElem")
             {
-                data["elements"].push(this.getElemInputBlockMCQ(this.anchor.childNodes[i]));
+                data["elements"].push(this.getElemInputBlockPDF(this.anchor.childNodes[i]));
             }
 
 

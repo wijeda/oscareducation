@@ -49,19 +49,19 @@
                 %div#headline
                     %span.glyphicon.glyphicon-facetime-video
                     %label{:for => 'title_video'} Vidéo:
-                    %input{:id => 'title_video', :placeholder => 'Tapez votre titre'}
+                    %input.titre_vid_Elem{:id => 'title_video', :placeholder => 'Tapez votre titre'}
                     %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                         %span.glyphicon.glyphicon-remove
                 .panel-body
                     .form-group
                         %iframe{:width => "420", :height => "315", :style => "display: none"}
                         %label URL de votre vidéo (Youtube)
-                        %input{:id => 'vid_url', :type => "text"}
+                        %input.url_vid_Elem{:id => 'vid_url', :type => "text"}
                         %button.btn.btn-primary#addVid{:action => "#", :onclick => "return loadVideo(this)"} Charger la vidéo
                         -# #loadVid{:style => "display: none"}
                     .form-group
                         %label{:for => 'description_vid'} Description:
-                        %input.description{:id => 'description_vid', :placeholder => 'Optionnel'}
+                        %input.desc_vid_Elem{:id => 'description_vid', :placeholder => 'Optionnel'}
 
             #mcqBlockElem{:style => "display: none"}
                 %div#headline
@@ -105,7 +105,7 @@
                         %span.glyphicon.glyphicon-remove
 
                 .panel-body
-                    %textarea{:rows => "2%", :cols => "80%", :placeholder => "Tapez votre texte"}
+                    %textarea.desc_text_Elem{:rows => "2%", :cols => "80%", :placeholder => "Tapez votre texte"}
 
             #imgBlockElem{:style => "display: none"}
                 %div#headline
@@ -118,31 +118,31 @@
                     .form-group
                         %img.imgprev{:width => "50%"}
                         %label Image (Entrez ici l'url de l'image)
-                        %input{:id => 'img_url', :type => "text"}
+                        %input.url_img_Elem{:id => 'img_url', :type => "text"}
                         -# %a{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image"}
                         %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
                         -# #loadImage{:style => "display: none"}
                     .form-group
                         %label{:for => 'description_img'} Description:
-                        %input{:id => 'description_img', :placeholder => 'Optionnel'}
+                        %input.desc_img_Elem{:id => 'description_img', :placeholder => 'Optionnel'}
 
             #pdfBlockElem{:style => "display: none"}
                 %div#headline
                     %span.glyphicon.glyphicon-file
                     %label{:for => 'title_pdf'} PDF:
-                    %input{:id => 'title_pdf', :placeholder => 'Tapez votre titre'}
+                    %input.titre_pdf_Elem{:id => 'title_pdf', :placeholder => 'Tapez votre titre'}
                     %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                         %span.glyphicon.glyphicon-remove
                 .panel-body
                     .form-group
                         %iframe{:width => "500", :height => "375", :style => "display: none"}
                         %label URL de votre pdf
-                        %input{:id => 'pdf_url', :type => "text"}
+                        %input.url_pdf_Elem{:id => 'pdf_url', :type => "text"}
                         %button.btn.btn-primary#addPDF{:action => "#", :onclick => "return loadPDF(this)"} Charger le PDF
                         -# #loadVid{:style => "display: none"}
                     .form-group
                         %label{:for => 'description_pdf'} Description:
-                        %input.description{:id => 'description_pdf', :placeholder => 'Optionnel'}
+                        %input.desc_pdf_Elem{:id => 'description_pdf', :placeholder => 'Optionnel'}
 
             #Tools.blk
                 %br
