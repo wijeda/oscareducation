@@ -77,8 +77,12 @@
       .container-fluid.box-options
         %button.btn-fixed-previous#previousElement
             Précédent
+        #progressBar
+            %button.btn-fixed-getelem#gotoElement{:style => "display: none"}
+                %span
         %button.btn-fixed-validate#validateElement
             Valider
+
         %button.btn-fixed-next#nextElement
             Suivant
         %button.btn-fixed-next#endElement{:style => "display: none", :href => "/student/train/student_list_scenario"}

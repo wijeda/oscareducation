@@ -3,7 +3,7 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, endButtonID, blockID){
+    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, endButtonID, blockID, getElemenButtonID){
         this.anchor = document.getElementById(anchorID);
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
@@ -17,6 +17,8 @@ class ScenarioVisualization{
         this.blockImage = document.getElementById(blockID["imgBlockID"]);
         this.blockVideo = document.getElementById(blockID["videoBlockID"]);
         this.blockMCQ = document.getElementById(blockID["mcqBlockID"]);
+        this.progressBar = document.getElementById("progressBar");
+        this.gotoElement = document.getElementById(getElemenButtonID);
         this.index = 0;
         this.elements = json.elements;
         this.tabElementObject = [];
@@ -24,21 +26,41 @@ class ScenarioVisualization{
             if(elem.type == "TextElem"){
                 let objectElem = new TextElem(elem, this.blockText, this.anchor);
                 this.tabElementObject.push(objectElem);
+                makeButtonGoToElement(elem.type);
             }
             else if(elem.type == "ImgElem"){
                 let objectElem = new ImageElem(elem, this.blockImage, this.anchor);
                 this.tabElementObject.push(objectElem);
+                makeButtonGoToElement(elem.type);
             }
             else if(elem.type == "VidElem"){
                 let objectElem = new VideoElem(elem, this.blockVideo, this.anchor);
                 this.tabElementObject.push(objectElem);
+                makeButtonGoToElement(elem.type);
             }
             else if(elem.type == "MCQElem"){
                 let objectElem = new MCQElem(elem, this.blockMCQ, this.anchor);
                 this.tabElementObject.push(objectElem);
+                makeButtonGoToElement(elem.type);
             }
         }
         this.tabElementObject[this.index].render();
+    }
+
+    makeButtonGoToElement(type){
+        let newelem = document.createElement("button")
+        newelem.classList.add('gotoElementButtonElem')
+        newelem.innertHTML = this.gotoElement.innerHTML
+
+        image = newelem.getElementsByTagName("span")
+        image.classList.add("glyphicon")
+
+        if(type=="TextElem"){
+            image.classList.add("glyphicon-font")
+        }
+
+        this.progressBar.appendChild(newelem)
+        newelem.style.display="block";
     }
 
     nextButtonElement(){
@@ -107,12 +129,13 @@ window.onload = function(){
     let anchorID = "anchor";
     let nextButtonID = "nextElement";
     let previousButtonID = "previousElement";
+    let gotoElemenButtonID = "gotoElement";
     let validateButtonID = "validateElement";
     let endButtonID = "endElement";
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","mcqBlockID":"mcqBlockElem"};
     let json = getJsonData();
-    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID);
+    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoElemenButtonID);
 
 };
 
