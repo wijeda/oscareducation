@@ -68,10 +68,8 @@ class ScenarioVisualization{
 
     gotoButtonElement(elem){
         this.tabElementObject[this.index].hide();
-        console.log(this);
-        console.log(elem.srcElement);
-        let button = elem.srcElement;
-        if (!elem.srcElement.classList.contains("gotoButton"))
+        let button = elem.target;
+        if (!elem.target.classList.contains("gotoButton"))
         {
             button = button.parentNode;
         }
