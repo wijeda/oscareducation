@@ -190,6 +190,9 @@
                         %span.glyphicon.glyphicon-font
                             %label Texte :
                                 %span
+                        %script{:src => "/static/js/train/jquery.sortable.js"}
+                        :javascript
+                          $('.divElemNav').sortable();
                     .divElemNav#idImgElemNav{:style => "display: none"}
                          %span.glyphicon.glyphicon-picture
                             %label Image :

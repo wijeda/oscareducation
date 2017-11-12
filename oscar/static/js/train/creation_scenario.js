@@ -45,23 +45,21 @@ class ScenarioCreation {
         this.mcqBlockNav = document.getElementById(param.idMCQElemNav);
         this.imgBlockNav = document.getElementById(param.idImgElemNav);
 
-        this.idList = document.getElementById(param.idList);
-        this.navFixed = document.getElementById(param.navFixed);
-
         this.fillPage();
     }
 
     makeBlockElemText(){
-        let newelem = document.createElement("div");
+        var newelem = document.createElement("div");
         newelem.classList.add('textBlockElem');
         newelem.innerHTML = this.textBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
 
-        let newNavElem = document.createElement("div");
+        var ul = document.getElementById("idList");
+        var newNavElem = document.createElement("li");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
-        this.navFixed.appendChild(newNavElem);
+        ul.appendChild(newNavElem);
     }
 
     makeBlockElemImg(){
@@ -70,14 +68,12 @@ class ScenarioCreation {
         newelem.innerHTML = this.imgBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
 
-        let newNavElem = document.createElement("div");
+        var ul = document.getElementById("idList");
+        let newNavElem = document.createElement("li");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
 
-        let newOrangeLine = document.createElement("div");
-        newOrangeLine.classList.add('ligneorangefine');
-        this.sideNavBar.appendChild(newOrangeLine);
-        this.sideNavBar.appendChild(newNavElem);
+        ul.appendChild(newNavElem);
     }
 
     makeBlockElemVideo(){
@@ -86,14 +82,12 @@ class ScenarioCreation {
         newelem.innerHTML = this.videoBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
 
-        let newNavElem = document.createElement("div");
+        var ul = document.getElementById("idList");
+        let newNavElem = document.createElement("li");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
 
-        let newOrangeLine = document.createElement("div");
-        newOrangeLine.classList.add('ligneorangefine');
-        this.sideNavBar.appendChild(newOrangeLine);
-        this.sideNavBar.appendChild(newNavElem);
+        ul.appendChild(newNavElem);
     }
 
     makeBlockElemPDF(){
@@ -111,14 +105,12 @@ class ScenarioCreation {
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
 
-        let newNavElem = document.createElement("div");
+        var ul = document.getElementById("idList");
+        let newNavElem = document.createElement("li");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
 
-        let newOrangeLine = document.createElement("div");
-        newOrangeLine.classList.add('ligneorangefine');
-        this.sideNavBar.appendChild(newOrangeLine);
-        this.sideNavBar.appendChild(newNavElem);
+        ul.appendChild(newNavElem);
     }
 
     showDiffElements(){
