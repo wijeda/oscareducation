@@ -45,6 +45,8 @@ class ScenarioCreation {
         this.mcqBlockNav = document.getElementById(param.idMCQElemNav);
         this.imgBlockNav = document.getElementById(param.idImgElemNav);
 
+        this.idList = document.getElementById(param.idList);
+
         this.fillPage();
     }
 
@@ -54,14 +56,11 @@ class ScenarioCreation {
         newelem.innerHTML = this.textBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
 
-        let newNavElem = document.createElement("div");
+        let newNavElem = document.createElement("li");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
-        let newOrangeLine = document.createElement("div");
-        newOrangeLine.classList.add('ligneorangefine');
-        this.sideNavBar.appendChild(newOrangeLine);
-        this.sideNavBar.appendChild(newNavElem);
+        this.idList.appendChild(newNavElem);
     }
 
     makeBlockElemImg(){

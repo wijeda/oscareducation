@@ -174,22 +174,35 @@
 
         %nav#sideNavBar
             #navFixed
-                .divElemNav
-                    %span.glyphicon.glyphicon-cog
-                        %label Paramètres
-                .divElemNav#idTextElemNav{:style => "display: none"}
-                    %span.glyphicon.glyphicon-font
-                        %label Texte :
-                            %span
-                .divElemNav#idImgElemNav{:style => "display: none"}
-                     %span.glyphicon.glyphicon-picture
-                        %label Image :
-                            %span
-                .divElemNav#idVideoElemNav{:style => "display: none"}
-                    %span.glyphicon.glyphicon-facetime-video
-                        %label Vidéo :
-                            %span
-                .divElemNav#idMCQElemNav{:style => "display: none"}
-                    %span.glyphicon.glyphicon-list
-                        %label QCM :
-                            %span
+                %ul.divElemNav#idList
+                    .divElemNav
+                      Item 1
+                    .divElemNav
+                      Item 2
+                    .divElemNav
+                      Item 3
+                    .divElemNav
+                      Item 4
+                    .divElemNav
+                        %span.glyphicon.glyphicon-cog
+                        Paramètres
+                    .divElemNav#idTextElemNav{:style => "display: none"}
+                        %span.glyphicon.glyphicon-font
+                            %label Texte :
+                                %span
+                    .divElemNav#idImgElemNav{:style => "display: none"}
+                         %span.glyphicon.glyphicon-picture
+                            %label Image :
+                                %span
+                    .divElemNav#idVideoElemNav{:style => "display: none"}
+                        %span.glyphicon.glyphicon-facetime-video
+                            %label Vidéo :
+                                %span
+                    .divElemNav#idMCQElemNav{:style => "display: none"}
+                        %span.glyphicon.glyphicon-list
+                            %label QCM :
+                                %span
+
+                %script{:src => "/static/js/train/jquery.sortable.js"}
+                :javascript
+                  $('.divElemNav').sortable();
