@@ -190,9 +190,6 @@
                         %span.glyphicon.glyphicon-font
                             %label Texte :
                                 %span
-                        %script{:src => "/static/js/train/jquery.sortable.js"}
-                        :javascript
-                          $('.divElemNav').sortable();
                     .divElemNav#idImgElemNav{:style => "display: none"}
                          %span.glyphicon.glyphicon-picture
                             %label Image :
@@ -205,7 +202,9 @@
                         %span.glyphicon.glyphicon-list
                             %label QCM :
                                 %span
+                    .divElemNav#idPDFElemNav{:style => "display: none"}
+                            %label PDF :
+                                %span
 
-                %script{:src => "/static/js/train/jquery.sortable.js"}
                 :javascript
-                  $('.divElemNav').sortable();
+                  $('#idList').sortable();
