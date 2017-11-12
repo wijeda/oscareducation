@@ -46,6 +46,7 @@ class ScenarioCreation {
         this.imgBlockNav = document.getElementById(param.idImgElemNav);
 
         this.idList = document.getElementById(param.idList);
+        this.navFixed = document.getElementById(param.navFixed);
 
         this.fillPage();
     }
@@ -56,11 +57,11 @@ class ScenarioCreation {
         newelem.innerHTML = this.textBlockElem.innerHTML;
         this.anchor.appendChild(newelem);
 
-        let newNavElem = document.createElement("li");
+        let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
-        this.idList.appendChild(newNavElem);
+        this.navFixed.appendChild(newNavElem);
     }
 
     makeBlockElemImg(){
