@@ -106,7 +106,6 @@ class ScenarioCreation {
     }
 
     makeBlockElemMcq(){
-        //TODO remplacer par QCM
         let newelem = document.createElement("div");
         newelem.classList.add('mcqBlockElem');
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
@@ -181,13 +180,11 @@ class ScenarioCreation {
         //             answers.push({"answer": reponse, "solution": checked});
         //      }
         // }
+        for (let elem of elemMCQ.getElementsByClassName('repLine')){
+             let reponse = elem.getElementsByClassName("answer")[0].value;
+             let checked = elem.getElementsByClassName("answer1isvalid")[0].checked;
+             answers.push({"answer": reponse, "solution": checked});
 
-        for (let elem of elemMCQ.getElementsByClassName('list_answers')){
-             if(elem.className == "repLine"){
-                    let reponse = elem.childNodes[3].value;
-                    let checked = elem.childNodes[5].checked;
-                    answers.push({"answer": reponse, "solution": checked});
-             }
         }
         return {"type":"MCQElem", "data":{"title": title, "instruction": instruction, "question": question, "answers" : answers}}
 
