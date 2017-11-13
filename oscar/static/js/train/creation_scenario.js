@@ -217,6 +217,13 @@ class ScenarioCreation {
         newelem.getElementsByClassName('titre_text_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('desc_text_Elem')[0].value = this.data["elements"][index]["data"]["content"]
         this.anchor.appendChild(newelem);
+
+        var ul = document.getElementById("idList");
+        var newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.textBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     makeFilledImg(index){
@@ -228,6 +235,13 @@ class ScenarioCreation {
         newelem.getElementsByClassName('desc_img_Elem')[0].value = this.data["elements"][index]["data"]["description"]
         newelem.getElementsByClassName('imgprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
         this.anchor.appendChild(newelem);
+
+        var ul = document.getElementById("idList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.imgBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     makeFilledVid(index){
@@ -239,6 +253,13 @@ class ScenarioCreation {
         newelem.getElementsByClassName('desc_vid_Elem')[0].value = this.data["elements"][index]["data"]["description"]
         loadVideo(newelem.getElementsByClassName('addVid')[0])
         this.anchor.appendChild(newelem);
+
+        var ul = document.getElementById("idList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.videoBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     makeFilledPDF(index){
@@ -250,6 +271,13 @@ class ScenarioCreation {
         newelem.getElementsByClassName('desc_pdf_Elem')[0].value = this.data["elements"][index]["data"]["description"]
         newelem.getElementsByClassName('pdfprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
         this.anchor.appendChild(newelem);
+
+        var ul = document.getElementById("idList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     makeFilledMcq(index){
@@ -278,6 +306,13 @@ class ScenarioCreation {
 
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
+
+        var ul = document.getElementById("idList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     fillPage()
