@@ -196,16 +196,23 @@ class ScenarioCreation {
         var pathTab = window.location.pathname.split("/")
         var id = pathTab[pathTab.length - 1]
 
-        let xhr = new XMLHttpRequest();
 
-        xhr.open("GET", "/professor/train/data/"+id, false);
+        if(id != ""){ // If we get a number id, i.e. we want to edit a scenario
+            console.log("damn");
+            let xhr = new XMLHttpRequest();
 
-        xhr.send(null);
-        // done
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var myArr = JSON.parse(xhr.responseText);
+            xhr.open("GET", "/professor/train/data/"+id, false);
 
-            return myArr;
+            xhr.send(null);
+            // done
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var myArr = JSON.parse(xhr.responseText);
+
+                return myArr;
+            }
+        }
+        else{
+            return {elements:[]};
         }
     }
 
