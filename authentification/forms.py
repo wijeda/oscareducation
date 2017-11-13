@@ -19,7 +19,7 @@ class UsernameLoginForm(forms.Form):
             raise forms.ValidationError("This user does not exist.")
         try:
             prof_or_stud = Professor.objects.get(user=user)
-            prof_or_stud.print_something()
+            #prof_or_stud.print_something()
             prof_or_stud.update_status()
         except:
             try:

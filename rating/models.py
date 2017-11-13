@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from datetime import datetime
 from django.contrib.auth.models import User
-
+from django.utils import timezone
 
 class Star_rating(models.Model):
     resource = models.ForeignKey('resources.Resource')
@@ -23,7 +22,7 @@ class Star_rating(models.Model):
         self.star = stars
         self.resource = resource
         self.rated_by = user
-        self.rated_on = datetime.date
+        self.rated_on = timezone.now()
         self.save()
         return
 
@@ -49,7 +48,7 @@ class Rating(models.Model):
 
     def number_votes_answer(self,resource,question,answer):
         """Get the number of votes for answer at a question from a resource"""
-        r = Rating.objects.get(resource=resource,question=question,answer=answer)
+        r = Rating.objects.filter(resource=resource,question=question,answer=answer)
         return r.entry_set.count()
 
     class Meta:

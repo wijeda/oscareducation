@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import json
 from django.db import models
 import random
+from django.db.models import Max
 from django.db.models import Count
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
@@ -28,9 +29,6 @@ class Professor(models.Model):
     def print_something(self):
         print(self.nbr_4_star_res)
 
-    def addRating(self, Resource):
-        pass
-
     def __unicode__(self):
         return ("%s %s" % (
         self.user.first_name, self.user.last_name)) if self.user.first_name or self.user.last_name else self.user.username
@@ -39,7 +37,7 @@ class Professor(models.Model):
         is_top = False
         top = None
         if Top_contributor.objects.count() != 0:
-            top = Top_contributor.objects.get(id=1)
+            top = Top_contributor.objects.get(pk=1)
 
 
         if (top is None):
@@ -72,6 +70,10 @@ class Professor(models.Model):
                 self.status = json.dumps(Status("Super Contributor", "icon.png").__dict__)
             self.save()
 
+        """"statuss = Professor_status.objects.filter(min_contrib__lte=self.nbr_4_star_res)
+        if statuss.count() != 0:
+            statuss = statuss.order_by('-min_contrib').first()
+            print("Status: "+statuss.name)"""
 
 
 
@@ -107,9 +109,6 @@ class Student(models.Model):
         self.save()
         return new_code
 
-    def addRating(self, Resource):
-        pass
-
     class Meta:
         ordering = ['user__last_name']
 
@@ -136,4 +135,16 @@ class Student(models.Model):
 
 class Top_contributor(models.Model):
 
+    #status = models.ForeignKey(Professor_status,null=True)
     professor = models.ForeignKey(Professor,null=True)
+
+
+"""class Professor_status(models.Model):
+
+    name = models.CharField(max_length=100,unique=True)
+    icon = models.CharField(max_length=300)
+    min_contrib = models.PositiveIntegerField(null=True)
+
+    class Meta:
+        ordering = ['min_contrib',"name"]"""
+
