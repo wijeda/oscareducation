@@ -133,9 +133,10 @@
 }
 .goToButton{
     background-color: white;
+    border-color: black;
     margin: 1px;
     height: 80%;
-    border: 0px solid;
+    border: 1px solid;
     border-radius: 5px;
 }
 .box-options{

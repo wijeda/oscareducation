@@ -16,6 +16,8 @@ from .models import Scenario
 from .models import TextElem
 from .models import VidElem
 
+from .utils import user_is_professor
+
 
 def root_redirection(request):
 
@@ -24,6 +26,10 @@ def root_redirection(request):
 def home(request):
     return TemplateResponse(request, "home.haml", {})
 
+# return the page for the creation of the scenario with either the data
+# filled if id != None(in this case we want to edit the corresponding scenario)
+# or with blank data
+@user_is_professor
 def create_scenario(request, id=None):
 
     # test d recup de date dans la db
@@ -44,6 +50,8 @@ def create_scenario(request, id=None):
     # else:
     #     return render(request, "train/creationScenarion.haml")
 
+# return the edit scenario page with the data of the scenario filled in
+@user_is_professor
 def edit_scenario(request, id):
 
     # we get the id of the scenario we want to edit
@@ -56,9 +64,11 @@ def edit_scenario(request, id):
     # filling the parameters
     dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
 
-
+    # we render the page of an edit
     return render(request, "train/editScenario.haml", dico)
 
+# return all the data (param + elements) from the scenario with the id in parameters
+# as a JSON
 def get_data(request, id):
 
     s = Scenario.objects.get(id=id)
@@ -130,6 +140,7 @@ def view_scenario(request, id):
 
     return render(request, "train/viewScenario.haml", dico)
 
+@user_is_professor
 def list_scenario(request):
 
     # "dico" is a dictionnary variable that will store the database information for the scenarios
@@ -264,6 +275,7 @@ def save_scenario(request):
     return HttpResponse("OK")
     # return HttpResponseRedirect('/professor/train/list_scenario/')
 
+@user_is_professor
 def delete_scenario(request, id):
 
     textes = TextElem.objects.filter(id_scenario=id)
@@ -282,7 +294,12 @@ def delete_scenario(request, id):
     for i in pdf:
         i.delete()
 
-    # TODO Delete the MCQ!!!
+    qcm = MCQElem.objects.filter(id_scenario=id)
+    for q in qcm:
+        ans = MCQReponse.objects.filter(id_question = q.id)
+        for a in ans:
+            a.delete()
+        q.delete()
 
     Scenario.objects.get(id=id).delete()
 
