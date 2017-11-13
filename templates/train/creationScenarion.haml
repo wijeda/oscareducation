@@ -8,6 +8,7 @@
 -block content
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
+    %script{:src => "/static/js/train/Sortable.js"}
 
     #OurContainer
         %section#sectionElements
@@ -179,38 +180,30 @@
 
         %nav#sideNavBar
             #navFixed
-                %ul.divElemNav#idList
-                    .divElemNav
-                      Item 1
-                    .divElemNav
-                      Item 2
-                    .divElemNav
-                      Item 3
-                    .divElemNav
-                      Item 4
-                    .divElemNav
+                #simpleList.list-group
+                    .list-group-item
                         %span.glyphicon.glyphicon-cog
                         Paramètres
-                    .divElemNav#idTextElemNav{:style => "display: none"}
+                    .list-group-item#idTextElemNav{:style => "display: none"}
                         %span.glyphicon.glyphicon-font
                             %label Texte :
                                 %span
-                    .divElemNav#idImgElemNav{:style => "display: none"}
+                    .list-group-item#idImgElemNav{:style => "display: none"}
                          %span.glyphicon.glyphicon-picture
                             %label Image :
                                 %span
-                    .divElemNav#idVideoElemNav{:style => "display: none"}
+                    .list-group-item#idVideoElemNav{:style => "display: none"}
                         %span.glyphicon.glyphicon-facetime-video
                             %label Vidéo :
                                 %span
-                    .divElemNav#idMCQElemNav{:style => "display: none"}
+                    .list-group-item#idMCQElemNav{:style => "display: none"}
                         %span.glyphicon.glyphicon-list
                             %label QCM :
                                 %span
-                    .divElemNav#idPDFElemNav{:style => "display: none"}
+                    .list-group-item#idPDFElemNav{:style => "display: none"}
                         %span.glyphicon.glyphicon-file
                             %label PDF :
                                 %span
 
-                :javascript
-                  $('#idList').sortable();
+        :javascript
+          Sortable.create(simpleList, { /* options */ });

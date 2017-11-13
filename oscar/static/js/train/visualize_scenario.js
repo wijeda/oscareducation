@@ -28,11 +28,20 @@ class ScenarioVisualization{
         this.gotoPDF = document.getElementById(gotoPDFID);
 
         this.index = 0;
+        this.lastButtonClicked = null;
         this.elements = json.elements;
         this.tabElementObject = [];
+        this.first = true;
         for(let elem of this.elements){
             var goto = document.createElement('button');
+            if(this.first)
+            {
+                goto.style.backgroundColor = "#f58025";
+                this.first = false;
+                this.lastButtonClicked = goto;
+            }
             goto.setAttribute("data", elem.order);
+            goto.classList.add("goToButton");
             if(elem.type == "TextElem"){
                 let objectElem = new TextElem(elem, this.blockText, this.anchor);
                 this.tabElementObject.push(objectElem);
@@ -70,14 +79,25 @@ class ScenarioVisualization{
     }
 
     gotoButtonElement(elem){
-        this.tabElementObject[this.index].hide();
-        let button = elem.target;
-        if (!elem.target.classList.contains("gotoButton"))
-        {
-            button = button.parentNode;
+        if(this.index == this.tabElementObject.length-1){
+            this.nextButton.style.display = "inline";
+            this.endButton.style.display = "none";
         }
-        button.style.backgroundColor = "red";
-        console.log(button.getAttribute("data"));
+        this.tabElementObject[this.index].hide();
+        if(this.lastButtonClicked != null)
+        {
+            this.lastButtonClicked.style.backgroundColor = "white";
+        }
+        let button = elem;
+        if (!elem.classList || !elem.classList.contains("gotoButton")){
+            button = elem.target;
+            if (!elem.target.classList.contains("gotoButton"))
+            {
+                button = button.parentNode;
+            }
+        }
+        button.style.backgroundColor = "#f58025";
+        this.lastButtonClicked = button;
         this.index = button.getAttribute("data");
         this.tabElementObject[this.index].render();
 
@@ -105,6 +125,14 @@ class ScenarioVisualization{
             this.endButton.style.display = "inline";
         }
 
+        // go through the navigation button to find the one with the current
+        // index and applie the function "gotoButtonElement" as if it has been click
+        for(let e of document.getElementsByClassName("goToButton")){
+            if (e.getAttribute("data") == this.index){
+                this.gotoButtonElement(e)
+            }
+        }
+
     }
 
     previousButtonElement(){
@@ -121,8 +149,16 @@ class ScenarioVisualization{
         else {
             this.previousButton.style.display = "inline"
         }
+
+        // go through the navigation button to find the one with the current
+        // index and applie the function "gotoButtonElement" as if it has been click
+        for(let e of document.getElementsByClassName("goToButton")){
+            if (e.getAttribute("data") == this.index){
+                this.gotoButtonElement(e)
+            }
+        }
     }
-    
+
     endButtonElement(){
         var pathTab = window.location.pathname.split("/");
         var user_type = pathTab[1];
@@ -167,9 +203,9 @@ window.onload = function(){
     let gotoVidID = "idVideoElemProg";
     let gotoMCQID = "idMCQElemProg";
     let gotoPDFID = "idPDFElemProg";
+    let json = getJsonData();
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","pdfBlockID":"pdfBlockElem","mcqBlockID":"mcqBlockElem"};
-    let json = getJsonData();
     new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID, gotoPDFID);
 
 };
@@ -227,7 +263,7 @@ class AbstractElem{
 
     render(){
         this.anchor.appendChild(this.node);
-        document.getElementById("validateElement").style.display = "none";
+        //document.getElementById("validateElement").style.display = "none";
     }
 
     hide(){
@@ -336,7 +372,6 @@ class MCQElem extends AbstractElem{
 
     render(){
         this.anchor.appendChild(this.node);
-        document.getElementById("validateElement").style.display = "block";
     }
 
     validate(){
