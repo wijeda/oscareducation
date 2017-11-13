@@ -84,7 +84,7 @@
 
                 %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)! :)
                 %p.failedMCQ{:style => "display: none"} Il y a eu une ou plusieurs erreurs :/
-                %button.btn-fixed-validate#validateElement
+                %button.btn-fixed-validate.validateElement
                     Valider
 
     #Tools.blk
@@ -92,23 +92,21 @@
         %button.btn-fixed-previous#previousElement
             Précédent
         #progressBar.progressBar
-            #idTextElemProg.go-to-button{:style => "display: none"}
+            #idTextElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-font
                         %span
-            #idImgElemProg.go-to-button{:style => "display: none"}
+            #idImgElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-picture
                         %span
-            #idVideoElemProg.go-to-button{:style => "display: none"}
+            #idVideoElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-facetime-video
                         %span
-            #idMCQElemProg.go-to-button{:style => "display: none"}
+            #idMCQElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-list
                         %span
-            #idPDFElemProg.go-to-button{:style => "display: none"}
-                %span.glyphicon.glyphicon-picture_as_pdf
+            #idPDFElemProg.goToButton{:style => "display: none"}
+                %span.glyphicon.glyphicon-file
                         %span
-
-
         %button.btn-fixed-next#nextElement
             Suivant
         %button.btn-fixed-next#endElement{:style => "display: none", :href => "/student/train/student_list_scenario"}

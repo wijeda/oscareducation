@@ -131,7 +131,7 @@
     left: 50%;
     transform: translateX(-50%);
 }
-.go-to-button{
+.goToButton{
     background-color: #f58025;
 	border-color: #d86e1c;
 }

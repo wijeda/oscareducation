@@ -9,8 +9,8 @@ class ScenarioVisualization{
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
         this.previousButton =  document.getElementById(previousButtonID);
         this.previousButton.addEventListener("click", this.previousButtonElement.bind(this), true);
-        this.validateButton = document.getElementById(validateButtonID);
-        this.validateButton.addEventListener("click", this.validateButtonElement.bind(this), true);
+        // this.validateButton = document.getElementById(validateButtonID);
+        // this.validateButton.addEventListener("click", this.validateButtonElement.bind(this), true);
         this.endButton = document.getElementById(endButtonID);
         this.endButton.addEventListener("click", this.endButtonElement.bind(this), true);
         this.blockText = document.getElementById(blockID["textBlockID"]);
@@ -76,6 +76,7 @@ class ScenarioVisualization{
         {
             button = button.parentNode;
         }
+        button.style.backgroundColor = "red";
         console.log(button.getAttribute("data"));
         this.index = button.getAttribute("data");
         this.tabElementObject[this.index].render();
@@ -121,11 +122,7 @@ class ScenarioVisualization{
             this.previousButton.style.display = "inline"
         }
     }
-
-    validateButtonElement(){
-        this.tabElementObject[this.index].validate();
-    }
-
+    
     endButtonElement(){
         var pathTab = window.location.pathname.split("/");
         var user_type = pathTab[1];
@@ -330,6 +327,10 @@ class MCQElem extends AbstractElem{
                 //blocanswer.getElementsByClassName("isAnswer")[0].checked = false;
                 this.Ul[0].appendChild(blocanswer);
             }
+
+            this.validateButton = this.node.getElementsByClassName("validateElement")[0];
+            this.validateButton.addEventListener("click", this.validate.bind(this), true);
+
         }
     }
 

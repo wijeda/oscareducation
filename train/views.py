@@ -236,6 +236,7 @@ def save_scenario(request):
                 elem.save()
 
             elif parsed_json['elements'][i]['type'] == "MCQElem":
+                print(parsed_json['elements'][i])
                 id_scenario = scena.id
                 order = i
                 title_elem = parsed_json['elements'][i]['data']['title']

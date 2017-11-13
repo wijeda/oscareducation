@@ -77,15 +77,15 @@
                     %div.list_answers
                         %div.repLine
                             %label.labelanswer Réponse 1:
-                            %input.answer1{:placeholder => 'Veuillez rentrer une réponse'}
+                            %input.answer1.answer{:placeholder => 'Veuillez rentrer une réponse'}
                             %input.answer1isvalid{:type => "checkbox"}
                             %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)", :style => "display : none"}
                                 %span.glyphicon.glyphicon-remove
                         %br
                         %div.repLine
                             %label Réponse 2:
-                            %input.answer2{:placeholder => 'Veuillez rentrer une réponse'}
-                            %input.answer2isvalid{:type => "checkbox"}
+                            %input.answer2.answer{:placeholder => 'Veuillez rentrer une réponse'}
+                            %input.answer2isvalid.answer1isvalid{:type => "checkbox"}
                             %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)"}
                                 %span.glyphicon.glyphicon-remove
                         %br
@@ -203,6 +203,7 @@
                             %label QCM :
                                 %span
                     .divElemNav#idPDFElemNav{:style => "display: none"}
+                        %span.glyphicon.glyphicon-file
                             %label PDF :
                                 %span
 
