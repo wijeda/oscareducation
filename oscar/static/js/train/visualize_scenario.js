@@ -85,7 +85,7 @@ class ScenarioVisualization{
             this.lastButtonClicked.style.backgroundColor = "white";
         }
         let button = elem;
-        if (!elem.classList.contains("gotoButton")){
+        if (!elem.classList || !elem.classList.contains("gotoButton")){
             button = elem.target;
             if (!elem.target.classList.contains("gotoButton"))
             {
@@ -121,7 +121,7 @@ class ScenarioVisualization{
             this.endButton.style.display = "inline";
         }
 
-        // go trought the navigation button to find the one with the current
+        // go through the navigation button to find the one with the current
         // index and applie the function "gotoButtonElement" as if it has been click
         for(let e of document.getElementsByClassName("goToButton")){
             if (e.getAttribute("data") == this.index){
@@ -146,7 +146,7 @@ class ScenarioVisualization{
             this.previousButton.style.display = "inline"
         }
 
-        // go trought the navigation button to find the one with the current
+        // go through the navigation button to find the one with the current
         // index and applie the function "gotoButtonElement" as if it has been click
         for(let e of document.getElementsByClassName("goToButton")){
             if (e.getAttribute("data") == this.index){
@@ -199,9 +199,9 @@ window.onload = function(){
     let gotoVidID = "idVideoElemProg";
     let gotoMCQID = "idMCQElemProg";
     let gotoPDFID = "idPDFElemProg";
+    let json = getJsonData();
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","pdfBlockID":"pdfBlockElem","mcqBlockID":"mcqBlockElem"};
-    let json = getJsonData();
     new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID, gotoPDFID);
 
 };
@@ -368,7 +368,6 @@ class MCQElem extends AbstractElem{
 
     render(){
         this.anchor.appendChild(this.node);
-        document.getElementById("validateElement").style.display = "block";
     }
 
     validate(){
