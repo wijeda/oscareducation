@@ -84,26 +84,30 @@
 
                 %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)! :)
                 %p.failedMCQ{:style => "display: none"} Il y a eu une ou plusieurs erreurs :/
+                %button.btn-fixed-validate#validateElement
+                    Valider
 
     #Tools.blk
       .container-fluid.box-options
         %button.btn-fixed-previous#previousElement
             Précédent
-        #progressBar
-            #idTextElemProg{:style => "display: none"}
+        #progressBar.progressBar
+            #idTextElemProg.go-to-button{:style => "display: none"}
                 %span.glyphicon.glyphicon-font
                         %span
-            #idImgElemProg{:style => "display: none"}
-                 %span.glyphicon.glyphicon-picture
+            #idImgElemProg.go-to-button{:style => "display: none"}
+                %span.glyphicon.glyphicon-picture
                         %span
-            #idVideoElemProg{:style => "display: none"}
+            #idVideoElemProg.go-to-button{:style => "display: none"}
                 %span.glyphicon.glyphicon-facetime-video
                         %span
-            #idMCQElemProg{:style => "display: none"}
+            #idMCQElemProg.go-to-button{:style => "display: none"}
                 %span.glyphicon.glyphicon-list
                         %span
-        %button.btn-fixed-validate#validateElement
-            Valider
+            #idPDFElemProg.go-to-button{:style => "display: none"}
+                %span.glyphicon.glyphicon-picture_as_pdf
+                        %span
+
 
         %button.btn-fixed-next#nextElement
             Suivant

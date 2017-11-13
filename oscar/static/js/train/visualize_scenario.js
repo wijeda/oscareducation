@@ -3,7 +3,7 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID){
+    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID, gotoPDFID){
         this.anchor = document.getElementById(anchorID);
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
@@ -25,6 +25,7 @@ class ScenarioVisualization{
         this.gotoImg = document.getElementById(gotoImgID);
         this.gotoVid = document.getElementById(gotoVidID);
         this.gotoMCQ = document.getElementById(gotoMCQID);
+        this.gotoPDF = document.getElementById(gotoPDFID);
 
         this.index = 0;
         this.elements = json.elements;
@@ -53,6 +54,8 @@ class ScenarioVisualization{
             else if(elem.type == "PDFElem"){
                 let objectElem = new PDFElem(elem, this.blockPDF, this.anchor);
                 this.tabElementObject.push(objectElem);
+                goto.innerHTML = this.gotoPDF.innerHTML;
+                this.progressBar.appendChild(goto);
             }
             else if(elem.type == "MCQElem"){
                 let objectElem = new MCQElem(elem, this.blockMCQ, this.anchor);
@@ -166,10 +169,11 @@ window.onload = function(){
     let gotoImgID = "idImgElemProg";
     let gotoVidID = "idVideoElemProg";
     let gotoMCQID = "idMCQElemProg";
+    let gotoPDFID = "idPDFElemProg";
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","pdfBlockID":"pdfBlockElem","mcqBlockID":"mcqBlockElem"};
     let json = getJsonData();
-    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID);
+    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID, gotoPDFID);
 
 };
 

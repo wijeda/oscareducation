@@ -119,13 +119,22 @@
 .btn-fixed-validate {
 	background-color: #f58025;
 	border-color: #d86e1c;
-	position: absolute;
-	right: 315px;
-	top: 15%;
+	position: relative;
+	left : 600px;
+    bottom: 15px;
 	width: 100px;
 	height: 35px;
 }
-
+.progressBar {
+    position: relative;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.go-to-button{
+    background-color: #f58025;
+	border-color: #d86e1c;
+}
 .box-options{
 		position: fixed;
     padding: 25px;
