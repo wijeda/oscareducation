@@ -415,7 +415,10 @@ class ScenarioCreation {
 
 function loadImage(elem){
     var root = elem.parentNode.childNodes;
-    root[1].setAttribute("src", root[5].value);
+    console.log(root);
+    console.log(root[1]);
+    console.log(root[7]);
+    root[1].setAttribute("src", root[7].value);
     return false;
 }
 

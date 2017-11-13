@@ -79,6 +79,10 @@ class ScenarioVisualization{
     }
 
     gotoButtonElement(elem){
+        if(this.index == this.tabElementObject.length-1){
+            this.nextButton.style.display = "inline";
+            this.endButton.style.display = "none";
+        }
         this.tabElementObject[this.index].hide();
         if(this.lastButtonClicked != null)
         {
