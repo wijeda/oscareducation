@@ -28,11 +28,20 @@ class ScenarioVisualization{
         this.gotoPDF = document.getElementById(gotoPDFID);
 
         this.index = 0;
+        this.lastButtonClicked = null;
         this.elements = json.elements;
         this.tabElementObject = [];
+        this.first = true;
         for(let elem of this.elements){
             var goto = document.createElement('button');
+            if(this.first)
+            {
+                goto.style.backgroundColor = "#f58025";
+                this.first = false;
+                this.lastButtonClicked = goto;
+            }
             goto.setAttribute("data", elem.order);
+            goto.classList.add("goToButton");
             if(elem.type == "TextElem"){
                 let objectElem = new TextElem(elem, this.blockText, this.anchor);
                 this.tabElementObject.push(objectElem);
@@ -71,13 +80,20 @@ class ScenarioVisualization{
 
     gotoButtonElement(elem){
         this.tabElementObject[this.index].hide();
-        let button = elem.target;
-        if (!elem.target.classList.contains("gotoButton"))
+        if(this.lastButtonClicked != null)
         {
-            button = button.parentNode;
+            this.lastButtonClicked.style.backgroundColor = "white";
         }
-        button.style.backgroundColor = "red";
-        console.log(button.getAttribute("data"));
+        let button = elem;
+        if (!elem.classList.contains("gotoButton")){
+            button = elem.target;
+            if (!elem.target.classList.contains("gotoButton"))
+            {
+                button = button.parentNode;
+            }
+        }
+        button.style.backgroundColor = "#f58025";
+        this.lastButtonClicked = button;
         this.index = button.getAttribute("data");
         this.tabElementObject[this.index].render();
 
@@ -105,6 +121,14 @@ class ScenarioVisualization{
             this.endButton.style.display = "inline";
         }
 
+        // go trought the navigation button to find the one with the current
+        // index and applie the function "gotoButtonElement" as if it has been click
+        for(let e of document.getElementsByClassName("goToButton")){
+            if (e.getAttribute("data") == this.index){
+                this.gotoButtonElement(e)
+            }
+        }
+
     }
 
     previousButtonElement(){
@@ -121,8 +145,16 @@ class ScenarioVisualization{
         else {
             this.previousButton.style.display = "inline"
         }
+
+        // go trought the navigation button to find the one with the current
+        // index and applie the function "gotoButtonElement" as if it has been click
+        for(let e of document.getElementsByClassName("goToButton")){
+            if (e.getAttribute("data") == this.index){
+                this.gotoButtonElement(e)
+            }
+        }
     }
-    
+
     endButtonElement(){
         var pathTab = window.location.pathname.split("/");
         var user_type = pathTab[1];
@@ -227,7 +259,7 @@ class AbstractElem{
 
     render(){
         this.anchor.appendChild(this.node);
-        document.getElementById("validateElement").style.display = "none";
+        //document.getElementById("validateElement").style.display = "none";
     }
 
     hide(){

@@ -132,8 +132,11 @@
     transform: translateX(-50%);
 }
 .goToButton{
-    background-color: #f58025;
-	border-color: #d86e1c;
+    background-color: white;
+    margin: 1px;
+    height: 80%;
+    border: 0px solid;
+    border-radius: 5px;
 }
 .box-options{
 		position: fixed;
