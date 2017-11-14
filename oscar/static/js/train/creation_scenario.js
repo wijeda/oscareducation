@@ -532,6 +532,24 @@ function removeElem(elem){
     root.parentNode.removeChild(root);
     return false;
 }
+
+function enlargeElem(elem){
+    var root = elem.parentNode.parentNode;
+    let miniElem = root.getElementsByClassName("panel-body")[0];
+    var rootbutton = elem.parentNode;
+    let buttonmini = rootbutton.getElementsByClassName("minimizeElem")[0];
+    let buttonenla = rootbutton.getElementsByClassName("enlargeElement")[0];
+    if(miniElem.style.display=="none"){
+        miniElem.style.display = "block";
+        buttonmini.style.display = "block";
+        buttonenla.style.display = "none";
+    }
+    else {
+        miniElem.style.display = "none";
+        buttonmini.style.display = "none";
+        buttonenla.style.display = "block";
+    }
+}
 function removeReponse(elem){
     var root = elem.parentNode;
     root.parentNode.removeChild(root);
