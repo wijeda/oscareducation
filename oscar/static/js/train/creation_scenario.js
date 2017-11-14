@@ -60,7 +60,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -77,7 +77,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -94,7 +94,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -107,15 +107,15 @@ class ScenarioCreation {
         newelem.innerHTML = this.pdfBlockElem.innerHTML;
         newelem.setAttribute("id", counterBlock);
         this.anchor.appendChild(newelem);
-        counterBlock = counterBlock +1;
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
+        counterBlock = counterBlock +1;
     }
 
     makeBlockElemMcq(){
@@ -129,7 +129,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -214,7 +214,6 @@ class ScenarioCreation {
 
 
         if(id != ""){ // If we get a number id, i.e. we want to edit a scenario
-            console.log("damn");
             let xhr = new XMLHttpRequest();
 
             xhr.open("GET", "/professor/train/data/"+id, false);
@@ -387,6 +386,7 @@ class ScenarioCreation {
 
         let data = {};
         let listOfParamIDfield = ["title", "skill", "topic", "grade_level", "instructions", "public"];
+
 
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
@@ -563,8 +563,30 @@ function addReponseFilled(root, answer){
 
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
+    var ul = document.getElementsByClassName("divElemNav");
+    var id = root.getAttribute("id");
+    var supNode = document.getElementById("navitem"+ id);
+    supNode.parentNode.removeChild(supNode);
     root.parentNode.removeChild(root);
     return false;
+}
+
+function enlargeElem(elem){
+    var root = elem.parentNode.parentNode;
+    let miniElem = root.getElementsByClassName("panel-body")[0];
+    var rootbutton = elem.parentNode;
+    let buttonmini = rootbutton.getElementsByClassName("minimizeElem")[0];
+    let buttonenla = rootbutton.getElementsByClassName("enlargeElement")[0];
+    if(miniElem.style.display=="none"){
+        miniElem.style.display = "block";
+        buttonmini.style.display = "block";
+        buttonenla.style.display = "none";
+    }
+    else {
+        miniElem.style.display = "none";
+        buttonmini.style.display = "none";
+        buttonenla.style.display = "block";
+    }
 }
 function removeReponse(elem){
     var root = elem.parentNode;
@@ -638,9 +660,11 @@ window.onload = function(){
         "removeImageID": "removeImage",*/
     }
 
-    Sortable.create(simpleList, {onEnd: function (evt) {
-      var itemEl = evt.item;  // dragged HTMLElement
-      var number =
+    Sortable.create(whiteBox, {onEnd: function (evt) {
+      var itemEl = evt.item;  // dragged HTMLElementevt.item.parentNode.childNodes[evt.newIndex+5];
+      var newPosition = evt.item.parentNode.childNodes[evt.newIndex+5];
+      evt.item.parentNode.insertBefore(evt.item.parentNode.removeChild(evt.item), newPosition);
+      itemEl.parentNode
       evt.to;    // target list
       evt.from;  // previous list
       evt.oldIndex;  // element's old index within old parent
