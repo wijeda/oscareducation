@@ -15,6 +15,7 @@ from .models import PDFElem
 from .models import Scenario
 from .models import TextElem
 from .models import VidElem
+from promotions.models import Stage
 
 from .utils import user_is_professor
 
@@ -32,23 +33,20 @@ def home(request):
 @user_is_professor
 def create_scenario(request, id=None):
 
-    # test d recup de date dans la db
-    if id == None:
-        dico = {}
-    else:
+    # we create a dictionary in which we put all the parameters
+    # and element from the scenario in order to pass it to the haml so it can be re-rendered
+    dico = {}
+    dico["stage_list"] = Stage.objects.all()
+
+    if id is not None:
         # we get the id of the scenario we want to edit
         s = Scenario.objects.get(id=id)
-
-        # we create a dictionary in which we put all the parameters
-        # and element from the scenario in order to pass it to the haml so it can be re-rendered
-        dico = {}
 
         # filling the parameters
         dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
 
     return render(request, "train/creationScenarion.haml", dico)
-    # else:
-    #     return render(request, "train/creationScenarion.haml")
+
 
 # return the edit scenario page with the data of the scenario filled in
 @user_is_professor
@@ -167,7 +165,7 @@ def student_list_scenario(request):
     dico = {}
     dico["scenarios"]=[]
     # test d recup de date dans la db
-    for s in Scenario.objects.all():
+    for s in Scenario.objects.filter(creator = request.user):
         dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]

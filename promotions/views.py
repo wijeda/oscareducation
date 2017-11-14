@@ -50,6 +50,8 @@ from .utils import generate_random_password, user_is_professor, force_encoding
 import csv
 from django.http import JsonResponse
 
+from train.models import Scenario
+
 
 @user_is_professor
 def dashboard(request):
@@ -116,11 +118,20 @@ def lesson_detail(request, pk):
             print e
             print "Error: could no calculate heatmap"
 
-    return render(request, "professor/lesson/detail.haml", {
-        "lesson": lesson,
-        "number_of_students": number_of_students,
-        "skills_to_heatmap_class": skills_to_heatmap_class,
-    })
+    dico = {}
+    dico["scenarios"]=[]
+    # test d recup de date dans la db
+    for s in Scenario.objects.all():
+        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+
+    # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
+    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
+
+    dico.update({"lesson": lesson,
+                "number_of_students": number_of_students,
+                "skills_to_heatmap_class": skills_to_heatmap_class})
+
+    return render(request, "professor/lesson/detail.haml", dico)
 
 
 @user_is_professor

@@ -32,7 +32,7 @@
                       %option{value: ""}
                           -for stage in stage_list
                             -if stage.name
-                              %optgroup{label: "{{ stage.name }}"}
+                              %optgroup{:id => 'datalist',label: "{{ stage.name }}"}
                                 -for skill in stage.skills.all
                                   %option{value: "{{ skill.code }}"}
                                     =skill.code

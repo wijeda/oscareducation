@@ -2,6 +2,10 @@
 	background-color: white;
 }*/
 
+#parameters label, .mcqBlockElem .panel-body label {
+    width: 140px;
+    height: 30px;
+}
 #OurContainer {
     display: grid;
     grid-template-columns: 90% 40%;
@@ -13,7 +17,6 @@
 }
 #sideNavBar {
     margin-left: 20px;
-
     grid-column: 2; /* placement en colonne 2 */
 }
 #navFixed {
@@ -170,7 +173,9 @@
 	width: 200px;
 	height: 35px;
 }
-#skill-code{
-    display: inline-block;
-    width: 270px;
+#skill{
+    width: 680px;
+}
+#datalist{
+    width: 665px;
 }
