@@ -375,6 +375,8 @@ class ScenarioCreation {
 
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
+            console.log("Rhis id= "+id);
+            console.log(elem);
             data[id] = elem.value;
         }
 

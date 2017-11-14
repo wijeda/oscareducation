@@ -28,7 +28,7 @@
                     %input{:id => 'title', :placeholder => 'Indiquez le titre', :value => "#{scenario.title}"}
                     %br
                     %label{:for => 'skill'} Compétence :
-                    %select#skill-code.form-control{ng-model: "skillCode"}
+                    %select#skill.form-control{ng-model: "skillCode"}
                       %option{value: ""}
                           -for stage in stage_list
                             -if stage.name
