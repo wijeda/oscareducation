@@ -423,7 +423,7 @@ class ScenarioCreation {
         xhr.send(JSON.stringify(data));
 
         xhr.onloadend = function () {
-            window.location.href = "/professor/train/list_scenario/";
+            window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
         };
 
     }
@@ -605,14 +605,21 @@ window.onload = function(){
     }
 
     Sortable.create(whiteBox, {onEnd: function (evt) {
-      var itemEl = evt.item;  // dragged HTMLElementevt.item.parentNode.childNodes[evt.newIndex+5];
-      var newPosition = evt.item.parentNode.childNodes[evt.newIndex+5];
-      evt.item.parentNode.insertBefore(evt.item.parentNode.removeChild(evt.item), newPosition);
-      itemEl.parentNode
+      var ul = document.getElementById("simpleList");
+      var node = ul.childNodes[evt.oldIndex-3];
+      ul.replaceChild(ul.childNodes[evt.newIndex-3], ul.childNodes[evt.oldIndex-3]);
+      ul.insertBefore(node, ul.childNodes[evt.newIndex-3]);
       evt.to;    // target list
       evt.from;  // previous list
       evt.oldIndex;  // element's old index within old parent
       evt.newIndex;  // element's new index within new parent
+    }});
+
+    Sortable.create(simpleList, {onEnd: function (evt) {
+      var ul = document.getElementById("whiteBox");
+      var node = ul.childNodes[evt.oldIndex+4];
+      ul.replaceChild(ul.childNodes[evt.newIndex+4], ul.childNodes[evt.oldIndex+4]);
+      ul.insertBefore(node, ul.childNodes[evt.newIndex+4]);
     }});
 
     /*new ScenarioCreation(anchorID,
