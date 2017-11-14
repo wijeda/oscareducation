@@ -423,7 +423,7 @@ class ScenarioCreation {
         xhr.send(JSON.stringify(data));
 
         xhr.onloadend = function () {
-            window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
+            window.location.href = "/professor/train/list_scenario/";
         };
 
     }
