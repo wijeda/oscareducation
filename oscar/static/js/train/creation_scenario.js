@@ -453,11 +453,13 @@ function loadPDF(elem){
 }
 
 function loadVideo(elem){
-    var root = elem.parentNode.childNodes;
-    var ID = getVideoId(root[7].value);
-    var embedURL = "//www.youtube.com/embed/" + ID
-    root[1].setAttribute("src", embedURL);
-    root[1].style.display = "block"
+    let root = elem.parentNode;
+    let url = root.getElementsByClassName("url_vid_Elem")[0].value;
+    let ID = getVideoId(url);
+    let embedURL = "//www.youtube.com/embed/" + ID
+    let videoIframe = root.getElementsByTagName("iframe")[0]
+    videoIframe.setAttribute("src", embedURL);
+    videoIframe.style.display = "block";
     return false;
 }
 
