@@ -10,6 +10,8 @@
     display: grid;
     grid-template-columns: 90% 40%;
 }
+
+}
 #sectionElements {
     grid-column: 1; /* placement en colonne 1 */
 }
@@ -29,7 +31,7 @@
     margin: 5px;
     border-radius: 7px;`
 }
-#parameters label, .mcqBlockElem label {
+#parameters label, .mcqBlockElem .panel-body label {
 	width: 140px;
 	height: 30px;
 }
@@ -93,6 +95,10 @@
 	height: 420px;
 }
 
+.pdf_scenario{
+	width: 100%;
+	height: 420px;
+}
 
 .btn-fixed-previous {
   background-color: #f58025;
@@ -118,13 +124,26 @@
 .btn-fixed-validate {
 	background-color: #f58025;
 	border-color: #d86e1c;
-	position: absolute;
-	right: 315px;
-	top: 15%;
+	position: relative;
+	left : 600px;
+    bottom: 15px;
 	width: 100px;
 	height: 35px;
 }
-
+.progressBar {
+    position: relative;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.goToButton{
+    background-color: white;
+    border-color: black;
+    margin: 1px;
+    height: 80%;
+    border: 1px solid;
+    border-radius: 5px;
+}
 .box-options{
 		position: fixed;
     padding: 25px;
@@ -146,4 +165,15 @@
 .ligneorangefine {
     width: 80%;
     margin: 0px auto;
+}
+#progressBar{
+	position: absolute;
+	right: 315px;
+	top: 15%;
+	width: 200px;
+	height: 35px;
+}
+#skill-code{
+    display: inline-block;
+    width: 270px;
 }

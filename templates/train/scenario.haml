@@ -51,6 +51,18 @@
                 %iframe.content.video_scenario
                 %p.description
 
+        #pdfBlockElem{:style => "display: none"}
+            .ligneorange
+
+            .container-fluid.boxclassetitle
+                %h1.titre
+
+            .ligneorangefine
+
+            .boxclasse.container-fluid
+                %iframe.content.pdf_scenario
+                %p.description
+
         #mcqBlockElem{:style => "display: none"}
             .ligneorange
 
@@ -72,13 +84,29 @@
 
                 %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)! :)
                 %p.failedMCQ{:style => "display: none"} Il y a eu une ou plusieurs erreurs :/
+                %button.btn-fixed-validate.validateElement
+                    Valider
 
     #Tools.blk
       .container-fluid.box-options
-        %button.btn-fixed-previous#previousElement
+        %button.btn-fixed-previous#previousElement{:style => "display: none"}
             Précédent
-        %button.btn-fixed-validate#validateElement
-            Valider
+        #progressBar.progressBar
+            #idTextElemProg.goToButton{:style => "display: none"}
+                %span.glyphicon.glyphicon-font
+                        %span
+            #idImgElemProg.goToButton{:style => "display: none"}
+                %span.glyphicon.glyphicon-picture
+                        %span
+            #idVideoElemProg.goToButton{:style => "display: none"}
+                %span.glyphicon.glyphicon-facetime-video
+                        %span
+            #idMCQElemProg.goToButton{:style => "display: none"}
+                %span.glyphicon.glyphicon-list
+                        %span
+            #idPDFElemProg.goToButton{:style => "display: none"}
+                %span.glyphicon.glyphicon-file
+                        %span
         %button.btn-fixed-next#nextElement
             Suivant
         %button.btn-fixed-next#endElement{:style => "display: none", :href => "/student/train/student_list_scenario"}
