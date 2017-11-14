@@ -59,7 +59,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
@@ -76,7 +76,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
 
@@ -93,7 +93,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
 
@@ -111,7 +111,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
 
@@ -128,7 +128,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
 
@@ -240,13 +240,13 @@ class ScenarioCreation {
         newelem.getElementsByClassName('titre_text_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('desc_text_Elem')[0].value = this.data["elements"][index]["data"]["content"]
         this.anchor.appendChild(newelem);
-        //
-        // var ul = document.getElementById("idList");
-        // var newNavElem = document.createElement("div");
-        // newNavElem.classList.add('divElemNav');
-        // newNavElem.innerHTML = this.textBlockNav.innerHTML;
-        //
-        // ul.appendChild(newNavElem);
+
+        let ul = document.getElementById("simpleList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.textBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     makeFilledImg(index){
@@ -259,12 +259,12 @@ class ScenarioCreation {
         newelem.getElementsByClassName('imgprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
         this.anchor.appendChild(newelem);
 
-        // var ul = document.getElementById("idList");
-        // let newNavElem = document.createElement("div");
-        // newNavElem.classList.add('divElemNav');
-        // newNavElem.innerHTML = this.imgBlockNav.innerHTML;
-        //
-        // ul.appendChild(newNavElem);
+        var ul = document.getElementById("simpleList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.imgBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     makeFilledVid(index){
@@ -277,12 +277,12 @@ class ScenarioCreation {
         loadVideo(newelem.getElementsByClassName('addVid')[0])
         this.anchor.appendChild(newelem);
 
-        // var ul = document.getElementById("idList");
-        // let newNavElem = document.createElement("div");
-        // newNavElem.classList.add('divElemNav');
-        // newNavElem.innerHTML = this.videoBlockNav.innerHTML;
-        //
-        // ul.appendChild(newNavElem);
+        var ul = document.getElementById("simpleList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.videoBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     makeFilledPDF(index){
@@ -295,12 +295,12 @@ class ScenarioCreation {
         newelem.getElementsByClassName('pdfprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
         this.anchor.appendChild(newelem);
 
-        // var ul = document.getElementById("idList");
-        // let newNavElem = document.createElement("div");
-        // newNavElem.classList.add('divElemNav');
-        // newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
-        //
-        // ul.appendChild(newNavElem);
+        var ul = document.getElementById("simpleList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     makeFilledMcq(index){
@@ -330,12 +330,12 @@ class ScenarioCreation {
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
 
-        // var ul = document.getElementById("idList");
-        // let newNavElem = document.createElement("div");
-        // newNavElem.classList.add('divElemNav');
-        // newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
-        //
-        // ul.appendChild(newNavElem);
+        var ul = document.getElementById("simpleList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
     }
 
     fillPage()
@@ -375,6 +375,8 @@ class ScenarioCreation {
 
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
+            console.log("Rhis id= "+id);
+            console.log(elem);
             data[id] = elem.value;
         }
 
@@ -430,32 +432,32 @@ class ScenarioCreation {
 }
 
 function loadImage(elem){
-    var root = elem.parentNode.childNodes;
-    console.log(root);
-    console.log(root[1]);
-    console.log(root[7]);
-    root[1].setAttribute("src", root[7].value);
+    let root = elem.parentNode;
+    let imgPreview = root.getElementsByClassName("imgprev")[0];
+    imgPreview.setAttribute("src", root.getElementsByClassName("url_img_Elem")[0].value);
+
     return false;
 }
 
 function loadPDF(elem){
-    var root = elem.parentNode.childNodes;
-    var ID = root[5].value;
-    console.log(ID);
-    var embedURL = "http://docs.google.com/gview?url=" + ID + "&embedded=true";
-    console.log(embedURL);
-    root[1].setAttribute("src", embedURL);
-    root[1].setAttribute("type", "application/pdf");
-    root[1].style.display = "block";
+    let root = elem.parentNode;
+    let pdfPreview = root.getElementsByClassName("pdfprev")[0];
+    let pdfURL = root.getElementsByClassName("url_pdf_Elem")[0].value;
+    var embedURL = "http://docs.google.com/gview?url=" + pdfURL + "&embedded=true";
+    pdfPreview.setAttribute("src", embedURL);
+    pdfPreview.setAttribute("type", "application/pdf");
+    pdfPreview.style.display = "block";
     return false;
 }
 
 function loadVideo(elem){
-    var root = elem.parentNode.childNodes;
-    var ID = getVideoId(root[7].value);
-    var embedURL = "//www.youtube.com/embed/" + ID
-    root[1].setAttribute("src", embedURL);
-    root[1].style.display = "block"
+    let root = elem.parentNode;
+    let url = root.getElementsByClassName("url_vid_Elem")[0].value;
+    let ID = getVideoId(url);
+    let embedURL = "//www.youtube.com/embed/" + ID
+    let videoIframe = root.getElementsByTagName("iframe")[0]
+    videoIframe.setAttribute("src", embedURL);
+    videoIframe.style.display = "block";
     return false;
 }
 
@@ -648,10 +650,16 @@ function getCookie(c_name)
 function editForm(){
     var pathTab = window.location.pathname.split("/")
     var id = pathTab[pathTab.length - 1]
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
-    xmlHttp.send( null );
-    //return xmlHttp.responseText;
+    if (id == "") {
+        id = pathTab[pathTab.length - 2]
+    }
+    console.log(id);
+    if (id != "create_scenario") {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
+        xmlHttp.send( null );
+        //return xmlHttp.responseText;
+    }
     sendForm();
 }
 

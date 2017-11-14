@@ -6,6 +6,8 @@
     display: grid;
     grid-template-columns: 90% 40%;
 }
+
+}
 #sectionElements {
     grid-column: 1; /* placement en colonne 1 */
 }
@@ -167,4 +169,8 @@
 	top: 15%;
 	width: 200px;
 	height: 35px;
+}
+#skill-code{
+    display: inline-block;
+    width: 270px;
 }

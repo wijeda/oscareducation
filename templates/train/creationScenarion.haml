@@ -9,6 +9,7 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
     %script{:src => "/static/js/train/Sortable.js"}
+    %script{type: "text/javascript", src: "{% static 'js/professor_validate_exercice.js' %}"}
 
     #OurContainer
         %section#sectionElements
@@ -26,8 +27,18 @@
                     %label{:for => 'title'} Titre :
                     %input{:id => 'title', :placeholder => 'Indiquez le titre', :value => "#{scenario.title}"}
                     %br
-                    %label{:for => 'skill'} Compétences :
-                    %input{:id => 'skill', :placeholder => 'Indiquez les compétences requises', :value => "#{scenario.skill}"}
+                    %label{:for => 'skill'} Compétence :
+                    %select#skill.form-control{ng-model: "skillCode"}
+                      %option{value: ""}
+                          -for stage in stage_list
+                            -if stage.name
+                              %optgroup{label: "{{ stage.name }}"}
+                                -for skill in stage.skills.all
+                                  %option{value: "{{ skill.code }}"}
+                                    =skill.code
+                                    \-
+                                    =skill.name
+
                     %br
                     %label{:for => 'topic'} Sujet :
                     %input{:id => 'topic', :placeholder => 'Indiquez le sujet du scénario', :value => "#{scenario.topic}"}
@@ -52,7 +63,7 @@
                         %span.glyphicon.glyphicon-remove
                 .panel-body
                     .form-group
-                        %iframe{:width => "420", :height => "315", :style => "display: none"}
+                        %iframe{:width => "420", :height => "315", :style => "display: none", :allowfullscreen => "allowfullscreen", :mozallowfullscreen => "mozallowfullscreen", :msallowfullscreen => "msallowfullscreen", :oallowfullscreen => "oallowfullscreen", :webkitallowfullscreen => "webkitallowfullscreen"}
                         %label URL de votre vidéo (Youtube)
                         %input.url_vid_Elem{:id => 'vid_url', :type => "text"}
                         %button.btn.btn-primary#addVid.addVid{:action => "#", :onclick => "return loadVideo(this)"} Charger la vidéo
