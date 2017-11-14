@@ -38,7 +38,7 @@ class ScenarioCreation {
         this.pdfButton.addEventListener("click", this.makeBlockElemPDF.bind(this), true);
 
         this.saveScenarioButton = document.getElementById(param.saveScenarioButtonID);
-        this.saveScenarioButton.addEventListener("click", this.sendForm.bind(this), true);
+        this.saveScenarioButton.addEventListener("click", this.editForm.bind(this), true);
 
         this.sideNavBar = document.getElementById(param.sideNavBar) ;
         this.textBlockNav = document.getElementById(param.idTextElemNav);
@@ -60,7 +60,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -77,7 +77,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -94,7 +94,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -107,15 +107,15 @@ class ScenarioCreation {
         newelem.innerHTML = this.pdfBlockElem.innerHTML;
         newelem.setAttribute("id", counterBlock);
         this.anchor.appendChild(newelem);
-        counterBlock = counterBlock +1;
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
+        counterBlock = counterBlock +1;
     }
 
     makeBlockElemMcq(){
@@ -129,7 +129,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -214,7 +214,6 @@ class ScenarioCreation {
 
 
         if(id != ""){ // If we get a number id, i.e. we want to edit a scenario
-            console.log("damn");
             let xhr = new XMLHttpRequest();
 
             xhr.open("GET", "/professor/train/data/"+id, false);
@@ -367,18 +366,51 @@ class ScenarioCreation {
         }
     }
 
+    editForm(){
+        var pathTab = window.location.pathname.split("/")
+        var id = pathTab[pathTab.length - 1]
+        if (id == "") {
+            id = pathTab[pathTab.length - 2]
+        }
+        console.log(id);
+        if (id != "create_scenario") {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
+            xmlHttp.send( null );
+            //return xmlHttp.responseText;
+        }
+        this.sendForm();
+    }
 
     sendForm() {
 
         let data = {};
         let listOfParamIDfield = ["title", "skill", "topic", "grade_level", "instructions", "public"];
 
+
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
-            console.log("Rhis id= "+id);
-            console.log(elem);
-            data[id] = elem.value;
+            if(id=="public")
+            {
+                if(elem.checked)
+                {
+                    // data[id] = true;
+                    data[id] = "True";
+                }
+                else
+                {
+                    // data[id] = false;
+                    data[id] = "False";
+                }
+            }
+            else
+            {
+                data[id] = elem.value;
+            }
+
+
         }
+
 
         data["elements"] = []
 
@@ -407,10 +439,9 @@ class ScenarioCreation {
             {
                 data["elements"].push(this.getElemInputBlockPDF(this.anchor.childNodes[i]));
             }
-
-
-
         }
+
+        console.log(data);
 
         // construct an HTTP request
 
@@ -421,13 +452,16 @@ class ScenarioCreation {
         xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
         // send the collected data as JSON
         xhr.send(JSON.stringify(data));
-
+        var pathArray = window.location.pathname.split( '/' );
+        var pk = pathArray[4]
+        console.log(pk);
+        var new_url = "/professor/lesson/"+pk+"/#listscena"
+        console.log(new_url);
         xhr.onloadend = function () {
-            window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
+            window.location.href = new_url;
         };
 
     }
-
 
 }
 
@@ -529,8 +563,30 @@ function addReponseFilled(root, answer){
 
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
+    var ul = document.getElementsByClassName("divElemNav");
+    var id = root.getAttribute("id");
+    var supNode = document.getElementById("navitem"+ id);
+    supNode.parentNode.removeChild(supNode);
     root.parentNode.removeChild(root);
     return false;
+}
+
+function enlargeElem(elem){
+    var root = elem.parentNode.parentNode;
+    let miniElem = root.getElementsByClassName("panel-body")[0];
+    var rootbutton = elem.parentNode;
+    let buttonmini = rootbutton.getElementsByClassName("minimizeElem")[0];
+    let buttonenla = rootbutton.getElementsByClassName("enlargeElement")[0];
+    if(miniElem.style.display=="none"){
+        miniElem.style.display = "block";
+        buttonmini.style.display = "block";
+        buttonenla.style.display = "none";
+    }
+    else {
+        miniElem.style.display = "none";
+        buttonmini.style.display = "none";
+        buttonenla.style.display = "block";
+    }
 }
 function removeReponse(elem){
     var root = elem.parentNode;
@@ -656,21 +712,7 @@ function getCookie(c_name)
 
 
 
-function editForm(){
-    var pathTab = window.location.pathname.split("/")
-    var id = pathTab[pathTab.length - 1]
-    if (id == "") {
-        id = pathTab[pathTab.length - 2]
-    }
-    console.log(id);
-    if (id != "create_scenario") {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
-        xmlHttp.send( null );
-        //return xmlHttp.responseText;
-    }
-    sendForm();
-}
+
 
 /**!
  * Sortable
