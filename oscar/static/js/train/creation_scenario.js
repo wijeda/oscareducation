@@ -604,9 +604,11 @@ window.onload = function(){
         "removeImageID": "removeImage",*/
     }
 
-    Sortable.create(simpleList, {onEnd: function (evt) {
-      var itemEl = evt.item;  // dragged HTMLElement
-      var number =
+    Sortable.create(whiteBox, {onEnd: function (evt) {
+      var itemEl = evt.item;  // dragged HTMLElementevt.item.parentNode.childNodes[evt.newIndex+5];
+      var newPosition = evt.item.parentNode.childNodes[evt.newIndex+5];
+      evt.item.parentNode.insertBefore(evt.item.parentNode.removeChild(evt.item), newPosition);
+      itemEl.parentNode
       evt.to;    // target list
       evt.from;  // previous list
       evt.oldIndex;  // element's old index within old parent
