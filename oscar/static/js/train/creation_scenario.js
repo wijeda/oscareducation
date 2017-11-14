@@ -671,12 +671,13 @@ window.onload = function(){
       evt.newIndex;  // element's new index within new parent
     }});
 
-    Sortable.create(simpleList, {onEnd: function (evt) {
+    /*Sortable.create(simpleList, {onEnd: function (evt) {
       var ul = document.getElementById("whiteBox");
       var node = ul.childNodes[evt.oldIndex+4];
       ul.replaceChild(ul.childNodes[evt.newIndex+4], ul.childNodes[evt.oldIndex+4]);
       ul.insertBefore(node, ul.childNodes[evt.newIndex+4]);
     }});
+    */
 
     /*new ScenarioCreation(anchorID,
                         btnPlusID,
