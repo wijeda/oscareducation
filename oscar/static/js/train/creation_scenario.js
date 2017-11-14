@@ -97,8 +97,6 @@ class ScenarioCreation {
         newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
 
-
-
         ul.appendChild(newNavElem);
         counterBlock = counterBlock +1;
     }
@@ -109,7 +107,6 @@ class ScenarioCreation {
         newelem.innerHTML = this.pdfBlockElem.innerHTML;
         newelem.setAttribute("id", counterBlock);
         this.anchor.appendChild(newelem);
-        counterBlock = counterBlock +1;
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
@@ -118,6 +115,7 @@ class ScenarioCreation {
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
+        counterBlock = counterBlock +1;
     }
 
     makeBlockElemMcq(){
