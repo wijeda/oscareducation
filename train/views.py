@@ -145,10 +145,16 @@ def list_scenario(request):
     # the request need to ask the database for scenario's title, skill, topic and grade level
     # for now, the actions are represented by character e for "edit", d for "delete" and s for "see"
     dico = {}
-    dico["scenarios"]=[]
+    dico["own_scenarios"]=[]
     # test d recup de date dans la db
-    for s in Scenario.objects.all():
-        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+    for s in Scenario.objects.filter(creator = request.user):
+
+        dico["own_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+
+    dico["foreign_scenarios"] = []
+
+    for s in Scenario.objects.exclude(creator = request.user):
+        dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
@@ -165,7 +171,7 @@ def student_list_scenario(request):
     dico = {}
     dico["scenarios"]=[]
     # test d recup de date dans la db
-    for s in Scenario.objects.filter(creator = request.user):
+    for s in Scenario.objects.all():
         dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
@@ -204,9 +210,16 @@ def save_scenario(request):
         instructions = parsed_json['instructions']
         public = parsed_json['public']
 
+        # if public == "on":
+        #     public = True
+        # else:
+        #     public = False
+        print("PUBLIC = ")
+        print(public)
         # creating the object
-        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = True)
-
+        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
+        print("WALALA")
+        print(scena)
         # saving the object
         scena.save()
 
@@ -300,6 +313,7 @@ def delete_scenario(request, id):
         q.delete()
 
     Scenario.objects.get(id=id).delete()
+    
 
     return list_scenario(request)
 

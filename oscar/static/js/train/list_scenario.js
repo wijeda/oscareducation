@@ -7,7 +7,8 @@ function ConfirmDelete(elem){
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
         xmlHttp.send( null );
-        location.reload();
+        window.location.href = window.location.href + "listscena";
+        location.reload(window.location.href);
     }
     else
     {

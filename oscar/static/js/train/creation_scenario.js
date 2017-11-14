@@ -38,7 +38,7 @@ class ScenarioCreation {
         this.pdfButton.addEventListener("click", this.makeBlockElemPDF.bind(this), true);
 
         this.saveScenarioButton = document.getElementById(param.saveScenarioButtonID);
-        this.saveScenarioButton.addEventListener("click", this.sendForm.bind(this), true);
+        this.saveScenarioButton.addEventListener("click", this.editForm.bind(this), true);
 
         this.sideNavBar = document.getElementById(param.sideNavBar) ;
         this.textBlockNav = document.getElementById(param.idTextElemNav);
@@ -367,6 +367,21 @@ class ScenarioCreation {
         }
     }
 
+    editForm(){
+        var pathTab = window.location.pathname.split("/")
+        var id = pathTab[pathTab.length - 1]
+        if (id == "") {
+            id = pathTab[pathTab.length - 2]
+        }
+        console.log(id);
+        if (id != "create_scenario") {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
+            xmlHttp.send( null );
+            //return xmlHttp.responseText;
+        }
+        this.sendForm();
+    }
 
     sendForm() {
 
@@ -375,10 +390,27 @@ class ScenarioCreation {
 
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
-            console.log("Rhis id= "+id);
-            console.log(elem);
-            data[id] = elem.value;
+            if(id=="public")
+            {
+                if(elem.value == "on")
+                {
+                    // data[id] = true;
+                    data[id] = "True";
+                }
+                else
+                {
+                    // data[id] = false;
+                    data[id] = "False";
+                }
+            }
+            else
+            {
+                data[id] = elem.value;
+            }
+
+
         }
+
 
         data["elements"] = []
 
@@ -407,10 +439,9 @@ class ScenarioCreation {
             {
                 data["elements"].push(this.getElemInputBlockPDF(this.anchor.childNodes[i]));
             }
-
-
-
         }
+
+        console.log(data);
 
         // construct an HTTP request
 
@@ -421,13 +452,16 @@ class ScenarioCreation {
         xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
         // send the collected data as JSON
         xhr.send(JSON.stringify(data));
-
+        var pathArray = window.location.pathname.split( '/' );
+        var pk = pathArray[4]
+        console.log(pk);
+        var new_url = "/professor/lesson/"+pk+"/#listscena"
+        console.log(new_url);
         xhr.onloadend = function () {
-            window.location.href = "/professor/train/list_scenario/";
+            window.location.href = new_url;
         };
 
     }
-
 
 }
 
@@ -647,21 +681,7 @@ function getCookie(c_name)
 
 
 
-function editForm(){
-    var pathTab = window.location.pathname.split("/")
-    var id = pathTab[pathTab.length - 1]
-    if (id == "") {
-        id = pathTab[pathTab.length - 2]
-    }
-    console.log(id);
-    if (id != "create_scenario") {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
-        xmlHttp.send( null );
-        //return xmlHttp.responseText;
-    }
-    sendForm();
-}
+
 
 /**!
  * Sortable

@@ -119,10 +119,16 @@ def lesson_detail(request, pk):
             print "Error: could no calculate heatmap"
 
     dico = {}
-    dico["scenarios"]=[]
+    dico["own_scenarios"]=[]
     # test d recup de date dans la db
-    for s in Scenario.objects.all():
-        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+    for s in Scenario.objects.filter(creator = request.user):
+
+        dico["own_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+
+    dico["foreign_scenarios"] = []
+
+    for s in Scenario.objects.exclude(creator = request.user):
+        dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
