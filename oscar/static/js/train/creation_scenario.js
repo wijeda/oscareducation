@@ -452,14 +452,14 @@ class ScenarioCreation {
         xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
         // send the collected data as JSON
         xhr.send(JSON.stringify(data));
-        // var pathArray = window.location.pathname.split( '/' );
-        // var pk = pathArray[4]
-        // console.log(pk);
-        // var new_url = "/professor/lesson/"+pk+"/#listscena"
-        // console.log(new_url);
-        // xhr.onloadend = function () {
-        //     window.location.href = new_url;
-        // };
+        var pathArray = window.location.pathname.split( '/' );
+        var pk = pathArray[4]
+        console.log(pk);
+        var new_url = "/professor/lesson/"+pk+"/#listscena"
+        console.log(new_url);
+        xhr.onloadend = function () {
+            window.location.href = new_url;
+        };
 
     }
 

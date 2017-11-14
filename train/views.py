@@ -153,7 +153,7 @@ def list_scenario(request):
 
     dico["foreign_scenarios"] = []
 
-    for s in Scenario.objects.exclude(creator = request.user):
+    for s in Scenario.objects.exclude(creator = request.user).filter(public = True):
         dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
@@ -209,7 +209,7 @@ def save_scenario(request):
         grade_level = parsed_json['grade_level']
         instructions = parsed_json['instructions']
         public = parsed_json['public']
-        
+
         # creating the object
         scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
         # saving the object
