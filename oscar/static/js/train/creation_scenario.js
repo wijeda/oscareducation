@@ -60,7 +60,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -77,7 +77,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -94,8 +94,10 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
+
+
 
         ul.appendChild(newNavElem);
         counterBlock = counterBlock +1;
@@ -112,7 +114,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -129,7 +131,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -214,7 +216,6 @@ class ScenarioCreation {
 
 
         if(id != ""){ // If we get a number id, i.e. we want to edit a scenario
-            console.log("damn");
             let xhr = new XMLHttpRequest();
 
             xhr.open("GET", "/professor/train/data/"+id, false);
@@ -373,10 +374,9 @@ class ScenarioCreation {
         let data = {};
         let listOfParamIDfield = ["title", "skill", "topic", "grade_level", "instructions", "public"];
 
+
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
-            console.log("Rhis id= "+id);
-            console.log(elem);
             data[id] = elem.value;
         }
 
@@ -529,6 +529,10 @@ function addReponseFilled(root, answer){
 
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
+    var ul = document.getElementsByClassName("divElemNav");
+    var id = root.getAttribute("id");
+    var supNode = document.getElementById("navitem"+ id);
+    supNode.parentNode.removeChild(supNode);
     root.parentNode.removeChild(root);
     return false;
 }
