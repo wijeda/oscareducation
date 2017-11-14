@@ -432,23 +432,30 @@ class ScenarioCreation {
 }
 
 function loadImage(elem){
-    var root = elem.parentNode.childNodes;
-    console.log(root);
-    console.log(root[1]);
-    console.log(root[7]);
-    root[1].setAttribute("src", root[7].value);
+    let root = elem.parentNode;
+    let imgPreview = root.getElementsByClassName("imgprev")[0];
+    imgPreview.setAttribute("src", root.getElementsByClassName("url_img_Elem")[0].value);
+
     return false;
 }
 
 function loadPDF(elem){
-    var root = elem.parentNode.childNodes;
-    var ID = root[5].value;
-    console.log(ID);
-    var embedURL = "http://docs.google.com/gview?url=" + ID + "&embedded=true";
-    console.log(embedURL);
-    root[1].setAttribute("src", embedURL);
-    root[1].setAttribute("type", "application/pdf");
-    root[1].style.display = "block";
+    // var root = elem.parentNode.childNodes;
+    // var ID = root[5].value;
+    // console.log(ID);
+    // var embedURL = "http://docs.google.com/gview?url=" + ID + "&embedded=true";
+    // console.log(embedURL);
+    // root[1].setAttribute("src", embedURL);
+    // root[1].setAttribute("type", "application/pdf");
+    // root[1].style.display = "block";
+
+    let root = elem.parentNode;
+    let pdfPreview = root.getElementsByClassName("pdfprev")[0];
+    let pdfURL = root.getElementsByClassName("url_pdf_Elem")[0].value;
+    var embedURL = "http://docs.google.com/gview?url=" + pdfURL + "&embedded=true";
+    pdfPreview.setAttribute("src", embedURL);
+    pdfPreview.setAttribute("type", "application/pdf");
+    pdfPreview.style.display = "block";
     return false;
 }
 
