@@ -59,7 +59,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
@@ -76,7 +76,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
 
@@ -93,7 +93,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
 
@@ -111,7 +111,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
 
@@ -128,7 +128,7 @@ class ScenarioCreation {
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
-        newNavElem.classList.add('list-group-item');
+        newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", counterBlock);
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
 
@@ -241,8 +241,8 @@ class ScenarioCreation {
         newelem.getElementsByClassName('desc_text_Elem')[0].value = this.data["elements"][index]["data"]["content"]
         this.anchor.appendChild(newelem);
 
-        var ul = document.getElementById("idList");
-        var newNavElem = document.createElement("div");
+        let ul = document.getElementById("simpleList");
+        let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
@@ -259,7 +259,7 @@ class ScenarioCreation {
         newelem.getElementsByClassName('imgprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
         this.anchor.appendChild(newelem);
 
-        var ul = document.getElementById("idList");
+        var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
@@ -277,7 +277,7 @@ class ScenarioCreation {
         loadVideo(newelem.getElementsByClassName('addVid')[0])
         this.anchor.appendChild(newelem);
 
-        var ul = document.getElementById("idList");
+        var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
@@ -295,7 +295,7 @@ class ScenarioCreation {
         newelem.getElementsByClassName('pdfprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
         this.anchor.appendChild(newelem);
 
-        var ul = document.getElementById("idList");
+        var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
@@ -330,7 +330,7 @@ class ScenarioCreation {
         this.anchor.appendChild(newelem);
         newelem.style.display = "block";
 
-        var ul = document.getElementById("idList");
+        var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
