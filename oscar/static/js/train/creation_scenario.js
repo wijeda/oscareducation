@@ -648,10 +648,16 @@ function getCookie(c_name)
 function editForm(){
     var pathTab = window.location.pathname.split("/")
     var id = pathTab[pathTab.length - 1]
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
-    xmlHttp.send( null );
-    //return xmlHttp.responseText;
+    if (id == "") {
+        id = pathTab[pathTab.length - 2]
+    }
+    console.log(id);
+    if (id != "create_scenario") {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
+        xmlHttp.send( null );
+        //return xmlHttp.responseText;
+    }
     sendForm();
 }
 
