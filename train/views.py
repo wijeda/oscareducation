@@ -281,30 +281,37 @@ def save_scenario(request):
 @user_is_professor
 def delete_scenario(request, id):
 
-    textes = TextElem.objects.filter(id_scenario=id)
-    for t in textes:
-        t.delete()
+    s = Scenario.objects.get(id=id)
+    dico = {}
+    dico ["scenario"] = {"creator":s.creator}
+    print(s.creator)
 
-    videos = VidElem.objects.filter(id_scenario=id)
-    for v in videos:
-        v.delete()
+    if request.user == s.creator:
 
-    images = ImgElem.objects.filter(id_scenario=id)
-    for i in images:
-        i.delete()
+        textes = TextElem.objects.filter(id_scenario=id)
+        for t in textes:
+            t.delete()
 
-    pdf = PDFElem.objects.filter(id_scenario=id)
-    for i in pdf:
-        i.delete()
+        videos = VidElem.objects.filter(id_scenario=id)
+        for v in videos:
+            v.delete()
 
-    qcm = MCQElem.objects.filter(id_scenario=id)
-    for q in qcm:
-        ans = MCQReponse.objects.filter(id_question = q.id)
-        for a in ans:
-            a.delete()
-        q.delete()
+        images = ImgElem.objects.filter(id_scenario=id)
+        for i in images:
+            i.delete()
 
-    Scenario.objects.get(id=id).delete()
+        pdf = PDFElem.objects.filter(id_scenario=id)
+        for i in pdf:
+            i.delete()
+
+        qcm = MCQElem.objects.filter(id_scenario=id)
+        for q in qcm:
+            ans = MCQReponse.objects.filter(id_question = q.id)
+            for a in ans:
+                a.delete()
+            q.delete()
+
+        Scenario.objects.get(id=id).delete()
 
 
     return list_scenario(request)
