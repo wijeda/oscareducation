@@ -209,17 +209,9 @@ def save_scenario(request):
         grade_level = parsed_json['grade_level']
         instructions = parsed_json['instructions']
         public = parsed_json['public']
-
-        # if public == "on":
-        #     public = True
-        # else:
-        #     public = False
-        print("PUBLIC = ")
-        print(public)
+        
         # creating the object
         scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
-        print("WALALA")
-        print(scena)
         # saving the object
         scena.save()
 
@@ -313,7 +305,7 @@ def delete_scenario(request, id):
         q.delete()
 
     Scenario.objects.get(id=id).delete()
-    
+
 
     return list_scenario(request)
 
