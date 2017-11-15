@@ -392,16 +392,17 @@ class ScenarioCreation {
             let elem = document.getElementById(id);
             if(id=="public")
             {
-                if(elem.checked)
-                {
-                    // data[id] = true;
-                    data[id] = "True";
-                }
-                else
-                {
-                    // data[id] = false;
-                    data[id] = "False";
-                }
+                // if(elem.checked)
+                // {
+                //     // data[id] = true;
+                //     data[id] = "True";
+                // }
+                // else
+                // {
+                //     // data[id] = false;
+                //     data[id] = "False";
+                // }
+                data[id] = elem.checked;
             }
             else
             {

@@ -127,7 +127,7 @@ def lesson_detail(request, pk):
 
     dico["foreign_scenarios"] = []
 
-    for s in Scenario.objects.exclude(creator = request.user):
+    for s in Scenario.objects.exclude(creator = request.user).filter(public = True):
         dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]

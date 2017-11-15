@@ -32,11 +32,11 @@
                                 %p{:dico => "tab"} #{st.grade}
                             %td{:width => "20%"}
                                 %a{:href => "/professor/train/create_scenario/#{st.id}"}
-                                    %img{:alt => "Editer la question", :height => "12.5%", :src => "/static/img/icons/modify.png", :width => "12.5%"}
+                                    %img.icon{:alt => "Editer le scénario",:width => "25%", :height => "25%",src: "{% static 'img/icons/modify.png' %}", data-toggle: "tooltip", data-placement: "top", title: "modifier"}
                                 %a{:data => "#{st.id}", :href => "#", :onclick => "return ConfirmDelete(this)"}
-                                    %img{:data => "#{st.id}", :alt => "Supprimer la question", :height => "25%", :src => "/static/img/icons/delete.png", :width => "25%"}
+                                    %img.icon{:data => "#{st.id}", :alt => "Supprimer le scénario",:width => "25%", :height => "25%",src: "{% static 'img/icons/delete.png' %}", data-toggle: "tooltip", data-placement: "top", title: "supprimer"}
                                 %a{:href => "/professor/train/make_scenario/#{st.id}"}
-                                    %img{:alt => "Voir la question", :height => "25%", :src => "/static/img/icons/detail.png", :width => "25%"}
+                                    %img.icon{:alt => "Jouer le scénario",:width => "25%", :height => "25%",src: "{% static 'img/icons/detail.png' %}", data-toggle: "tooltip", data-placement: "top", title: "jouer"}
         #Tools.blk
             %a.btn.btn-primary#addElement{:href => "/professor/train/lesson/#{lesson.pk}/create_scenario/"} Creer un autre scénario
 
@@ -65,4 +65,4 @@
                                 %p{:dico => "tab"} #{st.grade}
                             %td{:width => "20%"}
                                 %a{:href => "/professor/train/make_scenario/#{st.id}"}
-                                    %img{:alt => "Voir la question", :height => "25%", :src => "/static/img/icons/detail.png", :width => "25%"}
+                                    %img.icon{:alt => "Jouer le scénario",:width => "25%", :height => "25%",src: "{% static 'img/icons/detail.png' %}", data-toggle: "tooltip", data-placement: "top", title: "jouer"}
