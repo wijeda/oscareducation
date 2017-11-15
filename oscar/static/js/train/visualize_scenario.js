@@ -54,6 +54,12 @@ class ScenarioVisualization{
                 goto.innerHTML = this.gotoImg.innerHTML;
                 this.progressBar.appendChild(goto);
             }
+            else if(elem.type == "ImgElemHardDrive"){
+                let objectElem = new ImageElemHardDrive(elem, this.blockImage, this.anchor);
+                this.tabElementObject.push(objectElem);
+                goto.innerHTML = this.gotoImg.innerHTML;
+                this.progressBar.appendChild(goto);
+            }
             else if(elem.type == "VidElem"){
                 let objectElem = new VideoElem(elem, this.blockVideo, this.anchor);
                 this.tabElementObject.push(objectElem);
@@ -297,6 +303,24 @@ class ImageElem extends AbstractElem{
             this.data = elem["data"];
             this.title = this.data["title"];
             this.content = this.data["url"];
+            this.description = this.data["description"];
+            this.node.innerHTML = skull.innerHTML;
+            this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
+            this.node.getElementsByClassName("content")[0].setAttribute("src", this.content);
+            this.node.getElementsByClassName("description")[0].innerHTML = this.description;
+        }
+    }
+}
+
+// CLass for image that has been recuperate from the directory
+// Can be easily placed in the ImageElem Class => TODO
+class ImageElemHardDrive extends AbstractElem{
+    constructor(elem, skull, anchor){
+        super(anchor);
+        if(elem != null){
+            this.data = elem["data"];
+            this.title = this.data["title"];
+            this.content = this.data["url"].split("oscareducation")[1];
             this.description = this.data["description"];
             this.node.innerHTML = skull.innerHTML;
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;

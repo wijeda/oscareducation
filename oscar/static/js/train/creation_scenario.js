@@ -153,14 +153,27 @@ class ScenarioCreation {
         return {"type":"TextElem", "data":{"title": title, "content": content}}
     }
 
+    /*
+     *  We can get 2 images by 2 ways:
+     *      - from url: the value from the url input is thus not empty
+     *      - from oscar directories: the value from the url input is thus empty.
+     *          We have to get the data from the image preview in base 64 in order to save it.
+     *          When the scenario is edited, the image will be presented as a path from the directory
+     */
     getElemInputBlockImage(elemImage){
-        // let title = elemImage.childNodes[1].childNodes[3].value;
-        // let url = elemImage.childNodes[1].childNodes[9].value;
-        // let description = elemImage.childNodes[1].childNodes[11].value;
         let title = elemImage.getElementsByClassName('title_img')[0].value;
-        let url = elemImage.getElementsByClassName('url_img_Elem')[0].value;
-        let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
-        return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
+        if(!elemImage.getElementsByClassName('url_img_Elem')[0].value){
+            // Getting from directory:
+            let url = elemImage.getElementsByClassName("imgprev")[0].getAttribute("src");
+            let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
+            return {"type":"ImgElemHardDrive", "data":{"title": title, "url": url, "description" : description}}
+        }
+        else{
+            // Getting from url:
+            let url = elemImage.getElementsByClassName('url_img_Elem')[0].value;
+            let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
+            return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
+        }
     }
 
     getElemInputBlockVideo(elemVideo){
@@ -214,7 +227,6 @@ class ScenarioCreation {
 
 
         if(id != ""){ // If we get a number id, i.e. we want to edit a scenario
-            console.log("damn");
             let xhr = new XMLHttpRequest();
 
             xhr.open("GET", "/professor/train/data/"+id, false);
@@ -254,9 +266,32 @@ class ScenarioCreation {
         newelem.classList.add('imgBlockElem');
         newelem.innerHTML = this.imgBlockElem.innerHTML;
         newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
+        console.log(this.data["elements"][index]["data"]["url"]);
         newelem.getElementsByClassName('url_img_Elem')[0].value = this.data["elements"][index]["data"]["url"]
         newelem.getElementsByClassName('desc_img_Elem')[0].value = this.data["elements"][index]["data"]["description"]
         newelem.getElementsByClassName('imgprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
+        this.anchor.appendChild(newelem);
+
+        var ul = document.getElementById("simpleList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.imgBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
+    }
+
+    /**
+     *   When an Image is get from the directory, it's path adress contains all the directories from the root
+     *   We then have to take only the part after the oscareducation directory. That is why we split and take the part second part
+     */
+    makeFilledImgHardDrive(index){
+        let newelem = document.createElement("div")
+        newelem.classList.add('imgBlockElem');
+        newelem.innerHTML = this.imgBlockElem.innerHTML;
+        newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url_img_Elem')[0].value = this.data["elements"][index]["data"]["url"].split("oscareducation")[1];
+        newelem.getElementsByClassName('desc_img_Elem')[0].value = this.data["elements"][index]["data"]["description"]
+        newelem.getElementsByClassName('imgprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"].split("oscareducation")[1]);
         this.anchor.appendChild(newelem);
 
         var ul = document.getElementById("simpleList");
@@ -347,8 +382,14 @@ class ScenarioCreation {
                 {
                     this.makeFilledText(i);
                 }
+                else if(this.data["elements"][i]["type"] == "ImgElemHardDrive")
+                {
+                    console.log("this is an image from the hardrive");
+                    this.makeFilledImgHardDrive(i);
+                }
                 else if(this.data["elements"][i]["type"] == "ImgElem")
                 {
+                    console.log("this is an image url");
                     this.makeFilledImg(i);
                 }
                 else if(this.data["elements"][i]["type"] == "VidElem")
@@ -375,8 +416,6 @@ class ScenarioCreation {
 
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
-            console.log("Rhis id= "+id);
-            console.log(elem);
             data[id] = elem.value;
         }
 
@@ -412,7 +451,7 @@ class ScenarioCreation {
 
         }
 
-        // construct an HTTP request
+        //construct an HTTP request
 
         let xhr = new XMLHttpRequest();
 
@@ -435,8 +474,20 @@ function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
     imgPreview.setAttribute("src", root.getElementsByClassName("url_img_Elem")[0].value);
-
+    root.getElementsByClassName("importButton")[0].value = "";
     return false;
+}
+
+function loadFile(event, elem){
+    let root = elem.parentNode;
+    var reader = new FileReader();
+    reader.onload = function(){
+        let imgPreview = root.getElementsByClassName("imgprev")[0];
+        imgPreview.setAttribute("src", reader.result);
+    }
+    reader.readAsDataURL(event.target.files[0]);
+    root.getElementsByClassName("url_img_Elem")[0].value = "";
+    return false
 }
 
 function loadPDF(elem){

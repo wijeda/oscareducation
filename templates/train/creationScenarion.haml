@@ -129,9 +129,9 @@
                         -# %a{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image"}
                         -# %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
                         -# -# #loadImage{:style => "display: none"}
-                        .form-group
-                            %label Importer du PC :
-                            %input.importButton{id: "upload", ng-model: "image", type: "file", onchange: "angular.element(this).scope().uploadFile(this.files)", :style => 'inline-block'}
+                        %label Importer du PC :
+                        -# %input.importButton#importButton{id: "upload", ng-model: "image", type: "file", onchange: "angular.element(this).scope().uploadFile(this.files)", :style => 'inline-block'}
+                        %input#importButton.importButton{:type => "file", :accept => "image/*", onchange: "loadFile(event, this)"}
                         %label Importer d'une Url :
                         %input.url_img_Elem{:id => 'img_url', :type => "text", :placeholder => 'Entrez une url'}
                         %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
