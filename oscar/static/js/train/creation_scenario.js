@@ -153,14 +153,27 @@ class ScenarioCreation {
         return {"type":"TextElem", "data":{"title": title, "content": content}}
     }
 
+    /*
+     *  We can get 2 images by 2 ways:
+     *      - from url: the value from the url input is thus not empty
+     *      - from oscar directories: the value from the url input is thus empty.
+     *          We have to get the data from the image preview in base 64 in order to save it.
+     *          When the scenario is edited, the image will be presented as a path from the directory
+     */
     getElemInputBlockImage(elemImage){
-        // let title = elemImage.childNodes[1].childNodes[3].value;
-        // let url = elemImage.childNodes[1].childNodes[9].value;
-        // let description = elemImage.childNodes[1].childNodes[11].value;
         let title = elemImage.getElementsByClassName('title_img')[0].value;
-        let url = elemImage.getElementsByClassName('url_img_Elem')[0].value;
-        let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
-        return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
+        if(!elemImage.getElementsByClassName('url_img_Elem')[0].value){
+            // Getting from directory:
+            let url = elemImage.getElementsByClassName("imgprev")[0].getAttribute("src");
+            let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
+            return {"type":"ImgElemHardDrive", "data":{"title": title, "url": url, "description" : description}}
+        }
+        else{
+            // Getting from url:
+            let url = elemImage.getElementsByClassName('url_img_Elem')[0].value;
+            let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
+            return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
+        }
     }
 
     getElemInputBlockVideo(elemVideo){
@@ -266,6 +279,28 @@ class ScenarioCreation {
         ul.appendChild(newNavElem);
     }
 
+    /**
+     *   When an Image is get from the directory, it's path adress contains all the directories from the root
+     *   We then have to take only the part after the oscareducation directory. That is why we split and take the part second part
+     */
+    makeFilledImgHardDrive(index){
+        let newelem = document.createElement("div")
+        newelem.classList.add('imgBlockElem');
+        newelem.innerHTML = this.imgBlockElem.innerHTML;
+        newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url_img_Elem')[0].value = this.data["elements"][index]["data"]["url"].split("oscareducation")[1];
+        newelem.getElementsByClassName('desc_img_Elem')[0].value = this.data["elements"][index]["data"]["description"]
+        newelem.getElementsByClassName('imgprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"].split("oscareducation")[1]);
+        this.anchor.appendChild(newelem);
+
+        var ul = document.getElementById("simpleList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.imgBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
+    }
+
     makeFilledVid(index){
         let newelem = document.createElement("div");
         newelem.classList.add('videoBlockElem');
@@ -346,8 +381,14 @@ class ScenarioCreation {
                 {
                     this.makeFilledText(i);
                 }
+                else if(this.data["elements"][i]["type"] == "ImgElemHardDrive")
+                {
+                    console.log("this is an image from the hardrive");
+                    this.makeFilledImgHardDrive(i);
+                }
                 else if(this.data["elements"][i]["type"] == "ImgElem")
                 {
+                    console.log("this is an image url");
                     this.makeFilledImg(i);
                 }
                 else if(this.data["elements"][i]["type"] == "VidElem")
@@ -442,9 +483,7 @@ class ScenarioCreation {
             }
         }
 
-        console.log(data);
-
-        // construct an HTTP request
+        //construct an HTTP request
 
         let xhr = new XMLHttpRequest();
 
@@ -470,8 +509,20 @@ function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
     imgPreview.setAttribute("src", root.getElementsByClassName("url_img_Elem")[0].value);
-
+    root.getElementsByClassName("importButton")[0].value = "";
     return false;
+}
+
+function loadFile(event, elem){
+    let root = elem.parentNode;
+    var reader = new FileReader();
+    reader.onload = function(){
+        let imgPreview = root.getElementsByClassName("imgprev")[0];
+        imgPreview.setAttribute("src", reader.result);
+    }
+    reader.readAsDataURL(event.target.files[0]);
+    root.getElementsByClassName("url_img_Elem")[0].value = "";
+    return false
 }
 
 function loadPDF(elem){
@@ -662,15 +713,23 @@ window.onload = function(){
     }
 
     Sortable.create(whiteBox, {onEnd: function (evt) {
-      var itemEl = evt.item;  // dragged HTMLElementevt.item.parentNode.childNodes[evt.newIndex+5];
-      var newPosition = evt.item.parentNode.childNodes[evt.newIndex+5];
-      evt.item.parentNode.insertBefore(evt.item.parentNode.removeChild(evt.item), newPosition);
-      itemEl.parentNode
+      var ul = document.getElementById("simpleList");
+      var node = ul.childNodes[evt.oldIndex-3];
+      ul.replaceChild(ul.childNodes[evt.newIndex-3], ul.childNodes[evt.oldIndex-3]);
+      ul.insertBefore(node, ul.childNodes[evt.newIndex-3]);
       evt.to;    // target list
       evt.from;  // previous list
       evt.oldIndex;  // element's old index within old parent
       evt.newIndex;  // element's new index within new parent
     }});
+
+    /*Sortable.create(simpleList, {onEnd: function (evt) {
+      var ul = document.getElementById("whiteBox");
+      var node = ul.childNodes[evt.oldIndex+4];
+      ul.replaceChild(ul.childNodes[evt.newIndex+4], ul.childNodes[evt.oldIndex+4]);
+      ul.insertBefore(node, ul.childNodes[evt.newIndex+4]);
+    }});
+    */
 
     /*new ScenarioCreation(anchorID,
                         btnPlusID,

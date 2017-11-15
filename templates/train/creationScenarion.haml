@@ -32,7 +32,7 @@
                       %option{value: ""}
                           -for stage in stage_list
                             -if stage.name
-                              %optgroup{:id => 'datalist',label: "{{ stage.name }}"}
+                              %optgroup{label: "{{ stage.name }}"}
                                 -for skill in stage.skills.all
                                   %option{value: "{{ skill.code }}"}
                                     =skill.code
@@ -144,9 +144,9 @@
                         -# %a{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image"}
                         -# %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
                         -# -# #loadImage{:style => "display: none"}
-                        .form-group
-                            %label Importer du PC :
-                            %input.importButton{id: "upload", ng-model: "image", type: "file", onchange: "angular.element(this).scope().uploadFile(this.files)", :style => 'inline-block'}
+                        %label Importer du PC :
+                        -# %input.importButton#importButton{id: "upload", ng-model: "image", type: "file", onchange: "angular.element(this).scope().uploadFile(this.files)", :style => 'inline-block'}
+                        %input#importButton.importButton{:type => "file", :accept => "image/*", onchange: "loadFile(event, this)"}
                         %label Importer d'une Url :
                         %input.url_img_Elem{:id => 'img_url', :type => "text", :placeholder => 'Entrez une url'}
                         %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
@@ -213,24 +213,25 @@
                 .divElemNav
                     %span.glyphicon.glyphicon-cog
                     Paramètres
-                #simpleList.list-group
-                    .list-group-item#idTextElemNav{:style => "display: none"}
-                        %span.glyphicon.glyphicon-font
-                            %label Texte :
-                                %span
-                    .list-group-item#idImgElemNav{:style => "display: none"}
-                         %span.glyphicon.glyphicon-picture
-                            %label Image :
-                                %span
-                    .list-group-item#idVideoElemNav{:style => "display: none"}
-                        %span.glyphicon.glyphicon-facetime-video
-                            %label Vidéo :
-                                %span
-                    .list-group-item#idMCQElemNav{:style => "display: none"}
-                        %span.glyphicon.glyphicon-list
-                            %label QCM :
-                                %span
-                    .list-group-item#idPDFElemNav{:style => "display: none"}
-                        %span.glyphicon.glyphicon-file
-                            %label PDF :
-                                %span
+                #idTextElemNav{:style => "display: none"}
+                    %span.glyphicon.glyphicon-font
+                        %label Texte :
+                            %span
+                #idImgElemNav{:style => "display: none"}
+                     %span.glyphicon.glyphicon-picture
+                        %label Image :
+                            %span
+                #idVideoElemNav{:style => "display: none"}
+                    %span.glyphicon.glyphicon-facetime-video
+                        %label Vidéo :
+                            %span
+                #idMCQElemNav{:style => "display: none"}
+                    %span.glyphicon.glyphicon-list
+                        %label QCM :
+                            %span
+                #idPDFElemNav{:style => "display: none"}
+                    %span.glyphicon.glyphicon-file
+                        %label PDF :
+                            %span
+
+                #simpleList.divElemNav

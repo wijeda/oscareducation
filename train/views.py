@@ -1,6 +1,8 @@
 import json
+import os
 from operator import itemgetter
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -8,7 +10,10 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.template.response import TemplateResponse
 
+from base64 import b64decode
+
 from .models import ImgElem
+from .models import ImgElemHardDrive
 from .models import MCQElem
 from .models import MCQReponse
 from .models import PDFElem
@@ -96,6 +101,14 @@ def get_data(request, id):
 
     for i in images:
         elem = {"type" : "ImgElem", "order": i.order, "data":{"id_scenario": id, "title":i.title, "url": i.url, "description":i.description }}
+        elements.append(elem)
+
+    # filling the images elements from directory
+
+    imagesD = ImgElemHardDrive.objects.filter(id_scenario=id)
+
+    for iD in imagesD:
+        elem = {"type" : "ImgElemHardDrive", "order": iD.order, "data":{"id_scenario": id, "title":iD.title, "url": iD.url, "description":iD.description }}
         elements.append(elem)
 
     # filling the pdfs elements
@@ -235,6 +248,44 @@ def save_scenario(request):
                 description_elem = parsed_json['elements'][i]['data']['description']
 
                 elem = ImgElem(id_scenario = id_scenario, order = i, title = title_elem, url = url_elem, description = description_elem)
+
+                elem.save()
+
+            elif parsed_json['elements'][i]['type'] == "ImgElemHardDrive":
+                image = None
+                id_scenario = scena.id
+                order = i
+                title_elem = parsed_json['elements'][i]['data']['title']
+
+                exercices_folder = os.path.join(settings.MEDIA_ROOT, "train")
+                if not os.path.exists(exercices_folder):
+                    os.makedirs(exercices_folder)
+
+                existing_images = {x for x in os.listdir(os.path.join(settings.BASE_DIR, "train"))}
+                existing_images = existing_images.union({x for x in os.listdir(exercices_folder)})
+
+                print(parsed_json['elements'][i]['data']['url'])
+                image_extension, image = parsed_json['elements'][i]['data']['url'].split(",", 1)
+                print("my Image: ",image)
+                print("my image_extension: ",image_extension)
+                image_extension = image_extension.split("/")[1].split(";")[0]
+                print("my image_extension: ",image_extension)
+
+                for j in range(1, 1000):
+                    name = ("%s_%.2d.%s" % (skill, j, image_extension)).upper()
+                    if name not in existing_images:
+                        break
+                else:
+                    raise Exception()
+
+                html = '<img src="%strain/%s" class="img-responsive" />\n' % (settings.MEDIA_URL, name)
+
+                assert not os.path.exists(os.path.join(exercices_folder, name))
+                open(os.path.join(exercices_folder, name), "w").write(b64decode(image))
+
+                description_elem = parsed_json['elements'][i]['data']['description']
+
+                elem = ImgElemHardDrive(id_scenario = id_scenario, order = i, title = title_elem, url = os.path.join(exercices_folder, name), description = description_elem)
 
                 elem.save()
 
