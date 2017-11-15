@@ -996,3 +996,7 @@ h7 {
 
     background: transparent;
 }
+
+.fond {
+    position: relative;
+}

@@ -78,7 +78,7 @@
 	height: 150px;
 }
 
-.deleteElement {
+.deleteElement{
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -173,7 +173,9 @@
 	width: 200px;
 	height: 35px;
 }
-#skill-code{
-    display: inline-block;
-    width: 270px;
+#skill{
+    width: 680px;
+}
+#datalist{
+    width: 665px;
 }

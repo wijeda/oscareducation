@@ -158,10 +158,16 @@ def list_scenario(request):
     # the request need to ask the database for scenario's title, skill, topic and grade level
     # for now, the actions are represented by character e for "edit", d for "delete" and s for "see"
     dico = {}
-    dico["scenarios"]=[]
+    dico["own_scenarios"]=[]
     # test d recup de date dans la db
-    for s in Scenario.objects.all():
-        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+    for s in Scenario.objects.filter(creator = request.user):
+
+        dico["own_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+
+    dico["foreign_scenarios"] = []
+
+    for s in Scenario.objects.exclude(creator = request.user).filter(public = True):
+        dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
@@ -218,8 +224,7 @@ def save_scenario(request):
         public = parsed_json['public']
 
         # creating the object
-        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = True)
-
+        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
         # saving the object
         scena.save()
 
@@ -327,30 +332,38 @@ def save_scenario(request):
 @user_is_professor
 def delete_scenario(request, id):
 
-    textes = TextElem.objects.filter(id_scenario=id)
-    for t in textes:
-        t.delete()
+    s = Scenario.objects.get(id=id)
+    dico = {}
+    dico ["scenario"] = {"creator":s.creator}
+    print(s.creator)
 
-    videos = VidElem.objects.filter(id_scenario=id)
-    for v in videos:
-        v.delete()
+    if request.user == s.creator:
 
-    images = ImgElem.objects.filter(id_scenario=id)
-    for i in images:
-        i.delete()
+        textes = TextElem.objects.filter(id_scenario=id)
+        for t in textes:
+            t.delete()
 
-    pdf = PDFElem.objects.filter(id_scenario=id)
-    for i in pdf:
-        i.delete()
+        videos = VidElem.objects.filter(id_scenario=id)
+        for v in videos:
+            v.delete()
 
-    qcm = MCQElem.objects.filter(id_scenario=id)
-    for q in qcm:
-        ans = MCQReponse.objects.filter(id_question = q.id)
-        for a in ans:
-            a.delete()
-        q.delete()
+        images = ImgElem.objects.filter(id_scenario=id)
+        for i in images:
+            i.delete()
 
-    Scenario.objects.get(id=id).delete()
+        pdf = PDFElem.objects.filter(id_scenario=id)
+        for i in pdf:
+            i.delete()
+
+        qcm = MCQElem.objects.filter(id_scenario=id)
+        for q in qcm:
+            ans = MCQReponse.objects.filter(id_question = q.id)
+            for a in ans:
+                a.delete()
+            q.delete()
+
+        Scenario.objects.get(id=id).delete()
+
 
     return list_scenario(request)
 

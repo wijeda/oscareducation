@@ -9,8 +9,8 @@ from . import viewsStu
 urlpatterns = [
     url(r'^scenario/(?P<id>\d+)', views.scenario, name='student_dashboard'),
     url(r'^data/(?P<id>\d+)', views.get_data),
-    url(r'^create_scenario/(?P<id>\d+)', views.create_scenario, name='student_dashboard'),
-    url(r'^create_scenario/', views.create_scenario, name='student_dashboard'),
+    url(r'^lesson/\d+/create_scenario/(?P<id>\d+)?', views.create_scenario, name='student_dashboard'),
+    url(r'^create_scenario/(?P<id>\d+)?', views.create_scenario, name='student_dashboard'),
     url(r'^save_scenario', views.save_scenario, name='student_dashboard'),
     url(r'^delete_scenario/(?P<id>\d+)', views.delete_scenario, name='student_dashboard'),
     url(r'^list_scenario/', views.list_scenario, name='student_dashboard'),
