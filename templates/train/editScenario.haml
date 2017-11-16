@@ -59,9 +59,6 @@
         .panel-body
             %label Titre:
             %input.titre_MCQ_Elem{:placeholder => 'Title'}
-            %br
-            %label Consigne:
-            %input.instruction_MCQ_Elem{:placeholder => 'Instruction'}
             %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l'élément",:action => "#", :onclick => "return removeElem(this)"}
                 %span.glyphicon.glyphicon-remove
             %br

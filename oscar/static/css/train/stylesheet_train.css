@@ -93,18 +93,28 @@
     left: 980px;
     position:absolute;
 }
-#instructionMCQ{
-    width: 300px;
-    border: 5px solid grey;
-    padding: 25px;
-    margin: 25px;
-}
+
 #questionMCQ{
-    width: 300px;
+    display: inline-block;
+    width: auto;
     border: 5px solid orange;
     border-radius: 12px;
-    padding: 25px;
-    margin: 25px;
+    margin: 10px;
+    font-size: 30px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.boxTitleMcq{
+    padding: 5px;
+}
+.titleMCQ{
+    margin: 5px;
+    padding: 5px;
 }
 
 .deleteElement{
@@ -150,9 +160,7 @@
 	height: 50px;
 }
 
-
-
-.glyphicon-arrow-right, .glyphicon-arrow-left, .glyphicon-stop, .glyphicon-ok  {
+.glyphicon-arrow-right, .glyphicon-arrow-left, .glyphicon-stop {
     font-size: 40px;
     color:#f58025;
 }
@@ -171,20 +179,43 @@
 	height: 50px;
 }
 
+.glyphiconNavbar{
+    font-size: 25px;
+}
+
 .btn-fixed-validate {
     background-color: Transparent;
     background-repeat:no-repeat;
-    border: 2px solid orange;
-    border-radius: 12px;
+    border: 2px solid grey;
+    border-radius: 6px;
     cursor:pointer;
     overflow: hidden;
     outline:none;
 	position: relative;
 	left : 600px;
-    bottom: 55px;
-	width: 100px;
-	height: 55px;
+	width: 70px;
+	height: 40px;
+    transition-duration: 0.4s;
 }
+
+.glyphicon-ok{
+    font-size: 30px;
+    color:#f58025;
+}
+
+.btn-fixed-validate:hover .glyphicon-ok{
+    color: white;
+    transition-duration: 0.4s;
+
+}
+
+.btn-fixed-validate:hover {
+    background-color: #f58025;
+    color: white;
+    border: 0px solid grey;
+    transition-duration: 0.4s;
+}
+
 .progressBar {
     position: relative;
     text-align: center;
@@ -195,7 +226,8 @@
     background-color: white;
     border-color: black;
     margin: 1px;
-    height: 80%;
+    height: 45px;
+    width: 45px;
     border: 1px solid;
     border-radius: 5px;
 }
@@ -208,10 +240,44 @@
     height : 60px;
 }
 
-.blocanswer li div{
+.blocanswer{
 	display: inline-block;
-	width: 80px;
+	width: auto;
+    border: solid grey;
+    border-radius: 4px;
+    font-size: 20px;
+    margin: 10px;
+}
 
+.blocanswer .isAnswer, .blocanswer .answer{
+    margin: 10px;
+}
+
+.blocanswer .isAnswer{
+    position: relative;
+    top: 50%;
+    /*transform: translateY(-50%);*/
+}
+
+.verticalBar{
+    border-left: solid grey;
+    margin-right: 5px;
+    border-width: 2px;
+    height: 100%;
+}
+.answers{
+    width: 100%;
+    /*left: 50%;
+    transform: translateX(-50%);*/
+    text-align: center;
+}
+.answer{
+    display: inline-block;
+    max-width: 200px;
+}
+
+.containerMCQ{
+    padding-bottom: 15px;
 }
 
 .imgprev, .videoBlockElem div div iframe{

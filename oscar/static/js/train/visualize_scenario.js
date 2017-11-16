@@ -73,6 +73,7 @@ class ScenarioVisualization{
                 this.progressBar.appendChild(goto);
             }
             else if(elem.type == "MCQElem"){
+                console.log(elem);
                 let objectElem = new MCQElem(elem, this.blockMCQ, this.anchor);
                 this.tabElementObject.push(objectElem);
                 goto.innerHTML = this.gotoMCQ.innerHTML;
@@ -211,6 +212,7 @@ window.onload = function(){
     let gotoMCQID = "idMCQElemProg";
     let gotoPDFID = "idPDFElemProg";
     let json = getJsonData();
+
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","pdfBlockID":"pdfBlockElem","mcqBlockID":"mcqBlockElem"};
     new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID, gotoPDFID);
@@ -372,12 +374,10 @@ class MCQElem extends AbstractElem{
         if(elem != null){
             this.data = elem["data"];
             this.title = this.data["title"];
-            this.instruction = this.data["instruction"];
             this.question = this.data["question"];
             this.answers = this.data["answers"];
             this.node.innerHTML = skull.innerHTML;
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
-            this.node.getElementsByClassName("instruction")[0].innerHTML = this.instruction;
             this.node.getElementsByClassName("question")[0].innerHTML = this.question;
             this.Ul = this.node.getElementsByClassName("answers");
             for(let answer of this.answers){
@@ -406,18 +406,20 @@ class MCQElem extends AbstractElem{
             if(answer["solution"] != this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isAnswer")[0].checked){
                 error_number++;
                 if (answer["solution"]){
-                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].setAttribute("src", "/static/img/icons/correct.png");
+                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "green";
                 }else{
-                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].src = "/static/img/icons/delete.png"
+                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "red";
                 }
-                this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
+                //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
             }
             else{
                 if (answer["solution"]){
-                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
-                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].setAttribute("src", "/static/img/icons/correct.png");
+                    //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
+                    //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].setAttribute("src", "/static/img/icons/correct.png");
+                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "green";
                 }else {
-                    this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "none";
+                    //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "none";
+                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "grey";
                 }
 
             }

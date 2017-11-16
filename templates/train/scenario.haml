@@ -66,21 +66,20 @@
         #mcqBlockElem{:style => "display: none"}
             .ligneorange
 
-            .container-fluid.boxclassetitle
-                %h1.titre
+            .container-fluid.boxclassetitle.boxTitleMcq
+                %h2.titre.titleMCQ
 
             .ligneorangefine
 
-            .boxclasse.container-fluid
-                %p.instruction#instructionMCQ
-                %div.question#questionMCQ
-                %ul.answers
+            .boxclasse.container-fluid.containerMCQ
+                %div
+                    %div.question#questionMCQ
+                .answers
                     .blocanswer{:style => "display: none"}
-                        %li
-                            %input.isAnswer{:type => "checkbox"}
-                            .answer
-                            %img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
-
+                        %input.isAnswer{:type => "checkbox"}
+                        %span.verticalBar
+                        .answer
+                        -#%img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
 
                 %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)! :)
                 %p.failedMCQ{:style => "display: none"} Il y a eu une ou plusieurs erreurs :/
@@ -89,21 +88,25 @@
 
     #Tools.blk
       .container-fluid.box-options
+
         %button.btn-fixed-previous#previousElement{:style => "display: none"}
             %span.glyphicon.glyphicon-arrow-left
+
         #progressBar.progressBar
             #idTextElemProg.goToButton{:style => "display: none"}
-                %span.glyphicon.glyphicon-font
+                %span.glyphicon.glyphicon-font.glyphiconNavbar
             #idImgElemProg.goToButton{:style => "display: none"}
-                %span.glyphicon.glyphicon-picture
+                %span.glyphicon.glyphicon-picture.glyphiconNavbar
             #idVideoElemProg.goToButton{:style => "display: none"}
-                %span.glyphicon.glyphicon-facetime-video
+                %span.glyphicon.glyphicon-facetime-video.glyphiconNavbar
             #idMCQElemProg.goToButton{:style => "display: none"}
-                %span.glyphicon.glyphicon-list
+                %span.glyphicon.glyphicon-list.glyphiconNavbar
             #idPDFElemProg.goToButton{:style => "display: none"}
-                %span.glyphicon.glyphicon-file
+                %span.glyphicon.glyphicon-file.glyphiconNavbar
+
         %button.btn-fixed-next#nextElement
             %span.glyphicon.glyphicon-arrow-right
+
         %button.btn-fixed-next#endElement{:style => "display: none", :onclick => "return endButtonElement()"}
             %span.glyphicon.glyphicon-stop
 

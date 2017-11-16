@@ -75,7 +75,6 @@ class MCQElem(models.Model):
     id_scenario = models.IntegerField()
     order = models.IntegerField()
     title = models.CharField("Title", max_length = 500)
-    instruction = models.CharField("Instruction", max_length = 500)
     question = models.CharField("Question", max_length = 500)
 
 class MCQReponse(models.Model):

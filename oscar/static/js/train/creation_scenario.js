@@ -199,7 +199,6 @@ class ScenarioCreation {
     getElemInputBlockMCQ(elemMCQ){
 
         let title = elemMCQ.getElementsByClassName('titre_MCQ_Elem')[0].value;
-        let instruction = elemMCQ.getElementsByClassName('instruction_MCQ_Elem')[0].value;
         let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
         let answers = [];
         // for (let elem of elemMCQ.childNodes[1].childNodes[21].childNodes){
@@ -215,7 +214,7 @@ class ScenarioCreation {
              answers.push({"answer": reponse, "solution": checked});
 
         }
-        return {"type":"MCQElem", "data":{"title": title, "instruction": instruction, "question": question, "answers" : answers}}
+        return {"type":"MCQElem", "data":{"title": title, "question": question, "answers" : answers}}
 
     }
 
@@ -341,9 +340,8 @@ class ScenarioCreation {
         let newelem = document.createElement("div");
         newelem.classList.add('mcqBlockElem');
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
-        // filling the instructions and the question
+        // filling the title and the question
         newelem.getElementsByClassName('titre_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["title"]
-        newelem.getElementsByClassName('instruction_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["instruction"]
         newelem.getElementsByClassName('question_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["question"]
 
         // filling the first and the second answer of the mcq (because they are mandatory)
@@ -664,7 +662,7 @@ function fillTitle(elem){
     var navitemId = "navitem" + root.getAttribute("id");
     setInterval(function(){
         var titre = elem.value;
-        console.log(document.getElementById(navitemId).getElementsByTagName("span"));
+        //console.log(document.getElementById(navitemId).getElementsByTagName("span"));
         document.getElementById(navitemId).getElementsByTagName("label")[0].innerHTML = titre;
     }, 0);
 }

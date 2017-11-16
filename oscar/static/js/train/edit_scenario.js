@@ -106,7 +106,6 @@ class EditScenario {
     getElemInputBlockMCQ(elemMCQ){
 
         let title = elemMCQ.getElementsByClassName('titre_MCQ_Elem')[0].value;
-        let instruction = elemMCQ.getElementsByClassName('instruction_MCQ_Elem')[0].value;
         let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
         let answers = [];
         for (let elem of elemMCQ.childNodes[1].childNodes[21].childNodes){
