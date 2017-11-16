@@ -215,36 +215,36 @@
                         %label{:for => 'description_pdf'} Description:
                         %input.desc_pdf_Elem{:id => 'description_pdf', :placeholder => 'Optionnel'}
 
-        #Tools.blk
-            %br
-            -# %input.btn.btn-primary#submit{:type => "submit"}
-            {% buttons %}
-                #DiffElem
-                    %button.btn.btn-primary#addElement
-                        %span.glyphicon.glyphicon-plus
-                        Ajouter un élément
-                    #addElementDiv{:style => "display: none"}
-                        %button.btn.btn-primary#addElementVideo
-                            %span.glyphicon.glyphicon-facetime-video
-                            Ajouter une vidéo
-                        %button.btn.btn-primary#addElementTxt
-                            %span.glyphicon.glyphicon-font
-                            Ajouter un texte
-                        %button.btn.btn-primary#addElementImg
-                            %span.glyphicon.glyphicon-picture
-                            Ajouter une image
-                        %button.btn.btn-primary#addElementPDF
-                            %span.glyphicon.glyphicon-file
-                            Ajouter un PDF
-                        %button.btn.btn-primary#addElementMcq
-                            %span.glyphicon.glyphicon-list
-                            Ajouter un QCM
-
+            #Tools.blk
                 %br
-                %button.btn.btn-primary#cancelScenario{:toggle => "tooltip", :placement => "bottom", :title =>"Annuler la création",:action => "#", :onclick => "return cancelCreation(this)"}
-                    %span.glyphicon.glyphicon-menu-left
-                    Retour
-                %button.btn.btn-primary#saveScenario
-                    %span.glyphicon.glyphicon-floppy-disk
-                    Sauvegarder
-            {% endbuttons %}
+                -# %input.btn.btn-primary#submit{:type => "submit"}
+                {% buttons %}
+                    #DiffElem
+                        %button.btn.btn-primary#addElement
+                            %span.glyphicon.glyphicon-plus
+                            Ajouter un élément
+                        #addElementDiv{:style => "display: none"}
+                            %button.btn.btn-primary#addElementVideo
+                                %span.glyphicon.glyphicon-facetime-video
+                                Ajouter une vidéo
+                            %button.btn.btn-primary#addElementTxt
+                                %span.glyphicon.glyphicon-font
+                                Ajouter un texte
+                            %button.btn.btn-primary#addElementImg
+                                %span.glyphicon.glyphicon-picture
+                                Ajouter une image
+                            %button.btn.btn-primary#addElementPDF
+                                %span.glyphicon.glyphicon-file
+                                Ajouter un PDF
+                            %button.btn.btn-primary#addElementMcq
+                                %span.glyphicon.glyphicon-list
+                                Ajouter un QCM
+
+                    %br
+                    %button.btn.btn-primary#cancelScenario{:toggle => "tooltip", :placement => "bottom", :title =>"Annuler la création",:action => "#", :onclick => "return cancelCreation(this)"}
+                        %span.glyphicon.glyphicon-menu-left
+                        Retour
+                    %button.btn.btn-primary#saveScenario
+                        %span.glyphicon.glyphicon-floppy-disk
+                        Sauvegarder
+                {% endbuttons %}
