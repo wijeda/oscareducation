@@ -7,7 +7,7 @@ from . import views
 from . import viewsStu
 
 urlpatterns = [
-    url(r'^(?P<pk>\d+)begin_scenario/(?P<id>\d+)', views.scenario, name='student_dashboard'),
+    url(r'^(?P<pk>\d+)/scenario/(?P<id>\d+)', views.scenario, name='student_dashboard'),
     url(r'^data/(?P<id>\d+)', views.get_data),
     url(r'^lesson/(?P<pk>\d+)/create_scenario/(?P<id>\d+)?', views.create_scenario, name='student_dashboard'),
     url(r'^create_scenario/(?P<id>\d+)?', views.create_scenario, name='student_dashboard'),

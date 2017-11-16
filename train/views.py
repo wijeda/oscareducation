@@ -368,7 +368,7 @@ def delete_scenario(request, id):
 
     return list_scenario(request)
 
-def scenario(request, id):
+def scenario(request, id, pk):
     s = Scenario.objects.get(id=id)
 
     dico = {}

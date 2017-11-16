@@ -27,10 +27,13 @@
         var user_type = pathTab[1];
         var id = pathTab[pathTab.length - 1];
         var pk = pathTab[3]
+        console.log(id);
+        console.log(pk);
+
         if(user_type == "student"){
             window.location.href = "/student/train/scenario/"+id;
         }else{
-            window.location.href = /professor/train/"+pk+"/begin_scenario/"+id;
+            window.location.href = "/professor/train/"+pk+"/scenario/"+id;
         }
 
     }
