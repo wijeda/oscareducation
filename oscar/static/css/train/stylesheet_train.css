@@ -74,7 +74,10 @@
 .textBlockElem textarea {
 	width: 100%;
 }
-
+#saveScenario {
+    right:410px;
+    position:absolute;
+}
 .deleteElement{
 	position: absolute;
 	top: 0;
