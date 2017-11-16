@@ -196,3 +196,10 @@ datalist {
 .control-label{
     font-weight: bold;
 }
+
+#boxskills{
+    position: relative;
+    left: 20px;
+    width : 90%
+
+}

@@ -54,30 +54,6 @@
                     %label{:for => 'title'} Titre :
                     %input{:id => 'title', :placeholder => 'Indiquez le titre', :value => "#{scenario.title}"}
                     %br
-                    -for stage in stages
-                      -if forloop.counter == 3
-                        <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                          <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                              <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Compétences antérieures</a>
-                              </h4>
-                            </div>
-                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="panel-body">
-
-                      .form-group
-                        .control-label= stage.name 
-                        .form-group
-                          %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
-                            -regroup stage.skills_by_id by section as sections
-                            -for section in sections
-                              %optgroup{label: "{{ section.grouper }}"}
-                                -for skill in section.list reversed
-                                  %option{value: "{{ skill.code }}", id: "{{ skill.code }}"}
-                                    {{ skill.code }} - {{ skill.name }}
-
-                    %br
                     %label{:for => 'topic'} Sujet :
                     %input{:id => 'topic', :placeholder => 'Indiquez le sujet du scénario', :value => "#{scenario.topic}"}
                     %br
@@ -90,6 +66,30 @@
                     %label{:for => 'public'} Public :
                     %input{:id => 'public', :type => 'checkbox'}
                     %br
+                    %label{:for => 'skill'} Compétences :
+                    %div#boxskills
+                        -for stage in stages
+                          -if forloop.counter == 3
+                            <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                              <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                  <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Compétences antérieures</a>
+                                  </h4>
+                                </div>
+                              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+
+                          .form-group
+                            .control-label= stage.name
+                            .form-group
+                              %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
+                                -regroup stage.skills_by_id by section as sections
+                                -for section in sections
+                                  %optgroup{label: "{{ section.grouper }}"}
+                                    -for skill in section.list reversed
+                                      %option{value: "{{ skill.code }}", id: "{{ skill.code }}"}
+                                        {{ skill.code }} - {{ skill.name }}
 
 
             #videoBlockElem{:style => "display: none"}
@@ -215,37 +215,36 @@
                         %label{:for => 'description_pdf'} Description:
                         %input.desc_pdf_Elem{:id => 'description_pdf', :placeholder => 'Optionnel'}
 
-            #Tools.blk
+        #Tools.blk
+            %br
+            -# %input.btn.btn-primary#submit{:type => "submit"}
+            {% buttons %}
+                #DiffElem
+                    %button.btn.btn-primary#addElement
+                        %span.glyphicon.glyphicon-plus
+                        Ajouter un élément
+                    #addElementDiv{:style => "display: none"}
+                        %button.btn.btn-primary#addElementVideo
+                            %span.glyphicon.glyphicon-facetime-video
+                            Ajouter une vidéo
+                        %button.btn.btn-primary#addElementTxt
+                            %span.glyphicon.glyphicon-font
+                            Ajouter un texte
+                        %button.btn.btn-primary#addElementImg
+                            %span.glyphicon.glyphicon-picture
+                            Ajouter une image
+                        %button.btn.btn-primary#addElementPDF
+                            %span.glyphicon.glyphicon-file
+                            Ajouter un PDF
+                        %button.btn.btn-primary#addElementMcq
+                            %span.glyphicon.glyphicon-list
+                            Ajouter un QCM
+
                 %br
-                -# %input.btn.btn-primary#submit{:type => "submit"}
-                {% buttons %}
-                    #DiffElem
-                        %button.btn.btn-primary#addElement
-                            %span.glyphicon.glyphicon-plus
-                            Ajouter un élément
-                        #addElementDiv{:style => "display: none"}
-                            %button.btn.btn-primary#addElementVideo
-                                %span.glyphicon.glyphicon-facetime-video
-                                Ajouter une vidéo
-                            %button.btn.btn-primary#addElementTxt
-                                %span.glyphicon.glyphicon-font
-                                Ajouter un texte
-                            %button.btn.btn-primary#addElementImg
-                                %span.glyphicon.glyphicon-picture
-                                Ajouter une image
-                            %button.btn.btn-primary#addElementPDF
-                                %span.glyphicon.glyphicon-file
-                                Ajouter un PDF
-                            %button.btn.btn-primary#addElementMcq
-                                %span.glyphicon.glyphicon-list
-                                Ajouter un QCM
-
-                    %br
-                    %button.btn.btn-primary#cancelScenario{:toggle => "tooltip", :placement => "bottom", :title =>"Annuler la création",:action => "#", :onclick => "return cancelCreation(this)"}
-                        %span.glyphicon.glyphicon-menu-left
-                        Retour
-                    %button.btn.btn-primary#saveScenario
-                        %span.glyphicon.glyphicon-floppy-disk
-                        Sauvegarder
-                {% endbuttons %}
-
+                %button.btn.btn-primary#cancelScenario{:toggle => "tooltip", :placement => "bottom", :title =>"Annuler la création",:action => "#", :onclick => "return cancelCreation(this)"}
+                    %span.glyphicon.glyphicon-menu-left
+                    Retour
+                %button.btn.btn-primary#saveScenario
+                    %span.glyphicon.glyphicon-floppy-disk
+                    Sauvegarder
+            {% endbuttons %}
