@@ -93,6 +93,20 @@
     left: 980px;
     position:absolute;
 }
+#instructionMCQ{
+    width: 300px;
+    border: 5px solid grey;
+    padding: 25px;
+    margin: 25px;
+}
+#questionMCQ{
+    width: 300px;
+    border: 5px solid orange;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 25px;
+}
+
 .deleteElement{
 	position: absolute;
 	top: 0;
@@ -133,12 +147,13 @@
     right: 640px;
 	top: 15%;
     width: 100px;
-	height: 35px;
+	height: 50px;
 }
 
 
-.glyphicon-arrow-right, .glyphicon-arrow-left, .glyphicon-stop  {
-    font-size: 30px;
+
+.glyphicon-arrow-right, .glyphicon-arrow-left, .glyphicon-stop, .glyphicon-ok  {
+    font-size: 40px;
     color:#f58025;
 }
 
@@ -153,17 +168,22 @@
 	right: 5px;
 	top: 15%;
 	width: 100px;
-	height: 35px;
+	height: 50px;
 }
 
 .btn-fixed-validate {
-	background-color: #f58025;
-	border-color: #d86e1c;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 2px solid orange;
+    border-radius: 12px;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 	position: relative;
 	left : 600px;
-    bottom: 15px;
+    bottom: 55px;
 	width: 100px;
-	height: 35px;
+	height: 55px;
 }
 .progressBar {
     position: relative;
@@ -185,7 +205,7 @@
     background-color:white;
 	top: 80%;
 	width: 750px;
-    height : 45px;
+    height : 60px;
 }
 
 .blocanswer li div{

@@ -72,8 +72,8 @@
             .ligneorangefine
 
             .boxclasse.container-fluid
-                %p.instruction
-                %div.question
+                %p.instruction#instructionMCQ
+                %div.question#questionMCQ
                 %ul.answers
                     .blocanswer{:style => "display: none"}
                         %li
@@ -84,8 +84,8 @@
 
                 %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)! :)
                 %p.failedMCQ{:style => "display: none"} Il y a eu une ou plusieurs erreurs :/
-                %button.btn-fixed-validate.validateElement
-                    Valider
+                %button.btn-fixed-validate.validateElement#validateMCQ
+                    %span.glyphicon.glyphicon-ok
 
     #Tools.blk
       .container-fluid.box-options
