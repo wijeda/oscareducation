@@ -174,8 +174,14 @@
 	height: 35px;
 }
 #skill{
-    width: 680px;
+    display: inline;
 }
 #datalist{
-    width: 665px;
+    width: 80%;
+}
+datalist {
+    display: none;
+}
+#stagename{
+    background-color: red;
 }

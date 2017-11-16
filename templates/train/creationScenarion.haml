@@ -27,17 +27,28 @@
                     %label{:for => 'title'} Titre :
                     %input{:id => 'title', :placeholder => 'Indiquez le titre', :value => "#{scenario.title}"}
                     %br
-                    %label{:for => 'skill'} Compétence :
-                    %select#skill.form-control{ng-model: "skillCode"}
-                      %option{value: ""}
-                          -for stage in stage_list
-                            -if stage.name
-                              %optgroup{:id => 'datalist',label: "{{ stage.name }}"}
-                                -for skill in stage.skills.all
-                                  %option{value: "{{ skill.code }}"}
-                                    =skill.code
-                                    \-
-                                    =skill.name
+                    -for stage in stages
+                      -if forloop.counter == 3
+                        <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                              <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Compétences antérieures</a>
+                              </h4>
+                            </div>
+                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+
+                      .form-group
+                        %label.control-label= stage.name
+                        .form-group
+                          %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
+                            -regroup stage.skills_by_id by section as sections
+                            -for section in sections
+                              %optgroup{label: "{{ section.grouper }}"}
+                                -for skill in section.list reversed
+                                  %option{value: "{{ skill.code }}", id: "{{ skill.code }}"}
+                                    {{ skill.code }} - {{ skill.name }}
 
                     %br
                     %label{:for => 'topic'} Sujet :

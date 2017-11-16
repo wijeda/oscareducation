@@ -423,7 +423,7 @@ class ScenarioCreation {
         xhr.send(JSON.stringify(data));
 
         xhr.onloadend = function () {
-            window.location.href = "/professor/train/list_scenario/";
+            window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
         };
 
     }
@@ -538,9 +538,30 @@ function removeReponse(elem){
     return false;
 }
 
+function addListenerComp(){
+    console.log("in the function");
+    /*var list = document.getElementsByClassName('optionWithHint');
+
+    for (var f of list){
+        f.addEventListener("click",mouseover, false); // mouseover
+    }*/
+}
+
+function mouseover(elem){
+    console.log("yr");
+    console.log(elem);
+    //background-color = "red";
+}
+
+function mouseout(elem){
+    console.log(elem);
+
+    //this.target.style.color = "grey";
+}
+
 // initiation
 window.onload = function(){
-    let btnPlusID = "addElement"; //document.getElementById("addElement");
+    /*let btnPlusID = "addElement"; //document.getElementById("addElement");
     let anchorID = 'whiteBox';
     let addElementDivID = 'addElementDiv';
 
@@ -566,7 +587,7 @@ window.onload = function(){
     let pdfBlockElemID = "pdfBlockElem";
     let pdfButtonID = "addElementPDF";
 
-    let saveScenarioButtonID = "saveScenario";
+    let saveScenarioButtonID = "saveScenario";*/
 
     let param = {
         "btnPlusID":"addElement",
@@ -624,6 +645,7 @@ window.onload = function(){
                         imgButtonID,
                         mcqBlockElemID,
                         mcqButtonID);*/
+    addListenerComp();
     new ScenarioCreation(param)
 
 };
@@ -662,6 +684,7 @@ function editForm(){
     }
     sendForm();
 }
+
 
 /**!
  * Sortable
