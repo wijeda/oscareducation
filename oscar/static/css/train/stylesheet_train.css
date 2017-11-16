@@ -78,8 +78,19 @@
 .textBlockElem textarea {
 	width: 100%;
 }
+#DiffElem{
+    bottom : 180px;
+    left: 720px;
+    position:absolute;
+}
+#cancelScenario{
+    left: 720px;
+    bottom : 140px;
+    position:absolute;
+}
 #saveScenario {
-    left: 760px;
+    bottom : 140px;
+    left: 1200px;
     position:absolute;
 }
 .deleteElement{
@@ -209,4 +220,11 @@ datalist {
 }
 .control-label{
     font-weight: bold;
+}
+
+#boxskills{
+    position: relative;
+    left: 20px;
+    width : 90%
+
 }

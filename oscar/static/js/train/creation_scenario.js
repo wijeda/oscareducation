@@ -435,6 +435,9 @@ class ScenarioCreation {
             {
                 data[id] = elem.checked;
             }
+            else if (id == "skill") { // TODO to handle
+                data[id] = "";
+            }
             else
             {
                 data[id] = elem.value;
@@ -492,22 +495,7 @@ class ScenarioCreation {
     }
 
 }
-function cancelCreation(elem){
-    if (confirm('Etes vous sur de vouloir annuler la création de ce scénario ?'))
-    {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "/professor/train/cancel_scenario/", false ); // false for synchronous request
-        xmlHttp.send( null );
-        var pathArray = window.location.pathname.split( '/' );
-        var pk = pathArray[4];
-        var new_url = "/professor/lesson/"+pk+"/#listscena";
-        window.location.href = new_url;
-    }
-    else
-    {
-        console.log('no');
-    }
-}
+
 function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
@@ -561,7 +549,7 @@ function getVideoId(url) {
         return 'error';
     }
 }
-//This function permits to add a response in the MCQ
+
 function addReponse(elem){
     var root = elem.parentNode.parentNode;
     let count = 0;
@@ -587,7 +575,7 @@ function addReponse(elem){
     //root.parentNode.removeChild(root);
     return false;
 }
-//This function permits to display, in the edition-form, all the fields pre-filled
+
 function addReponseFilled(root, answer){
     let count = 0;
     let repLineElem = null;
@@ -615,7 +603,7 @@ function addReponseFilled(root, answer){
     //root.parentNode.removeChild(root);
     return false;
 }
-//This function permits to delete the principal block and the content in the navbar
+
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
     var ul = document.getElementsByClassName("divElemNav");
@@ -625,7 +613,7 @@ function removeElem(elem){
     root.parentNode.removeChild(root);
     return false;
 }
-//This function permits to resize the block (minimize or enlarge)
+
 function enlargeElem(elem){
     var root = elem.parentNode.parentNode;
     let miniElem = root.getElementsByClassName("panel-body")[0];
@@ -643,7 +631,6 @@ function enlargeElem(elem){
         buttonenla.style.display = "block";
     }
 }
-//This function permits to delete an answer in the MCQ
 function removeReponse(elem){
     var root = elem.parentNode;
     root.parentNode.removeChild(root);
@@ -670,36 +657,17 @@ function mouseout(elem){
 
     //this.target.style.color = "grey";
 }
-
+function fillTitle(elem){
+    var root = elem.parentNode.parentNode;
+    var navitemId = "navitem" + root.getAttribute("id");
+    setInterval(function(){
+        var titre = elem.value;
+        console.log(document.getElementById(navitemId).getElementsByTagName("span"));
+        document.getElementById(navitemId).getElementsByTagName("label")[0].innerHTML = titre;
+    }, 0);
+}
 // initiation
 window.onload = function(){
-    /*let btnPlusID = "addElement"; //document.getElementById("addElement");
-    let anchorID = 'whiteBox';
-    let addElementDivID = 'addElementDiv';
-
-    let textBlockElemID = "textBlockElem";
-    let textButtonID = "addElementTxt";
-
-    let videoBlockElemID = "videoBlockElem";
-    let videoButtonID = "addElementVideo";
-    // let loadVidID = "loadVideo";
-    // let loadVidButtonID = "addVid";
-
-    let mcqBlockElemID = "mcqBlockElem";
-    let mcqButtonID = "addElementMcq";
-
-    let imgBlockElemID = "imgBlockElem";
-    let imgButtonID = "addElementImg";
-
-    let loadImgID = "loadImage";
-    let loadImgButtonID = "addImg";
-
-    let removeImageID = "removeImage";
-
-    let pdfBlockElemID = "pdfBlockElem";
-    let pdfButtonID = "addElementPDF";
-
-    let saveScenarioButtonID = "saveScenario";*/
 
     let param = {
         "btnPlusID":"addElement",

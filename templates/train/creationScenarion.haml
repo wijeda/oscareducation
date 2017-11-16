@@ -19,15 +19,15 @@
                     Paramètres
                 #idTextElemNav{:style => "display: none"}
                     %span.glyphicon.glyphicon-font
-                        %label.textElemtitre
-                            %span
+                        %label Texte :
+                            -#%span
                 #idImgElemNav{:style => "display: none"}
                      %span.glyphicon.glyphicon-picture
                         %label Image :
                             %span
                 #idVideoElemNav{:style => "display: none"}
                     %span.glyphicon.glyphicon-facetime-video
-                        %label
+                        %label Vidéo :
                             %span
                 #idMCQElemNav{:style => "display: none"}
                     %span.glyphicon.glyphicon-list
@@ -39,21 +39,35 @@
                             %span
 
                 #simpleList.divElemNav
-        %section#sectionElements
-            #whiteBox{:methode => "POST"}
-                {% csrf_token %}
-                {{ form.errors }}
-                {{ form.non_field_errors }}
-                %div#headline
-                    %span.glyphicon.glyphicon-cog
-                    %label Paramètres
-                #parameters.blk
+    %section#sectionElements
+        #whiteBox{:methode => "POST"}
+            {% csrf_token %}
+            {{ form.errors }}
+            {{ form.non_field_errors }}
+            %div#headline
+                %span.glyphicon.glyphicon-cog
+                %label Paramètres
+            #parameters.blk
 
-                    %p Entrez les différents paramètres pour le scénario
+                %p Entrez les différents paramètres pour le scénario
 
-                    %label{:for => 'title'} Titre :
-                    %input{:id => 'title', :placeholder => 'Indiquez le titre', :value => "#{scenario.title}"}
-                    %br
+                %label{:for => 'title'} Titre :
+                %input{:id => 'title', :placeholder => 'Indiquez le titre', :value => "#{scenario.title}"}
+                %br
+                %label{:for => 'topic'} Sujet :
+                %input{:id => 'topic', :placeholder => 'Indiquez le sujet du scénario', :value => "#{scenario.topic}"}
+                %br
+                %label{:for => 'grade_level'} Niveau :
+                %input{:id => 'grade_level', :placeholder => "Indiquez le niveau d&rsquo;étude requis ", :value => "#{scenario.grade_level}"}
+                %br
+                %label{:for => 'instructions'} Instructions :
+                %input{:id => 'instructions', :placeholder => 'Expliquez votre scénario', :value => "#{scenario.instructions}"}
+                %br
+                %label{:for => 'public'} Public :
+                %input{:id => 'public', :type => 'checkbox'}
+                %br
+                %label{:for => 'skill'} Compétences :
+                %div#boxskills
                     -for stage in stages
                       -if forloop.counter == 3
                         <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -67,7 +81,7 @@
                             <div class="panel-body">
 
                       .form-group
-                        .control-label= stage.name 
+                        .control-label= stage.name
                         .form-group
                           %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
                             -regroup stage.skills_by_id by section as sections
@@ -77,26 +91,12 @@
                                   %option{value: "{{ skill.code }}", id: "{{ skill.code }}"}
                                     {{ skill.code }} - {{ skill.name }}
 
-                    %br
-                    %label{:for => 'topic'} Sujet :
-                    %input{:id => 'topic', :placeholder => 'Indiquez le sujet du scénario', :value => "#{scenario.topic}"}
-                    %br
-                    %label{:for => 'grade_level'} Niveau :
-                    %input{:id => 'grade_level', :placeholder => "Indiquez le niveau d&rsquo;étude requis ", :value => "#{scenario.grade_level}"}
-                    %br
-                    %label{:for => 'instructions'} Instructions :
-                    %input{:id => 'instructions', :placeholder => 'Expliquez votre scénario', :value => "#{scenario.instructions}"}
-                    %br
-                    %label{:for => 'public'} Public :
-                    %input{:id => 'public', :type => 'checkbox'}
-                    %br
-
 
             #videoBlockElem{:style => "display: none"}
                 %div#headline
                     %span.glyphicon.glyphicon-facetime-video
                     %label{:for => 'title_video'} Vidéo:
-                    %input.titre_vid_Elem{:id => 'title_video', :placeholder => 'Tapez votre titre'}
+                    %input.titre_vid_Elem{:id => 'title_video', :placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
                     %button.btn.minimizeElem{:toggle => "tooltip", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
                     %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
@@ -118,7 +118,7 @@
                 %div#headline
                     %span.glyphicon.glyphicon-list
                     %label{:for => 'title_mcq'} QCM:
-                    %input.titre_MCQ_Elem{:placeholder => 'Tapez votre titre'}
+                    %input.titre_MCQ_Elem{:placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
                     %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
                     %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
@@ -155,7 +155,7 @@
                 %div#headline
                     %span.glyphicon.glyphicon-font
                     %label{:for => 'title_txt'} Texte:
-                    %input.titre_text_Elem{:placeholder => 'Tapez votre titre', :onkeypress=>"myFunction()"}
+                    %input.titre_text_Elem{:placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
                     %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
                     %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
@@ -169,7 +169,7 @@
                 %div#headline
                     %span.glyphicon.glyphicon-picture
                     %label{:for => 'title_img'} Image:
-                    %input#title_img.title_img{:placeholder => 'Tapez votre titre'}
+                    %input#title_img.title_img{:placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
                     %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
                     %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
@@ -197,7 +197,7 @@
                 %div#headline
                     %span.glyphicon.glyphicon-file
                     %label{:for => 'title_pdf'} PDF:
-                    %input.titre_pdf_Elem{:id => 'title_pdf', :placeholder => 'Tapez votre titre'}
+                    %input.titre_pdf_Elem{:id => 'title_pdf', :placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
                     %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
                     %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
@@ -217,35 +217,34 @@
 
             #Tools.blk
                 %br
-                -# %input.btn.btn-primary#submit{:type => "submit"}
-                {% buttons %}
-                    #DiffElem
-                        %button.btn.btn-primary#addElement
-                            %span.glyphicon.glyphicon-plus
-                            Ajouter un élément
-                        #addElementDiv{:style => "display: none"}
-                            %button.btn.btn-primary#addElementVideo
-                                %span.glyphicon.glyphicon-facetime-video
-                                Ajouter une vidéo
-                            %button.btn.btn-primary#addElementTxt
-                                %span.glyphicon.glyphicon-font
-                                Ajouter un texte
-                            %button.btn.btn-primary#addElementImg
-                                %span.glyphicon.glyphicon-picture
-                                Ajouter une image
-                            %button.btn.btn-primary#addElementPDF
-                                %span.glyphicon.glyphicon-file
-                                Ajouter un PDF
-                            %button.btn.btn-primary#addElementMcq
-                                %span.glyphicon.glyphicon-list
-                                Ajouter un QCM
+    -# %input.btn.btn-primary#submit{:type => "submit"}
+    {% buttons %}
+        #DiffElem
+            %button.btn.btn-primary#addElement
+                %span.glyphicon.glyphicon-plus
+                Ajouter un élément
+            #addElementDiv{:style => "display: none"}
+                %button.btn.btn-primary#addElementVideo
+                    %span.glyphicon.glyphicon-facetime-video
+                    Ajouter une vidéo
+                %button.btn.btn-primary#addElementTxt
+                    %span.glyphicon.glyphicon-font
+                    Ajouter un texte
+                %button.btn.btn-primary#addElementImg
+                    %span.glyphicon.glyphicon-picture
+                    Ajouter une image
+                %button.btn.btn-primary#addElementPDF
+                    %span.glyphicon.glyphicon-file
+                    Ajouter un PDF
+                %button.btn.btn-primary#addElementMcq
+                    %span.glyphicon.glyphicon-list
+                    Ajouter un QCM
 
-                    %br
-                    %button.btn.btn-primary#cancelScenario{:toggle => "tooltip", :placement => "bottom", :title =>"Annuler la création",:action => "#", :onclick => "return cancelCreation(this)"}
-                        %span.glyphicon.glyphicon-menu-left
-                        Retour
-                    %button.btn.btn-primary#saveScenario
-                        %span.glyphicon.glyphicon-floppy-disk
-                        Sauvegarder
+        %br
+        %button.btn.btn-primary#cancelScenario{:toggle => "tooltip", :placement => "bottom", :title =>"Annuler la création",:action => "#", :onclick => "return cancelCreation(this)"}
+            %span.glyphicon.glyphicon-menu-left
+            Retour
+        %button.btn.btn-primary#saveScenario
+            %span.glyphicon.glyphicon-floppy-disk
+            Sauvegarder
                 {% endbuttons %}
-
