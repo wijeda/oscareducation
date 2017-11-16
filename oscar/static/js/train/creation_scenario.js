@@ -646,6 +646,26 @@ function addListenerComp(){
     }*/
 }
 
+function mouseover(elem){
+    console.log("yr");
+    console.log(elem);
+    //background-color = "red";
+}
+
+function mouseout(elem){
+    console.log(elem);
+
+    //this.target.style.color = "grey";
+}
+function fillTitle(elem){
+    var root = elem.parentNode.parentNode;
+    var navitemId = "navitem" + root.getAttribute("id");
+    setInterval(function(){
+        var titre = elem.value;
+        console.log(document.getElementById(navitemId).getElementsByTagName("span"));
+        document.getElementById(navitemId).getElementsByTagName("label")[0].innerHTML = titre;
+    }, 0);
+}
 // initiation
 window.onload = function(){
 
