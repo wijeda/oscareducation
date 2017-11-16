@@ -78,8 +78,19 @@
 .textBlockElem textarea {
 	width: 100%;
 }
+#DiffElem{
+    bottom : 180px;
+    left: 720px;
+    position:absolute;
+}
+#cancelScenario{
+    left: 720px;
+    bottom : 140px;
+    position:absolute;
+}
 #saveScenario {
-    left: 480px;
+    bottom : 140px;
+    left: 1200px;
     position:absolute;
 }
 .deleteElement{
