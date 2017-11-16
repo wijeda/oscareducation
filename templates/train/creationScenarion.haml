@@ -40,7 +40,7 @@
                             <div class="panel-body">
 
                       .form-group
-                        %label.control-label= stage.name
+                        .control-label= stage.name 
                         .form-group
                           %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
                             -regroup stage.skills_by_id by section as sections

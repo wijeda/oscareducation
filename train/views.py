@@ -37,14 +37,13 @@ def home(request):
 # filled if id != None(in this case we want to edit the corresponding scenario)
 # or with blank data
 @user_is_professor
-def create_scenario(request, id):
+def create_scenario(request, id, pk):
 
     # we create a dictionary in which we put all the parameters
     # and element from the scenario in order to pass it to the haml so it can be re-rendered
     dico = {}
     # dico["stage_list"] = Stage.objects.all
-    lesson = get_object_or_404(Lesson, pk=1)
-    print(lesson)
+    lesson = get_object_or_404(Lesson, pk=pk)
     dico["stages"] = lesson.stages_in_unchronological_order()
     if id is not None:
         # we get the id of the scenario we want to edit
