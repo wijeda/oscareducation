@@ -1,9 +1,10 @@
--extends "base.haml"
+-# -extends "base.haml"
 
 -load static
 -load compress
 
 -block content
+    .ligneorange
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/list_scenario.js"}
     #whiteBox
@@ -38,9 +39,9 @@
                                     %img.icon{:data => "#{st.id}", :alt => "Supprimer le scénario",:width => "25%", :height => "25%",src: "{% static 'img/icons/delete.png' %}", data-toggle: "tooltip", data-placement: "top", title: "supprimer"}
                                 %a{:href => "/professor/train/make_scenario/#{st.id}"}
                                     %img.icon{:alt => "Jouer le scénario",:width => "25%", :height => "25%",src: "{% static 'img/icons/detail.png' %}", data-toggle: "tooltip", data-placement: "top", title: "jouer"}
-        #Tools.blk
+        #addScenarioButton.blk
             %a.btn.btn-primary#addElement{:href => "/professor/train/lesson/#{lesson.pk}/create_scenario/"} Creer un autre scénario
-
+        .ligneorange
         #parameters.blk
             %h1 Les scénarios d'autres professeurs
             -#%p #{dico}

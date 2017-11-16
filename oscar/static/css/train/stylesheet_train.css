@@ -67,7 +67,9 @@
 	background-color: white;
 	margin-bottom: 20px;
 }
-
+#addScenarioButton{
+    margin-bottom: 30px;
+}
 .imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem {
 	width: 100%;
 	position: relative;
