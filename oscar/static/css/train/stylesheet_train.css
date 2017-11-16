@@ -182,6 +182,6 @@
 datalist {
     display: none;
 }
-#stagename{
-    background-color: red;
+.control-label{
+    font-weight: bold;
 }
