@@ -435,6 +435,9 @@ class ScenarioCreation {
             {
                 data[id] = elem.checked;
             }
+            else if (id == "skill") { // TODO to handle
+                data[id] = "";
+            }
             else
             {
                 data[id] = elem.value;
@@ -643,47 +646,8 @@ function addListenerComp(){
     }*/
 }
 
-function mouseover(elem){
-    console.log("yr");
-    console.log(elem);
-    //background-color = "red";
-}
-
-function mouseout(elem){
-    console.log(elem);
-
-    //this.target.style.color = "grey";
-}
-
 // initiation
 window.onload = function(){
-    /*let btnPlusID = "addElement"; //document.getElementById("addElement");
-    let anchorID = 'whiteBox';
-    let addElementDivID = 'addElementDiv';
-
-    let textBlockElemID = "textBlockElem";
-    let textButtonID = "addElementTxt";
-
-    let videoBlockElemID = "videoBlockElem";
-    let videoButtonID = "addElementVideo";
-    // let loadVidID = "loadVideo";
-    // let loadVidButtonID = "addVid";
-
-    let mcqBlockElemID = "mcqBlockElem";
-    let mcqButtonID = "addElementMcq";
-
-    let imgBlockElemID = "imgBlockElem";
-    let imgButtonID = "addElementImg";
-
-    let loadImgID = "loadImage";
-    let loadImgButtonID = "addImg";
-
-    let removeImageID = "removeImage";
-
-    let pdfBlockElemID = "pdfBlockElem";
-    let pdfButtonID = "addElementPDF";
-
-    let saveScenarioButtonID = "saveScenario";*/
 
     let param = {
         "btnPlusID":"addElement",
