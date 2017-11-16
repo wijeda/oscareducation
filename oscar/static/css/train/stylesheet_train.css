@@ -80,17 +80,17 @@
 }
 #DiffElem{
     bottom : 180px;
-    left: 720px;
+    left: 470px;
     position:absolute;
 }
 #cancelScenario{
-    left: 720px;
+    left: 470px;
     bottom : 140px;
     position:absolute;
 }
 #saveScenario {
     bottom : 140px;
-    left: 1200px;
+    left: 980px;
     position:absolute;
 }
 .deleteElement{
