@@ -168,10 +168,11 @@ class ScenarioVisualization{
     endButtonElement(){
         var pathTab = window.location.pathname.split("/");
         var user_type = pathTab[1];
+        var pk = pathTab[3]
         if(user_type == "student"){
             window.location.href = "/student/train/student_list_scenario/";
         }else{
-            window.location.href = "/professor/train/list_scenario/";
+            window.location.href = "/professor/lesson/"+pk+"/#listscena";
         }
 
     }

@@ -112,19 +112,32 @@
 }
 
 .btn-fixed-previous {
-  background-color: #f58025;
-  border-color: #d86e1c;
-  position: absolute;
-  right: 640px;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    position: absolute;
+    right: 640px;
 	top: 15%;
-  width: 100px;
+    width: 100px;
 	height: 35px;
 }
 
 
+.glyphicon-arrow-right, .glyphicon-arrow-left, .glyphicon-stop  {
+    font-size: 30px;
+    color:#f58025;
+}
+
 .btn-fixed-next {
-	background-color: #f58025;
-	border-color: #d86e1c;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 	position: absolute;
 	right: 5px;
 	top: 15%;
@@ -156,11 +169,12 @@
     border-radius: 5px;
 }
 .box-options{
-		position: fixed;
-    padding: 25px;
+	position: fixed;
+    /*padding-bottom: 25px;*/
     background-color:white;
-		top: 80%;
-		width: 750px;
+	top: 80%;
+	width: 750px;
+    height : 45px;
 }
 
 .blocanswer li div{

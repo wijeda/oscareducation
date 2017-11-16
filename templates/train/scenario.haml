@@ -90,24 +90,19 @@
     #Tools.blk
       .container-fluid.box-options
         %button.btn-fixed-previous#previousElement{:style => "display: none"}
-            Précédent
+            %span.glyphicon.glyphicon-arrow-left
         #progressBar.progressBar
             #idTextElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-font
-                        %span
             #idImgElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-picture
-                        %span
             #idVideoElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-facetime-video
-                        %span
             #idMCQElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-list
-                        %span
             #idPDFElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-file
-                        %span
         %button.btn-fixed-next#nextElement
-            Suivant
+            %span.glyphicon.glyphicon-arrow-right
         %button.btn-fixed-next#endElement{:style => "display: none", :href => "/student/train/student_list_scenario"}
-            Terminer
+            %span.glyphicon.glyphicon-stop
