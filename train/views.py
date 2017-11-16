@@ -1,6 +1,8 @@
 import json
+import os
 from operator import itemgetter
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -8,7 +10,10 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.response import TemplateResponse
 
+from base64 import b64decode
+
 from .models import ImgElem
+from .models import ImgElemHardDrive
 from .models import MCQElem
 from .models import MCQReponse
 from .models import PDFElem
@@ -52,21 +57,21 @@ def create_scenario(request, id):
 
 
 # return the edit scenario page with the data of the scenario filled in
-@user_is_professor
-def edit_scenario(request, id):
-
-    # we get the id of the scenario we want to edit
-    s = Scenario.objects.get(id=id)
-
-    # we create a dictionary in which we put all the parameters
-    # and element from the scenario in order to pass it to the haml so it can be re-rendered
-    dico = {}
-
-    # filling the parameters
-    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
-
-    # we render the page of an edit
-    return render(request, "train/editScenario.haml", dico)
+# @user_is_professor
+# def edit_scenario(request, id):
+#
+#     # we get the id of the scenario we want to edit
+#     s = Scenario.objects.get(id=id)
+#
+#     # we create a dictionary in which we put all the parameters
+#     # and element from the scenario in order to pass it to the haml so it can be re-rendered
+#     dico = {}
+#
+#     # filling the parameters
+#     dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+#
+#     # we render the page of an edit
+#     return render(request, "train/editScenario.haml", dico)
 
 # return all the data (param + elements) from the scenario with the id in parameters
 # as a JSON
@@ -99,6 +104,14 @@ def get_data(request, id):
 
     for i in images:
         elem = {"type" : "ImgElem", "order": i.order, "data":{"id_scenario": id, "title":i.title, "url": i.url, "description":i.description }}
+        elements.append(elem)
+
+    # filling the images elements from directory
+
+    imagesD = ImgElemHardDrive.objects.filter(id_scenario=id)
+
+    for iD in imagesD:
+        elem = {"type" : "ImgElemHardDrive", "order": iD.order, "data":{"id_scenario": id, "title":iD.title, "url": iD.url, "description":iD.description }}
         elements.append(elem)
 
     # filling the pdfs elements
@@ -148,10 +161,16 @@ def list_scenario(request):
     # the request need to ask the database for scenario's title, skill, topic and grade level
     # for now, the actions are represented by character e for "edit", d for "delete" and s for "see"
     dico = {}
-    dico["scenarios"]=[]
+    dico["own_scenarios"]=[]
     # test d recup de date dans la db
-    for s in Scenario.objects.all():
-        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+    for s in Scenario.objects.filter(creator = request.user):
+
+        dico["own_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+
+    dico["foreign_scenarios"] = []
+
+    for s in Scenario.objects.exclude(creator = request.user).filter(public = True):
+        dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
@@ -168,7 +187,7 @@ def student_list_scenario(request):
     dico = {}
     dico["scenarios"]=[]
     # test d recup de date dans la db
-    for s in Scenario.objects.filter(creator = request.user):
+    for s in Scenario.objects.all():
         dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
@@ -208,8 +227,7 @@ def save_scenario(request):
         public = parsed_json['public']
 
         # creating the object
-        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = True)
-
+        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
         # saving the object
         scena.save()
 
@@ -233,6 +251,44 @@ def save_scenario(request):
                 description_elem = parsed_json['elements'][i]['data']['description']
 
                 elem = ImgElem(id_scenario = id_scenario, order = i, title = title_elem, url = url_elem, description = description_elem)
+
+                elem.save()
+
+            elif parsed_json['elements'][i]['type'] == "ImgElemHardDrive":
+                image = None
+                id_scenario = scena.id
+                order = i
+                title_elem = parsed_json['elements'][i]['data']['title']
+
+                exercices_folder = os.path.join(settings.MEDIA_ROOT, "train")
+                if not os.path.exists(exercices_folder):
+                    os.makedirs(exercices_folder)
+
+                existing_images = {x for x in os.listdir(os.path.join(settings.BASE_DIR, "train"))}
+                existing_images = existing_images.union({x for x in os.listdir(exercices_folder)})
+
+                print(parsed_json['elements'][i]['data']['url'])
+                image_extension, image = parsed_json['elements'][i]['data']['url'].split(",", 1)
+                print("my Image: ",image)
+                print("my image_extension: ",image_extension)
+                image_extension = image_extension.split("/")[1].split(";")[0]
+                print("my image_extension: ",image_extension)
+
+                for j in range(1, 1000):
+                    name = ("%s_%.2d.%s" % (skill, j, image_extension)).upper()
+                    if name not in existing_images:
+                        break
+                else:
+                    raise Exception()
+
+                html = '<img src="%strain/%s" class="img-responsive" />\n' % (settings.MEDIA_URL, name)
+
+                assert not os.path.exists(os.path.join(exercices_folder, name))
+                open(os.path.join(exercices_folder, name), "w").write(b64decode(image))
+
+                description_elem = parsed_json['elements'][i]['data']['description']
+
+                elem = ImgElemHardDrive(id_scenario = id_scenario, order = i, title = title_elem, url = os.path.join(exercices_folder, name), description = description_elem)
 
                 elem.save()
 
@@ -279,6 +335,12 @@ def save_scenario(request):
 @user_is_professor
 def delete_scenario(request, id):
 
+    s = Scenario.objects.get(id=id)
+    print(id)
+
+    dico = {}
+    dico ["scenario"] = {"creator":s.creator}
+
     textes = TextElem.objects.filter(id_scenario=id)
     for t in textes:
         t.delete()
@@ -303,6 +365,7 @@ def delete_scenario(request, id):
         q.delete()
 
     Scenario.objects.get(id=id).delete()
+
 
     return list_scenario(request)
 

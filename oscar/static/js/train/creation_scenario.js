@@ -38,7 +38,7 @@ class ScenarioCreation {
         this.pdfButton.addEventListener("click", this.makeBlockElemPDF.bind(this), true);
 
         this.saveScenarioButton = document.getElementById(param.saveScenarioButtonID);
-        this.saveScenarioButton.addEventListener("click", this.sendForm.bind(this), true);
+        this.saveScenarioButton.addEventListener("click", this.editForm.bind(this), true);
 
         this.sideNavBar = document.getElementById(param.sideNavBar) ;
         this.textBlockNav = document.getElementById(param.idTextElemNav);
@@ -60,7 +60,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -77,7 +77,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -94,7 +94,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -107,15 +107,15 @@ class ScenarioCreation {
         newelem.innerHTML = this.pdfBlockElem.innerHTML;
         newelem.setAttribute("id", counterBlock);
         this.anchor.appendChild(newelem);
-        counterBlock = counterBlock +1;
 
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
+        counterBlock = counterBlock +1;
     }
 
     makeBlockElemMcq(){
@@ -129,7 +129,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
-        newNavElem.setAttribute("id", counterBlock);
+        newNavElem.setAttribute("id", "navitem" + counterBlock);
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -153,14 +153,27 @@ class ScenarioCreation {
         return {"type":"TextElem", "data":{"title": title, "content": content}}
     }
 
+    /*
+     *  We can get 2 images by 2 ways:
+     *      - from url: the value from the url input is thus not empty
+     *      - from oscar directories: the value from the url input is thus empty.
+     *          We have to get the data from the image preview in base 64 in order to save it.
+     *          When the scenario is edited, the image will be presented as a path from the directory
+     */
     getElemInputBlockImage(elemImage){
-        // let title = elemImage.childNodes[1].childNodes[3].value;
-        // let url = elemImage.childNodes[1].childNodes[9].value;
-        // let description = elemImage.childNodes[1].childNodes[11].value;
         let title = elemImage.getElementsByClassName('title_img')[0].value;
-        let url = elemImage.getElementsByClassName('url_img_Elem')[0].value;
-        let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
-        return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
+        if(!elemImage.getElementsByClassName('url_img_Elem')[0].value){
+            // Getting from directory:
+            let url = elemImage.getElementsByClassName("imgprev")[0].getAttribute("src");
+            let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
+            return {"type":"ImgElemHardDrive", "data":{"title": title, "url": url, "description" : description}}
+        }
+        else{
+            // Getting from url:
+            let url = elemImage.getElementsByClassName('url_img_Elem')[0].value;
+            let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
+            return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
+        }
     }
 
     getElemInputBlockVideo(elemVideo){
@@ -214,7 +227,6 @@ class ScenarioCreation {
 
 
         if(id != ""){ // If we get a number id, i.e. we want to edit a scenario
-            console.log("damn");
             let xhr = new XMLHttpRequest();
 
             xhr.open("GET", "/professor/train/data/"+id, false);
@@ -257,6 +269,28 @@ class ScenarioCreation {
         newelem.getElementsByClassName('url_img_Elem')[0].value = this.data["elements"][index]["data"]["url"]
         newelem.getElementsByClassName('desc_img_Elem')[0].value = this.data["elements"][index]["data"]["description"]
         newelem.getElementsByClassName('imgprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"]);
+        this.anchor.appendChild(newelem);
+
+        var ul = document.getElementById("simpleList");
+        let newNavElem = document.createElement("div");
+        newNavElem.classList.add('divElemNav');
+        newNavElem.innerHTML = this.imgBlockNav.innerHTML;
+
+        ul.appendChild(newNavElem);
+    }
+
+    /**
+     *   When an Image is get from the directory, it's path adress contains all the directories from the root
+     *   We then have to take only the part after the oscareducation directory. That is why we split and take the part second part
+     */
+    makeFilledImgHardDrive(index){
+        let newelem = document.createElement("div")
+        newelem.classList.add('imgBlockElem');
+        newelem.innerHTML = this.imgBlockElem.innerHTML;
+        newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
+        newelem.getElementsByClassName('url_img_Elem')[0].value = this.data["elements"][index]["data"]["url"].split("oscareducation")[1];
+        newelem.getElementsByClassName('desc_img_Elem')[0].value = this.data["elements"][index]["data"]["description"]
+        newelem.getElementsByClassName('imgprev')[0].setAttribute("src", this.data["elements"][index]["data"]["url"].split("oscareducation")[1]);
         this.anchor.appendChild(newelem);
 
         var ul = document.getElementById("simpleList");
@@ -347,8 +381,14 @@ class ScenarioCreation {
                 {
                     this.makeFilledText(i);
                 }
+                else if(this.data["elements"][i]["type"] == "ImgElemHardDrive")
+                {
+                    console.log("this is an image from the hardrive");
+                    this.makeFilledImgHardDrive(i);
+                }
                 else if(this.data["elements"][i]["type"] == "ImgElem")
                 {
+                    console.log("this is an image url");
                     this.makeFilledImg(i);
                 }
                 else if(this.data["elements"][i]["type"] == "VidElem")
@@ -367,18 +407,42 @@ class ScenarioCreation {
         }
     }
 
+    editForm(){
+        var pathTab = window.location.pathname.split("/")
+        var id = pathTab[pathTab.length - 1]
+        if (id == "") {
+            id = pathTab[pathTab.length - 2]
+        }
+        console.log(id);
+        if (id != "create_scenario") {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
+            xmlHttp.send( null );
+            //return xmlHttp.responseText;
+        }
+        this.sendForm();
+    }
 
     sendForm() {
 
         let data = {};
         let listOfParamIDfield = ["title", "skill", "topic", "grade_level", "instructions", "public"];
 
+
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
-            console.log("Rhis id= "+id);
-            console.log(elem);
-            data[id] = elem.value;
+            if(id=="public")
+            {
+                data[id] = elem.checked;
+            }
+            else
+            {
+                data[id] = elem.value;
+            }
+
+
         }
+
 
         data["elements"] = []
 
@@ -407,12 +471,9 @@ class ScenarioCreation {
             {
                 data["elements"].push(this.getElemInputBlockPDF(this.anchor.childNodes[i]));
             }
-
-
-
         }
 
-        // construct an HTTP request
+        //construct an HTTP request
 
         let xhr = new XMLHttpRequest();
 
@@ -421,13 +482,14 @@ class ScenarioCreation {
         xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
         // send the collected data as JSON
         xhr.send(JSON.stringify(data));
-
+        var pathArray = window.location.pathname.split( '/' );
+        var pk = pathArray[4]
+        var new_url = "/professor/lesson/"+pk+"/#listscena"
         xhr.onloadend = function () {
-            window.location.href = "http://127.0.0.1:8000/professor/train/list_scenario/";
+            window.location.href = new_url;
         };
 
     }
-
 
 }
 
@@ -435,8 +497,20 @@ function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
     imgPreview.setAttribute("src", root.getElementsByClassName("url_img_Elem")[0].value);
-
+    root.getElementsByClassName("importButton")[0].value = "";
     return false;
+}
+
+function loadFile(event, elem){
+    let root = elem.parentNode;
+    var reader = new FileReader();
+    reader.onload = function(){
+        let imgPreview = root.getElementsByClassName("imgprev")[0];
+        imgPreview.setAttribute("src", reader.result);
+    }
+    reader.readAsDataURL(event.target.files[0]);
+    root.getElementsByClassName("url_img_Elem")[0].value = "";
+    return false
 }
 
 function loadPDF(elem){
@@ -529,8 +603,30 @@ function addReponseFilled(root, answer){
 
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
+    var ul = document.getElementsByClassName("divElemNav");
+    var id = root.getAttribute("id");
+    var supNode = document.getElementById("navitem"+ id);
+    supNode.parentNode.removeChild(supNode);
     root.parentNode.removeChild(root);
     return false;
+}
+
+function enlargeElem(elem){
+    var root = elem.parentNode.parentNode;
+    let miniElem = root.getElementsByClassName("panel-body")[0];
+    var rootbutton = elem.parentNode;
+    let buttonmini = rootbutton.getElementsByClassName("minimizeElem")[0];
+    let buttonenla = rootbutton.getElementsByClassName("enlargeElement")[0];
+    if(miniElem.style.display=="none"){
+        miniElem.style.display = "block";
+        buttonmini.style.display = "block";
+        buttonenla.style.display = "none";
+    }
+    else {
+        miniElem.style.display = "none";
+        buttonmini.style.display = "none";
+        buttonenla.style.display = "block";
+    }
 }
 function removeReponse(elem){
     var root = elem.parentNode;
@@ -625,14 +721,24 @@ window.onload = function(){
         "removeImageID": "removeImage",*/
     }
 
-    Sortable.create(simpleList, {onEnd: function (evt) {
-      var itemEl = evt.item;  // dragged HTMLElement
-      var number =
+    Sortable.create(whiteBox, {onEnd: function (evt) {
+      var ul = document.getElementById("simpleList");
+      var node = ul.childNodes[evt.oldIndex-3];
+      ul.replaceChild(ul.childNodes[evt.newIndex-3], ul.childNodes[evt.oldIndex-3]);
+      ul.insertBefore(node, ul.childNodes[evt.newIndex-3]);
       evt.to;    // target list
       evt.from;  // previous list
       evt.oldIndex;  // element's old index within old parent
       evt.newIndex;  // element's new index within new parent
     }});
+
+    /*Sortable.create(simpleList, {onEnd: function (evt) {
+      var ul = document.getElementById("whiteBox");
+      var node = ul.childNodes[evt.oldIndex+4];
+      ul.replaceChild(ul.childNodes[evt.newIndex+4], ul.childNodes[evt.oldIndex+4]);
+      ul.insertBefore(node, ul.childNodes[evt.newIndex+4]);
+    }});
+    */
 
     /*new ScenarioCreation(anchorID,
                         btnPlusID,
@@ -669,21 +775,7 @@ function getCookie(c_name)
 
 
 
-function editForm(){
-    var pathTab = window.location.pathname.split("/")
-    var id = pathTab[pathTab.length - 1]
-    if (id == "") {
-        id = pathTab[pathTab.length - 2]
-    }
-    console.log(id);
-    if (id != "create_scenario") {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
-        xmlHttp.send( null );
-        //return xmlHttp.responseText;
-    }
-    sendForm();
-}
+
 
 
 /**!
