@@ -492,7 +492,22 @@ class ScenarioCreation {
     }
 
 }
-
+function cancelCreation(elem){
+    if (confirm('Etes vous sur de vouloir annuler la création de ce scénario ?'))
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "/professor/train/cancel_scenario/", false ); // false for synchronous request
+        xmlHttp.send( null );
+        var pathArray = window.location.pathname.split( '/' );
+        var pk = pathArray[4];
+        var new_url = "/professor/lesson/"+pk+"/#listscena";
+        window.location.href = new_url;
+    }
+    else
+    {
+        console.log('no');
+    }
+}
 function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
@@ -546,7 +561,7 @@ function getVideoId(url) {
         return 'error';
     }
 }
-
+//This function permits to add a response in the MCQ
 function addReponse(elem){
     var root = elem.parentNode.parentNode;
     let count = 0;
@@ -572,7 +587,7 @@ function addReponse(elem){
     //root.parentNode.removeChild(root);
     return false;
 }
-
+//This function permits to display, in the edition-form, all the fields pre-filled
 function addReponseFilled(root, answer){
     let count = 0;
     let repLineElem = null;
@@ -600,7 +615,7 @@ function addReponseFilled(root, answer){
     //root.parentNode.removeChild(root);
     return false;
 }
-
+//This function permits to delete the principal block and the content in the navbar
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
     var ul = document.getElementsByClassName("divElemNav");
@@ -610,7 +625,7 @@ function removeElem(elem){
     root.parentNode.removeChild(root);
     return false;
 }
-
+//This function permits to resize the block (minimize or enlarge)
 function enlargeElem(elem){
     var root = elem.parentNode.parentNode;
     let miniElem = root.getElementsByClassName("panel-body")[0];
@@ -628,6 +643,7 @@ function enlargeElem(elem){
         buttonenla.style.display = "block";
     }
 }
+//This function permits to delete an answer in the MCQ
 function removeReponse(elem){
     var root = elem.parentNode;
     root.parentNode.removeChild(root);

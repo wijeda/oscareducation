@@ -10,8 +10,6 @@
     display: grid;
     grid-template-columns: 90% 40%;
 }
-
-}
 #sectionElements {
     grid-column: 1; /* placement en colonne 1 */
 }
@@ -73,9 +71,8 @@
 	position: relative;
 }
 
-.textBlockElem {
+.textBlockElem textarea {
 	width: 100%;
-	height: 150px;
 }
 
 .deleteElement{
@@ -84,6 +81,13 @@
 	right: 0;
 	margin-right: 5px;
 	padding: 0;
+}
+.minimizeElem, .enlargeElement{
+    padding:0;
+    position: absolute;
+    top:0;
+    right:70px;
+    background-color:#ffbe2f;
 }
 
 .img_scenario {
