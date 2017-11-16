@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template.response import TemplateResponse
 
 from base64 import b64decode
@@ -21,6 +21,7 @@ from .models import Scenario
 from .models import TextElem
 from .models import VidElem
 from promotions.models import Stage
+from promotions.models import Lesson
 
 from .utils import user_is_professor
 
@@ -36,13 +37,15 @@ def home(request):
 # filled if id != None(in this case we want to edit the corresponding scenario)
 # or with blank data
 @user_is_professor
-def create_scenario(request, id=None):
+def create_scenario(request, id):
 
     # we create a dictionary in which we put all the parameters
     # and element from the scenario in order to pass it to the haml so it can be re-rendered
     dico = {}
-    dico["stage_list"] = Stage.objects.all()
-
+    # dico["stage_list"] = Stage.objects.all
+    lesson = get_object_or_404(Lesson, pk=1)
+    print(lesson)
+    dico["stages"] = lesson.stages_in_unchronological_order()
     if id is not None:
         # we get the id of the scenario we want to edit
         s = Scenario.objects.get(id=id)

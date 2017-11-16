@@ -27,17 +27,28 @@
                     %label{:for => 'title'} Titre :
                     %input{:id => 'title', :placeholder => 'Indiquez le titre', :value => "#{scenario.title}"}
                     %br
-                    %label{:for => 'skill'} Compétence :
-                    %select#skill.form-control{ng-model: "skillCode"}
-                      %option{value: ""}
-                          -for stage in stage_list
-                            -if stage.name
-                              %optgroup{label: "{{ stage.name }}"}
-                                -for skill in stage.skills.all
-                                  %option{value: "{{ skill.code }}"}
-                                    =skill.code
-                                    \-
-                                    =skill.name
+                    -for stage in stages
+                      -if forloop.counter == 3
+                        <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                              <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Compétences antérieures</a>
+                              </h4>
+                            </div>
+                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+
+                      .form-group
+                        %label.control-label= stage.name
+                        .form-group
+                          %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
+                            -regroup stage.skills_by_id by section as sections
+                            -for section in sections
+                              %optgroup{label: "{{ section.grouper }}"}
+                                -for skill in section.list reversed
+                                  %option{value: "{{ skill.code }}", id: "{{ skill.code }}"}
+                                    {{ skill.code }} - {{ skill.name }}
 
                     %br
                     %label{:for => 'topic'} Sujet :
@@ -59,9 +70,9 @@
                     %span.glyphicon.glyphicon-facetime-video
                     %label{:for => 'title_video'} Vidéo:
                     %input.titre_vid_Elem{:id => 'title_video', :placeholder => 'Tapez votre titre'}
-                    %button.btn.btn-danger.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.minimizeElem{:toggle => "tooltip", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
-                    %button.btn.btn-danger.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-unchecked
                     %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                         %span.glyphicon.glyphicon-remove
@@ -81,9 +92,9 @@
                     %span.glyphicon.glyphicon-list
                     %label{:for => 'title_mcq'} QCM:
                     %input.titre_MCQ_Elem{:placeholder => 'Tapez votre titre'}
-                    %button.btn.btn-danger.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
-                    %button.btn.btn-danger.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-unchecked
                     %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                         %span.glyphicon.glyphicon-remove
@@ -118,9 +129,9 @@
                     %span.glyphicon.glyphicon-font
                     %label{:for => 'title_txt'} Texte:
                     %input.titre_text_Elem{:placeholder => 'Tapez votre titre'}
-                    %button.btn.btn-danger.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
-                    %button.btn.btn-danger.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-unchecked
                     %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                         %span.glyphicon.glyphicon-remove
@@ -132,9 +143,9 @@
                     %span.glyphicon.glyphicon-picture
                     %label{:for => 'title_img'} Image:
                     %input#title_img.title_img{:placeholder => 'Tapez votre titre'}
-                    %button.btn.btn-danger.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
-                    %button.btn.btn-danger.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-unchecked
                     %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                         %span.glyphicon.glyphicon-remove
@@ -160,9 +171,9 @@
                     %span.glyphicon.glyphicon-file
                     %label{:for => 'title_pdf'} PDF:
                     %input.titre_pdf_Elem{:id => 'title_pdf', :placeholder => 'Tapez votre titre'}
-                    %button.btn.btn-danger.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-minus
-                    %button.btn.btn-danger.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                         %span.glyphicon.glyphicon-unchecked
                     %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                         %span.glyphicon.glyphicon-remove
@@ -203,6 +214,9 @@
                                 Ajouter un QCM
 
                     %br
+                    %button.btn.btn-primary#cancelScenario{:toggle => "tooltip", :placement => "bottom", :title =>"Annuler la création",:action => "#", :onclick => "return cancelCreation(this)"}
+                        %span.glyphicon.glyphicon-menu-left
+                        Retour
                     %button.btn.btn-primary#saveScenario
                         %span.glyphicon.glyphicon-floppy-disk
                         Sauvegarder
