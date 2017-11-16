@@ -549,7 +549,7 @@ function getVideoId(url) {
         return 'error';
     }
 }
-
+//Add a response on the MCQ.
 function addReponse(elem){
     var root = elem.parentNode.parentNode;
     let count = 0;
@@ -603,7 +603,7 @@ function addReponseFilled(root, answer){
     //root.parentNode.removeChild(root);
     return false;
 }
-
+//This function permits to delete a principal block and also in the sideBar
 function removeElem(elem){
     var root = elem.parentNode.parentNode;
     var ul = document.getElementsByClassName("divElemNav");
@@ -613,7 +613,7 @@ function removeElem(elem){
     root.parentNode.removeChild(root);
     return false;
 }
-
+//This function permits to minimize or enlarge the element except Parameters.
 function enlargeElem(elem){
     var root = elem.parentNode.parentNode;
     let miniElem = root.getElementsByClassName("panel-body")[0];
@@ -631,6 +631,7 @@ function enlargeElem(elem){
         buttonenla.style.display = "block";
     }
 }
+//This function permits to delete an answer in the MCQ exercise.
 function removeReponse(elem){
     var root = elem.parentNode;
     root.parentNode.removeChild(root);
@@ -657,6 +658,7 @@ function mouseout(elem){
 
     //this.target.style.color = "grey";
 }
+//This function permits to fill automatically the field on the navBar when the user is writting the title of the content.
 function fillTitle(elem){
     var root = elem.parentNode.parentNode;
     var navitemId = "navitem" + root.getAttribute("id");
