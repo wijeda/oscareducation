@@ -54,21 +54,21 @@ def create_scenario(request, id=None):
 
 
 # return the edit scenario page with the data of the scenario filled in
-@user_is_professor
-def edit_scenario(request, id):
-
-    # we get the id of the scenario we want to edit
-    s = Scenario.objects.get(id=id)
-
-    # we create a dictionary in which we put all the parameters
-    # and element from the scenario in order to pass it to the haml so it can be re-rendered
-    dico = {}
-
-    # filling the parameters
-    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
-
-    # we render the page of an edit
-    return render(request, "train/editScenario.haml", dico)
+# @user_is_professor
+# def edit_scenario(request, id):
+#
+#     # we get the id of the scenario we want to edit
+#     s = Scenario.objects.get(id=id)
+#
+#     # we create a dictionary in which we put all the parameters
+#     # and element from the scenario in order to pass it to the haml so it can be re-rendered
+#     dico = {}
+#
+#     # filling the parameters
+#     dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+#
+#     # we render the page of an edit
+#     return render(request, "train/editScenario.haml", dico)
 
 # return all the data (param + elements) from the scenario with the id in parameters
 # as a JSON
@@ -333,36 +333,35 @@ def save_scenario(request):
 def delete_scenario(request, id):
 
     s = Scenario.objects.get(id=id)
+    print(id)
+
     dico = {}
     dico ["scenario"] = {"creator":s.creator}
-    print(s.creator)
 
-    if request.user == s.creator:
+    textes = TextElem.objects.filter(id_scenario=id)
+    for t in textes:
+        t.delete()
 
-        textes = TextElem.objects.filter(id_scenario=id)
-        for t in textes:
-            t.delete()
+    videos = VidElem.objects.filter(id_scenario=id)
+    for v in videos:
+        v.delete()
 
-        videos = VidElem.objects.filter(id_scenario=id)
-        for v in videos:
-            v.delete()
+    images = ImgElem.objects.filter(id_scenario=id)
+    for i in images:
+        i.delete()
 
-        images = ImgElem.objects.filter(id_scenario=id)
-        for i in images:
-            i.delete()
+    pdf = PDFElem.objects.filter(id_scenario=id)
+    for i in pdf:
+        i.delete()
 
-        pdf = PDFElem.objects.filter(id_scenario=id)
-        for i in pdf:
-            i.delete()
+    qcm = MCQElem.objects.filter(id_scenario=id)
+    for q in qcm:
+        ans = MCQReponse.objects.filter(id_question = q.id)
+        for a in ans:
+            a.delete()
+        q.delete()
 
-        qcm = MCQElem.objects.filter(id_scenario=id)
-        for q in qcm:
-            ans = MCQReponse.objects.filter(id_question = q.id)
-            for a in ans:
-                a.delete()
-            q.delete()
-
-        Scenario.objects.get(id=id).delete()
+    Scenario.objects.get(id=id).delete()
 
 
     return list_scenario(request)

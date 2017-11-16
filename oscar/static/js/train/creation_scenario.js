@@ -433,16 +433,6 @@ class ScenarioCreation {
             let elem = document.getElementById(id);
             if(id=="public")
             {
-                // if(elem.checked)
-                // {
-                //     // data[id] = true;
-                //     data[id] = "True";
-                // }
-                // else
-                // {
-                //     // data[id] = false;
-                //     data[id] = "False";
-                // }
                 data[id] = elem.checked;
             }
             else
@@ -494,9 +484,7 @@ class ScenarioCreation {
         xhr.send(JSON.stringify(data));
         var pathArray = window.location.pathname.split( '/' );
         var pk = pathArray[4]
-        console.log(pk);
         var new_url = "/professor/lesson/"+pk+"/#listscena"
-        console.log(new_url);
         xhr.onloadend = function () {
             window.location.href = new_url;
         };

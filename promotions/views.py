@@ -119,6 +119,7 @@ def lesson_detail(request, pk):
             print "Error: could no calculate heatmap"
 
     dico = {}
+    dico["lesson_number"] = pk
     dico["own_scenarios"]=[]
     # test d recup de date dans la db
     for s in Scenario.objects.filter(creator = request.user):
