@@ -79,19 +79,19 @@
 	width: 100%;
 }
 #DiffElem{
-    bottom : 180px;
-    left: 470px;
-    position:absolute;
+    bottom : 15%;
+    left: 20%;
+    position:relative;
 }
 #cancelScenario{
-    left: 470px;
-    bottom : 140px;
-    position:absolute;
+    left: 20%;
+    bottom : 20%;
+    position:relative;
 }
 #saveScenario {
-    bottom : 140px;
-    left: 980px;
-    position:absolute;
+    bottom : 12%;
+    left: 68%;
+    position:relative;
 }
 
 #questionMCQ{
