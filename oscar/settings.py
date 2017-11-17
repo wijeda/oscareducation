@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'oscar',  # hack: add self for templates dir
     'promotions',
+    'rating',
     'skills',
     'planification',
     'examinations',
@@ -62,6 +63,7 @@ INSTALLED_APPS = (
     'resources',
     'end_test_poll',
     'django.contrib.sites',
+    'chart'  # group 07
 
 ) + ADDITIONAL_APPS
 

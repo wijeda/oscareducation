@@ -2,11 +2,11 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.postgres.fields import JSONField
-from datetime import datetime
-from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
+from rating.models import Star_rating,Rating
+from django.utils import timezone
+from users.models import Professor,Student
+
 
 """resources models"""
 
@@ -23,6 +23,94 @@ class Resource(models.Model):
     added_by = models.ForeignKey(User, null=True)
 
 
+    def add_star(self, rate, user):
+        """
+        Creates or modifies the star rating for a resource by a user
+
+        :param rate: float number of stars given
+        :param user: user who is giving the stars
+        :return: the star object or None is the user can not rate the resource because he uploaded it
+        """
+        if self.added_by == user:
+            return None
+        star = Star_rating.objects.filter(resource=self,rated_by=user)
+        if star.exists() and len(star) == 1:
+            star= star.first()
+            star.star = rate
+            star.save()
+        elif not star.exists() and len(star) == 0:
+            star = Star_rating.objects.create(resource=self,star=rate,rated_by=user,rated_on=timezone.now())
+        else:
+            #Error
+            return None
+        return star
+
+    def average(self):
+        """
+
+        :return: A tuple containing the average for students and average for professors
+        """
+        all = Star_rating.objects.filter(resource=self)
+        prof_nb = 0
+        student_nb = 0
+        star_prof = 0
+        star_student = 0
+        for e in all:
+            try:
+                prof = Professor.objects.get(user=e.rated_by)
+            except Professor.DoesNotExist:
+                prof = None
+            try:
+                student = Student.objects.get(user=e.rated_by)
+            except Student.DoesNotExist:
+                student = None
+            if prof != None:
+                prof_nb = prof_nb + 1
+                star_prof = star_prof + e.star
+            if student != None:
+                student_nb = student_nb + 1
+                star_student = star_student + e.star
+
+        if student_nb==0:
+            if prof_nb==0:
+                return (0,0)
+            else:
+                return (0, star_prof / prof_nb)
+        else:
+            if prof_nb==0:
+                return (star_student / student_nb,0)
+            else:
+                return (star_student / student_nb, star_prof / prof_nb)
+
+    def add_rating(self,question,answer,user):
+        """
+        Creates or Modifies a question/answer to a resource by a user
+
+        :param question: the question answers by user
+        :param answer: the answer to question by user
+        :param user: the user answering a question
+        :return: The rating object or None if the user may not rate the resource
+        """
+        if user == self.added_by:
+            return None
+        rating = Rating.objects.filter(resource=self,rated_by=user,question=question)
+        if rating.exists() and len(rating)==1:
+            rating = rating.first()
+            rating.question = question
+            rating.answer = answer
+            rating.save()
+        elif not rating.exists() and len(rating) == 0:
+            rating = Rating.objects.create(
+                resource=self,
+                question=question,
+                answer=answer,
+                rated_by=user,
+                rated_on=timezone.now()
+            )
+        else:
+            #Error
+            return None
+        return rating
 
 #khanAcademy video reference data parsed from source url
 

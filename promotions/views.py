@@ -49,6 +49,7 @@ from .forms import LessonForm, StudentAddForm, SyntheseForm, KhanAcademyForm, St
 from .utils import generate_random_password, user_is_professor, force_encoding
 import csv
 from django.http import JsonResponse
+from users.models import Student, Professor
 
 
 @user_is_professor
@@ -59,11 +60,22 @@ def dashboard(request):
     :param request:
     :return:
     """
+    prof = None
+    if Professor.objects.filter(user_id=request.user.id):
+        prof = Professor.objects.get(user_id=request.user.id)
+
+    if prof is not None:
+        if prof.status is not None:
+            obj = json.loads(prof.status)
+        else:
+            obj = {}
+            obj["name"] = None
     return render(request, "professor/dashboard.haml", {
         "lessons": Lesson.objects.filter(professors=request.user.professor).annotate(Count("students")).select_related(
             "stage"),
         "no_menu": True,
-    })
+        "name": obj["name"],
+        })
 
 
 @user_is_professor
@@ -1400,6 +1412,12 @@ def exercice_validation_form_validate_exercice(request):
                 "answers": question["answers"],
             }
 
+        elif question["type"].startswith("chart"):
+            questions[question["instructions"]] = {
+                "type": question["type"],
+                #GROUPE 7 on enregistre dans la BD
+                "answers": [[y for y in x["chart"]] for x in question["answers"]],
+            }
         # No provided answer if corrected by a Professor
         elif question["type"] == "professor":
             questions[question["instructions"]] = {
@@ -1548,6 +1566,24 @@ def exercice_validation_form_submit(request, pk=None):
                     "answers": "",
                 }
 
+            #Group 7
+            elif question["type"] == "chart-barchart":
+                answers = []
+
+                for answer in question["answers"]:
+                    if "latex" in answer:
+                        del answer["latex"]
+                    if "correct" in answer:
+                        del answer["correct"]
+                    if "text" in answer:
+                        del answer["text"]
+                    answers.append(answer)
+
+                new_question_answers = {
+                    "type": question["type"],
+                    "answers": question["answers"],
+                }
+
             else:
                 answers = CommentedMap()
                 for i in question["answers"]:
@@ -1616,7 +1652,7 @@ def exercice_validation_form_validate_exercice_yaml(request):
     return HttpResponse(json.dumps({
         "yaml": {
             "result": "success",
-            "message": "L'exercice semble valide",
+            "message": "L'exercice semble valide ",
         },
         "rendering": rendering.content,
     }, indent=4), content_type="application/json")
@@ -1681,6 +1717,8 @@ def exercice_update_json(request, pk):
             answers = question.get_answer()["answers"]
         elif question_type == "professor":
             answers = ""
+        elif question_type.startwith("chart"):
+            answers = question.get_answer()["answers"]
         elif isinstance(question.get_answer()["answers"], list):
             answers = [{"text": key, "correct": True} for key in question.get_answer()["answers"]]
         else:  # assuming dict
