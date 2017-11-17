@@ -1,9 +1,9 @@
-import time
 import unittest
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import *
 
 # Run with "python3.5 *test name*.py"
 
@@ -11,6 +11,8 @@ URL_HOMEPAGE = "http://127.0.0.1:8000"
 URL_LOGIN = "http://127.0.0.1:8000/accounts/usernamelogin/"
 URL_SCENARIO_CREATION = "http://127.0.0.1:8000/professor/train/create_scenario/"
 URL_LIST_SCENARIO = "http://127.0.0.1:8000/professor/train/list_scenario/"
+URL_CLASS = "http://127.0.0.1:8000/professor/lesson/1/#"
+URL_VIDEO = "https://www.youtube.com/watch?v=2bjk26RwjyU"
 
 
 class SampleTest(unittest.TestCase):
@@ -26,69 +28,59 @@ class SampleTest(unittest.TestCase):
         self.click_element_css("input[value='Connexion']")
 
     def test_edit_scenario(self):
-        driver = self.driver
-        driver.get(URL_LIST_SCENARIO)
+        self.click_element_css("a[href='/professor/lesson/1/']")
+        self.click_element_css("a[href='#listscena']")
+        self.click_element_id("addElement")
 
         scenario_title = "old_title"
 
-        self.click_element_id("addElement")
         self.fill_field("title", scenario_title)
         self.fill_field("instructions", "test")
-        self.fill_field("skill", "test")
+
+        self.scroll_bottom()
         self.click_element_id("saveScenario")
-        # driver.get(URL_LIST_SCENARIO)
-        # driver.refresh()
-        self.click_element_css("img[alt = 'Editer la question']")
+        self.click_element_css("img[alt = 'Editer le scénario']")
 
         self.fill_field("title", "new title")
         self.fill_field("instructions", "new instructions")
-        self.fill_field("skill", "new skill")
 
-        self.click_element_id("addElement")
-        self.click_element_id("addElementVideo")
-        self.fill_field("vid_url", "https://www.youtube.com/watch?v=2bjk26RwjyU")
+        add_hover = self.driver.find_element_by_id("addElement")
+        video_click = self.driver.find_element_by_id("addElementVideo")
+
+        ActionChains(self.driver).move_to_element(add_hover).click(video_click).perform()
+
+        self.scroll_bottom()
+        self.fill_field("vid_url", URL_VIDEO)
         self.click_element_id("addVid")
 
         self.scroll_bottom()
-
-        self.click_element_id("addElementImg")
-        self.fill_field("img_url", "https://i.imgur.com/UkiM2YH.jpg")
-        self.click_element_id("addImg")
-
-        self.scroll_bottom()
         self.click_element_id("saveScenario")
-        # driver.get(URL_LIST_SCENARIO)
-        # driver.refresh()
 
-        self.click_element_css("img[alt = 'Editer la question']")
+        self.click_element_css("img[alt = 'Editer le scénario']")
         self.assertTrue(self.fieldText("title") == "new title")
         self.assertTrue(self.fieldText("instructions") == "new instructions")
-        self.assertTrue(self.fieldText("skill") == "new skill")
-        self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "iframe[class = 'video']"))
+        self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "iframe[src = '//www.youtube.com/embed/2bjk26RwjyU']"))
 
     def test_creation(self):
-
-        driver = self.driver
-        driver.get(URL_LIST_SCENARIO)
-
+        self.click_element_css("a[href='/professor/lesson/1/']")
+        self.click_element_css("a[href='#listscena']")
         self.click_element_id("addElement")
 
-        scenario_title = "title"
+        scenario_title = "test_title_abcdef"
 
         # Check if a rightly created scenario is in the list
 
         self.fill_field("title", scenario_title)
         self.fill_field("instructions", "test")
+        self.scroll_bottom()
         self.click_element_id("saveScenario")
-        driver.get(URL_LIST_SCENARIO)
         body_text = self.driver.find_element_by_tag_name('body').text
         self.assertTrue(scenario_title in body_text)
 
     def test_deletion(self):
 
-        driver = self.driver
-        driver.get(URL_LIST_SCENARIO)
-
+        self.click_element_css("a[href='/professor/lesson/1/']")
+        self.click_element_css("a[href='#listscena']")
         self.click_element_id("addElement")
 
         scenario_title = "toDelete"
@@ -97,18 +89,20 @@ class SampleTest(unittest.TestCase):
 
         self.fill_field("title", scenario_title)
         self.fill_field("instructions", "test")
+        self.scroll_bottom()
         self.click_element_id("saveScenario")
-        driver.get(URL_LIST_SCENARIO)
-        self.click_element_css("img[alt = 'Supprimer la question']")
+        self.click_element_css("img[alt = 'Supprimer le scénario']")
         self.driver.switch_to.alert.accept()
         time.sleep(1)
-        self.assertFalse(self.is_element_present(By.CSS_SELECTOR, "img[alt = 'Supprimer la question']"))
+        body_text = self.driver.find_element_by_tag_name('body').text
+        self.assertTrue(scenario_title in body_text)
 
     def tearDown(self):
         # close the browser window and clear test scenarios
-        self.driver.get(URL_LIST_SCENARIO)
-        if self.is_element_present(By.CSS_SELECTOR, "img[alt = 'Supprimer la question']"):
-            self.click_element_css("img[alt = 'Supprimer la question']")
+        self.driver.get(URL_CLASS)
+        self.click_element_css("a[href='#listscena']")
+        if self.is_element_present(By.CSS_SELECTOR, "img[alt = 'Supprimer le scénario']"):
+            self.click_element_css("img[alt = 'Supprimer le scénario']")
             time.sleep(1)
             self.driver.switch_to.alert.accept()
         self.driver.quit()
@@ -126,22 +120,28 @@ class SampleTest(unittest.TestCase):
         return True
 
     def click_element_id(self, el_id):
-        el = self.driver.find_element_by_id(el_id)
-        el.click()
-        # ActionChains(self.driver).move_to_element(el).click(el).perform()
+        els = self.driver.find_elements_by_id(el_id)
+        for el in els:
+            if el.is_displayed():
+                el.click()
+                # ActionChains(self.driver).move_to_element(el).click(el).perform()
 
     def click_element_css(self, selector):
-        el = self.driver.find_element_by_css_selector(selector)
-        el.click()
-        # ActionChains(self.driver).move_to_element(el).click(el).perform()
+        els = self.driver.find_elements_by_css_selector(selector)
+        for el in els:
+            if el.is_displayed():
+                el.click()
+                # ActionChains(self.driver).move_to_element(el).click(el).perform()
 
     def scroll_bottom(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
 
     def fill_field(self, el_id, text):
-        el = self.driver.find_element_by_id(el_id)
-        el.clear()
-        el.send_keys(text)
+        els = self.driver.find_elements_by_id(el_id)
+        for el in els:
+            if el.is_displayed():
+                el.clear()
+                el.send_keys(text)
 
     def fieldText(self, el_id):
         el = self.driver.find_element_by_id(el_id)
