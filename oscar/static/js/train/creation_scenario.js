@@ -447,10 +447,11 @@ class ScenarioCreation {
 
         data["elements"] = []
 
-        for(let i = 5; i < this.anchor.childNodes.length; i++)
+        for(let i = 0; i < this.anchor.childNodes.length; i++)
         {
 
             let classElem = this.anchor.childNodes[i].className;
+            console.log(classElem);
 
             if(classElem == "textBlockElem")
             {
