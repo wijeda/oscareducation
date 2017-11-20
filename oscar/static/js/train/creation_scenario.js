@@ -424,7 +424,7 @@ class ScenarioCreation {
     sendForm() {
 
         let data = {};
-        let listOfParamIDfield = ["title", "skill", "topic", "grade_level", "instructions", "public"];
+        let listOfParamIDfield = ["title", "topic", "grade_level", "instructions", "public"];
 
 
         for(let id of listOfParamIDfield){
@@ -433,9 +433,6 @@ class ScenarioCreation {
             {
                 data[id] = elem.checked;
             }
-            else if (id == "skill") { // TODO to handle
-                data[id] = "";
-            }
             else
             {
                 data[id] = elem.value;
@@ -443,7 +440,18 @@ class ScenarioCreation {
 
 
         }
+        // get skills
+        data["skill"] = "";
+        data["skills"] = [];
+        let skillsBox = document.getElementById("skillsBox");
+        for(let skillBox of skillsBox.childNodes){
+            if(skillBox.classList && skillBox.classList.contains("ng-scope")) {
+                let skill = skillBox.getElementsByTagName("button")[0].innerHTML.trim();
+                data["skills"].push(skill)
+            }
+        }
 
+        console.log(data["skills"]);
 
         data["elements"] = []
 
