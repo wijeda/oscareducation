@@ -66,35 +66,35 @@
                           {& skill &}
                     %br
                     %label{:for => 'skill'} Compétences :
-                %div#boxskills
-                    -for stage in stages
-                      -if forloop.counter == 3
-                        <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                          <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                              <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Compétences antérieures</a>
-                              </h4>
-                            </div>
-                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="panel-body">
-
-                      .form-group
-                        .control-label= stage.name
-                        .form-group
-                          %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
-                            -regroup stage.skills_by_id by section as sections
-                            -for section in sections
-                              %optgroup{label: "{{ section.grouper }}"}
-                                -for skill in section.list reversed
-                                  %option{value: "{{ skill.code }}", id: "{{ skill.code }}"}
-                                    {{ skill.code }} - {{ skill.name }}
+                    %div#boxskills
+                        -for stage in stages
+                          -if forloop.counter == 3
+                            <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                              <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                  <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Compétences antérieures</a>
+                                  </h4>
+                                </div>
+                              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
 
                           .form-group
-                            %button.btn.btn-primary{ng-click: "addSkillToTest({{ stage.id }})", id: "addSkillToTestButtonForStage{{ stage.id }}"}
-                                Ajouter cette compétence
+                            .control-label= stage.name
+                            .form-group
+                              %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
+                                -regroup stage.skills_by_id by section as sections
+                                -for section in sections
+                                  %optgroup{label: "{{ section.grouper }}"}
+                                    -for skill in section.list reversed
+                                      %option{value: "{{ skill.code }}", id: "{{ skill.code }}"}
+                                        {{ skill.code }} - {{ skill.name }}
 
-                          -if forloop.last and forloop.counter >= 3
+                              .form-group
+                                %button.btn.btn-primary{ng-click: "addSkillToTest({{ stage.id }})", id: "addSkillToTestButtonForStage{{ stage.id }}"}
+                                    Ajouter cette compétence
+
+                              -if forloop.last and forloop.counter >= 3
 
           #whiteBox{:methode => "POST"}
 

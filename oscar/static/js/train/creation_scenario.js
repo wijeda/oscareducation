@@ -637,26 +637,9 @@ function removeReponse(elem){
     return false;
 }
 
-function addListenerComp(){
-    console.log("in the function");
-    /*var list = document.getElementsByClassName('optionWithHint');
 
-    for (var f of list){
-        f.addEventListener("click",mouseover, false); // mouseover
-    }*/
-}
 
-function mouseover(elem){
-    console.log("yr");
-    console.log(elem);
-    //background-color = "red";
-}
 
-function mouseout(elem){
-    console.log(elem);
-
-    //this.target.style.color = "grey";
-}
 //This function permits to fill automatically the field on the navBar when the user is writting the title of the content.
 function fillTitle(elem){
     var root = elem.parentNode.parentNode;
@@ -669,6 +652,15 @@ function fillTitle(elem){
 }
 // initiation
 window.onload = function(){
+
+
+    if(typeof angular == 'undefined') {
+      console.log("errror");
+    }else {
+      console.log("pas error");
+    }
+
+
 
     let param = {
         "btnPlusID":"addElement",
@@ -740,7 +732,7 @@ window.onload = function(){
                         imgButtonID,
                         mcqBlockElemID,
                         mcqButtonID);*/
-    addListenerComp();
+
     new ScenarioCreation(param)
 
 };

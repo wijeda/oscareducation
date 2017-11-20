@@ -44,6 +44,7 @@ def create_scenario(request, id, pk):
     dico = {}
     # dico["stage_list"] = Stage.objects.all
     lesson = get_object_or_404(Lesson, pk=pk)
+    dico["lesson"] = lesson
     dico["stages"] = lesson.stages_in_unchronological_order()
     if id is not None:
         # we get the id of the scenario we want to edit
