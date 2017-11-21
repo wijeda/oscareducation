@@ -15,7 +15,7 @@
 #sideNavBar {
     grid-column: 1; /* placement en colonne 1 */
 }
-#sectionElements, #whiteBox {
+#sectionElements, #whiteBox, #ToolsBarSEC {
     margin-left: 140px;
     grid-column: 2; /* placement en colonne 2 */
 }
@@ -80,18 +80,15 @@
 }
 #DiffElem{
     bottom : 15%;
-    left: 20%;
-    position:relative;
+
 }
 #cancelScenario{
-    left: 20%;
     bottom : 20%;
-    position:relative;
 }
 #saveScenario {
     bottom : 12%;
-    left: 68%;
-    position:relative;
+    left: 410px;
+    position: relative;
 }
 
 #questionMCQ{
@@ -254,22 +251,28 @@ label:hover {
     margin: 10px;
 }
 
-.blocanswer .isAnswer, .blocanswer .answer{
+.blocanswer .blocanswer .answer{
     margin: 10px;
+}
+
+.blocanswer label{
+    margin-bottom: 0px;
 }
 
 .blocanswer .isAnswer{
     position: relative;
     top: 50%;
+    margin: 10px;
+    left: 5px;
     /*transform: translateY(-50%);*/
 }
 
-.verticalBar{
+/*.verticalBar{
     border-left: solid grey;
     margin-right: 5px;
     border-width: 2px;
     height: 100%;
-}
+}*/
 .answers{
     width: 100%;
     /*left: 50%;
@@ -279,6 +282,8 @@ label:hover {
 .answer{
     display: inline-block;
     max-width: 200px;
+    border-left: solid grey;
+    padding: 10px;
 }
 
 .containerMCQ{
