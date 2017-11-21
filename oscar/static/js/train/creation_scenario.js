@@ -504,7 +504,22 @@ class ScenarioCreation {
     }
 
 }
-
+function cancelCreation(elem){
+    if (confirm('Etes vous sur de vouloir annuler la création de ce scénario ?'))
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "/professor/train/cancel_scenario/", false ); // false for synchronous request
+        xmlHttp.send( null );
+        var pathArray = window.location.pathname.split( '/' );
+        var pk = pathArray[4];
+        var new_url = "/professor/lesson/"+pk+"/#listscena";
+        window.location.href = new_url;
+    }
+    else
+    {
+        console.log('no');
+    }
+}
 function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
