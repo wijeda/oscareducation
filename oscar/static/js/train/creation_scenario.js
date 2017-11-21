@@ -424,7 +424,7 @@ class ScenarioCreation {
     sendForm() {
 
         let data = {};
-        let listOfParamIDfield = ["title", "skill", "topic", "grade_level", "instructions", "public"];
+        let listOfParamIDfield = ["title", "topic", "grade_level", "instructions", "public"];
 
 
         for(let id of listOfParamIDfield){
@@ -433,9 +433,6 @@ class ScenarioCreation {
             {
                 data[id] = elem.checked;
             }
-            else if (id == "skill") { // TODO to handle
-                data[id] = "";
-            }
             else
             {
                 data[id] = elem.value;
@@ -443,14 +440,26 @@ class ScenarioCreation {
 
 
         }
+        // get skills
+        data["skill"] = "";
+        data["skills"] = [];
+        let skillsBox = document.getElementById("skillsBox");
+        for(let skillBox of skillsBox.childNodes){
+            if(skillBox.classList && skillBox.classList.contains("ng-scope")) {
+                let skill = skillBox.getElementsByTagName("button")[0].innerHTML.trim();
+                data["skills"].push(skill)
+            }
+        }
 
+        console.log(data["skills"]);
 
         data["elements"] = []
 
-        for(let i = 5; i < this.anchor.childNodes.length; i++)
+        for(let i = 0; i < this.anchor.childNodes.length; i++)
         {
 
-            let classElem = this.anchor.childNodes[i].className
+            let classElem = this.anchor.childNodes[i].className;
+            console.log(classElem);
 
             if(classElem == "textBlockElem")
             {
@@ -636,26 +645,9 @@ function removeReponse(elem){
     return false;
 }
 
-function addListenerComp(){
-    console.log("in the function");
-    /*var list = document.getElementsByClassName('optionWithHint');
 
-    for (var f of list){
-        f.addEventListener("click",mouseover, false); // mouseover
-    }*/
-}
 
-function mouseover(elem){
-    console.log("yr");
-    console.log(elem);
-    //background-color = "red";
-}
 
-function mouseout(elem){
-    console.log(elem);
-
-    //this.target.style.color = "grey";
-}
 //This function permits to fill automatically the field on the navBar when the user is writting the title of the content.
 function fillTitle(elem){
     var root = elem.parentNode.parentNode;
@@ -668,6 +660,15 @@ function fillTitle(elem){
 }
 // initiation
 window.onload = function(){
+
+
+    if(typeof angular == 'undefined') {
+      console.log("errror");
+    }else {
+      console.log("pas error");
+    }
+
+
 
     let param = {
         "btnPlusID":"addElement",
@@ -705,24 +706,28 @@ window.onload = function(){
         "removeImageID": "removeImage",*/
     }
 
-    Sortable.create(whiteBox, {onEnd: function (evt) {
+    var sorte = Sortable.create(whiteBox, {onEnd: function (evt) {
       var ul = document.getElementById("simpleList");
-      var node = ul.childNodes[evt.oldIndex-3];
-      ul.replaceChild(ul.childNodes[evt.newIndex-3], ul.childNodes[evt.oldIndex-3]);
-      ul.insertBefore(node, ul.childNodes[evt.newIndex-3]);
+      console.log(ul.childNodes[evt.oldIndex]);
+      console.log(ul);
+      var node = ul.childNodes[evt.oldIndex];
+      ul.replaceChild(ul.childNodes[evt.newIndex], ul.childNodes[evt.oldIndex]);
+      ul.insertBefore(node, ul.childNodes[evt.newIndex]);
       evt.to;    // target list
       evt.from;  // previous list
       evt.oldIndex;  // element's old index within old parent
       evt.newIndex;  // element's new index within new parent
     }});
 
-    /*Sortable.create(simpleList, {onEnd: function (evt) {
+    Sortable.create(simpleList, {onEnd: function (evt) {
       var ul = document.getElementById("whiteBox");
-      var node = ul.childNodes[evt.oldIndex+4];
-      ul.replaceChild(ul.childNodes[evt.newIndex+4], ul.childNodes[evt.oldIndex+4]);
-      ul.insertBefore(node, ul.childNodes[evt.newIndex+4]);
+      console.log(ul.childNodes[evt.oldIndex]);
+      console.log(ul);
+      var node = ul.childNodes[evt.oldIndex];
+      ul.replaceChild(ul.childNodes[evt.newIndex], ul.childNodes[evt.oldIndex]);
+      ul.insertBefore(node, ul.childNodes[evt.newIndex]);
     }});
-    */
+
 
     /*new ScenarioCreation(anchorID,
                         btnPlusID,
@@ -735,7 +740,7 @@ window.onload = function(){
                         imgButtonID,
                         mcqBlockElemID,
                         mcqButtonID);*/
-    addListenerComp();
+
     new ScenarioCreation(param)
 
 };

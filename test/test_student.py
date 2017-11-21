@@ -6,13 +6,13 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
 # Run with "python3.5 *test name*.py"
-
+URL_IMG = "https://i.imgur.com/UkiM2YH.jpg"
 URL_HOMEPAGE = "http://127.0.0.1:8000"
 URL_LOGIN = "http://127.0.0.1:8000/accounts/usernamelogin/"
 URL_SCENARIO_CREATION = "http://127.0.0.1:8000/professor/train/create_scenario/"
 URL_LIST_SCENARIO = "http://127.0.0.1:8000/professor/train/list_scenario/"
 URL_LIST_STUDENT = "http://127.0.0.1:8000/professor/train/student_list_scenario/"
-URL_IMG = "https://i.imgur.com/UkiM2YH.jpg"
+URL_CLASS = "http://127.0.0.1:8000/professor/lesson/1/#"
 URL_VIDEO = "https://www.youtube.com/watch?v=2bjk26RwjyU"
 
 
@@ -31,28 +31,35 @@ class SampleTest(unittest.TestCase):
     def test_student_view(self):
 
         driver = self.driver
-        driver.get(URL_LIST_SCENARIO)
-
+        self.click_element_css("a[href='/professor/lesson/1/']")
+        self.click_element_css("a[href='#listscena']")
         self.click_element_id("addElement")
 
         self.fill_field("title", "test_title")
         self.fill_field("instructions", "test_instructions")
 
-        self.click_element_id("addElement")
-        self.click_element_id("addElementVideo")
+        add_hover = self.driver.find_element_by_id("addElement")
+        img_click = self.driver.find_element_by_id("addElementImg")
+        video_click = self.driver.find_element_by_id("addElementVideo")
+        mcq_click = self.driver.find_element_by_id("addElementMcq")
+
+        ActionChains(self.driver).move_to_element(add_hover).click(video_click).perform()
+        self.scroll_bottom()
         self.fill_field("vid_url", URL_VIDEO)
         self.click_element_id("addVid")
 
         self.scroll_bottom()
 
-        self.click_element_id("addElementImg")
+        ActionChains(self.driver).move_to_element(add_hover).click(img_click).perform()
+        self.scroll_bottom()
         self.fill_field("img_url", URL_IMG)
         self.click_element_id("addImg")
-
         time.sleep(1)
+
         self.scroll_bottom()
 
-        self.click_element_id("addElementMcq")
+        ActionChains(self.driver).move_to_element(add_hover).click(mcq_click).perform()
+        self.scroll_bottom()
         self.fill_field_css("input[class='titre_MCQ_Elem']", "Titre_MCQ")
         self.fill_field_css("input[class='instruction_MCQ_Elem']", "instruction")
         self.fill_field_css("input[class='question_MCQ_Elem']", "question")
@@ -85,10 +92,12 @@ class SampleTest(unittest.TestCase):
 
     def tearDown(self):
         # close the browser window and clear test scenarios
-        self.driver.get(URL_LIST_SCENARIO)
-        self.click_element_css("img[alt = 'Supprimer la question']")
-        time.sleep(1)
-        self.driver.switch_to.alert.accept()
+        self.driver.get(URL_CLASS)
+        self.click_element_css("a[href='#listscena']")
+        if self.is_element_present(By.CSS_SELECTOR, "img[alt = 'Supprimer le scénario']"):
+            self.click_element_css("img[alt = 'Supprimer le scénario']")
+            time.sleep(1)
+            self.driver.switch_to.alert.accept()
         self.driver.quit()
 
     def is_text_in_body(self, text):
@@ -108,29 +117,37 @@ class SampleTest(unittest.TestCase):
         return True
 
     def click_element_id(self, el_id):
-        el = self.driver.find_element_by_id(el_id)
-        ActionChains(self.driver).move_to_element(el).click(el).perform()
+        els = self.driver.find_elements_by_id(el_id)
+        for el in els:
+            if el.is_displayed():
+                el.click()
+                # ActionChains(self.driver).move_to_element(el).click(el).perform()
 
     def click_element_css(self, selector):
-        el = self.driver.find_element_by_css_selector(selector)
-        ActionChains(self.driver).move_to_element(el).click(el).perform()
+        els = self.driver.find_elements_by_css_selector(selector)
+        for el in els:
+            if el.is_displayed():
+                el.click()
+                # ActionChains(self.driver).move_to_element(el).click(el).perform()
 
     def scroll_bottom(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
 
     def fill_field(self, el_id, text):
+        els = self.driver.find_elements_by_id(el_id)
+        for el in els:
+            if el.is_displayed():
+                el.clear()
+                el.send_keys(text)
+
+    def fieldText(self, el_id):
         el = self.driver.find_element_by_id(el_id)
-        el.clear()
-        el.send_keys(text)
+        return el.get_attribute("value")
 
     def fill_field_css(self, el_css, text):
         el = self.driver.find_element_by_css_selector(el_css)
         el.clear()
         el.send_keys(text)
-
-    def fieldText(self, el_id):
-        el = self.driver.find_element_by_id(el_id)
-        return el.get_attribute("value")
 
 
 if __name__ == "__main__":

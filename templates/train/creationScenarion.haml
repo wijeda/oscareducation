@@ -6,10 +6,18 @@
 -load bootstrap3
 
 -block content
+
+
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
     %script{:src => "/static/js/train/Sortable.js"}
     %script{type: "text/javascript", src: "{% static 'js/professor_validate_exercice.js' %}"}
+    %script{type: "text/javascript", src: "{% static 'js/professor_lesson.js' %}"}
+
+    :javascript
+      context = {
+        lessonId: {{ lesson.id }}
+      };
 
     #OurContainer
         %nav#sideNavBar
@@ -17,30 +25,11 @@
                 .divElemNav
                     %span.glyphicon.glyphicon-cog
                     Paramètres
-                #idTextElemNav{:style => "display: none"}
-                    %span.glyphicon.glyphicon-font
-                        %label Texte :
-                            -#%span
-                #idImgElemNav{:style => "display: none"}
-                     %span.glyphicon.glyphicon-picture
-                        %label Image :
-                            %span
-                #idVideoElemNav{:style => "display: none"}
-                    %span.glyphicon.glyphicon-facetime-video
-                        %label Vidéo :
-                            %span
-                #idMCQElemNav{:style => "display: none"}
-                    %span.glyphicon.glyphicon-list
-                        %label QCM :
-                            %span
-                #idPDFElemNav{:style => "display: none"}
-                    %span.glyphicon.glyphicon-file
-                        %label PDF :
-                            %span
-
                 #simpleList.divElemNav
+
+
     %section#sectionElements
-        #whiteBox{:methode => "POST"}
+        #whiteBox1{:methode => "POST"}
             {% csrf_token %}
             {{ form.errors }}
             {{ form.non_field_errors }}
@@ -66,154 +55,50 @@
                 %label{:for => 'public'} Public :
                 %input{:id => 'public', :type => 'checkbox'}
                 %br
-                %label{:for => 'skill'} Compétences :
-                %div#boxskills
-                    -for stage in stages
-                      -if forloop.counter == 3
-                        <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                          <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                              <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Compétences antérieures</a>
-                              </h4>
-                            </div>
-                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="panel-body">
+                %div{ng-app: "oscar", ng-controller: "createTestController"}
+                    %p
+                      %b
+                        Compétences sélectionnées :
 
-                      .form-group
-                        .control-label= stage.name
-                        .form-group
-                          %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
-                            -regroup stage.skills_by_id by section as sections
-                            -for section in sections
-                              %optgroup{label: "{{ section.grouper }}"}
-                                -for skill in section.list reversed
-                                  %option{value: "{{ skill.code }}", id: "{{ skill.code }}"}
-                                    {{ skill.code }} - {{ skill.name }}
-
-
-            #videoBlockElem{:style => "display: none"}
-                %div#headline
-                    %span.glyphicon.glyphicon-facetime-video
-                    %label{:for => 'title_video'} Vidéo:
-                    %input.titre_vid_Elem{:id => 'title_video', :placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
-                    %button.btn.minimizeElem{:toggle => "tooltip", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-minus
-                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-unchecked
-                    %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
-                        %span.glyphicon.glyphicon-remove
-                .panel-body
-                    .form-group
-                        %iframe{:width => "420", :height => "315", :style => "display: none", :allowfullscreen => "allowfullscreen", :mozallowfullscreen => "mozallowfullscreen", :msallowfullscreen => "msallowfullscreen", :oallowfullscreen => "oallowfullscreen", :webkitallowfullscreen => "webkitallowfullscreen"}
-                        %label URL de votre vidéo (Youtube)
-                        %input.url_vid_Elem{:id => 'vid_url', :type => "text"}
-                        %button.btn.btn-primary#addVid.addVid{:action => "#", :onclick => "return loadVideo(this)"} Charger la vidéo
-                        -# #loadVid{:style => "display: none"}
-                    .form-group
-                        %label{:for => 'description_vid'} Description:
-                        %input.desc_vid_Elem{:id => 'description_vid', :placeholder => 'Optionnel'}
-
-            #mcqBlockElem{:style => "display: none"}
-                %div#headline
-                    %span.glyphicon.glyphicon-list
-                    %label{:for => 'title_mcq'} QCM:
-                    %input.titre_MCQ_Elem{:placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
-                    %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-minus
-                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-unchecked
-                    %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
-                        %span.glyphicon.glyphicon-remove
-                .panel-body
-                    %label Question:
-                    %input.question_MCQ_Elem{:placeholder => 'Question'}
+                    .well#skillsBox
+                      %span{ng-repeat: "skill in toTestSkills"}
+                        %button.btn.btn-primary.selected-skill{type: "button", title: "{& skill.name &}", ng-click: "removeSkill(skill)"}
+                          {& skill &}
                     %br
-                    %div.list_answers
-                        %div.repLine
-                            %label.labelanswer Réponse 1:
-                            %input.answer1.answer{:placeholder => 'Veuillez rentrer une réponse'}
-                            %input.answer1isvalid{:type => "checkbox"}
-                            %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)", :style => "display : none"}
-                                %span.glyphicon.glyphicon-remove
-                        %br
-                        %div.repLine
-                            %label Réponse 2:
-                            %input.answer2.answer{:placeholder => 'Veuillez rentrer une réponse'}
-                            %input.answer2isvalid.answer1isvalid{:type => "checkbox"}
-                            %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)"}
-                                %span.glyphicon.glyphicon-remove
-                        %br
-                    %button.btn.btn-primary.addReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une réponse",:action => "#", :onclick => "return addReponse(this)"}
-                        %span.glyphicon.glyphicon-plus
-                    %br
+                    %label{:for => 'skill'} Compétences :
+                    %div#boxskills
+                        -for stage in stages
+                          -if forloop.counter == 3
+                            <div class="panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                              <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                  <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Compétences antérieures</a>
+                                  </h4>
+                                </div>
+                              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
 
-            #textBlockElem{:style => "display: none"}
-                %div#headline
-                    %span.glyphicon.glyphicon-font
-                    %label{:for => 'title_txt'} Texte:
-                    %input.titre_text_Elem{:placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
-                    %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-minus
-                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-unchecked
-                    %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
-                        %span.glyphicon.glyphicon-remove
-                .panel-body
-                    %textarea.desc_text_Elem{:rows => "2%", :cols => "60%", :placeholder => "Tapez votre texte"}
+                          .form-group
+                            .control-label= stage.name
+                            .form-group
+                              %select.form-control{ng-model: "stage{{ stage.id }}SelectedSkill"}
+                                -regroup stage.skills_by_id by section as sections
+                                -for section in sections
+                                  %optgroup{label: "{{ section.grouper }}"}
+                                    -for skill in section.list reversed
+                                      %option{value: "{{ skill.code }}", id: "{{ skill.code }}"}
+                                        {{ skill.code }} - {{ skill.name }}
 
-            #imgBlockElem{:style => "display: none"}
-                %div#headline
-                    %span.glyphicon.glyphicon-picture
-                    %label{:for => 'title_img'} Image:
-                    %input#title_img.title_img{:placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
-                    %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-minus
-                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-unchecked
-                    %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
-                        %span.glyphicon.glyphicon-remove
-                .panel-body
-                    .form-group
-                        %img.imgprev{:width => "50%"}
-                        -# %a{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image"}
-                        -# %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
-                        -# -# #loadImage{:style => "display: none"}
-                        %label Importer du PC :
-                        -# %input.importButton#importButton{id: "upload", ng-model: "image", type: "file", onchange: "angular.element(this).scope().uploadFile(this.files)", :style => 'inline-block'}
-                        %input#importButton.importButton{:type => "file", :accept => "image/*", onchange: "loadFile(event, this)"}
-                        %label Importer d'une Url :
-                        %input.url_img_Elem{:id => 'img_url', :type => "text", :placeholder => 'Entrez une url'}
-                        %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
-                            -# #loadImage{:style => "display: none"}
-                    .form-group
-                        %label{:for => 'description_img'} Description:
-                        %input.desc_img_Elem{:id => 'description_img', :placeholder => 'Optionnel'}
+                              .form-group
+                                %button.btn.btn-primary{ng-click: "addSkillToTest({{ stage.id }})", id: "addSkillToTestButtonForStage{{ stage.id }}"}
+                                    Ajouter cette compétence
 
-            #pdfBlockElem{:style => "display: none"}
-                %div#headline
-                    %span.glyphicon.glyphicon-file
-                    %label{:for => 'title_pdf'} PDF:
-                    %input.titre_pdf_Elem{:id => 'title_pdf', :placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
-                    %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-minus
-                    %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
-                        %span.glyphicon.glyphicon-unchecked
-                    %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
-                        %span.glyphicon.glyphicon-remove
-                .panel-body
-                    .form-group
-                        %iframe.pdfprev{:width => "500", :height => "375", :style => "display: none"}
-                        %label URL de votre pdf
-                        %input.url_pdf_Elem{:id => 'pdf_url', :type => "text"}
-                        %button.btn.btn-primary#addPDF{:action => "#", :onclick => "return loadPDF(this)"} Charger le PDF
-                        -# #loadVid{:style => "display: none"}
-                    .form-group
-                        %label{:for => 'description_pdf'} Description:
-                        %input.desc_pdf_Elem{:id => 'description_pdf', :placeholder => 'Optionnel'}
+                              -if forloop.last and forloop.counter >= 3
 
-            #Tools.blk
-                %br
+          #whiteBox{:methode => "POST"}
+
+
     -# %input.btn.btn-primary#submit{:type => "submit"}
     {% buttons %}
         #DiffElem
@@ -245,3 +130,144 @@
             %span.glyphicon.glyphicon-floppy-disk
             Sauvegarder
                 {% endbuttons %}
+
+
+                  #videoBlockElem{:style => "display: none"}
+                      %div#headline
+                          %span.glyphicon.glyphicon-facetime-video
+                          %label{:for => 'title_video'} Vidéo:
+                          %input.titre_vid_Elem{:id => 'title_video', :placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
+                          %button.btn.minimizeElem{:toggle => "tooltip", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-minus
+                          %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-unchecked
+                          %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
+                              %span.glyphicon.glyphicon-remove
+                      .panel-body
+                          .form-group
+                              %iframe{:width => "420", :height => "315", :style => "display: none", :allowfullscreen => "allowfullscreen", :mozallowfullscreen => "mozallowfullscreen", :msallowfullscreen => "msallowfullscreen", :oallowfullscreen => "oallowfullscreen", :webkitallowfullscreen => "webkitallowfullscreen"}
+                              %label URL de votre vidéo (Youtube)
+                              %input.url_vid_Elem{:id => 'vid_url', :type => "text"}
+                              %button.btn.btn-primary#addVid.addVid{:action => "#", :onclick => "return loadVideo(this)"} Charger la vidéo
+                              -# #loadVid{:style => "display: none"}
+                          .form-group
+                              %label{:for => 'description_vid'} Description:
+                              %input.desc_vid_Elem{:id => 'description_vid', :placeholder => 'Optionnel'}
+
+                  #mcqBlockElem{:style => "display: none"}
+                      %div#headline
+                          %span.glyphicon.glyphicon-list
+                          %label{:for => 'title_mcq'} QCM:
+                          %input.titre_MCQ_Elem{:placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
+                          %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-minus
+                          %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-unchecked
+                          %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
+                              %span.glyphicon.glyphicon-remove
+                      .panel-body
+                          %label Question:
+                          %input.question_MCQ_Elem{:placeholder => 'Question'}
+                          %br
+                          %div.list_answers
+                              %div.repLine
+                                  %label.labelanswer Réponse 1:
+                                  %input.answer1.answer{:placeholder => 'Veuillez rentrer une réponse'}
+                                  %input.answer1isvalid{:type => "checkbox"}
+                                  %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)", :style => "display : none"}
+                                      %span.glyphicon.glyphicon-remove
+                              %br
+                              %div.repLine
+                                  %label Réponse 2:
+                                  %input.answer2.answer{:placeholder => 'Veuillez rentrer une réponse'}
+                                  %input.answer2isvalid.answer1isvalid{:type => "checkbox"}
+                                  %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)"}
+                                      %span.glyphicon.glyphicon-remove
+                              %br
+                          %button.btn.btn-primary.addReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une réponse",:action => "#", :onclick => "return addReponse(this)"}
+                              %span.glyphicon.glyphicon-plus
+                          %br
+
+                  #textBlockElem{:style => "display: none"}
+                      %div#headline
+                          %span.glyphicon.glyphicon-font
+                          %label{:for => 'title_txt'} Texte:
+                          %input.titre_text_Elem{:placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
+                          %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-minus
+                          %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-unchecked
+                          %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
+                              %span.glyphicon.glyphicon-remove
+                      .panel-body
+                          %textarea.desc_text_Elem{:rows => "2%", :cols => "60%", :placeholder => "Tapez votre texte"}
+
+                  #imgBlockElem{:style => "display: none"}
+                      %div#headline
+                          %span.glyphicon.glyphicon-picture
+                          %label{:for => 'title_img'} Image:
+                          %input#title_img.title_img{:placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
+                          %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-minus
+                          %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-unchecked
+                          %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
+                              %span.glyphicon.glyphicon-remove
+                      .panel-body
+                          .form-group
+                              %img.imgprev{:width => "50%"}
+                              -# %a{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image"}
+                              -# %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
+                              -# -# #loadImage{:style => "display: none"}
+                              %label Importer du PC :
+                              -# %input.importButton#importButton{id: "upload", ng-model: "image", type: "file", onchange: "angular.element(this).scope().uploadFile(this.files)", :style => 'inline-block'}
+                              %input#importButton.importButton{:type => "file", :accept => "image/*", onchange: "loadFile(event, this)"}
+                              %label Importer d'une Url :
+                              %input.url_img_Elem{:id => 'img_url', :type => "text", :placeholder => 'Entrez une url'}
+                              %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
+                                  -# #loadImage{:style => "display: none"}
+                          .form-group
+                              %label{:for => 'description_img'} Description:
+                              %input.desc_img_Elem{:id => 'description_img', :placeholder => 'Optionnel'}
+
+                  #pdfBlockElem{:style => "display: none"}
+                      %div#headline
+                          %span.glyphicon.glyphicon-file
+                          %label{:for => 'title_pdf'} PDF:
+                          %input.titre_pdf_Elem{:id => 'title_pdf', :placeholder => 'Tapez votre titre', :onkeypress=> "fillTitle(this)"}
+                          %button.btn.minimizeElem{:toggle => "tooltip", :placement => "bottom", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-minus
+                          %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :placement => "bottom", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                              %span.glyphicon.glyphicon-unchecked
+                          %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
+                              %span.glyphicon.glyphicon-remove
+                      .panel-body
+                          .form-group
+                              %iframe.pdfprev{:width => "500", :height => "375", :style => "display: none"}
+                              %label URL de votre pdf
+                              %input.url_pdf_Elem{:id => 'pdf_url', :type => "text"}
+                              %button.btn.btn-primary#addPDF{:action => "#", :onclick => "return loadPDF(this)"} Charger le PDF
+                              -# #loadVid{:style => "display: none"}
+                          .form-group
+                              %label{:for => 'description_pdf'} Description:
+                              %input.desc_pdf_Elem{:id => 'description_pdf', :placeholder => 'Optionnel'}
+                    #idTextElemNav{:style => "display: none"}
+                      %span.glyphicon.glyphicon-font
+                      %label Texte :
+                                                -#%span
+                    #idImgElemNav{:style => "display: none"}
+                      %span.glyphicon.glyphicon-picture
+                      %label Image :
+                      %span
+                    #idVideoElemNav{:style => "display: none"}
+                      %span.glyphicon.glyphicon-facetime-video
+                      %label Vidéo :
+                      %span
+                    #idMCQElemNav{:style => "display: none"}
+                      %span.glyphicon.glyphicon-list
+                      %label QCM :
+                      %span
+                    #idPDFElemNav{:style => "display: none"}
+                      %span.glyphicon.glyphicon-file
+                      %label PDF :
+                      %span
