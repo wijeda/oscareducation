@@ -18,6 +18,7 @@
 #sectionElements, #whiteBox, #ToolsBarSEC {
     margin-left: 140px;
     grid-column: 2; /* placement en colonne 2 */
+    margin-bottom: 70px;
 }
 #navFixed {
     position:fixed;
@@ -78,6 +79,10 @@
 .textBlockElem textarea {
 	width: 100%;
 }
+#parameters textarea {
+    width: 100%;
+    resize: none;
+}
 #DiffElem{
     bottom : 15%;
 
@@ -119,7 +124,9 @@ label:hover {
     margin: 5px;
     padding: 5px;
 }
-
+.desc_text_Elem{
+    resize:none;
+}
 .deleteElement{
 	position: absolute;
 	top: 0;
