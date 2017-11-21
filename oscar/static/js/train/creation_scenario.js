@@ -482,6 +482,7 @@ class ScenarioCreation {
                 data["elements"].push(this.getElemInputBlockPDF(this.anchor.childNodes[i]));
             }
         }
+        console.log(data);
 
         //construct an HTTP request
 
@@ -490,6 +491,7 @@ class ScenarioCreation {
         xhr.open("POST", "/professor/train/save_scenario", true);
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
         xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
+
         // send the collected data as JSON
         xhr.send(JSON.stringify(data));
         var pathArray = window.location.pathname.split( '/' );

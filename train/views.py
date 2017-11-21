@@ -52,7 +52,10 @@ def create_scenario(request, id, pk):
 
         # filling the parameters
         dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+        print("wolololo")
+        print(s.public)
 
+        dico["scenario"]["public"] = s.public
     return render(request, "train/creationScenarion.haml", dico)
 
 

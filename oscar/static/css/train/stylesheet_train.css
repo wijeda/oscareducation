@@ -15,7 +15,7 @@
 #sideNavBar {
     grid-column: 1; /* placement en colonne 1 */
 }
-#sectionElements {
+#sectionElements, #whiteBox {
     margin-left: 140px;
     grid-column: 2; /* placement en colonne 2 */
 }
