@@ -102,8 +102,8 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 label:hover {
@@ -251,39 +251,30 @@ label:hover {
     margin: 10px;
 }
 
-.blocanswer .blocanswer .answer{
-    margin: 10px;
+.blocanswer .answer{
+    margin-left: 10px;
 }
 
 .blocanswer label{
     margin-bottom: 0px;
+    display: flex;
 }
 
 .blocanswer .isAnswer{
-    position: relative;
-    top: 50%;
-    margin: 10px;
-    left: 5px;
-    /*transform: translateY(-50%);*/
+    margin: auto;
+    margin-left: 12px;
 }
 
-/*.verticalBar{
-    border-left: solid grey;
-    margin-right: 5px;
-    border-width: 2px;
-    height: 100%;
-}*/
 .answers{
     width: 100%;
-    /*left: 50%;
-    transform: translateX(-50%);*/
     text-align: center;
 }
-.answer{
+div.answer{
     display: inline-block;
     max-width: 200px;
     border-left: solid grey;
     padding: 10px;
+    word-break: break-all;
 }
 
 .containerMCQ{
@@ -302,7 +293,7 @@ label:hover {
 	position: absolute;
 	right: 315px;
 	top: 15%;
-	width: 200px;
+	width: 600px;
 	height: 35px;
 }
 #skill{
