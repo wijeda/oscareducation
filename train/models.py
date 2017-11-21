@@ -17,6 +17,7 @@ class Scenario(models.Model):
     topic = models.CharField("Sujet", max_length = 755)
     grade_level = models.CharField("Niveau", max_length = 755)
     instructions = models.CharField("Instructions", max_length = 755)
+    backgroundImage = models.CharField("backgroundImage", max_length = 755)
     public = models.BooleanField("Visibilité")
 
     def __str__(self):

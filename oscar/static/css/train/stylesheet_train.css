@@ -70,7 +70,7 @@
 #addScenarioButton{
     margin-bottom: 30px;
 }
-.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem {
+.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem, #whiteBox1 {
 	width: 100%;
 	position: relative;
 }
@@ -114,7 +114,7 @@ label:hover {
 .boxTitleMcq{
     padding: 5px;
 }
-.titleMCQ{
+.titleMCQ{ffbe2f
     margin: 5px;
     padding: 5px;
 }
@@ -126,6 +126,16 @@ label:hover {
 	margin-right: 5px;
 	padding: 0;
 }
+
+.addBackgroundImage{
+    padding:0;
+    position: absolute;
+    top:0;
+    right:0px;
+	margin-right: 5px;
+    background-color:#7db1ce;
+}
+
 .minimizeElem, .enlargeElement{
     padding:0;
     position: absolute;
