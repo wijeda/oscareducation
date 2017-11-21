@@ -32,6 +32,7 @@ class ScenarioVisualization{
         this.elements = json.elements;
         this.tabElementObject = [];
         this.first = true;
+
         for(let elem of this.elements){
             var goto = document.createElement('button');
             if(this.first)
@@ -83,6 +84,10 @@ class ScenarioVisualization{
             goto.addEventListener("click", this.gotoButtonElement.bind(this), true)
         }
         this.tabElementObject[this.index].render();
+
+        if (this.elements.length == 1){
+            this.nextButtonElement.bind(this)();
+        }
     }
 
     gotoButtonElement(elem){

@@ -36,7 +36,7 @@
 	height: 30px;
 }
 
-#parameters input, .answer1, .answer2{
+#parameters input, .answer1, .answer2, .question_MCQ_Elem{
 	width: 270px;
 }
 .blk {
@@ -94,7 +94,7 @@
 #questionMCQ{
     display: inline-block;
     width: auto;
-    border: 5px solid orange;
+    border: 5px solid #f38026;
     border-radius: 12px;
     margin: 10px;
     font-size: 30px;
@@ -104,10 +104,11 @@
     text-align: center;
     padding-left: 30px;
     padding-right: 30px;
+    background-color: #f38026b5;
 }
 
 label:hover {
- background:#eee;
+ background:#bfbfbf;
  cursor:pointer;
 }
 
@@ -188,7 +189,7 @@ label:hover {
 .btn-fixed-validate {
     background-color: Transparent;
     background-repeat:no-repeat;
-    border: 2px solid grey;
+    border: 2px solid #f38026;
     border-radius: 6px;
     cursor:pointer;
     overflow: hidden;
@@ -249,6 +250,7 @@ label:hover {
     border-radius: 4px;
     font-size: 20px;
     margin: 10px;
+    background-color: #eee;
 }
 
 .blocanswer .answer{
@@ -275,6 +277,7 @@ div.answer{
     border-left: solid grey;
     padding: 10px;
     word-break: break-all;
+    font-weight: normal;
 }
 
 .containerMCQ{

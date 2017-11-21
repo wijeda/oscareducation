@@ -171,7 +171,8 @@
                               %span.glyphicon.glyphicon-remove
                       .panel-body
                           %label Question:
-                          %input.question_MCQ_Elem{:placeholder => 'Question'}
+                          %textarea.question_MCQ_Elem{:placeholder => 'Question'}
+                          %br
                           %br
                           %div.list_answers
                               %div.repLine
@@ -180,14 +181,14 @@
                                   %input.answer1isvalid{:type => "checkbox"}
                                   %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)", :style => "display : none"}
                                       %span.glyphicon.glyphicon-remove
-                              %br
+
                               %div.repLine
                                   %label Réponse 2:
                                   %input.answer2.answer{:placeholder => 'Veuillez rentrer une réponse'}
                                   %input.answer2isvalid.answer1isvalid{:type => "checkbox"}
                                   %button.btn.btn-danger.removeReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer la réponse",:action => "#", :onclick => "return removeReponse(this)"}
                                       %span.glyphicon.glyphicon-remove
-                              %br
+
                           %button.btn.btn-primary.addReponse{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une réponse",:action => "#", :onclick => "return addReponse(this)"}
                               %span.glyphicon.glyphicon-plus
                           %br
