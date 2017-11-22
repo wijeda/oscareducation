@@ -152,7 +152,13 @@ label:hover {
     padding:0;
     position: absolute;
     top:0;
-    right:70px;
+    right:70x;
+    background-color:#ffbe2f;
+}
+.minimizeParam, .enlargeParam{
+    padding:0;
+    position: absolute;
+    right:10%;
     background-color:#ffbe2f;
 }
 

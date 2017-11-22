@@ -39,7 +39,7 @@
                                 %a{:href => "/professor/train/#{lesson_number}/make_scenario/#{st.id}"}
                                     %span.glyphicon.glyphicon-play{title:"jouer"}
         #addScenarioButton.blk
-            %a.btn.btn-primary#addElement{:href => "/professor/train/lesson/#{lesson.pk}/create_scenario/"} Creer un autre scénario
+            %a.btn.btn-primary#addElement{:href => "/professor/train/lesson/#{lesson.pk}/create_scenario/"} Créer un autre scénario
         .ligneorange
         #parameters.blk
             %h1 Les scénarios d'autres professeurs
@@ -67,3 +67,5 @@
                             %td{:width => "20%"}
                                 %a{:href => "/professor/train/make_scenario/#{st.id}"}
                                     %span.glyphicon.glyphicon-play{title:"jouer"}
+                                %a{:href => "/professor/train/lesson/#{lesson_number}/create_scenario/#{st.id}"}
+                                    %span.glyphicon.glyphicon-copy{title:"Dupliquer"}
