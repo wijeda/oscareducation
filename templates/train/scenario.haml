@@ -24,8 +24,8 @@
 
             .ligneorangefine
 
-            .boxclasse.container-fluid
-                %p.content
+            .boxclasse.container-fluid{:style => "background: url(#{scenario.backgroundImage}) no-repeat; background-size: cover; backgroudn-clip: padding-box; background-color: white;"}
+                %p.content{:style => " background-color: #ffffffb3;padding: 20px;"}
 
         #imgBlockElem{:style => "display: none"}
             .ligneorange
@@ -71,7 +71,7 @@
 
             .ligneorangefine
 
-            .boxclasse.container-fluid.containerMCQ
+            .boxclasse.container-fluid.containerMCQ{:style => "background: url(#{scenario.backgroundImage}) no-repeat; background-size: cover; backgroudn-clip: padding-box; background-color: white;"}
                 %div
                     %div.question#questionMCQ
                 .answers
@@ -82,8 +82,8 @@
                                 .answer
                                 -#%img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
 
-                %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)! :)
-                %p.failedMCQ{:style => "display: none"} Il y a eu une ou plusieurs erreurs :/
+                %p.succededMCQ{:style => "display: none;background-color: #ffffffb3;padding: 20px;"} Bonne(s) Réponse(s)!
+                %p.failedMCQ{:style => "display: none;background-color: #ffffffb3;padding: 20px;"} Il y a eu une ou plusieurs erreurs
                 %button.btn-fixed-validate.validateElement#validateMCQ
                     %span.glyphicon.glyphicon-ok
 

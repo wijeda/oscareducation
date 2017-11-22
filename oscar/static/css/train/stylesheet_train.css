@@ -153,7 +153,13 @@ label:hover {
     padding:0;
     position: absolute;
     top:0;
-    right:70px;
+    right:70x;
+    background-color:#ffbe2f;
+}
+.minimizeParam, .enlargeParam{
+    padding:0;
+    position: absolute;
+    right:10%;
     background-color:#ffbe2f;
 }
 
@@ -209,7 +215,7 @@ label:hover {
 }
 
 .btn-fixed-validate {
-    background-color: Transparent;
+    background-color: white;
     background-repeat:no-repeat;
     border: 2px solid #f38026;
     border-radius: 6px;

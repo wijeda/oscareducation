@@ -421,6 +421,22 @@ class ScenarioCreation {
         this.sendForm();
     }
 
+    duplicateForm(){
+        var pathTab = window.location.pathname.split("/")
+        var id = pathTab[pathTab.length - 1]
+        if (id == "") {
+            id = pathTab[pathTab.length - 2]
+        }
+        console.log(id);
+        if (id != "create_scenario") {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "/professor/train/duplicate_scenario/"+id, false ); // false for synchronous request
+            xmlHttp.send( null );
+            //return xmlHttp.responseText;
+        }
+        this.sendForm();
+    }
+
     sendForm() {
 
         let data = {};
@@ -500,11 +516,25 @@ class ScenarioCreation {
         xhr.onloadend = function () {
             window.location.href = new_url;
         };
-
     }
 
 }
-
+function cancelCreation(elem){
+    if (confirm('Etes vous sur de vouloir annuler la création de ce scénario ?'))
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "/professor/train/cancel_scenario/", false ); // false for synchronous request
+        xmlHttp.send( null );
+        var pathArray = window.location.pathname.split( '/' );
+        var pk = pathArray[4];
+        var new_url = "/professor/lesson/"+pk+"/#listscena";
+        window.location.href = new_url;
+    }
+    else
+    {
+        console.log('no');
+    }
+}
 function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
@@ -580,9 +610,11 @@ function addReponse(elem){
         newelem.getElementsByClassName('labelanswer')[0].innerHTML = txt.substring(0,txt.length -2) + (count +1) +':';
         newelem.getElementsByClassName('removeReponse')[0].style.display = "inline";
         root.getElementsByClassName('list_answers')[0].appendChild(newelem);
+        if (count >= 3) {
+            let button = root.getElementsByClassName('btn-primary addReponse')[0];
+            button.style.display = "none";
+        }
     }
-
-    //root.parentNode.removeChild(root);
     return false;
 }
 
@@ -615,13 +647,18 @@ function addReponseFilled(root, answer){
 }
 //This function permits to delete a principal block and also in the sideBar
 function removeElem(elem){
-    var root = elem.parentNode.parentNode;
-    var ul = document.getElementsByClassName("divElemNav");
-    var id = root.getAttribute("id");
-    var supNode = document.getElementById("navitem"+ id);
-    supNode.parentNode.removeChild(supNode);
-    root.parentNode.removeChild(root);
-    return false;
+    if (confirm('Etes vous sur de vouloir supprimer cet objet ?'))
+    {
+        var root = elem.parentNode.parentNode;
+        var ul = document.getElementsByClassName("divElemNav");
+        var id = root.getAttribute("id");
+        var supNode = document.getElementById("navitem"+ id);
+        supNode.parentNode.removeChild(supNode);
+        root.parentNode.removeChild(root);
+    }
+    else
+    {
+    }
 }
 //This function permits to minimize or enlarge the element except Parameters.
 function enlargeElem(elem){
@@ -641,10 +678,39 @@ function enlargeElem(elem){
         buttonenla.style.display = "block";
     }
 }
+function enlargeParam(elem){
+    var root = elem.parentNode.parentNode;
+    let miniElem = root.getElementsByClassName("blk")[0];
+    var rootbutton = elem.parentNode;
+    let buttonmini = rootbutton.getElementsByClassName("minimizeParam")[0];
+    let buttonenla = rootbutton.getElementsByClassName("enlargeParam")[0];
+    if(miniElem.style.display=="none"){
+        miniElem.style.display = "block";
+        buttonmini.style.display = "block";
+        buttonenla.style.display = "none";
+    }
+    else {
+        miniElem.style.display = "none";
+        buttonmini.style.display = "none";
+        buttonenla.style.display = "block";
+    }
+}
 //This function permits to delete an answer in the MCQ exercise.
 function removeReponse(elem){
-    var root = elem.parentNode;
-    root.parentNode.removeChild(root);
+    var root = elem.parentNode.parentNode.parentNode.parentNode;
+    let count = 0;
+    let repLineElem = null;
+    for(let subElem of root.getElementsByClassName('list_answers')[0].childNodes){
+        if (subElem.className == "repLine"){
+            count++;
+        }
+    }
+    if (count -1 <= 3){
+        let button = root.getElementsByClassName('btn-primary addReponse')[0];
+        button.style.display = "block";
+    }
+    var delrep = elem.parentNode;
+    delrep.parentNode.removeChild(delrep);
     return false;
 }
 
