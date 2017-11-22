@@ -417,7 +417,7 @@ class MCQElem extends AbstractElem{
                 }else{
                     this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#ff404091";
                     this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#ff404091";
-                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid ff404091";
+                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #ff404091";
                 }
                 //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
             }

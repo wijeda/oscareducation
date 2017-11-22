@@ -19,9 +19,9 @@ from end_test_poll.models import StudentPoll
 from end_test_poll.forms import StudentPollForm
 from resources.models import KhanAcademy, Sesamath, Resource
 
-
 from utils import user_is_student
 
+from train.models import Scenario
 
 @user_is_student
 def dashboard(request):
@@ -483,8 +483,8 @@ def skill_pedagogic_ressources(request, type, slug):
     sesamath_references_manuals = Sesamath.objects.filter(ressource_kind__iexact="Manuel")
     sesamath_references_cahiers = Sesamath.objects.filter(ressource_kind__iexact="Cahier")
 
-    return render(request, "professor/skill/update_pedagogical_resources.haml", {
-        "sesamath_references_manuals": sesamath_references_manuals,
+    dico = {}
+    dico.update({"sesamath_references_manuals": sesamath_references_manuals,
         "sesamath_references_cahier": sesamath_references_cahiers,
         "base": base,
         "personal_resources": personal_resource,
@@ -506,5 +506,14 @@ def skill_pedagogic_ressources(request, type, slug):
         "sori_coder_other_resources": sori_coder_other_resources,
         "sori_coder_lesson_resource_sesamath": sori_coder_lesson_resource_sesamath,
         "sori_coder_lesson_resource_khanacademy": sori_coder_lesson_resource_khanacademy,
-        "sori_coder_exercice_resource_sesamath": sori_coder_exercice_resource_sesamath,
-    })
+        "sori_coder_exercice_resource_sesamath": sori_coder_exercice_resource_sesamath})
+
+    dico["scenarios"] = []
+
+    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
+
+    for s in Scenario.objects.all():
+
+        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+
+    return render(request, "professor/skill/update_pedagogical_resources.haml", dico)

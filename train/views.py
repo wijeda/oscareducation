@@ -201,7 +201,7 @@ def student_list_scenario(request):
     # to access the values passed to dico, you need to call the key not dico itself, here it is "scenarios" or "headlines"
     return render(request, "train/studentListScenario.haml", dico)
 
-def make_scenario(request,pk, id):
+def make_scenario(request, id, pk=-1):
     # dico = {}
     # dico["descriptif"]=["Titre d'un exo", " Autheur de l'exo", "Voici le descriptif d'un cours pris en random dans la liste", id]
 
@@ -371,7 +371,7 @@ def delete_scenario(request, id):
 
     return list_scenario(request)
 
-def scenario(request, id, pk):
+def scenario(request, id, pk=-1):
     s = Scenario.objects.get(id=id)
 
     dico = {}
