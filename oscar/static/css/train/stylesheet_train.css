@@ -15,9 +15,10 @@
 #sideNavBar {
     grid-column: 1; /* placement en colonne 1 */
 }
-#sectionElements {
+#sectionElements, #whiteBox, #ToolsBarSEC {
     margin-left: 140px;
     grid-column: 2; /* placement en colonne 2 */
+    margin-bottom: 70px;
 }
 #navFixed {
     position:fixed;
@@ -40,7 +41,7 @@
 	height: 30px;
 }
 
-#parameters input, .answer1, .answer2{
+#parameters input, .answer1, .answer2, .question_MCQ_Elem{
 	width: 270px;
 }
 .blk {
@@ -74,7 +75,7 @@
 #addScenarioButton{
     margin-bottom: 30px;
 }
-.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem {
+.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem, #whiteBox1 {
 	width: 100%;
 	position: relative;
 }
@@ -82,26 +83,27 @@
 .textBlockElem textarea {
 	width: 100%;
 }
+#parameters textarea {
+    width: 100%;
+    resize: none;
+}
 #DiffElem{
     bottom : 15%;
-    left: 20%;
-    position:relative;
+
 }
 #cancelScenario{
-    left: 20%;
     bottom : 20%;
-    position:relative;
 }
 #saveScenario {
     bottom : 12%;
-    left: 68%;
-    position:relative;
+    left: 410px;
+    position: relative;
 }
 
 #questionMCQ{
     display: inline-block;
     width: auto;
-    border: 5px solid orange;
+    border: 5px solid #f38026;
     border-radius: 12px;
     margin: 10px;
     font-size: 30px;
@@ -109,18 +111,26 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #f38026b5;
+}
+
+label:hover {
+ background:#bfbfbf;
+ cursor:pointer;
 }
 
 .boxTitleMcq{
     padding: 5px;
 }
-.titleMCQ{
+.titleMCQ{ffbe2f
     margin: 5px;
     padding: 5px;
 }
-
+.desc_text_Elem{
+    resize:none;
+}
 .deleteElement{
 	position: absolute;
 	top: 0;
@@ -128,6 +138,16 @@
 	margin-right: 5px;
 	padding: 0;
 }
+
+.addBackgroundImage{
+    padding:0;
+    position: absolute;
+    top:0;
+    right:0px;
+	margin-right: 5px;
+    background-color:#7db1ce;
+}
+
 .minimizeElem, .enlargeElement{
     padding:0;
     position: absolute;
@@ -190,7 +210,7 @@
 .btn-fixed-validate {
     background-color: Transparent;
     background-repeat:no-repeat;
-    border: 2px solid grey;
+    border: 2px solid #f38026;
     border-radius: 6px;
     cursor:pointer;
     overflow: hidden;
@@ -251,33 +271,34 @@
     border-radius: 4px;
     font-size: 20px;
     margin: 10px;
+    background-color: #eee;
 }
 
-.blocanswer .isAnswer, .blocanswer .answer{
-    margin: 10px;
+.blocanswer .answer{
+    margin-left: 10px;
+}
+
+.blocanswer label{
+    margin-bottom: 0px;
+    display: flex;
 }
 
 .blocanswer .isAnswer{
-    position: relative;
-    top: 50%;
-    /*transform: translateY(-50%);*/
+    margin: auto;
+    margin-left: 12px;
 }
 
-.verticalBar{
-    border-left: solid grey;
-    margin-right: 5px;
-    border-width: 2px;
-    height: 100%;
-}
 .answers{
     width: 100%;
-    /*left: 50%;
-    transform: translateX(-50%);*/
     text-align: center;
 }
-.answer{
+div.answer{
     display: inline-block;
     max-width: 200px;
+    border-left: solid grey;
+    padding: 10px;
+    word-break: break-all;
+    font-weight: normal;
 }
 
 .containerMCQ{
@@ -296,7 +317,7 @@
 	position: absolute;
 	right: 315px;
 	top: 15%;
-	width: 200px;
+	width: 600px;
 	height: 35px;
 }
 #skill{
