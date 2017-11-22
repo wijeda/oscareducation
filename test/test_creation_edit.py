@@ -46,7 +46,7 @@ class SampleTest(unittest.TestCase):
 
         add_hover = self.driver.find_element_by_id("addElement")
         video_click = self.driver.find_element_by_id("addElementVideo")
-
+        self.scroll_bottom()
         ActionChains(self.driver).move_to_element(add_hover).click(video_click).perform()
 
         self.scroll_bottom()
