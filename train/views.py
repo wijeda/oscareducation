@@ -20,10 +20,13 @@ from .models import PDFElem
 from .models import Scenario
 from .models import TextElem
 from .models import VidElem
+from .models import ScenaSkill
 from promotions.models import Stage
 from promotions.models import Lesson
 
 from .utils import user_is_professor
+
+from skills.models import Skill
 
 
 def root_redirection(request):
@@ -235,6 +238,15 @@ def save_scenario(request):
         # saving the object
         scena.save()
 
+        for skill in parsed_json['skills']:
+
+            print("scenaskill creation")
+            print(skill)
+
+            # s = Skill.objects.get(code = skill)
+            scsk = ScenaSkill(code_skill = skill, id_scenario = scena.id)
+            scsk.save()
+
         # parsing the elements of the json
         for i in range(0, len(parsed_json['elements'])):
             if parsed_json['elements'][i]['type'] == "TextElem":
@@ -380,3 +392,6 @@ def scenario(request, id, pk=-1):
     dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions, "backgroundImage":s.backgroundImage}
 
     return render(request, "train/scenario.haml", dico)
+
+def redirect_dashboard(request):
+    return HttpResponseRedirect("/student/dashboard")

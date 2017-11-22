@@ -22,6 +22,7 @@ from resources.models import KhanAcademy, Sesamath, Resource
 from utils import user_is_student
 
 from train.models import Scenario
+from train.models import ScenaSkill
 
 @user_is_student
 def dashboard(request):
@@ -511,9 +512,15 @@ def skill_pedagogic_ressources(request, type, slug):
     dico["scenarios"] = []
 
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
-
-    for s in Scenario.objects.all():
-
+    dico["pk"] = slug;
+    print("WE ARE HERE")
+    print(slug)
+    for scsk in ScenaSkill.objects.all():
+        print("lol")
+        print(scsk.code_skill)
+    for scsk in ScenaSkill.objects.filter(code_skill = slug):
+        print(scsk.code_skill)
+        s = Scenario.objects.get(id = scsk.id_scenario)
         dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     return render(request, "professor/skill/update_pedagogical_resources.haml", dico)

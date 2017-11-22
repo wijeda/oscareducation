@@ -75,12 +75,12 @@
                 %div
                     %div.question#questionMCQ
                 .answers
-                    .blocanswer{:style => "display: none"}
-                        %label
-                            %input.isAnswer{:type => "checkbox"}
-                            -# %span.verticalBar
-                            .answer
-                            -#%img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
+                        .blocanswer{:style => "display: none"}
+                            %label
+                                %input.isAnswer{:type => "checkbox"}
+                                -# %span.verticalBar
+                                .answer
+                                -#%img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
 
                 %p.succededMCQ{:style => "display: none"} Bonne(s) Réponse(s)! :)
                 %p.failedMCQ{:style => "display: none"} Il y a eu une ou plusieurs erreurs :/
@@ -105,7 +105,7 @@
             #idPDFElemProg.goToButton{:style => "display: none"}
                 %span.glyphicon.glyphicon-file.glyphiconNavbar
 
-        
+
         %button.btn-fixed-next#nextElement
             %span.glyphicon.glyphicon-arrow-right
 

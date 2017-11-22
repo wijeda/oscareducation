@@ -82,3 +82,7 @@ class MCQReponse(models.Model):
     id_question = models.IntegerField()
     answer = models.CharField("Reponse", max_length = 500)
     is_answer = models.BooleanField()
+
+class ScenaSkill(models.Model):
+    code_skill = models.CharField("Code", max_length = 500)
+    id_scenario = models.IntegerField()
