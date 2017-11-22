@@ -511,13 +511,10 @@ def skill_pedagogic_ressources(request, type, slug):
 
     dico["scenarios"] = []
 
-    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
+    dico["headline"] = ["Titre", "Thematique", "Niveau Scolaire", "Actions"]
     dico["pk"] = slug;
     print("WE ARE HERE")
     print(slug)
-    for scsk in ScenaSkill.objects.all():
-        print("lol")
-        print(scsk.code_skill)
     for scsk in ScenaSkill.objects.filter(code_skill = slug):
         print(scsk.code_skill)
         s = Scenario.objects.get(id = scsk.id_scenario)

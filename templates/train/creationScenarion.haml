@@ -11,7 +11,7 @@
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
     %script{:src => "/static/js/train/Sortable.js"}
-    %script{type: "text/javascript", src: "{% static 'js/professor_validate_exercice.js' %}"}
+    -# %script{type: "text/javascript", src: "{% static 'js/professor_validate_exercice.js' %}"}
     %script{type: "text/javascript", src: "{% static 'js/professor_lesson.js' %}"}
     %script{type: "text/javascript", src: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
     :javascript
@@ -72,7 +72,7 @@
                 %br
                 %label{:for => 'instructions'} Instructions :
                 %br
-                %textarea{:id => 'instructions', :placeholder => 'Expliquez votre scénario'}"#{scenario.instructions}"
+                %textarea{:id => 'instructions', :placeholder => 'Expliquez votre scénario'}#{scenario.instructions}
                 %br
                 %label{:for => 'public'} Public :
                 -if scenario.public
@@ -88,6 +88,13 @@
                         Compétences sélectionnées :
 
                     .well#skillsBox
+                        -# <!-- ngRepeat: skill in toTestSkills -->
+                        -# -for s in skills
+                        -#     %span{:ng-repeat=>"skill in toTestSkills", :class=>"ng-scope"}
+                        -#         %button{:type=>"button", :title=>"", :ng-click=>"removeSkill(skill)", :class=>"btn btn-primary selected-skill ng-binding"}
+                        -#           #{s}
+                        -#     <!-- end ngRepeat: skill in toTestSkills -->
+
                       %span{ng-repeat: "skill in toTestSkills"}
                         %button.btn.btn-primary.selected-skill{type: "button", title: "{& skill.name &}", ng-click: "removeSkill(skill)"}
                           {& skill &}

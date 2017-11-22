@@ -47,7 +47,24 @@ class ScenarioCreation {
         this.imgBlockNav = document.getElementById(param.idImgElemNav);
         this.pdfBlockNav = document.getElementById(param.idPDFElemNav);
 
+        this.skillsRender();
+
         this.fillPage();
+    }
+
+    skillsRender(){
+        for(var skill of this.data["skills"])
+        {
+            var newelem = document.createElement("span");
+            newelem.innerHTML = '<button type="button" title="" ng-click="removeSkill(skill)" class="btn btn-primary selected-skill ng-binding">' + skill + "</button>"
+            newelem.classList.add("ng-scope");
+            newelem.setAttribute("ng-repeat", "skill in toTestSkills");
+            newelem.addEventListener("click", deleteSkill,true);
+            document.getElementsByClassName("well")[0].appendChild(newelem);
+            var newLine = document.createElement("span");
+            newLine.innerHTML = "\n<!-- end ngRepeat: skill in toTestSkills -->"
+            document.getElementsByClassName("well")[0].appendChild(newLine);
+        }
     }
 
     makeBlockElemText(){
@@ -467,15 +484,12 @@ class ScenarioCreation {
             }
         }
 
-        console.log(data["skills"]);
-
         data["elements"] = []
 
         for(let i = 0; i < this.anchor.childNodes.length; i++)
         {
 
             let classElem = this.anchor.childNodes[i].className;
-            console.log(classElem);
 
             if(classElem == "textBlockElem")
             {
@@ -659,6 +673,12 @@ function removeElem(elem){
     else
     {
     }
+}
+
+function deleteSkill(elem) {
+    console.log(elem);
+    var parent = elem.target.parentNode;
+    parent.removeChild(elem.target);
 }
 //This function permits to minimize or enlarge the element except Parameters.
 function enlargeElem(elem){

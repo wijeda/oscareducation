@@ -36,6 +36,16 @@ def root_redirection(request):
 def home(request):
     return TemplateResponse(request, "home.haml", {})
 
+def supressDouble(tab):
+    dico_skill = {}
+    for s in tab:
+        if s not in dico_skill:
+            dico_skill[s] = s
+
+    ret = []
+    for sk in dico_skill:
+        ret.append(sk)
+    return ret
 # return the page for the creation of the scenario with either the data
 # filled if id != None(in this case we want to edit the corresponding scenario)
 # or with blank data
@@ -55,8 +65,9 @@ def create_scenario(request, id, pk):
 
         # filling the parameters
         dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions, "backgroundImage":s.backgroundImage}
-        print("wolololo")
-        print(s.public)
+        dico["skills"] = []
+        for sk in ScenaSkill.objects.filter(id_scenario = s.id):
+            dico["skills"].append(sk.code_skill)
 
         dico["scenario"]["public"] = s.public
     return render(request, "train/creationScenarion.haml", dico)
@@ -143,6 +154,13 @@ def get_data(request, id):
 
         elem = {"type" : "MCQElem", "order": q.order, "data":{"id_scenario": id, "title":q.title, "question":q.question, "answers": answers}}
         elements.append(elem)
+
+    skills = []
+
+    for scsk in ScenaSkill.objects.filter(id_scenario = id):
+        skills.append(scsk.code_skill)
+
+    dico["skills"] = skills
 
     elements.sort(key = itemgetter('order'))
 
@@ -238,10 +256,7 @@ def save_scenario(request):
         # saving the object
         scena.save()
 
-        for skill in parsed_json['skills']:
-
-            print("scenaskill creation")
-            print(skill)
+        for skill in supressDouble(parsed_json['skills']):
 
             # s = Skill.objects.get(code = skill)
             scsk = ScenaSkill(code_skill = skill, id_scenario = scena.id)
@@ -283,12 +298,8 @@ def save_scenario(request):
                 existing_images = {x for x in os.listdir(os.path.join(settings.BASE_DIR, "train"))}
                 existing_images = existing_images.union({x for x in os.listdir(exercices_folder)})
 
-                print(parsed_json['elements'][i]['data']['url'])
                 image_extension, image = parsed_json['elements'][i]['data']['url'].split(",", 1)
-                print("my Image: ",image)
-                print("my image_extension: ",image_extension)
                 image_extension = image_extension.split("/")[1].split(";")[0]
-                print("my image_extension: ",image_extension)
 
                 for j in range(1, 1000):
                     name = ("%s_%.2d.%s" % (skill, j, image_extension)).upper()
@@ -320,7 +331,6 @@ def save_scenario(request):
                 elem.save()
 
             elif parsed_json['elements'][i]['type'] == "MCQElem":
-                print(parsed_json['elements'][i])
                 id_scenario = scena.id
                 order = i
                 title_elem = parsed_json['elements'][i]['data']['title']
@@ -351,10 +361,13 @@ def save_scenario(request):
 def delete_scenario(request, id):
 
     s = Scenario.objects.get(id=id)
-    print(id)
 
     dico = {}
     dico ["scenario"] = {"creator":s.creator}
+
+    scsk = ScenaSkill.objects.filter(id_scenario=id)
+    for sk in scsk:
+        sk.delete()
 
     textes = TextElem.objects.filter(id_scenario=id)
     for t in textes:
@@ -380,7 +393,6 @@ def delete_scenario(request, id):
         q.delete()
 
     Scenario.objects.get(id=id).delete()
-
 
     return list_scenario(request)
 
