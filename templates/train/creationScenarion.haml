@@ -50,6 +50,10 @@
             %div#headline
                 %span.glyphicon.glyphicon-cog
                 %label Paramètres
+                %button.btn.minimizeParam{:toggle => "tooltip", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeParam(this)"}
+                    %span.glyphicon.glyphicon-minus
+                %button.btn.enlargeParam{:style => "display: none", :toggle => "tooltip", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeParam(this)"}
+                    %span.glyphicon.glyphicon-unchecked
                 %button.btn.addBackgroundImage{:toggle => "tooltip", :data-toggle => "popover", :placement => "bottom", :title =>"Ajouter une image d&rsquo;arrière-plan",:action => "#", :onclick => "return displayBgImgWindow(this)"}
                     %span.glyphicon.glyphicon-picture
                 -# %label Image d'arrière-plan:
@@ -68,7 +72,7 @@
                 %br
                 %label{:for => 'instructions'} Instructions :
                 %br
-                %textarea{:id => 'instructions', :placeholder => 'Expliquez votre scénario', :value => "#{scenario.instructions}"}
+                %textarea{:id => 'instructions', :placeholder => 'Expliquez votre scénario'}"#{scenario.instructions}"
                 %br
                 %label{:for => 'public'} Public :
                 -if scenario.public
