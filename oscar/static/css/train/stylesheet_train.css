@@ -23,6 +23,7 @@
     position:fixed;
     overflow: auto;
     height: 70%;
+    max-width: 235px;
 }
 .divElemNav {
     background-color: white;
@@ -30,6 +31,9 @@
     border: 2px solid;
     margin: 5px;
     border-radius: 7px;`
+}
+.divElemNav label{
+    word-break: break-all;
 }
 #parameters label, .mcqBlockElem .panel-body label {
 	width: 140px;
