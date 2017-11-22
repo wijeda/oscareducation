@@ -12,8 +12,6 @@ class ScenarioCreation {
         this.addElementDiv = document.getElementById(param.addElementDivID);
         this.DiffElem = document.getElementById(param.DiffElem);
         this.addElementOption = false; // at start it is not shown
-        this.DiffElem.addEventListener("mouseover", this.showDiffElements.bind(this));
-        this.DiffElem.addEventListener("mouseout", this.hideDiffElements.bind(this));
 
 
         this.textBlockElem = document.getElementById(param.textBlockElemID);
@@ -153,13 +151,6 @@ class ScenarioCreation {
         counterBlock = counterBlock +1;
     }
 
-    showDiffElements(){
-        this.addElementDiv.style.display = "block";
-    }
-
-    hideDiffElements(){
-        this.addElementDiv.style.display = "none";
-    }
 
     getElemInputBlockText(elemText){
         // let title = elemText.childNodes[1].childNodes[3].value;
@@ -848,7 +839,6 @@ window.onload = function(){
 
         "removeImageID": "removeImage",*/
     }
-
     var sorte = Sortable.create(whiteBox, {onEnd: function (evt) {
       var ul = document.getElementById("simpleList");
       console.log(ul.childNodes[evt.oldIndex]);
@@ -870,8 +860,6 @@ window.onload = function(){
       ul.replaceChild(ul.childNodes[evt.newIndex], ul.childNodes[evt.oldIndex]);
       ul.insertBefore(node, ul.childNodes[evt.newIndex]);
     }});
-
-
     /*new ScenarioCreation(anchorID,
                         btnPlusID,
                         addElementDivID,
