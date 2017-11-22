@@ -176,7 +176,7 @@ class ScenarioVisualization{
         var user_type = pathTab[1];
         var pk = pathTab[3]
         if(user_type == "student"){
-            window.location.href = "/student/train/student_list_scenario/";
+            window.location.href = "/student/pedagogical/skill/"+pk;
         }else{
             window.location.href = "/professor/lesson/"+pk+"/#listscena";
         }
@@ -432,7 +432,7 @@ class MCQElem extends AbstractElem{
                 }else{
                     this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#ff404091";
                     this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#ff404091";
-                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid ff404091";
+                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #ff404091";
                 }
                 //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
             }

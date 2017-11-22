@@ -20,10 +20,13 @@ from .models import PDFElem
 from .models import Scenario
 from .models import TextElem
 from .models import VidElem
+from .models import ScenaSkill
 from promotions.models import Stage
 from promotions.models import Lesson
 
 from .utils import user_is_professor
+
+from skills.models import Skill
 
 
 def root_redirection(request):
@@ -201,7 +204,7 @@ def student_list_scenario(request):
     # to access the values passed to dico, you need to call the key not dico itself, here it is "scenarios" or "headlines"
     return render(request, "train/studentListScenario.haml", dico)
 
-def make_scenario(request,pk, id):
+def make_scenario(request, id, pk=-1):
     # dico = {}
     # dico["descriptif"]=["Titre d'un exo", " Autheur de l'exo", "Voici le descriptif d'un cours pris en random dans la liste", id]
 
@@ -234,6 +237,15 @@ def save_scenario(request):
         scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public, backgroundImage = backgroundImage)
         # saving the object
         scena.save()
+
+        for skill in parsed_json['skills']:
+
+            print("scenaskill creation")
+            print(skill)
+
+            # s = Skill.objects.get(code = skill)
+            scsk = ScenaSkill(code_skill = skill, id_scenario = scena.id)
+            scsk.save()
 
         # parsing the elements of the json
         for i in range(0, len(parsed_json['elements'])):
@@ -372,7 +384,7 @@ def delete_scenario(request, id):
 
     return list_scenario(request)
 
-def scenario(request, id, pk):
+def scenario(request, id, pk=-1):
     s = Scenario.objects.get(id=id)
 
     dico = {}
@@ -380,3 +392,6 @@ def scenario(request, id, pk):
     dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions, "backgroundImage":s.backgroundImage}
 
     return render(request, "train/scenario.haml", dico)
+
+def redirect_dashboard(request):
+    return HttpResponseRedirect("/student/dashboard")
