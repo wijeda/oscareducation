@@ -402,6 +402,21 @@ class MCQElem extends AbstractElem{
 
     render(){
         this.anchor.appendChild(this.node);
+        var maxWidth = 0;
+        var maxHeight = 0;
+        var blocanswer = this.node.getElementsByClassName("blocanswer");
+        for(let i = 1; i < blocanswer.length; i++){
+            if(maxWidth < blocanswer[i].clientWidth){
+                maxWidth = blocanswer[i].clientWidth;
+            }
+            if(maxHeight < blocanswer[i].clientHeight){
+                maxHeight = blocanswer[i].clientHeight;
+            }
+        }
+        for(let i = 1; i < blocanswer.length; i++){
+            var newStyle = "width: "+maxWidth+"px ;height: "+maxHeight+"px; "+"display: flex; justify-content: center; flex-direction: column;"
+            blocanswer[i].getElementsByClassName("answer")[0].setAttribute("style",newStyle);
+        }
     }
 
     validate(){
