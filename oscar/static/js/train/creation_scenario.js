@@ -424,7 +424,7 @@ class ScenarioCreation {
     sendForm() {
 
         let data = {};
-        let listOfParamIDfield = ["title", "topic", "grade_level", "instructions", "public"];
+        let listOfParamIDfield = ["title", "topic", "grade_level", "instructions", "public", "backgroundImage"];
 
 
         for(let id of listOfParamIDfield){
@@ -524,7 +524,8 @@ function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
     imgPreview.setAttribute("src", root.getElementsByClassName("url_img_Elem")[0].value);
-    root.getElementsByClassName("importButton")[0].value = "";
+    if(root.getElementsByClassName("importButton"))
+        root.getElementsByClassName("importButton")[0].value = "";
     return false;
 }
 
@@ -675,6 +676,60 @@ function fillTitle(elem){
         document.getElementById(navitemId).getElementsByTagName("label")[0].innerHTML = titre;
     }, 0);
 }
+
+function saveBackgroundImage(elem){
+    // let window = document.getElementById("backgroundImageWindow");
+    // let inputurl = window.getElementsByClassName("url_img_Elem")[0];
+    // window.getElementsByClassName("url_img_Elem")[0].value = elem.parentNode.getElementsByClassName("url_img_Elem")[0].value;
+    document.getElementById("backgroundImage").value = elem.parentNode.getElementsByClassName("url_img_Elem")[0].value;
+}
+
+function displayBgImgWindow(elem){
+    if(elem.getAttribute("data-content")){
+        let parent = elem.parentNode;
+        $('[data-toggle="popover"]').popover('show');
+        let mywindow = parent.getElementsByClassName("popover fade left in");
+        // let window = document.getElementById("backgroundImageWindow");
+        mywindow[0].getElementsByClassName("url_img_Elem")[0].value = document.getElementById("backgroundImage").value;
+
+    }
+    else{
+        elem.setAttribute("data-content", document.getElementById("backgroundImageWindow").innerHTML);
+        elem.setAttribute("data-placement", "left");
+        elem.setAttribute("data-html", "true");
+        $('[data-toggle="popover"]').popover();
+    }
+    // let root = elem.parentNode.parentNode;
+    // if(!elem.getAttribute("data-showPopup")){
+    //     let window = document.createElement("div");
+    //     window.classList.add("backgroundImageWindow");
+    //     window.innerHTML = document.getElementById("backgroundImageWindow").innerHTML;
+    //     // let window = document.getElementById("backgroundImageWindow");
+    //     root.appendChild(window);
+    //     var x = elem.offsetLeft;
+    //     var y = elem.offsetTop;
+    //     console.log("position x="+x+", y="+y);
+    //
+    //     // console.log("My window: "+window);
+    //     window.style.display = "block";
+    //     window.setAttribute("position", "absolute");
+    //     window.setAttribute("left", "x");
+    //     window.setAttribute("top", "y");
+    //     elem.setAttribute("data-showPopup", "true");
+    // }
+    // else if (elem.getAttribute("data-showPopup")=="false"){
+    //     let window = root.getElementsByClassName("backgroundImageWindow")[0];
+    //     window.style.display = "block";
+    //     elem.setAttribute("data-showPopup", "true");
+    // }
+    // else{
+    //     let window = root.getElementsByClassName("backgroundImageWindow")[0];
+    //     window.style.display = "none";
+    //     elem.setAttribute("data-showPopup", false);
+    // }
+    // // elem.style.display = "none";
+}
+
 // initiation
 window.onload = function(){
 

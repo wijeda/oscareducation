@@ -51,7 +51,7 @@ def create_scenario(request, id, pk):
         s = Scenario.objects.get(id=id)
 
         # filling the parameters
-        dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+        dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions, "backgroundImage":s.backgroundImage}
         print("wolololo")
         print(s.public)
 
@@ -153,7 +153,7 @@ def view_scenario(request, id):
 
     dico = {}
 
-    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions, "backgroundImage":s.backgroundImage}
 
     return render(request, "train/viewScenario.haml", dico)
 
@@ -191,7 +191,7 @@ def student_list_scenario(request):
     dico["scenarios"]=[]
     # test d recup de date dans la db
     for s in Scenario.objects.all():
-        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level})
+        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level, "backgroundImage":s.backgroundImage})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire"]
@@ -209,7 +209,7 @@ def make_scenario(request,pk, id):
 
     dico = {}
 
-    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions, "backgroundImage":s.backgroundImage}
 
     return render(request, "train/st_begin_scenario.haml", dico)
 
@@ -228,9 +228,10 @@ def save_scenario(request):
         grade_level = parsed_json['grade_level']
         instructions = parsed_json['instructions']
         public = parsed_json['public']
+        backgroundImage = parsed_json['backgroundImage']
 
         # creating the object
-        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public)
+        scena = Scenario(title = title, creator= creator, skill = skill, topic= topic, grade_level = grade_level, instructions= instructions, public = public, backgroundImage = backgroundImage)
         # saving the object
         scena.save()
 
@@ -376,6 +377,6 @@ def scenario(request, id, pk):
 
     dico = {}
 
-    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions}
+    dico["scenario"] = {"creator":s.creator, "id":s.id, "title":s.title, "skill":s.skill, "topic":s.topic, "grade_level":s.grade_level, "instructions":s.instructions, "backgroundImage":s.backgroundImage}
 
     return render(request, "train/scenario.haml", dico)
