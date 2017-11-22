@@ -204,7 +204,7 @@ label:hover {
 }
 
 .btn-fixed-validate {
-    background-color: Transparent;
+    background-color: white;
     background-repeat:no-repeat;
     border: 2px solid #f38026;
     border-radius: 6px;

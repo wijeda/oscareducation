@@ -16,8 +16,17 @@
 
   .ligneorangefine
 
-  .boxclasse.container-fluid
-          %p{:dico => "tab"} #{scenario.instructions}
+  .boxclasse.container-fluid{:style => " background-color: white; background: url(#{scenario.backgroundImage}) no-repeat; background-size: cover; backgroudn-clip: padding-box;"}
+        %div{:style => " background-color: #ffffffb3;padding: 20px;"}
+            %label Sujet:
+            %p{:dico => "tab"} #{scenario.topic}
+            %br
+            %label Niveau:
+            %p{:dico => "tab"} #{scenario.grade_level}
+            %br
+            %label Instructions:
+            %p{:dico => "tab"} #{scenario.instructions}
+
 
   %a.btn.btn-primary#begin{:onclick => "return nextButton(this)"} Commencer l'exercice
 
