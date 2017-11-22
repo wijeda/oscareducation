@@ -18,11 +18,13 @@
 #sectionElements, #whiteBox, #ToolsBarSEC {
     margin-left: 140px;
     grid-column: 2; /* placement en colonne 2 */
+    margin-bottom: 70px;
 }
 #navFixed {
     position:fixed;
     overflow: auto;
     height: 70%;
+    max-width: 235px;
 }
 .divElemNav {
     background-color: white;
@@ -30,6 +32,9 @@
     border: 2px solid;
     margin: 5px;
     border-radius: 7px;`
+}
+.divElemNav label{
+    word-break: break-all;
 }
 #parameters label, .mcqBlockElem .panel-body label {
 	width: 140px;
@@ -70,13 +75,17 @@
 #addScenarioButton{
     margin-bottom: 30px;
 }
-.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem {
+.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem, #whiteBox1 {
 	width: 100%;
 	position: relative;
 }
 
 .textBlockElem textarea {
 	width: 100%;
+}
+#parameters textarea {
+    width: 100%;
+    resize: none;
 }
 #DiffElem{
     bottom : 15%;
@@ -115,11 +124,13 @@ label:hover {
 .boxTitleMcq{
     padding: 5px;
 }
-.titleMCQ{
+.titleMCQ{ffbe2f
     margin: 5px;
     padding: 5px;
 }
-
+.desc_text_Elem{
+    resize:none;
+}
 .deleteElement{
 	position: absolute;
 	top: 0;
@@ -127,6 +138,16 @@ label:hover {
 	margin-right: 5px;
 	padding: 0;
 }
+
+.addBackgroundImage{
+    padding:0;
+    position: absolute;
+    top:0;
+    right:0px;
+	margin-right: 5px;
+    background-color:#7db1ce;
+}
+
 .minimizeElem, .enlargeElement{
     padding:0;
     position: absolute;

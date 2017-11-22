@@ -13,7 +13,7 @@
     %script{:src => "/static/js/train/Sortable.js"}
     %script{type: "text/javascript", src: "{% static 'js/professor_validate_exercice.js' %}"}
     %script{type: "text/javascript", src: "{% static 'js/professor_lesson.js' %}"}
-
+    %script{type: "text/javascript", src: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
     :javascript
       context = {
         lessonId: {{ lesson.id }}
@@ -27,6 +27,20 @@
                     Paramètres
                 #simpleList.divElemNav
 
+    #backgroundImageWindow{:style => "display: none"}
+        -# %label Importer du PC :
+        -# %input#importButton.importButton{:type => "file", :accept => "image/*", onchange: "loadFile(event, this)"}
+        %label Importer d'une Url :
+        %input.url_img_Elem{:id => 'img_url', :type => "text", :placeholder => 'Entrez une url'}
+        %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
+        %br
+        %label
+            %input.isGeneral{:type => "checkbox"}
+            Appliquer cet arrière-plan à l'ensemble du scénario.
+        %img.imgprev{:width => "25%"}
+        %button.btn.btn-primary#saveBackgroundImage{:onclick => "return saveBackgroundImage(this)"}
+            %span.glyphicon.glyphicon-floppy-disk
+            Ajouter
 
     %section#sectionElements
         #whiteBox1{:methode => "POST"}
@@ -36,6 +50,9 @@
             %div#headline
                 %span.glyphicon.glyphicon-cog
                 %label Paramètres
+                %button.btn.addBackgroundImage{:toggle => "tooltip", :data-toggle => "popover", :placement => "bottom", :title =>"Ajouter une image d&rsquo;arrière-plan",:action => "#", :onclick => "return displayBgImgWindow(this)"}
+                    %span.glyphicon.glyphicon-picture
+                -# %label Image d'arrière-plan:
             #parameters.blk
 
                 %p Entrez les différents paramètres pour le scénario
@@ -50,13 +67,16 @@
                 %input{:id => 'grade_level', :placeholder => "Indiquez le niveau d&rsquo;étude requis ", :value => "#{scenario.grade_level}"}
                 %br
                 %label{:for => 'instructions'} Instructions :
-                %input{:id => 'instructions', :placeholder => 'Expliquez votre scénario', :value => "#{scenario.instructions}"}
+                %br
+                %textarea{:id => 'instructions', :placeholder => 'Expliquez votre scénario', :value => "#{scenario.instructions}"}
                 %br
                 %label{:for => 'public'} Public :
                 -if scenario.public
                     %input{:id => 'public', :type => 'checkbox', :checked => "#{scenario.public}"}
                 -else
                     %input{:id => 'public', :type => 'checkbox'}
+                %br
+                %input{:style => "display: none", :id => 'backgroundImage', :type => "text", :placeholder => 'Donnez une image à votre scénario', :value => "#{scenario.backgroundImage}"}
                 %br
                 %div{ng-app: "oscar", ng-controller: "createTestController"}
                     %p
