@@ -802,11 +802,19 @@ window.onload = function(){
     }
     var sorte = Sortable.create(whiteBox, {onEnd: function (evt) {
       var ul = document.getElementById("simpleList");
-      console.log(ul.childNodes[evt.oldIndex]);
+      console.log("liste " + evt.oldIndex);
+      console.log("liste " + evt.newIndex);
       console.log(ul);
-      var node = ul.childNodes[evt.oldIndex];
-      ul.replaceChild(ul.childNodes[evt.newIndex], ul.childNodes[evt.oldIndex]);
-      ul.insertBefore(node, ul.childNodes[evt.newIndex]);
+      if (evt.oldIndex > evt.newIndex) {
+        var node = ul.childNodes[evt.newIndex];
+        ul.replaceChild(ul.childNodes[evt.oldIndex], ul.childNodes[evt.newIndex]);
+        ul.insertBefore(node, ul.childNodes[evt.newIndex].nextSibling);
+      }
+      else{
+        var node = ul.childNodes[evt.newIndex];
+        ul.replaceChild(ul.childNodes[evt.oldIndex], ul.childNodes[evt.newIndex]);
+        ul.insertBefore(node, ul.childNodes[evt.newIndex-1]);
+      }
       evt.to;    // target list
       evt.from;  // previous list
       evt.oldIndex;  // element's old index within old parent
@@ -815,11 +823,19 @@ window.onload = function(){
 
     Sortable.create(simpleList, {onEnd: function (evt) {
       var ul = document.getElementById("whiteBox");
-      console.log(ul.childNodes[evt.oldIndex]);
+      console.log("liste " + evt.oldIndex);
+      console.log("liste " + evt.newIndex);
       console.log(ul);
-      var node = ul.childNodes[evt.oldIndex];
-      ul.replaceChild(ul.childNodes[evt.newIndex], ul.childNodes[evt.oldIndex]);
-      ul.insertBefore(node, ul.childNodes[evt.newIndex]);
+      if (evt.oldIndex > evt.newIndex) {
+        var node = ul.childNodes[evt.newIndex];
+        ul.replaceChild(ul.childNodes[evt.oldIndex], ul.childNodes[evt.newIndex]);
+        ul.insertBefore(node, ul.childNodes[evt.newIndex].nextSibling);
+      }
+      else{
+        var node = ul.childNodes[evt.newIndex];
+        ul.replaceChild(ul.childNodes[evt.oldIndex], ul.childNodes[evt.newIndex]);
+        ul.insertBefore(node, ul.childNodes[evt.newIndex-1]);
+      }
     }});
     /*new ScenarioCreation(anchorID,
                         btnPlusID,
