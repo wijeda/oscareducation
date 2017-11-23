@@ -384,6 +384,7 @@ class MCQElem extends AbstractElem{
             this.title = this.data["title"];
             this.question = this.data["question"];
             this.answers = this.data["answers"];
+            this.tips = this.data["tips"];
             this.node.innerHTML = skull.innerHTML;
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
             this.node.getElementsByClassName("question")[0].innerHTML = this.question;
@@ -400,7 +401,13 @@ class MCQElem extends AbstractElem{
             this.validateButton = this.node.getElementsByClassName("validateElement")[0];
             this.validateButton.addEventListener("click", this.validate.bind(this), true);
 
+            this.tipsButton = this.node.getElementsByClassName("tipsMCQ")[0];
+            this.tipsButton.addEventListener("click", this.showtips.bind(this), true);
+
         }
+    }
+    showtips(){
+        alert("Indice : " + this.tips);
     }
 
     render(){

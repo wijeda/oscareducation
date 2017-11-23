@@ -18,13 +18,13 @@
 #sectionElements, #whiteBox, #ToolsBarSEC {
     margin-left: 140px;
     grid-column: 2; /* placement en colonne 2 */
-    margin-bottom: 70px;
+    margin-bottom: 20px;
 }
 #navFixed {
     position:fixed;
     overflow: auto;
     height: 70%;
-    max-width: 235px;
+    width: 235px;
 }
 .divElemNav {
     background-color: white;
@@ -86,6 +86,8 @@
 #parameters textarea {
     width: 100%;
     resize: none;
+    min-height: 50px;
+    max-height: 200px;
 }
 #DiffElem{
     bottom : 15%;
@@ -131,6 +133,8 @@ label:hover {
 }
 .desc_text_Elem{
     resize:none;
+    overflow:hidden;
+    min-height:50px;
 }
 .deleteElement{
 	position: absolute;
@@ -153,16 +157,9 @@ label:hover {
     padding:0;
     position: absolute;
     top:0;
-    right:70x;
+    right:60px;;
     background-color:#ffbe2f;
 }
-.minimizeParam, .enlargeParam{
-    padding:0;
-    position: absolute;
-    right:10%;
-    background-color:#ffbe2f;
-}
-
 .img_scenario {
 	width: 100%;
 }
@@ -321,10 +318,10 @@ div.answer{
 	display: block;
 }
 
-.ligneorangefine {
+/*.ligneorangefine {
     width: 80%;
     margin: 0px auto;
-}
+}*/
 #progressBar{
 	position: absolute;
 	right: 315px;

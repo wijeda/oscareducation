@@ -82,8 +82,10 @@
                                 .answer
                                 -#%img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
 
-                %p.succededMCQ{:style => "display: none;background-color: #ffffff;padding: 20px;"} Bonne(s) Réponse(s)!
-                %p.failedMCQ{:style => "display: none;background-color: #ffffff;padding: 20px;"} Il y a eu une ou plusieurs erreurs
+                %p.succededMCQ{:style => "display: none;background-color: #ffffffb3;padding: 20px;"} Bonne(s) Réponse(s)!
+                %p.failedMCQ{:style => "display: none;background-color: #ffffffb3;padding: 20px;"} Il y a eu une ou plusieurs erreurs
+                %button.btn-fixed-tips.tipsMCQ
+                    %span.glyphicon.glyphicon-info-sign
                 %button.btn-fixed-validate.validateElement#validateMCQ
                     %span.glyphicon.glyphicon-ok
 

@@ -51,17 +51,19 @@ class ScenarioCreation {
     }
 
     skillsRender(){
-        for(var skill of this.data["skills"])
-        {
-            var newelem = document.createElement("span");
-            newelem.innerHTML = '<button type="button" title="" ng-click="removeSkill(skill)" class="btn btn-primary selected-skill ng-binding">' + skill + "</button>"
-            newelem.classList.add("ng-scope");
-            newelem.setAttribute("ng-repeat", "skill in toTestSkills");
-            newelem.addEventListener("click", deleteSkill,true);
-            document.getElementsByClassName("well")[0].appendChild(newelem);
-            var newLine = document.createElement("span");
-            newLine.innerHTML = "\n<!-- end ngRepeat: skill in toTestSkills -->"
-            document.getElementsByClassName("well")[0].appendChild(newLine);
+        if (this.data["skills"]){
+            for(var skill of this.data["skills"])
+            {
+                var newelem = document.createElement("span");
+                newelem.innerHTML = '<button type="button" title="" ng-click="removeSkill(skill)" class="btn btn-primary selected-skill ng-binding">' + skill + "</button>"
+                newelem.classList.add("ng-scope");
+                newelem.setAttribute("ng-repeat", "skill in toTestSkills");
+                newelem.addEventListener("click", deleteSkill,true);
+                document.getElementsByClassName("well")[0].appendChild(newelem);
+                var newLine = document.createElement("span");
+                newLine.innerHTML = "\n<!-- end ngRepeat: skill in toTestSkills -->"
+                document.getElementsByClassName("well")[0].appendChild(newLine);
+            }
         }
     }
 
@@ -208,6 +210,7 @@ class ScenarioCreation {
 
         let title = elemMCQ.getElementsByClassName('titre_MCQ_Elem')[0].value;
         let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
+        let tips = elemMCQ.getElementsByClassName('tipsMCQ')[0].value;
         let answers = [];
         // for (let elem of elemMCQ.childNodes[1].childNodes[21].childNodes){
         //      if(elem.className == "repLine"){
@@ -222,7 +225,7 @@ class ScenarioCreation {
              answers.push({"answer": reponse, "solution": checked});
 
         }
-        return {"type":"MCQElem", "data":{"title": title, "question": question, "answers" : answers}}
+        return {"type":"MCQElem", "data":{"title": title, "question": question, "tips": tips, "answers" : answers}}
 
     }
 
@@ -351,6 +354,7 @@ class ScenarioCreation {
         // filling the title and the question
         newelem.getElementsByClassName('titre_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('question_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["question"]
+        newelem.getElementsByClassName('tipsMCQ')[0].value = this.data["elements"][index]["data"]["tips"]
 
         // filling the first and the second answer of the mcq (because they are mandatory)
         newelem.getElementsByClassName('answer1')[0].value = this.data["elements"][index]["data"]["answers"][0]["answer"]
@@ -389,12 +393,10 @@ class ScenarioCreation {
                 }
                 else if(this.data["elements"][i]["type"] == "ImgElemHardDrive")
                 {
-                    console.log("this is an image from the hardrive");
                     this.makeFilledImgHardDrive(i);
                 }
                 else if(this.data["elements"][i]["type"] == "ImgElem")
                 {
-                    console.log("this is an image url");
                     this.makeFilledImg(i);
                 }
                 else if(this.data["elements"][i]["type"] == "VidElem")
@@ -419,26 +421,9 @@ class ScenarioCreation {
         if (id == "") {
             id = pathTab[pathTab.length - 2]
         }
-        console.log(id);
         if (id != "create_scenario") {
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
-            xmlHttp.send( null );
-            //return xmlHttp.responseText;
-        }
-        this.sendForm();
-    }
-
-    duplicateForm(){
-        var pathTab = window.location.pathname.split("/")
-        var id = pathTab[pathTab.length - 1]
-        if (id == "") {
-            id = pathTab[pathTab.length - 2]
-        }
-        console.log(id);
-        if (id != "create_scenario") {
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", "/professor/train/duplicate_scenario/"+id, false ); // false for synchronous request
             xmlHttp.send( null );
             //return xmlHttp.responseText;
         }
@@ -503,7 +488,6 @@ class ScenarioCreation {
                 data["elements"].push(this.getElemInputBlockPDF(this.anchor.childNodes[i]));
             }
         }
-        console.log(data);
 
         //construct an HTTP request
 
@@ -667,7 +651,6 @@ function removeElem(elem){
 }
 
 function deleteSkill(elem) {
-    console.log(elem);
     var parent = elem.target.parentNode;
     parent.removeChild(elem.target);
 }
@@ -689,22 +672,9 @@ function enlargeElem(elem){
         buttonenla.style.display = "block";
     }
 }
-function enlargeParam(elem){
-    var root = elem.parentNode.parentNode;
-    let miniElem = root.getElementsByClassName("blk")[0];
-    var rootbutton = elem.parentNode;
-    let buttonmini = rootbutton.getElementsByClassName("minimizeParam")[0];
-    let buttonenla = rootbutton.getElementsByClassName("enlargeParam")[0];
-    if(miniElem.style.display=="none"){
-        miniElem.style.display = "block";
-        buttonmini.style.display = "block";
-        buttonenla.style.display = "none";
-    }
-    else {
-        miniElem.style.display = "none";
-        buttonmini.style.display = "none";
-        buttonenla.style.display = "block";
-    }
+function auto_growth_textarea(elem){
+    elem.style.height = "5px";
+    elem.style.height = (elem.scrollHeight)+"px";
 }
 //This function permits to delete an answer in the MCQ exercise.
 function removeReponse(elem){
@@ -734,7 +704,26 @@ function fillTitle(elem){
     var navitemId = "navitem" + root.getAttribute("id");
     setInterval(function(){
         var titre = elem.value;
-        //console.log(document.getElementById(navitemId).getElementsByTagName("span"));
+        console.log(titre);
+        var titrenavbarelem = document.getElementById(navitemId).getElementsByTagName("label")[0];
+        if (titre == ""){
+            console.log("in");
+            if(titrenavbarelem.classList.contains("textetitre")){
+                titre = "Texte";
+            }
+            else if (titrenavbarelem.classList.contains("imagetitre")){
+                titre = "Image";
+            }
+            else if (titrenavbarelem.classList.contains("videotitre")){
+                titre = "Vidéo";
+            }
+            else if (titrenavbarelem.classList.contains("qcmtitre")){
+                titre = "QCM";
+            }
+            else if (titrenavbarelem.classList.contains("pdftitre")){
+                titre = "PDF";
+            }
+        }
         document.getElementById(navitemId).getElementsByTagName("label")[0].innerHTML = titre;
     }, 0);
 }
@@ -761,35 +750,6 @@ function displayBgImgWindow(elem){
         elem.setAttribute("data-html", "true");
         $('[data-toggle="popover"]').popover();
     }
-    // let root = elem.parentNode.parentNode;
-    // if(!elem.getAttribute("data-showPopup")){
-    //     let window = document.createElement("div");
-    //     window.classList.add("backgroundImageWindow");
-    //     window.innerHTML = document.getElementById("backgroundImageWindow").innerHTML;
-    //     // let window = document.getElementById("backgroundImageWindow");
-    //     root.appendChild(window);
-    //     var x = elem.offsetLeft;
-    //     var y = elem.offsetTop;
-    //     console.log("position x="+x+", y="+y);
-    //
-    //     // console.log("My window: "+window);
-    //     window.style.display = "block";
-    //     window.setAttribute("position", "absolute");
-    //     window.setAttribute("left", "x");
-    //     window.setAttribute("top", "y");
-    //     elem.setAttribute("data-showPopup", "true");
-    // }
-    // else if (elem.getAttribute("data-showPopup")=="false"){
-    //     let window = root.getElementsByClassName("backgroundImageWindow")[0];
-    //     window.style.display = "block";
-    //     elem.setAttribute("data-showPopup", "true");
-    // }
-    // else{
-    //     let window = root.getElementsByClassName("backgroundImageWindow")[0];
-    //     window.style.display = "none";
-    //     elem.setAttribute("data-showPopup", false);
-    // }
-    // // elem.style.display = "none";
 }
 
 // initiation
