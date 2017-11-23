@@ -25,7 +25,7 @@
             .ligneorangefine
 
             .boxclasse.container-fluid{:style => "background: url(#{scenario.backgroundImage}) no-repeat; background-size: cover; backgroudn-clip: padding-box; background-color: white; height: 70%"}
-                %p.content{:style => " background-color: #ffffff;padding: 20px;display: flex;justify-content: center;flex-direction: column;text-align: center;"}
+                %p.content.simple-text
 
         #imgBlockElem{:style => "display: none"}
             .ligneorange
@@ -71,7 +71,7 @@
 
             .ligneorangefine
 
-            .boxclasse.container-fluid.containerMCQ{:style => "background: url(#{scenario.backgroundImage}) no-repeat; background-size: cover; backgroudn-clip: padding-box; background-color: white;"}
+            .boxclasse.container-fluid.containerMCQ{:style => "background: url(#{scenario.backgroundImage}) no-repeat; background-size: cover; backgroudn-clip: padding-box; background-color: white"}
                 %div
                     %div.question#questionMCQ
                 .answers
@@ -82,8 +82,8 @@
                                 .answer
                                 -#%img.isFalse{:style => "display: none", :height => "2%", :src => "/static/img/icons/delete.png", :width => "4%"}/
 
-                %p.succededMCQ{:style => "display: none;background-color: #ffffffb3;padding: 20px;"} Bonne(s) Réponse(s)!
-                %p.failedMCQ{:style => "display: none;background-color: #ffffffb3;padding: 20px;"} Il y a eu une ou plusieurs erreurs
+                %p.succededMCQ{:style => "display: none;background-color: #ffffffe6;padding: 20px;border-radius: 5px;"} Bonne(s) Réponse(s)!
+                %p.failedMCQ{:style => "display: none;background-color: #ffffffe6;padding: 20px;border-radius: 5px;"} Il y a eu une ou plusieurs erreurs
                 %button.btn-fixed-tips.tipsMCQ
                     %span.glyphicon.glyphicon-info-sign
                 %button.btn-fixed-validate.validateElement#validateMCQ

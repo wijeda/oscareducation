@@ -411,6 +411,9 @@ class MCQElem extends AbstractElem{
     }
 
     render(){
+        if(this.node.getElementsByClassName("boxclasse")[0].style.height > "400px"){
+            this.node.getElementsByClassName("boxclasse")[0].style.height="400px";
+        }
         this.anchor.appendChild(this.node);
         var maxWidth = 0;
         var maxHeight = 0;
@@ -437,11 +440,11 @@ class MCQElem extends AbstractElem{
                 error_number++;
                 if (answer["solution"]){
                     this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#00bb00"; //00bb0082
-                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#00bb00";
+                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#76f276";
                     this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #00bb00";
                 }else{
                     this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#ff4040"; //ff404091
-                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#ff4040";
+                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#fe7575";
                     this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #ff4040";
                 }
                 //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
@@ -451,7 +454,7 @@ class MCQElem extends AbstractElem{
                     //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
                     //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].setAttribute("src", "/static/img/icons/correct.png");
                     this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#00bb00";
-                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#00bb00";
+                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#76f276";
                     this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #00bb00";
                 }else {
                     //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "none";

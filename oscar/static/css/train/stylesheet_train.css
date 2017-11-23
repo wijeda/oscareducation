@@ -113,9 +113,21 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: #ffb378;
+}
+
+.simple-text{
+    background-color: #ffffffe6;
+    padding: 20px;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20%;
+    border-radius: 5px;
+    word-break: break-all;
 }
 
 label:hover {
