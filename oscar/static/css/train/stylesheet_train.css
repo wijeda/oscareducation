@@ -153,16 +153,9 @@ label:hover {
     padding:0;
     position: absolute;
     top:0;
-    right:70x;
+    right:60px;;
     background-color:#ffbe2f;
 }
-.minimizeParam, .enlargeParam{
-    padding:0;
-    position: absolute;
-    right:10%;
-    background-color:#ffbe2f;
-}
-
 .img_scenario {
 	width: 100%;
 }

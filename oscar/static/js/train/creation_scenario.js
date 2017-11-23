@@ -689,23 +689,6 @@ function enlargeElem(elem){
         buttonenla.style.display = "block";
     }
 }
-function enlargeParam(elem){
-    var root = elem.parentNode.parentNode;
-    let miniElem = root.getElementsByClassName("blk")[0];
-    var rootbutton = elem.parentNode;
-    let buttonmini = rootbutton.getElementsByClassName("minimizeParam")[0];
-    let buttonenla = rootbutton.getElementsByClassName("enlargeParam")[0];
-    if(miniElem.style.display=="none"){
-        miniElem.style.display = "block";
-        buttonmini.style.display = "block";
-        buttonenla.style.display = "none";
-    }
-    else {
-        miniElem.style.display = "none";
-        buttonmini.style.display = "none";
-        buttonenla.style.display = "block";
-    }
-}
 //This function permits to delete an answer in the MCQ exercise.
 function removeReponse(elem){
     var root = elem.parentNode.parentNode.parentNode.parentNode;
