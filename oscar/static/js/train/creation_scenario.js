@@ -210,6 +210,7 @@ class ScenarioCreation {
 
         let title = elemMCQ.getElementsByClassName('titre_MCQ_Elem')[0].value;
         let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
+        let tips = elemMCQ.getElementsByClassName('tipsMCQ')[0].value;
         let answers = [];
         // for (let elem of elemMCQ.childNodes[1].childNodes[21].childNodes){
         //      if(elem.className == "repLine"){
@@ -224,7 +225,7 @@ class ScenarioCreation {
              answers.push({"answer": reponse, "solution": checked});
 
         }
-        return {"type":"MCQElem", "data":{"title": title, "question": question, "answers" : answers}}
+        return {"type":"MCQElem", "data":{"title": title, "question": question, "tips": tips, "answers" : answers}}
 
     }
 
@@ -353,6 +354,7 @@ class ScenarioCreation {
         // filling the title and the question
         newelem.getElementsByClassName('titre_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('question_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["question"]
+        newelem.getElementsByClassName('tipsMCQ')[0].value = this.data["elements"][index]["data"]["tips"]
 
         // filling the first and the second answer of the mcq (because they are mandatory)
         newelem.getElementsByClassName('answer1')[0].value = this.data["elements"][index]["data"]["answers"][0]["answer"]

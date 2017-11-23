@@ -142,9 +142,9 @@ def get_data(request, id):
         elements.append(elem)
 
 
-    mcq = MCQElem.objects.filter(id_scenario=id)
-    for m in mcq:
-        elem = {"type" : "MCQElem", "order": m.order, "title": m.title, "data":{"id_scenario": id, "question": m.question}}
+    #mcq = MCQElem.objects.filter(id_scenario=id)
+    #for m in mcq:
+    #    elem = {"type" : "MCQElem", "order": m.order, "title": m.title, "data":{"id_scenario": id, "question": m.question, "tips": m.tips}}
 
     qcm = MCQElem.objects.filter(id_scenario=id)
 
@@ -155,7 +155,7 @@ def get_data(request, id):
         for a in answer_fromDB:
             answers.append({"answer": a.answer, "solution": a.is_answer})
 
-        elem = {"type" : "MCQElem", "order": q.order, "data":{"id_scenario": id, "title":q.title, "question":q.question, "answers": answers}}
+        elem = {"type" : "MCQElem", "order": q.order, "data":{"id_scenario": id, "title":q.title, "question":q.question,"tips": q.tips, "answers": answers}}
         elements.append(elem)
 
     skills = []
@@ -338,7 +338,8 @@ def save_scenario(request):
                 order = i
                 title_elem = parsed_json['elements'][i]['data']['title']
                 question_elem = parsed_json['elements'][i]['data']['question']
-                elem = MCQElem(id_scenario = id_scenario, order = i, title = title_elem, question = question_elem)
+                tipsMCQ = parsed_json['elements'][i]['data']['tips']
+                elem = MCQElem(id_scenario = id_scenario, order = i, title = title_elem, question = question_elem, tips = tipsMCQ)
                 elem.save()
 
                 id_MCQ_Elem = elem.id
