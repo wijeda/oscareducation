@@ -50,14 +50,14 @@
             %div#headline
                 %span.glyphicon.glyphicon-cog
                 %label Paramètres
-                %button.btn.minimizeParam{:toggle => "tooltip", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeParam(this)"}
-                    %span.glyphicon.glyphicon-minus
-                %button.btn.enlargeParam{:style => "display: none", :toggle => "tooltip", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeParam(this)"}
+                %button.btn.enlargeElement{:style => "display: none", :toggle => "tooltip", :title =>"Agrandir l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                     %span.glyphicon.glyphicon-unchecked
+                %button.btn.minimizeElem{:toggle => "tooltip", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
+                    %span.glyphicon.glyphicon-minus
                 %button.btn.addBackgroundImage{:toggle => "tooltip", :data-toggle => "popover", :placement => "bottom", :title =>"Ajouter une image d&rsquo;arrière-plan",:action => "#", :onclick => "return displayBgImgWindow(this)"}
                     %span.glyphicon.glyphicon-picture
                 -# %label Image d'arrière-plan:
-            #parameters.blk
+            #parameters.blk.panel-body
 
                 %p Entrez les différents paramètres pour le scénario
 
@@ -72,7 +72,7 @@
                 %br
                 %label{:for => 'instructions'} Instructions :
                 %br
-                %textarea{:id => 'instructions', :placeholder => 'Expliquez votre scénario'}#{scenario.instructions}
+                %textarea{:id => 'instructions', :placeholder => 'Expliquez votre scénario' ,:onkeyup => "auto_growth_textarea(this)"}#{scenario.instructions}
                 %br
                 %label{:for => 'public'} Public :
                 -if scenario.public
@@ -202,6 +202,8 @@
                           %label Question:
                           %textarea.question_MCQ_Elem{:placeholder => 'Question'}
                           %br
+                          %label Tips:
+                          %textarea.tipsMCQ{:placeholder => 'Veuillez rentrer une astuce pour l&rsquo;élève'}
                           %br
                           %div.list_answers
                               %div.repLine
@@ -234,7 +236,7 @@
                           %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                               %span.glyphicon.glyphicon-remove
                       .panel-body
-                          %textarea.desc_text_Elem{:rows => "2%", :cols => "60%", :placeholder => "Tapez votre texte"}
+                          %textarea.desc_text_Elem{:rows => "2%", :cols => "60%", :placeholder => "Tapez votre texte",:onkeyup => "auto_growth_textarea(this)"}
 
                   #imgBlockElem{:style => "display: none"}
                       %div#headline
@@ -287,21 +289,21 @@
                               %input.desc_pdf_Elem{:id => 'description_pdf', :placeholder => 'Optionnel'}
                     #idTextElemNav{:style => "display: none"}
                       %span.glyphicon.glyphicon-font
-                      %label Texte :
+                      %label.textetitre Texte
                                                 -#%span
                     #idImgElemNav{:style => "display: none"}
                       %span.glyphicon.glyphicon-picture
-                      %label Image :
+                      %label.imagetitre Image
                       %span
                     #idVideoElemNav{:style => "display: none"}
                       %span.glyphicon.glyphicon-facetime-video
-                      %label Vidéo :
+                      %label.videotitre Vidéo
                       %span
                     #idMCQElemNav{:style => "display: none"}
                       %span.glyphicon.glyphicon-list
-                      %label QCM :
+                      %label.qcmtitre QCM
                       %span
                     #idPDFElemNav{:style => "display: none"}
                       %span.glyphicon.glyphicon-file
-                      %label PDF :
+                      %label.pdftitre PDF
                       %span
