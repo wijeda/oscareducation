@@ -276,6 +276,9 @@ class AbstractElem{
 	}
 
     render(){
+        if(this.node.getElementsByClassName("boxclasse")[0].style.height > "400px"){
+            this.node.getElementsByClassName("boxclasse")[0].style.height="400px";
+        }
         this.anchor.appendChild(this.node);
         //document.getElementById("validateElement").style.display = "none";
     }
@@ -426,13 +429,13 @@ class MCQElem extends AbstractElem{
             if(answer["solution"] != this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isAnswer")[0].checked){
                 error_number++;
                 if (answer["solution"]){
-                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#00bb0082";
-                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#00bb0082";
-                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #00bb0082";
+                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#00bb00"; //00bb0082
+                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#00bb00";
+                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #00bb00";
                 }else{
-                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#ff404091";
-                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#ff404091";
-                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #ff404091";
+                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#ff4040"; //ff404091
+                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#ff4040";
+                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #ff4040";
                 }
                 //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
             }
@@ -440,9 +443,9 @@ class MCQElem extends AbstractElem{
                 if (answer["solution"]){
                     //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
                     //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].setAttribute("src", "/static/img/icons/correct.png");
-                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#00bb0082";
-                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#00bb0082";
-                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #00bb0082";
+                    this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#00bb00";
+                    this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#00bb00";
+                    this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #00bb00";
                 }else {
                     //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "none";
                     this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "grey";
