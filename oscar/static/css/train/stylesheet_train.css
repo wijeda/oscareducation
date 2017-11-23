@@ -18,7 +18,7 @@
 #sectionElements, #whiteBox, #ToolsBarSEC {
     margin-left: 140px;
     grid-column: 2; /* placement en colonne 2 */
-    margin-bottom: 70px;
+    margin-bottom: 20px;
 }
 #navFixed {
     position:fixed;
