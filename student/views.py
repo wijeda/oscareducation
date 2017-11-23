@@ -24,6 +24,12 @@ from utils import user_is_student
 from train.models import Scenario
 from train.models import ScenaSkill
 
+from promotions.models import Lesson
+
+from users.models import Student
+
+from django.apps import apps
+
 @user_is_student
 def dashboard(request):
     return render(request, "student/dashboard.haml", {})
@@ -514,7 +520,11 @@ def skill_pedagogic_ressources(request, type, slug):
     dico["headline"] = ["Titre", "Thematique", "Niveau Scolaire", "Actions"]
     dico["pk"] = slug;
     print("WE ARE HERE")
-    print(slug)
+    print(request.user)
+    #user = apps.get_model(app_label='auth', model_name='request.user')
+    stud = Student.objects.filter(user = request.user)
+    less =  Lesson.objects.filter(students = stud).values()
+    print(less)
     for scsk in ScenaSkill.objects.filter(code_skill = slug):
         print(scsk.code_skill)
         s = Scenario.objects.get(id = scsk.id_scenario)
