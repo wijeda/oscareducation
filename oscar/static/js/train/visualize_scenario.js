@@ -404,7 +404,7 @@ class MCQElem extends AbstractElem{
         }
     }
     showtips(){
-        alert(this.tips);
+        alert("Indice : " + this.tips);
     }
 
     render(){
