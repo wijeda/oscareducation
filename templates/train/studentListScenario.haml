@@ -4,12 +4,13 @@
 
 -block content
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
+    %script{:src => "/static/js/train/list_scenario.js"}
     #parameters3.blk
         %h5 Scénarios disponibles
         %p #{dico}
 
         %table.table.no-border
-            %tbody
+            %tbody.mylist
                 %tr#headline
                     -# %p {{data}}
                     -for st in headline
@@ -18,7 +19,7 @@
 
                 -for st in scenarios
 
-                    %tr#contentlist
+                    %tr#contentlist.mycontentlist
                         %td{:width => "20%"}
                             %a{:href => "/student/train/make_scenario/#{st.id}"} #{st.sequence}
                         %td{:width => "20%"}

@@ -348,3 +348,11 @@ datalist {
     width : 90%
 
 }
+
+.emptyListScenario{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: grey;
+    text-align: center;
+}

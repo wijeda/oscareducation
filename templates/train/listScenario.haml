@@ -13,7 +13,7 @@
             -#%p #{dico}
 
             %table.table.no-border
-                %tbody
+                %tbody.mylist
                     %tr#headline
                         -# %p {{data}}
                         -for st in headline
@@ -22,7 +22,7 @@
 
                     -for st in own_scenarios
 
-                        %tr#contentlist
+                        %tr#contentlist.mycontentlist
                             %td{:width => "20%"}
                                 %p{:dico => "tab"} #{st.sequence}
                             %td{:width => "20%"}
@@ -38,6 +38,7 @@
                                     %img.icon{:data => "#{st.id}", :alt => "Supprimer le scénario",:width => "25%", :height => "25%",src: "{% static 'img/icons/delete.png' %}", data-toggle: "tooltip", data-placement: "top", title: "supprimer"}
                                 %a{:href => "/professor/train/#{lesson_number}/make_scenario/#{st.id}"}
                                     %span.glyphicon.glyphicon-play{title:"jouer"}
+
         #addScenarioButton.blk
             %a.btn.btn-primary#addElement{:href => "/professor/train/lesson/#{lesson.pk}/create_scenario/"} Créer un autre scénario
         .ligneorange
@@ -46,7 +47,7 @@
             -#%p #{dico}
 
             %table.table.no-border
-                %tbody
+                %tbody.otherlist
                     %tr#headline
                         -# %p {{data}}
                         -for st in headline
@@ -55,7 +56,7 @@
 
                     -for st in foreign_scenarios
 
-                        %tr#contentlist
+                        %tr#contentlist.othercontentlist
                             %td{:width => "20%"}
                                 %p{:dico => "tab"} #{st.sequence}
                             %td{:width => "20%"}
