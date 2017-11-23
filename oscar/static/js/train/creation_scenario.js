@@ -524,13 +524,19 @@ function cancelCreation(elem){
         console.log('no');
     }
 }
+
 function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
     imgPreview.setAttribute("src", root.getElementsByClassName("url_img_Elem")[0].value);
-    if(root.getElementsByClassName("importButton"))
-        root.getElementsByClassName("importButton")[0].value = "";
     return false;
+}
+
+function loadImageElem(elem){
+    let root = elem.parentNode;
+    let imgPreview = root.getElementsByClassName("imgprev")[0];
+    imgPreview.setAttribute("src", root.getElementsByClassName("url_img_Elem")[0].value);
+    root.getElementsByClassName("importButton")[0].value = "";
 }
 
 function loadFile(event, elem){
@@ -726,31 +732,6 @@ function fillTitle(elem){
         }
         document.getElementById(navitemId).getElementsByTagName("label")[0].innerHTML = titre;
     }, 0);
-}
-
-function saveBackgroundImage(elem){
-    // let window = document.getElementById("backgroundImageWindow");
-    // let inputurl = window.getElementsByClassName("url_img_Elem")[0];
-    // window.getElementsByClassName("url_img_Elem")[0].value = elem.parentNode.getElementsByClassName("url_img_Elem")[0].value;
-    document.getElementById("backgroundImage").value = elem.parentNode.getElementsByClassName("url_img_Elem")[0].value;
-}
-
-function displayBgImgWindow(elem){
-    if(elem.getAttribute("data-content")){
-        let parent = elem.parentNode;
-        $('[data-toggle="popover"]').popover('show');
-        let mywindow = parent.getElementsByClassName("popover fade left in");
-        // let window = document.getElementById("backgroundImageWindow");
-        mywindow[0].getElementsByClassName("url_img_Elem")[0].value = document.getElementById("backgroundImage").value;
-
-    }
-    else{
-        elem.setAttribute("data-content", document.getElementById("backgroundImageWindow").innerHTML);
-        elem.setAttribute("data-placement", "left");
-        elem.setAttribute("data-html", "true");
-        elem.setAttribute("data-trigger", "focus");
-        $('[data-toggle="popover"]').popover('show');
-    }
 }
 
 // initiation
