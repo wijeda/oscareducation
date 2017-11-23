@@ -689,6 +689,10 @@ function enlargeElem(elem){
         buttonenla.style.display = "block";
     }
 }
+function auto_growth_textarea(elem){
+    elem.style.height = "5px";
+    elem.style.height = (elem.scrollHeight)+"px";
+}
 //This function permits to delete an answer in the MCQ exercise.
 function removeReponse(elem){
     var root = elem.parentNode.parentNode.parentNode.parentNode;

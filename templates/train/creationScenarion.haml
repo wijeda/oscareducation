@@ -72,7 +72,7 @@
                 %br
                 %label{:for => 'instructions'} Instructions :
                 %br
-                %textarea{:id => 'instructions', :placeholder => 'Expliquez votre scénario'}#{scenario.instructions}
+                %textarea{:id => 'instructions', :placeholder => 'Expliquez votre scénario' ,:onkeyup => "auto_growth_textarea(this)"}#{scenario.instructions}
                 %br
                 %label{:for => 'public'} Public :
                 -if scenario.public
@@ -234,7 +234,7 @@
                           %button.btn.btn-danger.deleteElement{:toggle => "tooltip", :placement => "bottom", :title =>"Supprimer l&rsquo;élément",:action => "#", :onclick => "return removeElem(this)"}
                               %span.glyphicon.glyphicon-remove
                       .panel-body
-                          %textarea.desc_text_Elem{:rows => "2%", :cols => "60%", :placeholder => "Tapez votre texte"}
+                          %textarea.desc_text_Elem{:rows => "2%", :cols => "60%", :placeholder => "Tapez votre texte",:onkeyup => "auto_growth_textarea(this)"}
 
                   #imgBlockElem{:style => "display: none"}
                       %div#headline

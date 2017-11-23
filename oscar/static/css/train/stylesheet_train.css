@@ -86,6 +86,8 @@
 #parameters textarea {
     width: 100%;
     resize: none;
+    min-height: 50px;
+    max-height: 200px;
 }
 #DiffElem{
     bottom : 15%;
@@ -131,6 +133,8 @@ label:hover {
 }
 .desc_text_Elem{
     resize:none;
+    overflow:hidden;
+    min-height:50px;
 }
 .deleteElement{
 	position: absolute;
