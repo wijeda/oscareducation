@@ -21,10 +21,13 @@ from .models import Scenario
 from .models import TextElem
 from .models import VidElem
 from .models import ScenaSkill
+from users.models import Professor
 from promotions.models import Stage
 from promotions.models import Lesson
 
 from .utils import user_is_professor
+from django.contrib.auth.models import User
+
 
 from skills.models import Skill
 
@@ -362,37 +365,40 @@ def delete_scenario(request, id):
 
     s = Scenario.objects.get(id=id)
 
+
     dico = {}
     dico ["scenario"] = {"creator":s.creator}
+    userprof = User.objects.filter(username=s.creator)
 
-    scsk = ScenaSkill.objects.filter(id_scenario=id)
-    for sk in scsk:
-        sk.delete()
+    if userprof[0].id == request.user.id:
+        scsk = ScenaSkill.objects.filter(id_scenario=id)
+        for sk in scsk:
+            sk.delete()
 
-    textes = TextElem.objects.filter(id_scenario=id)
-    for t in textes:
-        t.delete()
+        textes = TextElem.objects.filter(id_scenario=id)
+        for t in textes:
+            t.delete()
 
-    videos = VidElem.objects.filter(id_scenario=id)
-    for v in videos:
-        v.delete()
+        videos = VidElem.objects.filter(id_scenario=id)
+        for v in videos:
+            v.delete()
 
-    images = ImgElem.objects.filter(id_scenario=id)
-    for i in images:
-        i.delete()
+        images = ImgElem.objects.filter(id_scenario=id)
+        for i in images:
+            i.delete()
 
-    pdf = PDFElem.objects.filter(id_scenario=id)
-    for i in pdf:
-        i.delete()
+        pdf = PDFElem.objects.filter(id_scenario=id)
+        for i in pdf:
+            i.delete()
 
-    qcm = MCQElem.objects.filter(id_scenario=id)
-    for q in qcm:
-        ans = MCQReponse.objects.filter(id_question = q.id)
-        for a in ans:
-            a.delete()
-        q.delete()
+        qcm = MCQElem.objects.filter(id_scenario=id)
+        for q in qcm:
+            ans = MCQReponse.objects.filter(id_question = q.id)
+            for a in ans:
+                a.delete()
+            q.delete()
 
-    Scenario.objects.get(id=id).delete()
+        Scenario.objects.get(id=id).delete()
 
     return list_scenario(request)
 
