@@ -413,7 +413,7 @@ class MCQElem extends AbstractElem{
         this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-content", this.tips);
         this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-placement", "bottom");
         this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-html", "true");
-        this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-trigger", "click|focus");
+        this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-trigger", "focus");
         $('[data-toggle="popover"]').popover('show');
     }
     // showtips(){
