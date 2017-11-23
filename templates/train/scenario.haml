@@ -15,6 +15,9 @@
     %h4#instructions{:dico => "tab"} #{scenario.instructions}
     -# =id.instructions
 
+    #tipsWindow{:style => "display: none"}
+        %p.tipsValue
+
     %div#anchor{:style => "margin-bottom: 120px;"}
         #textBlockElem{:style => "display: none"}
             .ligneorange
@@ -84,7 +87,7 @@
 
                 %p.succededMCQ{:style => "display: none;background-color: #ffffffe6;padding: 20px;border-radius: 5px;"} Bonne(s) Réponse(s)!
                 %p.failedMCQ{:style => "display: none;background-color: #ffffffe6;padding: 20px;border-radius: 5px;"} Il y a eu une ou plusieurs erreurs
-                %button.btn-fixed-tips.tipsMCQ
+                %button.btn-fixed-tips.tipsMCQ{:toggle => "tooltip", :data-toggle => "popover", :placement => "bottom", :title =>"Indice: ",:action => "#"}
                     %span.glyphicon.glyphicon-info-sign
                 %button.btn-fixed-validate.validateElement#validateMCQ
                     %span.glyphicon.glyphicon-ok

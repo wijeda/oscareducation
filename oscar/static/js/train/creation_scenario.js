@@ -748,7 +748,8 @@ function displayBgImgWindow(elem){
         elem.setAttribute("data-content", document.getElementById("backgroundImageWindow").innerHTML);
         elem.setAttribute("data-placement", "left");
         elem.setAttribute("data-html", "true");
-        $('[data-toggle="popover"]').popover();
+        elem.setAttribute("data-trigger", "click|focus");
+        $('[data-toggle="popover"]').popover('show');
     }
 }
 

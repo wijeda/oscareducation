@@ -400,15 +400,25 @@ class MCQElem extends AbstractElem{
 
             this.validateButton = this.node.getElementsByClassName("validateElement")[0];
             this.validateButton.addEventListener("click", this.validate.bind(this), true);
-
+            //
+            // this.tipsButton = this.node.getElementsByClassName("tipsMCQ")[0];
+            // this.tipsButton.addEventListener("click", this.showtips.bind(this), true);
             this.tipsButton = this.node.getElementsByClassName("tipsMCQ")[0];
-            this.tipsButton.addEventListener("click", this.showtips.bind(this), true);
+            this.tipsButton.addEventListener("click", this.displayTips.bind(this), true);
 
         }
     }
-    showtips(){
-        alert("Indice : " + this.tips);
+
+    displayTips(){
+        this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-content", this.tips);
+        this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-placement", "bottom");
+        this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-html", "true");
+        this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-trigger", "click|focus");
+        $('[data-toggle="popover"]').popover('show');
     }
+    // showtips(){
+    //     alert("Indice : " + this.tips);
+    // }
 
     render(){
         if(this.node.getElementsByClassName("boxclasse")[0].style.height > "400px"){
