@@ -51,17 +51,19 @@ class ScenarioCreation {
     }
 
     skillsRender(){
-        for(var skill of this.data["skills"])
-        {
-            var newelem = document.createElement("span");
-            newelem.innerHTML = '<button type="button" title="" ng-click="removeSkill(skill)" class="btn btn-primary selected-skill ng-binding">' + skill + "</button>"
-            newelem.classList.add("ng-scope");
-            newelem.setAttribute("ng-repeat", "skill in toTestSkills");
-            newelem.addEventListener("click", deleteSkill,true);
-            document.getElementsByClassName("well")[0].appendChild(newelem);
-            var newLine = document.createElement("span");
-            newLine.innerHTML = "\n<!-- end ngRepeat: skill in toTestSkills -->"
-            document.getElementsByClassName("well")[0].appendChild(newLine);
+        if (this.data["skills"]){
+            for(var skill of this.data["skills"])
+            {
+                var newelem = document.createElement("span");
+                newelem.innerHTML = '<button type="button" title="" ng-click="removeSkill(skill)" class="btn btn-primary selected-skill ng-binding">' + skill + "</button>"
+                newelem.classList.add("ng-scope");
+                newelem.setAttribute("ng-repeat", "skill in toTestSkills");
+                newelem.addEventListener("click", deleteSkill,true);
+                document.getElementsByClassName("well")[0].appendChild(newelem);
+                var newLine = document.createElement("span");
+                newLine.innerHTML = "\n<!-- end ngRepeat: skill in toTestSkills -->"
+                document.getElementsByClassName("well")[0].appendChild(newLine);
+            }
         }
     }
 
@@ -389,12 +391,10 @@ class ScenarioCreation {
                 }
                 else if(this.data["elements"][i]["type"] == "ImgElemHardDrive")
                 {
-                    console.log("this is an image from the hardrive");
                     this.makeFilledImgHardDrive(i);
                 }
                 else if(this.data["elements"][i]["type"] == "ImgElem")
                 {
-                    console.log("this is an image url");
                     this.makeFilledImg(i);
                 }
                 else if(this.data["elements"][i]["type"] == "VidElem")
@@ -419,26 +419,9 @@ class ScenarioCreation {
         if (id == "") {
             id = pathTab[pathTab.length - 2]
         }
-        console.log(id);
         if (id != "create_scenario") {
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open( "GET", "/professor/train/delete_scenario/"+id, false ); // false for synchronous request
-            xmlHttp.send( null );
-            //return xmlHttp.responseText;
-        }
-        this.sendForm();
-    }
-
-    duplicateForm(){
-        var pathTab = window.location.pathname.split("/")
-        var id = pathTab[pathTab.length - 1]
-        if (id == "") {
-            id = pathTab[pathTab.length - 2]
-        }
-        console.log(id);
-        if (id != "create_scenario") {
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", "/professor/train/duplicate_scenario/"+id, false ); // false for synchronous request
             xmlHttp.send( null );
             //return xmlHttp.responseText;
         }
@@ -503,7 +486,6 @@ class ScenarioCreation {
                 data["elements"].push(this.getElemInputBlockPDF(this.anchor.childNodes[i]));
             }
         }
-        console.log(data);
 
         //construct an HTTP request
 
@@ -667,7 +649,6 @@ function removeElem(elem){
 }
 
 function deleteSkill(elem) {
-    console.log(elem);
     var parent = elem.target.parentNode;
     parent.removeChild(elem.target);
 }
@@ -721,7 +702,6 @@ function fillTitle(elem){
     var navitemId = "navitem" + root.getAttribute("id");
     setInterval(function(){
         var titre = elem.value;
-        //console.log(document.getElementById(navitemId).getElementsByTagName("span"));
         document.getElementById(navitemId).getElementsByTagName("label")[0].innerHTML = titre;
     }, 0);
 }
@@ -748,35 +728,6 @@ function displayBgImgWindow(elem){
         elem.setAttribute("data-html", "true");
         $('[data-toggle="popover"]').popover();
     }
-    // let root = elem.parentNode.parentNode;
-    // if(!elem.getAttribute("data-showPopup")){
-    //     let window = document.createElement("div");
-    //     window.classList.add("backgroundImageWindow");
-    //     window.innerHTML = document.getElementById("backgroundImageWindow").innerHTML;
-    //     // let window = document.getElementById("backgroundImageWindow");
-    //     root.appendChild(window);
-    //     var x = elem.offsetLeft;
-    //     var y = elem.offsetTop;
-    //     console.log("position x="+x+", y="+y);
-    //
-    //     // console.log("My window: "+window);
-    //     window.style.display = "block";
-    //     window.setAttribute("position", "absolute");
-    //     window.setAttribute("left", "x");
-    //     window.setAttribute("top", "y");
-    //     elem.setAttribute("data-showPopup", "true");
-    // }
-    // else if (elem.getAttribute("data-showPopup")=="false"){
-    //     let window = root.getElementsByClassName("backgroundImageWindow")[0];
-    //     window.style.display = "block";
-    //     elem.setAttribute("data-showPopup", "true");
-    // }
-    // else{
-    //     let window = root.getElementsByClassName("backgroundImageWindow")[0];
-    //     window.style.display = "none";
-    //     elem.setAttribute("data-showPopup", false);
-    // }
-    // // elem.style.display = "none";
 }
 
 // initiation
