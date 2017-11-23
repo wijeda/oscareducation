@@ -702,6 +702,26 @@ function fillTitle(elem){
     var navitemId = "navitem" + root.getAttribute("id");
     setInterval(function(){
         var titre = elem.value;
+        console.log(titre);
+        var titrenavbarelem = document.getElementById(navitemId).getElementsByTagName("label")[0];
+        if (titre == ""){
+            console.log("in");
+            if(titrenavbarelem.classList.contains("textetitre")){
+                titre = "Texte";
+            }
+            else if (titrenavbarelem.classList.contains("imagetitre")){
+                titre = "Image";
+            }
+            else if (titrenavbarelem.classList.contains("videotitre")){
+                titre = "Vidéo";
+            }
+            else if (titrenavbarelem.classList.contains("qcmtitre")){
+                titre = "QCM";
+            }
+            else if (titrenavbarelem.classList.contains("pdftitre")){
+                titre = "PDF";
+            }
+        }
         document.getElementById(navitemId).getElementsByTagName("label")[0].innerHTML = titre;
     }, 0);
 }

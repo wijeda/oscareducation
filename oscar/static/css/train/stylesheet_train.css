@@ -24,7 +24,7 @@
     position:fixed;
     overflow: auto;
     height: 70%;
-    max-width: 235px;
+    width: 235px;
 }
 .divElemNav {
     background-color: white;
