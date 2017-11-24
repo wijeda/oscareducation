@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 import unittest
 import time
 from selenium import webdriver
@@ -11,7 +12,7 @@ URL_LOGIN = "http://127.0.0.1:8000/accounts/usernamelogin/"
 URL_SCENARIO_CREATION = "http://127.0.0.1:8000/professor/train/create_scenario/"
 URL_LIST_SCENARIO = "http://127.0.0.1:8000/professor/train/list_scenario/"
 URL_LIST_STUDENT = "http://127.0.0.1:8000/professor/train/student_list_scenario/"
-URL_CLASS = "http://127.0.0.1:8000/professor/lesson/1/#"
+URL_CLASS = "http://127.0.0.1:8000/professor/lesson/2/#"
 URL_VIDEO = "https://www.youtube.com/watch?v=2bjk26RwjyU"
 
 
@@ -30,7 +31,7 @@ class SampleTest(unittest.TestCase):
     def test_student_view(self):
 
         driver = self.driver
-        self.click_element_css("a[href='/professor/lesson/1/']")
+        self.click_element_css("a[href='/professor/lesson/2/']")
         self.click_element_css("a[href='#listscena']")
         self.click_element_id("addElement")
 
@@ -57,8 +58,8 @@ class SampleTest(unittest.TestCase):
         self.scroll_bottom()
         self.fill_field_css("input[class='titre_MCQ_Elem']", "Titre_MCQ")
         self.fill_field_css("textarea[class='question_MCQ_Elem']", "question")
-        self.fill_field_css("input[class='answer1 answer']", "Réponse 1")
-        self.fill_field_css("input[class='answer2 answer']", "Réponse 2")
+        self.fill_field_css("input[class='answer1 answer']", "Reponse 1")
+        self.fill_field_css("input[class='answer2 answer']", "Reponse 2")
         self.click_element_css("input[class='answer1isvalid']")
         # self.click_element_css("input[class='answer1_is_valid']")
         # self.scroll_bottom()

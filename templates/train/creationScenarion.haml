@@ -63,7 +63,7 @@
                 -else
                     %input{:id => 'public', :type => 'checkbox'}
                 %br
-                %label{:for => 'public'} Arrière-plan :
+                %label{:for => 'backgroundImage'} Arrière-plan :
                 %input.url_img_Elem{:id => 'backgroundImage', :type => "text", :placeholder => 'Donnez une image à votre scénario', :value => "#{scenario.backgroundImage}"}
                 %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
                 %img.imgprev{:width => "25%"}
