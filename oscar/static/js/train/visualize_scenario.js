@@ -468,9 +468,14 @@ class MCQElem extends AbstractElem{
                 maxHeight = blocanswer[i].clientHeight;
             }
         }
+        // console.log(blocanswer);
         for(let i = 1; i < blocanswer.length; i++){
+            console.log(i);
             var newStyle = "width: "+maxWidth+"px ;height: "+maxHeight+"px; "+"display: flex; justify-content: center; flex-direction: column;"
-            blocanswer[i].getElementsByClassName("answer")[0].setAttribute("style",newStyle);
+            if (blocanswer[i].getElementsByClassName("answer")[0])
+            {
+                blocanswer[i].getElementsByClassName("answer")[0].setAttribute("style",newStyle);
+            }
         }
     }
 
