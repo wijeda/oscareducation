@@ -122,15 +122,15 @@ def lesson_detail(request, pk):
     dico = {}
     dico["lesson_number"] = pk
     dico["own_scenarios"]=[]
+    dico["skills"]=[]
     # test d recup de date dans la db
     for s in Scenario.objects.filter(creator = request.user):
 
         dico["own_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+        for sk in ScenaSkill.objects.filter(id_scenario = s.id):
+            dico["skills"].append({"id":s.id,"skillcode":sk.code_skill})
 
 
-    dico["skills"]=[]
-    # for sk in ScenaSkill.objects.filter(id_scenario = s.id):
-    #     dico["skills"].append({"id":s.id,"skillcode":sk.code_skill})
 
     dico["foreign_scenarios"] = []
 
