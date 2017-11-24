@@ -459,7 +459,7 @@ class MCQElem extends AbstractElem{
         this.anchor.appendChild(this.node);
         var maxWidth = 0;
         var maxHeight = 0;
-        var blocanswer = this.node.getElementsByClassName("blocanswer");
+        var blocanswer = this.node.getElementsByClassName("answer");
         for(let i = 1; i < blocanswer.length; i++){
             if(maxWidth < blocanswer[i].clientWidth){
                 maxWidth = blocanswer[i].clientWidth;

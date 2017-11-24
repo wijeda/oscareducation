@@ -27,21 +27,6 @@
                     Paramètres
                 #simpleList.divElemNav
 
-    #backgroundImageWindow{:style => "display: none"}
-        -# %label Importer du PC :
-        -# %input#importButton.importButton{:type => "file", :accept => "image/*", onchange: "loadFile(event, this)"}
-        %label Importer d'une Url :
-        %input.url_img_Elem{:id => 'img_url', :type => "text", :placeholder => 'Entrez une url'}
-        %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
-        %br
-        %label
-            %input.isGeneral{:type => "checkbox"}
-            Appliquer cet arrière-plan à l'ensemble du scénario.
-        %img.imgprev{:width => "25%"}
-        %button.btn.btn-primary#saveBackgroundImage{:onclick => "return saveBackgroundImage(this)"}
-            %span.glyphicon.glyphicon-floppy-disk
-            Ajouter
-
     %section#sectionElements
         #whiteBox1{:methode => "POST"}
             {% csrf_token %}
@@ -54,8 +39,6 @@
                     %span.glyphicon.glyphicon-unchecked
                 %button.btn.minimizeElem{:toggle => "tooltip", :title =>"Réduire l&rsquo;élément",:action => "#", :onclick => "return enlargeElem(this)"}
                     %span.glyphicon.glyphicon-minus
-                %button.btn.addBackgroundImage{:toggle => "tooltip", :data-toggle => "popover", :placement => "bottom", :title =>"Ajouter une image d&rsquo;arrière-plan",:action => "#", :onclick => "return displayBgImgWindow(this)"}
-                    %span.glyphicon.glyphicon-picture
                 -# %label Image d'arrière-plan:
             #parameters.blk.panel-body
 
@@ -80,7 +63,10 @@
                 -else
                     %input{:id => 'public', :type => 'checkbox'}
                 %br
-                %input{:style => "display: none", :id => 'backgroundImage', :type => "text", :placeholder => 'Donnez une image à votre scénario', :value => "#{scenario.backgroundImage}"}
+                %label{:for => 'public'} Arrière-plan :
+                %input.url_img_Elem{:id => 'backgroundImage', :type => "text", :placeholder => 'Donnez une image à votre scénario', :value => "#{scenario.backgroundImage}"}
+                %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
+                %img.imgprev{:width => "25%"}
                 %br
                 %div{ng-app: "oscar", ng-controller: "createTestController"}
                     %p
@@ -260,7 +246,7 @@
                               %input#importButton.importButton{:type => "file", :accept => "image/*", onchange: "loadFile(event, this)"}
                               %label Importer d'une Url :
                               %input.url_img_Elem{:id => 'img_url', :type => "text", :placeholder => 'Entrez une url'}
-                              %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImage(this)"}
+                              %img#addImg{:toggle => "tooltip", :placement => "bottom", :title =>"Ajouter une image", :src => "/static/img/icons/add.png", :height => "5%", :width => "5%",:action => "#", :onclick => "return loadImageElem(this)"}
                                   -# #loadImage{:style => "display: none"}
                           .form-group
                               %label{:for => 'description_img'} Description:
