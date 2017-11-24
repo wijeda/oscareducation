@@ -13,7 +13,7 @@ URL_HOMEPAGE = "http://127.0.0.1:8000"
 URL_LOGIN = "http://127.0.0.1:8000/accounts/usernamelogin/"
 URL_SCENARIO_CREATION = "http://127.0.0.1:8000/professor/train/create_scenario/"
 URL_LIST_SCENARIO = "http://127.0.0.1:8000/professor/train/list_scenario/"
-URL_CLASS = "http://127.0.0.1:8000/professor/lesson/1/#"
+URL_CLASS = "http://127.0.0.1:8000/professor/lesson/2/#"
 URL_VIDEO = "https://www.youtube.com/watch?v=2bjk26RwjyU"
 
 
@@ -30,7 +30,7 @@ class SampleTest(unittest.TestCase):
         self.click_element_css("input[value='Connexion']")
 
     def test_edit_scenario(self):
-        self.click_element_css("a[href='/professor/lesson/1/']")
+        self.click_element_css("a[href='/professor/lesson/2/']")
         self.click_element_css("a[href='#listscena']")
         self.click_element_id("addElement")
 
@@ -62,7 +62,7 @@ class SampleTest(unittest.TestCase):
         self.assertTrue(self.is_element_present(By.CSS_SELECTOR, "iframe[src = '//www.youtube.com/embed/2bjk26RwjyU']"))
 
     def test_creation(self):
-        self.click_element_css("a[href='/professor/lesson/1/']")
+        self.click_element_css("a[href='/professor/lesson/2/']")
         self.click_element_css("a[href='#listscena']")
         self.click_element_id("addElement")
 
@@ -79,7 +79,7 @@ class SampleTest(unittest.TestCase):
 
     def test_deletion(self):
 
-        self.click_element_css("a[href='/professor/lesson/1/']")
+        self.click_element_css("a[href='/professor/lesson/2/']")
         self.click_element_css("a[href='#listscena']")
         self.click_element_id("addElement")
 

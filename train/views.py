@@ -189,10 +189,18 @@ def list_scenario(request):
     # for now, the actions are represented by character e for "edit", d for "delete" and s for "see"
     dico = {}
     dico["own_scenarios"]=[]
+    dico["skills"]=[]
     # test d recup de date dans la db
     for s in Scenario.objects.filter(creator = request.user):
 
         dico["own_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+
+    print("1")
+    for sk in ScenaSkill.objects.filter(id_scenario = s.id):
+        print("2")
+        dico["skills"].append(sk.code_skill)
+        print(sk.code_skill)
+        print(sk)
 
     dico["foreign_scenarios"] = []
 
