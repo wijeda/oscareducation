@@ -802,6 +802,9 @@ window.onload = function(){
         ul.replaceChild(ul.childNodes[evt.oldIndex], ul.childNodes[evt.newIndex]);
         ul.insertBefore(node, ul.childNodes[evt.newIndex].nextSibling);
       }
+      else if (evt.oldIndex == evt.newIndex) {
+
+      }
       else{
         var node = ul.childNodes[evt.newIndex];
         ul.replaceChild(ul.childNodes[evt.oldIndex], ul.childNodes[evt.newIndex]);
@@ -822,6 +825,9 @@ window.onload = function(){
         var node = ul.childNodes[evt.newIndex];
         ul.replaceChild(ul.childNodes[evt.oldIndex], ul.childNodes[evt.newIndex]);
         ul.insertBefore(node, ul.childNodes[evt.newIndex].nextSibling);
+      }
+      else if (evt.oldIndex == evt.newIndex) {
+
       }
       else{
         var node = ul.childNodes[evt.newIndex];
