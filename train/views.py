@@ -208,7 +208,7 @@ def list_scenario(request):
         dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
-    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
+    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau", "Actions"]
     # 2 examples to be replaced:
     # dico["scenarios"] = [{"sequence":"Calculer l'aire d'un triangle", "skill":"Aire d'un triangle", "topic":"Trigonometrie", "grade":"3e Primaire","edit":"e","delete":"d","see":"s"},
                         # {"sequence":"Decouverte des fractions", "skill":"Addition de fraction", "topic":"Algebre", "grade":"2e Primaire","edit":"e","delete":"d","see":"s"}]
@@ -226,7 +226,7 @@ def student_list_scenario(request):
         dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level, "backgroundImage":s.backgroundImage})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
-    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire"]
+    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau"]
     # 2 examples to be replaced:
     # dico["scenarios"] = [{"sequence":"Calculer l'aire d'un triangle", "skill":"Aire d'un triangle", "topic":"Trigonometrie", "grade":"3e Primaire","edit":"e","delete":"d","see":"s"},
                         # {"sequence":"Decouverte des fractions", "skill":"Addition de fraction", "topic":"Algebre", "grade":"2e Primaire","edit":"e","delete":"d","see":"s"}]

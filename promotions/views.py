@@ -138,7 +138,7 @@ def lesson_detail(request, pk):
         dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
-    dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau Scolaire", "Actions"]
+    dico["headline"] = ["Titre", "Competence(s)", "Thematique", "Niveau", "Actions"]
 
     dico.update({"lesson": lesson,
                 "number_of_students": number_of_students,
