@@ -1,7 +1,6 @@
 import unittest
 import time
 from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
@@ -20,7 +19,7 @@ class SampleTest(unittest.TestCase):
     def setUp(self):
         # create a new Chrome session
         self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(10)
         self.driver.maximize_window()
         self.driver.get(URL_LOGIN)
         self.fill_field("id_username", "professor")
@@ -38,19 +37,15 @@ class SampleTest(unittest.TestCase):
         self.fill_field("title", "test_title")
         self.fill_field("instructions", "test_instructions")
 
-        add_hover = self.driver.find_element_by_id("addElement")
-        img_click = self.driver.find_element_by_id("addElementImg")
-        video_click = self.driver.find_element_by_id("addElementVideo")
-        mcq_click = self.driver.find_element_by_id("addElementMcq")
-
-        ActionChains(self.driver).move_to_element(add_hover).click(video_click).perform()
+        self.scroll_bottom()
+        self.click_element_id("addElementVideo")
         self.scroll_bottom()
         self.fill_field("vid_url", URL_VIDEO)
         self.click_element_id("addVid")
 
         self.scroll_bottom()
 
-        ActionChains(self.driver).move_to_element(add_hover).click(img_click).perform()
+        self.click_element_id("addElementImg")
         self.scroll_bottom()
         self.fill_field("img_url", URL_IMG)
         self.click_element_id("addImg")
@@ -58,13 +53,13 @@ class SampleTest(unittest.TestCase):
 
         self.scroll_bottom()
 
-        ActionChains(self.driver).move_to_element(add_hover).click(mcq_click).perform()
+        self.click_element_id("addElementMcq")
         self.scroll_bottom()
         self.fill_field_css("input[class='titre_MCQ_Elem']", "Titre_MCQ")
-        self.fill_field_css("input[class='instruction_MCQ_Elem']", "instruction")
-        self.fill_field_css("input[class='question_MCQ_Elem']", "question")
-        self.fill_field_css("input[class='answer1']", "Réponse 1")
-        self.fill_field_css("input[class='answer2']", "Réponse 2")
+        self.fill_field_css("textarea[class='question_MCQ_Elem']", "question")
+        self.fill_field_css("input[class='answer1 answer']", "Réponse 1")
+        self.fill_field_css("input[class='answer2 answer']", "Réponse 2")
+        self.click_element_css("input[class='answer1isvalid']")
         # self.click_element_css("input[class='answer1_is_valid']")
         # self.scroll_bottom()
         # self.click_element_css("button[title='Ajouter une réponse']")

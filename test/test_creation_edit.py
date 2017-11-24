@@ -6,7 +6,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import *
 
-# Run with "python3.5 *test name*.py"
+# Run with "python3.5 *test name*.py" or whatever version of python selenium is installed on
+# Need to create a user named professor with professor access
 
 URL_HOMEPAGE = "http://127.0.0.1:8000"
 URL_LOGIN = "http://127.0.0.1:8000/accounts/usernamelogin/"
@@ -20,7 +21,7 @@ class SampleTest(unittest.TestCase):
     def setUp(self):
         # create a new Chrome session
         self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(10)
         self.driver.maximize_window()
         self.driver.get(URL_LOGIN)
         self.fill_field("id_username", "professor")
@@ -45,10 +46,8 @@ class SampleTest(unittest.TestCase):
         self.fill_field("title", "new title")
         self.fill_field("instructions", "new instructions")
 
-        add_hover = self.driver.find_element_by_id("addElement")
-        video_click = self.driver.find_element_by_id("addElementVideo")
         self.scroll_bottom()
-        ActionChains(self.driver).move_to_element(add_hover).click(video_click).perform()
+        self.click_element_id("addElementVideo")
 
         self.scroll_bottom()
         self.fill_field("vid_url", URL_VIDEO)
@@ -96,7 +95,7 @@ class SampleTest(unittest.TestCase):
         self.driver.switch_to.alert.accept()
         time.sleep(1)
         body_text = self.driver.find_element_by_tag_name('body').text
-        self.assertTrue(scenario_title in body_text)
+        self.assertFalse(scenario_title in body_text)
 
     def tearDown(self):
         # close the browser window and clear test scenarios
