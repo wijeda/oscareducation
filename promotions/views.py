@@ -129,8 +129,8 @@ def lesson_detail(request, pk):
 
 
     dico["skills"]=[]
-    for sk in ScenaSkill.objects.filter(id_scenario = s.id):
-        dico["skills"].append({"id":s.id,"skillcode":sk.code_skill})
+    # for sk in ScenaSkill.objects.filter(id_scenario = s.id):
+    #     dico["skills"].append({"id":s.id,"skillcode":sk.code_skill})
 
     dico["foreign_scenarios"] = []
 

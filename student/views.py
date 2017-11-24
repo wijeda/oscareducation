@@ -527,16 +527,19 @@ def skill_pedagogic_ressources(request, type, slug):
     #user = apps.get_model(app_label='auth', model_name='request.user')
     stud = Student.objects.filter(user = request.user)
 
-    # for prof in Lesson.objects.filter(students = stud).values():#('professors'):
-    #     print(prof)
-    #     print(User.objects.filter(id = prof['professors']))
+    for lesson in Lesson.objects.filter(students = stud):
+        prof = list(lesson.professors.all())[0]
+
     # for final in Professor.objects.filter(user = prof['professors']):
     #     print("PROF : ")
     #     print(final.user)
     for scsk in ScenaSkill.objects.filter(code_skill = slug):
-        print(scsk.code_skill)
-        s = Scenario.objects.get(id = scsk.id_scenario)
-        print(s.creator)
-        dico["scenarios"].append({"pk":slug,"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+        for scena in Scenario.objects.filter(id = scsk.id_scenario):
+            try:
+                s = Scenario.objects.get(id = scsk.id_scenario)
+                if(s.creator == prof.user.username):
+                    dico["scenarios"].append({"pk":slug,"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+            except:
+                pass
 
     return render(request, "professor/skill/update_pedagogical_resources.haml", dico)

@@ -371,7 +371,6 @@ def save_scenario(request):
 
 @user_is_professor
 def delete_scenario(request, id):
-
     s = Scenario.objects.get(id=id)
 
 
