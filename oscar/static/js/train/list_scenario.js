@@ -4,16 +4,17 @@ window.onload = function(){
     if(scenarioList.length == 0){
         let emptyDiv = document.createElement("div");
         emptyDiv.classList.add("emptyListScenario");
-        emptyDiv.innerHTML = "<div>Vous n'avez auncun scénario</div>";
+        emptyDiv.innerHTML = "<div>Vous n'avez aucun scénario</div>";
         document.getElementsByClassName("mylist")[0].parentNode.parentNode.appendChild(emptyDiv);
     }
 
     let otherscenarioList = document.getElementsByClassName("othercontentlist");
-    if(otherscenarioList.length == 0){
+    let otherlist = document.getElementsByClassName("otherlist");
+    if(otherlist.length != 0 && otherscenarioList.length == 0){
         let emptyDiv = document.createElement("div");
         emptyDiv.classList.add("emptyListScenario");
-        emptyDiv.innerHTML = "<div>Vous n'avez auncun scénario</div>";
-        document.getElementsByClassName("otherlist")[0].parentNode.appendChild(emptyDiv);
+        emptyDiv.innerHTML = "<div>Il n'y a pas de scénario disponible</div>";
+        otherlist[0].parentNode.parentNode.appendChild(emptyDiv);
     }
 };
 

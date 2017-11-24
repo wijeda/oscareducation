@@ -704,7 +704,6 @@ function fillTitle(elem){
     var navitemId = "navitem" + root.getAttribute("id");
     setInterval(function(){
         var titre = elem.value;
-        console.log(titre);
         var titrenavbarelem = document.getElementById(navitemId).getElementsByTagName("label")[0];
         if (titre == ""){
             console.log("in");

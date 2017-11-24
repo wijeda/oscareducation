@@ -3,7 +3,7 @@
 class ScenarioVisualization{
 
     //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
-    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID, gotoPDFID){
+    constructor(json,anchorID,nextButtonID,previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID, gotoPDFID, quitButtonID){
         this.anchor = document.getElementById(anchorID);
         this.nextButton = document.getElementById(nextButtonID);
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
@@ -18,6 +18,7 @@ class ScenarioVisualization{
         this.blockVideo = document.getElementById(blockID["videoBlockID"]);
         this.blockPDF = document.getElementById(blockID["pdfBlockID"]);
         this.blockMCQ = document.getElementById(blockID["mcqBlockID"]);
+
 
         this.progressBar = document.getElementById("progressBar");
 
@@ -172,6 +173,7 @@ class ScenarioVisualization{
     }
 
     endButtonElement(){
+        console.log("test");
         var pathTab = window.location.pathname.split("/");
         var user_type = pathTab[1];
         var pk = pathTab[3]
@@ -211,6 +213,8 @@ window.onload = function(){
     let validateButtonID = "validateElement";
     let endButtonID = "endElement";
 
+    let quitButtonID = "quit";
+
     let gotoTextID = "idTextElemProg";
     let gotoImgID = "idImgElemProg";
     let gotoVidID = "idVideoElemProg";
@@ -220,7 +224,7 @@ window.onload = function(){
 
 
     let blockID = {"textBlockID":"textBlockElem","imgBlockID":"imgBlockElem","videoBlockID":"videoBlockElem","pdfBlockID":"pdfBlockElem","mcqBlockID":"mcqBlockElem"};
-    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID, gotoPDFID);
+    new ScenarioVisualization(json, anchorID, nextButtonID, previousButtonID, validateButtonID, endButtonID, blockID, gotoTextID, gotoImgID, gotoVidID, gotoMCQID, gotoPDFID, quitButtonID);
 
 };
 
@@ -287,9 +291,24 @@ class AbstractElem{
         this.anchor.removeChild(this.node);
     }
 
+
+
 	delete() {
 		throw new Error('You have to implement the method delete');
 	}
+}
+
+function quitButton(){
+    console.log("test");
+    var pathTab = window.location.pathname.split("/");
+    var user_type = pathTab[1];
+    var pk = pathTab[3]
+    if(user_type == "student"){
+        window.location.href = "/student/pedagogical/skill/"+pk;
+    }else{
+        window.location.href = "/professor/lesson/"+pk+"/#listscena";
+    }
+
 }
 
 class TextElem extends AbstractElem{
@@ -304,6 +323,9 @@ class TextElem extends AbstractElem{
             this.node.innerHTML = skull.innerHTML;
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
             this.node.getElementsByClassName("content")[0].innerHTML = this.content;
+            this.quitButton = this.node.getElementsByClassName("quit")[0];
+            this.quitButton.addEventListener("click", quitButton, true);
+
     }
 }
 
@@ -319,6 +341,8 @@ class ImageElem extends AbstractElem{
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
             this.node.getElementsByClassName("content")[0].setAttribute("src", this.content);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
+            this.quitButton = this.node.getElementsByClassName("quit")[0];
+            this.quitButton.addEventListener("click", quitButton, true);
         }
     }
 }
@@ -337,6 +361,8 @@ class ImageElemHardDrive extends AbstractElem{
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
             this.node.getElementsByClassName("content")[0].setAttribute("src", this.content);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
+            this.quitButton = this.node.getElementsByClassName("quit")[0];
+            this.quitButton.addEventListener("click", quitButton, true);
         }
     }
 }
@@ -355,6 +381,8 @@ class VideoElem extends AbstractElem{
             this.embedURL = "//www.youtube.com/embed/" + ID;
             this.node.getElementsByClassName("content")[0].setAttribute("src", this.embedURL);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
+            this.quitButton = this.node.getElementsByClassName("quit")[0];
+            this.quitButton.addEventListener("click", quitButton, true);
         }
     }
 }
@@ -372,6 +400,8 @@ class PDFElem extends AbstractElem{
             this.node.getElementsByClassName("titre")[0].innerHTML = this.title;
             this.node.getElementsByClassName("content")[0].setAttribute("src", this.content);
             this.node.getElementsByClassName("description")[0].innerHTML = this.description;
+            this.quitButton = this.node.getElementsByClassName("quit")[0];
+            this.quitButton.addEventListener("click", quitButton, true);
         }
     }
 }
@@ -405,6 +435,8 @@ class MCQElem extends AbstractElem{
             // this.tipsButton.addEventListener("click", this.showtips.bind(this), true);
             this.tipsButton = this.node.getElementsByClassName("tipsMCQ")[0];
             this.tipsButton.addEventListener("click", this.displayTips.bind(this), true);
+            this.quitButton = this.node.getElementsByClassName("quit")[0];
+            this.quitButton.addEventListener("click", quitButton, true);
 
         }
     }

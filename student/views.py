@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_POST
 from django.db import transaction
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 # from examinations import generation
 from examinations.models import TestStudent, Answer, TestExercice
@@ -27,6 +28,8 @@ from train.models import ScenaSkill
 from promotions.models import Lesson
 
 from users.models import Student
+from users.models import Professor
+
 
 from django.apps import apps
 
@@ -518,16 +521,22 @@ def skill_pedagogic_ressources(request, type, slug):
     dico["scenarios"] = []
 
     dico["headline"] = ["Titre", "Thematique", "Niveau Scolaire", "Actions"]
-    dico["pk"] = slug;
+    dico["pk"] = slug
     print("WE ARE HERE")
     print(request.user)
     #user = apps.get_model(app_label='auth', model_name='request.user')
     stud = Student.objects.filter(user = request.user)
-    less =  Lesson.objects.filter(students = stud).values()
-    print(less)
+
+    # for prof in Lesson.objects.filter(students = stud).values():#('professors'):
+    #     print(prof)
+    #     print(User.objects.filter(id = prof['professors']))
+    # for final in Professor.objects.filter(user = prof['professors']):
+    #     print("PROF : ")
+    #     print(final.user)
     for scsk in ScenaSkill.objects.filter(code_skill = slug):
         print(scsk.code_skill)
         s = Scenario.objects.get(id = scsk.id_scenario)
-        dico["scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
+        print(s.creator)
+        dico["scenarios"].append({"pk":slug,"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
 
     return render(request, "professor/skill/update_pedagogical_resources.haml", dico)
