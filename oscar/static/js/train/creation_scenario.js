@@ -259,6 +259,7 @@ class ScenarioCreation {
         let newelem = document.createElement("div");
         newelem.classList.add('textBlockElem');
         newelem.innerHTML = this.textBlockElem.innerHTML;
+        newelem.setAttribute("id", index);
         newelem.getElementsByClassName('titre_text_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('desc_text_Elem')[0].value = this.data["elements"][index]["data"]["content"]
         this.anchor.appendChild(newelem);
@@ -266,6 +267,7 @@ class ScenarioCreation {
         let ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
+        newNavElem.setAttribute("id", "navitem"+ index);
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -275,6 +277,7 @@ class ScenarioCreation {
         let newelem = document.createElement("div")
         newelem.classList.add('imgBlockElem');
         newelem.innerHTML = this.imgBlockElem.innerHTML;
+        newelem.setAttribute("id", index);
         newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('url_img_Elem')[0].value = this.data["elements"][index]["data"]["url"]
         newelem.getElementsByClassName('desc_img_Elem')[0].value = this.data["elements"][index]["data"]["description"]
@@ -284,6 +287,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
+        newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -297,6 +301,7 @@ class ScenarioCreation {
         let newelem = document.createElement("div")
         newelem.classList.add('imgBlockElem');
         newelem.innerHTML = this.imgBlockElem.innerHTML;
+        newelem.setAttribute("id", index);
         newelem.getElementsByClassName('title_img')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('url_img_Elem')[0].value = this.data["elements"][index]["data"]["url"].split("oscareducation")[1];
         newelem.getElementsByClassName('desc_img_Elem')[0].value = this.data["elements"][index]["data"]["description"]
@@ -306,6 +311,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
+        newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -315,6 +321,7 @@ class ScenarioCreation {
         let newelem = document.createElement("div");
         newelem.classList.add('videoBlockElem');
         newelem.innerHTML = this.videoBlockElem.innerHTML;
+        newelem.setAttribute("id", index);
         newelem.getElementsByClassName('titre_vid_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('url_vid_Elem')[0].value = this.data["elements"][index]["data"]["url"]
         newelem.getElementsByClassName('desc_vid_Elem')[0].value = this.data["elements"][index]["data"]["description"]
@@ -324,6 +331,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
+        newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -333,6 +341,7 @@ class ScenarioCreation {
         let newelem = document.createElement("div");
         newelem.classList.add('pdfBlockElem');
         newelem.innerHTML = this.pdfBlockElem.innerHTML;
+        newelem.setAttribute("id", index);
         newelem.getElementsByClassName('titre_pdf_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('url_pdf_Elem')[0].value = this.data["elements"][index]["data"]["url"]
         newelem.getElementsByClassName('desc_pdf_Elem')[0].value = this.data["elements"][index]["data"]["description"]
@@ -342,6 +351,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
+        newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
@@ -351,6 +361,7 @@ class ScenarioCreation {
         let newelem = document.createElement("div");
         newelem.classList.add('mcqBlockElem');
         newelem.innerHTML = this.mcqBlockElem.innerHTML;
+        newelem.setAttribute("id", index);
         // filling the title and the question
         newelem.getElementsByClassName('titre_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["title"]
         newelem.getElementsByClassName('question_MCQ_Elem')[0].value = this.data["elements"][index]["data"]["question"]
@@ -377,6 +388,7 @@ class ScenarioCreation {
         var ul = document.getElementById("simpleList");
         let newNavElem = document.createElement("div");
         newNavElem.classList.add('divElemNav');
+        newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
 
         ul.appendChild(newNavElem);
