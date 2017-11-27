@@ -148,7 +148,8 @@ def lesson_detail(request, pk):
 
     for s in Scenario.objects.exclude(creator = request.user).filter(public = True):
         dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
-
+        for sk in ScenaSkill.objects.filter(id_scenario = s.id):
+            dico["skills"].append({"id":s.id,"skillcode":sk.code_skill})
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence(s)", "Thematique", "Niveau", "Actions"]
 
