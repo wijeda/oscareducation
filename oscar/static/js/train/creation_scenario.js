@@ -269,6 +269,9 @@ class ScenarioCreation {
         newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", "navitem"+ index);
         newNavElem.innerHTML = this.textBlockNav.innerHTML;
+        if (this.data["elements"][index]["data"]["title"] != ""){
+            newNavElem.getElementsByTagName('label')[0].innerHTML = this.data["elements"][index]["data"]["title"]
+        }
 
         ul.appendChild(newNavElem);
     }
@@ -289,6 +292,9 @@ class ScenarioCreation {
         newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
+        if (this.data["elements"][index]["data"]["title"] != ""){
+            newNavElem.getElementsByTagName('label')[0].innerHTML = this.data["elements"][index]["data"]["title"]
+        }
 
         ul.appendChild(newNavElem);
     }
@@ -313,6 +319,9 @@ class ScenarioCreation {
         newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.imgBlockNav.innerHTML;
+        if (this.data["elements"][index]["data"]["title"] != ""){
+            newNavElem.getElementsByTagName('label')[0].innerHTML = this.data["elements"][index]["data"]["title"]
+        }
 
         ul.appendChild(newNavElem);
     }
@@ -333,6 +342,9 @@ class ScenarioCreation {
         newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.videoBlockNav.innerHTML;
+        if (this.data["elements"][index]["data"]["title"] != ""){
+            newNavElem.getElementsByTagName('label')[0].innerHTML = this.data["elements"][index]["data"]["title"]
+        }
 
         ul.appendChild(newNavElem);
     }
@@ -353,6 +365,9 @@ class ScenarioCreation {
         newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.pdfBlockNav.innerHTML;
+        if (this.data["elements"][index]["data"]["title"] != ""){
+            newNavElem.getElementsByTagName('label')[0].innerHTML = this.data["elements"][index]["data"]["title"]
+        }
 
         ul.appendChild(newNavElem);
     }
@@ -390,6 +405,9 @@ class ScenarioCreation {
         newNavElem.classList.add('divElemNav');
         newNavElem.setAttribute("id", "navitem"+ index)
         newNavElem.innerHTML = this.mcqBlockNav.innerHTML;
+        if (this.data["elements"][index]["data"]["title"] != ""){
+            newNavElem.getElementsByTagName('label')[0].innerHTML = this.data["elements"][index]["data"]["title"]
+        }
 
         ul.appendChild(newNavElem);
     }
