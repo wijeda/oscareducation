@@ -466,7 +466,7 @@ class ScenarioCreation {
         data["skills"] = [];
         let skillsBox = document.getElementById("skillsBox");
         for(let skillBox of skillsBox.childNodes){
-            if(skillBox.classList && skillBox.classList.contains("ng-scope")) {
+            if(skillBox.classList && skillBox.classList.contains("ng-scope") && skillBox.getElementsByTagName("button")[0]) {
                 let skill = skillBox.getElementsByTagName("button")[0].innerHTML.trim();
                 data["skills"].push(skill)
             }
