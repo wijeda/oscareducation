@@ -10,7 +10,9 @@
 
     %link{:rel => "stylesheet", :type => "text/css", :href => "/static/css/train/stylesheet_train.css"}
     %script{:src => "/static/js/train/creation_scenario.js"}
-    %script{:src => "/static/js/train/Sortable.js"}
+    %script{:src => "https://code.jquery.com/jquery-1.12.4.js"}
+    %script{:src => "https://code.jquery.com/ui/1.12.1/jquery-ui.js"}
+
     -# %script{type: "text/javascript", src: "{% static 'js/professor_validate_exercice.js' %}"}
     %script{type: "text/javascript", src: "{% static 'js/professor_lesson.js' %}"}
     %script{type: "text/javascript", src: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"}
@@ -293,3 +295,49 @@
                       %span.glyphicon.glyphicon-file
                       %label.pdftitre PDF
                       %span
+    :javascript
+      $("#whiteBox").sortable({
+        start: function(event, ui) {
+          ui.item.startPos = ui.item.index();
+        },
+        update: function( event, ui ) {
+          var oldIndex = ui.item.startPos;
+          var newIndex = ui.item.index();
+          var ul = document.getElementById("simpleList");
+          if (oldIndex > newIndex) {
+            var node = ul.childNodes[newIndex];
+            ul.replaceChild(ul.childNodes[oldIndex], ul.childNodes[newIndex]);
+            ul.insertBefore(node, ul.childNodes[newIndex].nextSibling);
+          }
+          else if (oldIndex == newIndex) {}
+          else{
+            var node = ul.childNodes[newIndex];
+            ul.replaceChild(ul.childNodes[oldIndex], ul.childNodes[newIndex]);
+            ul.insertBefore(node, ul.childNodes[newIndex-1]);
+          }
+        }
+      });
+      $("#whiteBox").disableSelection();
+
+      $("#simpleList").sortable({
+        start: function(event, ui) {
+          ui.item.startPos = ui.item.index();
+        },
+        update: function( event, ui ) {
+          var oldIndex = ui.item.startPos;
+          var newIndex = ui.item.index();
+          var ul = document.getElementById("whiteBox");
+          if (oldIndex > newIndex) {
+            var node = ul.childNodes[newIndex];
+            ul.replaceChild(ul.childNodes[oldIndex], ul.childNodes[newIndex]);
+            ul.insertBefore(node, ul.childNodes[newIndex].nextSibling);
+          }
+          else if (oldIndex == newIndex) {}
+          else{
+            var node = ul.childNodes[newIndex];
+            ul.replaceChild(ul.childNodes[oldIndex], ul.childNodes[newIndex]);
+            ul.insertBefore(node, ul.childNodes[newIndex-1]);
+          }
+        }
+      });
+      $("simpleList").disableSelection();

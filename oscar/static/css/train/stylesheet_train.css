@@ -20,6 +20,14 @@
     grid-column: 2; /* placement en colonne 2 */
     margin-bottom: 20px;
 }
+
+.ui-sortable-placeholder {
+  border: 3px dashed #aaa;
+  height: 45px;
+  width: 344px;
+  background: #ccc;
+}
+
 #navFixed {
     position:fixed;
     overflow: auto;
