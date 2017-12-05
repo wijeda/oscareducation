@@ -175,6 +175,12 @@ class ScenarioCreation {
         if(!elemImage.getElementsByClassName('url_img_Elem')[0].value){
             // Getting from directory:
             let url = elemImage.getElementsByClassName("imgprev")[0].getAttribute("src");
+            //If no image has been set, the url value will be null so we have to initialize it
+            if(!url){
+                url = "";
+                let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
+                return {"type":"ImgElem", "data":{"title": title, "url": url, "description" : description}}
+            }
             let description = elemImage.getElementsByClassName('desc_img_Elem')[0].value;
             return {"type":"ImgElemHardDrive", "data":{"title": title, "url": url, "description" : description}}
         }
@@ -187,19 +193,14 @@ class ScenarioCreation {
     }
 
     getElemInputBlockVideo(elemVideo){
-        // let title = elemVideo.childNodes[1].childNodes[3].value;
-        // let url = elemVideo.childNodes[1].childNodes[9].childNodes[7].value
-        // let description = elemVideo.getElementsByClassName('description')[0].value
         let title = elemVideo.getElementsByClassName('titre_vid_Elem')[0].value;
         let url = elemVideo.getElementsByClassName('url_vid_Elem')[0].value;
+        console.log("The video url:",url);
         let description = elemVideo.getElementsByClassName('desc_vid_Elem')[0].value;
         return {"type":"VidElem", "data":{"title": title, "url": url, "description" : description}}
     }
 
     getElemInputBlockPDF(elemPDF){
-        // let title = elemPDF.childNodes[1].childNodes[3].value;
-        // let url = elemPDF.childNodes[1].childNodes[9].childNodes[7].value
-        // let description = elemPDF.getElementsByClassName('description')[0].value
         let title = elemPDF.getElementsByClassName('titre_pdf_Elem')[0].value;
         let url = elemPDF.getElementsByClassName('url_pdf_Elem')[0].value;
         let description = elemPDF.getElementsByClassName('desc_pdf_Elem')[0].value;
@@ -212,13 +213,6 @@ class ScenarioCreation {
         let question = elemMCQ.getElementsByClassName('question_MCQ_Elem')[0].value;
         let tips = elemMCQ.getElementsByClassName('tipsMCQ')[0].value;
         let answers = [];
-        // for (let elem of elemMCQ.childNodes[1].childNodes[21].childNodes){
-        //      if(elem.className == "repLine"){
-        //             let reponse = elem.childNodes[3].value;
-        //             let checked = elem.childNodes[5].checked;
-        //             answers.push({"answer": reponse, "solution": checked});
-        //      }
-        // }
         for (let elem of elemMCQ.getElementsByClassName('repLine')){
              let reponse = elem.getElementsByClassName("answer")[0].value;
              let checked = elem.getElementsByClassName("answer1isvalid")[0].checked;
@@ -577,6 +571,9 @@ function loadPDF(elem){
 function loadVideo(elem){
     let root = elem.parentNode;
     let url = root.getElementsByClassName("url_vid_Elem")[0].value;
+    if(url == ""){
+        return false;
+    }
     let ID = getVideoId(url);
     let embedURL = "//www.youtube.com/embed/" + ID
     let videoIframe = root.getElementsByTagName("iframe")[0]
@@ -752,7 +749,7 @@ window.onload = function(){
     if(typeof angular == 'undefined') {
       console.log("errror");
     }else {
-      console.log("pas error");
+      console.log("no error");
     }
 
 
