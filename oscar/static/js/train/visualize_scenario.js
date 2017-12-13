@@ -9,8 +9,6 @@ class ScenarioVisualization{
         this.nextButton.addEventListener("click", this.nextButtonElement.bind(this), true);
         this.previousButton =  document.getElementById(previousButtonID);
         this.previousButton.addEventListener("click", this.previousButtonElement.bind(this), true);
-        // this.validateButton = document.getElementById(validateButtonID);
-        // this.validateButton.addEventListener("click", this.validateButtonElement.bind(this), true);
         this.endButton = document.getElementById(endButtonID);
         this.endButton.addEventListener("click", this.endButtonElement.bind(this), true);
         this.blockText = document.getElementById(blockID["textBlockID"]);
@@ -18,7 +16,6 @@ class ScenarioVisualization{
         this.blockVideo = document.getElementById(blockID["videoBlockID"]);
         this.blockPDF = document.getElementById(blockID["pdfBlockID"]);
         this.blockMCQ = document.getElementById(blockID["mcqBlockID"]);
-
 
         this.progressBar = document.getElementById("progressBar");
 
@@ -34,6 +31,8 @@ class ScenarioVisualization{
         this.tabElementObject = [];
         this.first = true;
 
+        //we load each elem, and display them one by one, according to the
+        //user actions
         for(let elem of this.elements){
             var goto = document.createElement('button');
             if(this.first)
@@ -91,6 +90,16 @@ class ScenarioVisualization{
         }
     }
 
+    /*
+     *#####################################################################
+     * NAVIGATION BUTTON FUNCTIONS
+     *#####################################################################
+     */
+
+    //when a element of the navbar(when playing a scenario) is clicked,
+    //this function will ensure to display the right element and modify the
+    //button if need(for example at the last element the right arrow is
+    //replaced by a square)
     gotoButtonElement(elem){
         if(this.index == this.tabElementObject.length-1){
             this.nextButton.style.display = "inline";
@@ -182,8 +191,12 @@ class ScenarioVisualization{
         }else{
             window.location.href = "/professor/lesson/"+pk+"/#listscena";
         }
-
     }
+    /*
+     *#####################################################################
+     * END OF NAVIGATION BUTTON FUNCTIONS
+     *#####################################################################
+     */
 }
 
 function getJsonData(){
@@ -291,8 +304,6 @@ class AbstractElem{
         this.anchor.removeChild(this.node);
     }
 
-
-
 	delete() {
 		throw new Error('You have to implement the method delete');
 	}
@@ -311,6 +322,15 @@ function quitButton(){
 
 }
 
+/*
+ *#####################################################################
+ * RENDERING ELEMENT FUNCTIONS
+ *#####################################################################
+ */
+
+ /*
+  * Those functions will load the content of the elem
+  */
 class TextElem extends AbstractElem{
     constructor(elem, skull, anchor){
         // elem is the data to render
@@ -424,15 +444,11 @@ class MCQElem extends AbstractElem{
                 blocanswer.innerHTML = this.node.getElementsByClassName("blocanswer")[0].innerHTML;
                 blocanswer.classList.add('blocanswer');
                 blocanswer.getElementsByClassName("answer")[0].innerHTML = answer["answer"];
-                //blocanswer.getElementsByClassName("isAnswer")[0].checked = false;
                 this.Ul[0].appendChild(blocanswer);
             }
 
             this.validateButton = this.node.getElementsByClassName("validateElement")[0];
             this.validateButton.addEventListener("click", this.validate.bind(this), true);
-            //
-            // this.tipsButton = this.node.getElementsByClassName("tipsMCQ")[0];
-            // this.tipsButton.addEventListener("click", this.showtips.bind(this), true);
             this.tipsButton = this.node.getElementsByClassName("tipsMCQ")[0];
             this.tipsButton.addEventListener("click", this.displayTips.bind(this), true);
             this.quitButton = this.node.getElementsByClassName("quit")[0];
@@ -441,6 +457,12 @@ class MCQElem extends AbstractElem{
         }
     }
 
+    /*
+     *#####################################################################
+     * END OF NAVIGATION BUTTON FUNCTIONS
+     *#####################################################################
+     */
+
     displayTips(){
         this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-content", this.tips);
         this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-placement", "bottom");
@@ -448,9 +470,6 @@ class MCQElem extends AbstractElem{
         this.node.getElementsByClassName("tipsMCQ")[0].setAttribute("data-trigger", "focus");
         $('[data-toggle="popover"]').popover('show');
     }
-    // showtips(){
-    //     alert("Indice : " + this.tips);
-    // }
 
     render(){
         if(this.node.getElementsByClassName("boxclasse")[0].style.height > "400px"){
@@ -479,6 +498,7 @@ class MCQElem extends AbstractElem{
         }
     }
 
+    //handle the MCQ, when validate is pressed, modifies the colors, print a feedback etc
     validate(){
         let count = 1;
         let error_number = 0;
@@ -494,17 +514,13 @@ class MCQElem extends AbstractElem{
                     this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#fe7575";
                     this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #ff4040";
                 }
-                //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
             }
             else{
                 if (answer["solution"]){
-                    //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "inline-block";
-                    //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].setAttribute("src", "/static/img/icons/correct.png");
                     this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "#00bb00";
                     this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "#76f276";
                     this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid #00bb00";
                 }else {
-                    //this.node.getElementsByClassName("blocanswer")[count].getElementsByClassName("isFalse")[0].style.display = "none";
                     this.node.getElementsByClassName("blocanswer")[count].style.borderColor = "grey";
                     this.node.getElementsByClassName("blocanswer")[count].style.backgroundColor = "";
                     this.node.getElementsByClassName("answer")[count].style.borderLeft = "solid grey";
