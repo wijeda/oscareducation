@@ -11,6 +11,8 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_POST
 from django.db import transaction
 from django.db.models import Q
+from rating.models import *
+from django.forms import model_to_dict
 from django.contrib.auth.models import User
 
 # from examinations import generation
@@ -194,6 +196,8 @@ def validate_exercice(request, test_student, test_exercice):
 
             elif data["type"] == "professor":
                 raw_answer[number]["response"] = [request.POST[str(number)]]
+            elif data["type"] == "chart-barchart":
+                raw_answer[number]["response"] = [request.POST[str(number)]]
             else:
                 raise Exception()
 
@@ -281,6 +285,18 @@ def skill_pedagogic_ressources(request, type, slug):
     else:
         # type == 'coder'
         base = get_object_or_404(CodeR, id=slug)
+
+    rated_res = {}
+    """All resource id from the page!"""
+    for item in base.resource.all():
+        r = Rating.objects.filter(resource=item.id, rated_by=request.user)
+        s = Star_rating.objects.filter(resource=item.id, rated_by=request.user)
+        if r.exists() & s.exists():
+            if s.count() != 1:
+                print "Error more than 1 star rating for 1 resource"
+            rated_res[item.id] = {}
+            for rr in r:
+                rated_res[item.id][rr.question.id] = rr.value
 
     personal_resource = base.resource.filter(section="personal_resource")
     lesson_resource = base.resource.filter(section="lesson_resource")
@@ -516,7 +532,9 @@ def skill_pedagogic_ressources(request, type, slug):
         "sori_coder_other_resources": sori_coder_other_resources,
         "sori_coder_lesson_resource_sesamath": sori_coder_lesson_resource_sesamath,
         "sori_coder_lesson_resource_khanacademy": sori_coder_lesson_resource_khanacademy,
-        "sori_coder_exercice_resource_sesamath": sori_coder_exercice_resource_sesamath})
+        "sori_coder_exercice_resource_sesamath": sori_coder_exercice_resource_sesamath,
+        "rated_resources": rated_res,
+    })
 
     dico["scenarios"] = []
 

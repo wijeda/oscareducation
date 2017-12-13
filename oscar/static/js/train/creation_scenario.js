@@ -3,7 +3,9 @@
 let counterBlock = 0;
 class ScenarioCreation {
 
-    //constructor(anchorID, btnPlusID, addElementDivID, textBlockElemID, textButtonID, videoBlockElemID, videoButtonID, imgBlockElemID, imgButtonID, mcqBlockElemID, mcqButtonID){
+    /*
+     *  constructor of the creation scenario page (init all the button, the element etc)
+     */
     constructor(param){
         this.data = this.getJsonData();
 
@@ -66,6 +68,18 @@ class ScenarioCreation {
             }
         }
     }
+
+    /*
+     *#####################################################################
+     * MAKE BLOCK FUNCTIONS
+     *#####################################################################
+     */
+
+     /*
+      * all the "makeblockelem..." are used when the user add an element.
+      * the method will initialize the corresponding block by copying
+      * a template on the haml file
+      */
 
     makeBlockElemText(){
         var newelem = document.createElement("div");
@@ -159,6 +173,26 @@ class ScenarioCreation {
         counterBlock = counterBlock +1;
     }
 
+    /*
+     *#####################################################################
+     * END OF MAKE BLOCK FUNCTIONS
+     *#####################################################################
+     */
+
+    //----------------------------------------------------------------------
+
+    /*
+     *#####################################################################
+     * GET ELEM INPUT BLOCK FUNCTIONS
+     *#####################################################################
+     */
+
+    /*
+     * the "getEleminputBlock..." will get the data that the user put
+     * from the corresponding block and structure it : for example
+     * getElemInputBlockText will get the title and the content and return it
+     * in a json structure
+     */
 
     getElemInputBlockText(elemText){
         // let title = elemText.childNodes[1].childNodes[3].value;
@@ -229,6 +263,12 @@ class ScenarioCreation {
 
     }
 
+    /*
+     *#####################################################################
+     * END OF GET ELEM INPUT BLOCK FUNCTIONS
+     *#####################################################################
+     */
+
     // get the JSON data when editing in order to retrieve the elements
     getJsonData(){
 
@@ -253,6 +293,20 @@ class ScenarioCreation {
             return {elements:[]};
         }
     }
+
+    //----------------------------------------------------------------------
+
+    /*
+     *#####################################################################
+     * MAKE FILLED ELEMENT FUNCTIONS
+     *#####################################################################
+     */
+
+    /*
+     * the "makeFilled..." function will be used when a user edit a scenario,
+     * for each element of it, a block will be created and filled by those
+     * methods
+     */
 
     // make a filled element
     makeFilledText(index){
@@ -412,35 +466,29 @@ class ScenarioCreation {
         ul.appendChild(newNavElem);
     }
 
+    /*
+     *#####################################################################
+     * END OF MAKE FILLED ELEMENT FUNCTIONS
+     *#####################################################################
+     */
+
     fillPage()
     {
         if(this.data){
             for(let i = 0;i<this.data["elements"].length;i++)
             {
                 if(this.data["elements"][i]["type"] == "TextElem")
-                {
                     this.makeFilledText(i);
-                }
                 else if(this.data["elements"][i]["type"] == "ImgElemHardDrive")
-                {
                     this.makeFilledImgHardDrive(i);
-                }
                 else if(this.data["elements"][i]["type"] == "ImgElem")
-                {
                     this.makeFilledImg(i);
-                }
                 else if(this.data["elements"][i]["type"] == "VidElem")
-                {
                     this.makeFilledVid(i);
-                }
                 else if(this.data["elements"][i]["type"] == "PDFElem")
-                {
                     this.makeFilledPDF(i);
-                }
                 else if(this.data["elements"][i]["type"] == "MCQElem")
-                {
                     this.makeFilledMcq(i);
-                }
             }
         }
     }
@@ -460,24 +508,21 @@ class ScenarioCreation {
         this.sendForm();
     }
 
+    /*
+     * once the user clicked on "sauvegarder", sendForm will be called and
+     * will save the datas of the scenarios in order to get all the datas
+     * and will then send it as a json in order to save it in the views
+     */
     sendForm() {
-
         let data = {};
         let listOfParamIDfield = ["title", "topic", "grade_level", "instructions", "public", "backgroundImage"];
-
 
         for(let id of listOfParamIDfield){
             let elem = document.getElementById(id);
             if(id=="public")
-            {
                 data[id] = elem.checked;
-            }
             else
-            {
                 data[id] = elem.value;
-            }
-
-
         }
         // get skills
         data["skill"] = "";
@@ -498,31 +543,18 @@ class ScenarioCreation {
             let classElem = this.anchor.childNodes[i].className;
 
             if(classElem == "textBlockElem")
-            {
                 data["elements"].push(this.getElemInputBlockText(this.anchor.childNodes[i]));
-            }
             else if(classElem == "videoBlockElem")
-            {
                 data["elements"].push(this.getElemInputBlockVideo(this.anchor.childNodes[i]));
-            }
             else if(classElem == "imgBlockElem")
-            {
                 data["elements"].push(this.getElemInputBlockImage(this.anchor.childNodes[i]));
-            }
             else if(classElem =="mcqBlockElem")
-            {
                 data["elements"].push(this.getElemInputBlockMCQ(this.anchor.childNodes[i]));
-            }
             else if(classElem =="pdfBlockElem")
-            {
                 data["elements"].push(this.getElemInputBlockPDF(this.anchor.childNodes[i]));
-            }
         }
-
         //construct an HTTP request
-
         let xhr = new XMLHttpRequest();
-
         xhr.open("POST", "/professor/train/save_scenario", true);
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
         xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"))
@@ -550,11 +582,20 @@ function cancelCreation(elem){
         window.location.href = new_url;
     }
     else
-    {
-        console.log('no');
-    }
+        console.log('cancel of the scenario aborted');
 }
 
+//----------------------------------------------------------------------
+
+/*
+ *#####################################################################
+ * LOAD ELEMENT FUNCTIONS
+ *#####################################################################
+ */
+
+/*
+ * functions that will load element when needed, for example the youtube videos
+ */
 function loadImage(elem){
     let root = elem.parentNode;
     let imgPreview = root.getElementsByClassName("imgprev")[0];
@@ -605,6 +646,12 @@ function loadVideo(elem){
     videoIframe.style.display = "block";
     return false;
 }
+
+/*
+ *#####################################################################
+ * END OF LOAD ELEMENT FUNCTIONS
+ *#####################################################################
+ */
 
 // Transforms the video URL into its embed version for better hosting support
 function getVideoId(url) {
@@ -734,9 +781,6 @@ function removeReponse(elem){
     return false;
 }
 
-
-
-
 //This function permits to fill automatically the field on the navBar when the user is writting the title of the content.
 function fillTitle(elem){
     var root = elem.parentNode.parentNode;
@@ -768,16 +812,11 @@ function fillTitle(elem){
 
 // initiation
 window.onload = function(){
-
-
     if(typeof angular == 'undefined') {
       console.log("errror");
     }else {
       console.log("no error");
     }
-
-
-
     let param = {
         "btnPlusID":"addElement",
         "anchorID":"whiteBox",
@@ -794,8 +833,6 @@ window.onload = function(){
 
         "videoBlockElemID": "videoBlockElem",
         "videoButtonID": "addElementVideo",
-        /*"loadVidID": "loadVideo",
-        "loadVidButtonID": "addVid",*/
 
         "mcqBlockElemID": "mcqBlockElem",
         "mcqButtonID": "addElementMcq",
@@ -806,24 +843,7 @@ window.onload = function(){
         "pdfBlockElemID": "pdfBlockElem",
         "pdfButtonID": "addElementPDF",
         "saveScenarioButtonID": "saveScenario"
-
-
-        /*"loadImgID": "loadImage",
-        "loadImgButtonID": "addImg",
-
-        "removeImageID": "removeImage",*/
     }
-    /*new ScenarioCreation(anchorID,
-                        btnPlusID,
-                        addElementDivID,
-                        textBlockElemID,
-                        textButtonID,
-                        videoBlockElemID,
-                        videoButtonID,
-                        imgBlockElemID,
-                        imgButtonID,
-                        mcqBlockElemID,
-                        mcqButtonID);*/
 
     new ScenarioCreation(param)
 

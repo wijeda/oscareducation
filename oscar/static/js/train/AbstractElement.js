@@ -44,17 +44,6 @@ class ScenarioCreation {
         this.anchor.appendChild(newelem);
     }
 
-    // makeBlockElemVideo(){
-    //     //TODO : adapter les liens
-    //     let newelem = document.createElement("input");
-    //     newelem.setAttribute("placeholder", "URL de votre vidéo");
-    //     newelem.innerHTML = this.videoBlockElem.innerHTML;
-    //     this.anchor.appendChild(newelem);
-    //     newelem.style.display = "block";
-    //     newelem.style.width = "100%";
-    //
-    // }
-
     makeBlockElemVideo(){
         let newelem = document.createElement("div");
         newelem.classList.add('videoBlockElem');
@@ -158,24 +147,7 @@ window.onload = function(){
 
         "imgBlockElemID": "imgBlockElem",
         "imgButtonID": "addElementImg",
-
-        /*"loadImgID": "loadImage",
-        "loadImgButtonID": "addImg",
-
-        "removeImageID": "removeImage",*/
     }
-
-    /*new ScenarioCreation(anchorID,
-                        btnPlusID,
-                        addElementDivID,
-                        textBlockElemID,
-                        textButtonID,
-                        videoBlockElemID,
-                        videoButtonID,
-                        imgBlockElemID,
-                        imgButtonID,
-                        mcqBlockElemID,
-                        mcqButtonID);*/
     new ScenarioCreation(param)
 
 };
@@ -198,46 +170,6 @@ function getCookie(c_name)
  }
 
  function sendForm() {
-     /*let emptyfield = false
-     let form = document.getElementById("whiteBox");
-     form.setAttribute("method", "POST");
-     form.setAttribute("action", "/professor/train/save_scenario");
-
-     let listOfIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
-     for(let key in listOfIDfield){
-         console.log("key : " + listOfIDfield[key]);
-         let elem = document.getElementById(listOfIDfield[key])
-         if(elem){
-
-             let hiddenField = document.createElement("input");
-             hiddenField.setAttribute("type", "hidden");
-             hiddenField.setAttribute("name", listOfIDfield[key]);
-
-             if (elem.type == "checkbox"){
-               //hiddenField.setAttribute("type", "checkbox");
-               //hiddenField.setAttribute("checked", elem.checked);
-               //hiddenField.setAttribute("value", (elem.checked?"True":"False"));
-               hiddenField.setAttribute("value", "True");
-               //hiddenField.setAttribute("required", false);
-               console.log(elem.checked)
-             }else{
-               console.log(elem.value)
-               hiddenField.setAttribute("value", elem.value);
-             }
-
-             if(!elem.value || elem.value == ""){
-                 emptyfield = true
-             }
-
-             form.appendChild(hiddenField);
-         }
-     }
-     if (!emptyfield) {
-         form.submit();
-     }else {
-         console.error("Empty field");
-     }*/
-
      let data = {}
      let listOfParamIDfield = ["creator", "title", "skill", "topic", "grade_level", "instructions", "public"];
 

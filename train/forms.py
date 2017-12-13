@@ -2,7 +2,6 @@ from django import forms
 from .models import Scenario
 
 class ScenarioForm(forms.Form):
-    # TODO foreignkey
     creator = forms.CharField()
     title = forms.CharField() #("Titre", max_length = 255)
     skill = forms.CharField()

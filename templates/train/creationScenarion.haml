@@ -76,12 +76,6 @@
                         Compétences sélectionnées :
 
                     .well#skillsBox
-                        -# <!-- ngRepeat: skill in toTestSkills -->
-                        -# -for s in skills
-                        -#     %span{:ng-repeat=>"skill in toTestSkills", :class=>"ng-scope"}
-                        -#         %button{:type=>"button", :title=>"", :ng-click=>"removeSkill(skill)", :class=>"btn btn-primary selected-skill ng-binding"}
-                        -#           #{s}
-                        -#     <!-- end ngRepeat: skill in toTestSkills -->
 
                       %span{ng-repeat: "skill in toTestSkills"}
                         %button.btn.btn-primary.selected-skill{type: "button", title: "{& skill.name &}", ng-click: "removeSkill(skill)"}
