@@ -538,7 +538,7 @@ def skill_pedagogic_ressources(request, type, slug):
 
     dico["scenarios"] = []
 
-    dico["headline"] = ["Titre", "Thematique", "Niveau Scolaire", "Actions"]
+    dico["headline"] = ["Titre", "Thematique", "Niveau", "Actions"]
     dico["pk"] = slug
     print("WE ARE HERE")
     print(request.user)
