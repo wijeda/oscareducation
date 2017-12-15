@@ -1,142 +1,8 @@
-/*#whiteBox {
-	background-color: white;
-}*/
-
-#parameters label, .mcqBlockElem .panel-body label {
-    width: 140px;
-    height: 30px;
-}
-#OurContainer {
-    display: grid;
-    grid-template-columns: 5% 110%;
-    position: relative;
-    right: 100px;
-}
-#sideNavBar {
-    grid-column: 1; /* placement en colonne 1 */
-}
-#sectionElements, #whiteBox, #ToolsBarSEC {
-    margin-left: 140px;
-    grid-column: 2; /* placement en colonne 2 */
-    margin-bottom: 20px;
-}
-
-.ui-sortable-placeholder {
-  border: 3px dashed #aaa;
-  height: 45px;
-  width: 344px;
-  background: #ccc;
-}
-
-#navFixed {
-    position:fixed;
-    overflow: auto;
-    height: 70%;
-    width: 235px;
-}
-.divElemNav {
-    background-color: white;
-    padding : 6px;
-    border: 2px solid;
-    margin: 5px;
-    border-radius: 7px;`
-}
-.divElemNav label{
-    word-break: break-word;
-}
-#parameters label, .mcqBlockElem .panel-body label {
-	width: 140px;
-	height: 30px;
-}
-
-#parameters input, .answer1, .answer2, .question_MCQ_Elem{
-	width: 270px;
-}
+/*==================================================
+    Common
+==================================================*/
 .blk {
-	padding: 10px;
-}
-/*	list scenario's part	*/
-#headline {
-	background-color: #f58025;
-	border-radius: 0px;
-	font-family: 'Open Sans', sans-serif;
-	text-transform: uppercase;
-	padding: 3px;
-}
-
-#headline span {
-	padding: 13px
-}
-
-#headline td p {
-	color: white;
-}
-
-#contentlist {
-	color: #f58025;
-}
-
-#parameters, .imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem {
-	background-color: white;
-	margin-bottom: 20px;
-}
-#addScenarioButton{
-    margin-bottom: 30px;
-}
-.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem, #whiteBox1 {
-	width: 100%;
-	position: relative;
-}
-
-.textBlockElem textarea {
-	width: 100%;
-}
-#parameters textarea {
-    width: 100%;
-    resize: none;
-    min-height: 50px;
-    max-height: 200px;
-}
-#DiffElem{
-    bottom : 15%;
-
-}
-#cancelScenario{
-    bottom : 20%;
-}
-#saveScenario {
-    bottom : 12%;
-    left: 410px;
-    position: relative;
-}
-
-#questionMCQ{
-    display: inline-block;
-    width: auto;
-    border: 5px solid #f38026;
-    border-radius: 12px;
-    margin: 10px;
-    font-size: 30px;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #ffb378;
-}
-
-.simple-text{
-    background-color: #ffffffe6;
-    padding: 20px;
-    justify-content: center;
-    text-align: center;
-    margin-top: 20%;
-    border-radius: 5px;
-    word-break: break-word;
-    width: 100%;
+    padding: 10px;
 }
 
 label:hover {
@@ -145,18 +11,91 @@ label:hover {
  border-radius: 10px;
 }
 
-.boxTitleMcq{
-    padding: 5px;
+
+/*==================================================
+    Scenario Creation
+==================================================*/
+#OurContainer {
+    display: grid;
+    grid-template-columns: 5% 110%;
+    position: relative;
+    right: 100px;
 }
-.titleMCQ{
+
+#sideNavBar {
+    grid-column: 1; /* placement en colonne 1 */
+}
+
+#sectionElements, #whiteBox, #ToolsBarSEC {
+    margin-left: 140px;
+    grid-column: 2; /* placement en colonne 2 */
+    margin-bottom: 20px;
+}
+
+#navFixed {
+    position:fixed;
+    overflow: auto;
+    height: 70%;
+    width: 235px;
+}
+
+#DiffElem{
+    bottom : 15%;
+
+}
+
+#parameters label, .mcqBlockElem .panel-body label {
+    width: 140px;
+    height: 30px;
+}
+
+#parameters input, .answer1, .answer2, .question_MCQ_Elem{
+    width: 270px;
+}
+
+#parameters, .imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem {
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+#parameters textarea {
+    width: 100%;
+    resize: none;
+    min-height: 50px;
+    max-height: 200px;
+}
+
+#cancelScenario{
+    bottom : 20%;
+}
+
+#saveScenario {
+    bottom : 12%;
+    left: 410px;
+    position: relative;
+}
+
+.divElemNav {
+    background-color: white;
+    padding : 6px;
+    border: 2px solid;
     margin: 5px;
-    padding: 5px;
+    border-radius: 7px;`
 }
-.desc_text_Elem{
-    resize:none;
-    overflow:hidden;
-    min-height:50px;
+
+.divElemNav label{
+    word-break: break-word;
 }
+
+.imgBlockElem, .videoBlockElem, .textBlockElem, .mcqBlockElem, .pdfBlockElem, #whiteBox1 {
+	width: 100%;
+	position: relative;
+}
+
+.textBlockElem textarea {
+	width: 100%;
+}
+
 .deleteElement{
 	position: absolute;
 	top: 0;
@@ -181,6 +120,61 @@ label:hover {
     right:60px;;
     background-color:#ffbe2f;
 }
+
+.imgprev, .videoBlockElem div div iframe{
+	display: block;
+}
+
+.desc_text_Elem{
+    resize:none;
+    overflow:hidden;
+    min-height:50px;
+}
+
+#skill{
+    display: inline;
+}
+
+#boxskills{
+    position: relative;
+    left: 20px;
+    width : 90%
+
+}
+
+.control-label{
+    font-weight: bold;
+}
+
+/*==================================================
+    Scenario Vizualisation
+==================================================*/
+#questionMCQ{
+    display: inline-block;
+    width: auto;
+    border: 5px solid #f38026;
+    border-radius: 12px;
+    margin: 10px;
+    font-size: 30px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #ffb378;
+}
+
+#progressBar{
+	position: absolute;
+	right: 315px;
+	top: 15%;
+	width: 600px;
+	height: 35px;
+}
+
 .img_scenario {
 	width: 100%;
 }
@@ -193,6 +187,24 @@ label:hover {
 .pdf_scenario{
 	width: 100%;
 	height: 420px;
+}
+
+.containerMCQ{
+    padding-bottom: 15px;
+}
+
+.glyphicon-arrow-right, .glyphicon-arrow-left, .glyphicon-stop {
+    font-size: 40px;
+    color:#f58025;
+}
+
+.glyphiconNavbar{
+    font-size: 25px;
+}
+
+.glyphicon-ok{
+    font-size: 30px;
+    color:#f58025;
 }
 
 .btn-fixed-previous {
@@ -209,11 +221,6 @@ label:hover {
 	height: 50px;
 }
 
-.glyphicon-arrow-right, .glyphicon-arrow-left, .glyphicon-stop {
-    font-size: 40px;
-    color:#f58025;
-}
-
 .btn-fixed-next {
     background-color: Transparent;
     background-repeat:no-repeat;
@@ -226,10 +233,6 @@ label:hover {
 	top: 15%;
 	width: 100px;
 	height: 50px;
-}
-
-.glyphiconNavbar{
-    font-size: 25px;
 }
 
 .btn-fixed-validate {
@@ -245,11 +248,6 @@ label:hover {
 	width: 70px;
 	height: 40px;
     transition-duration: 0.4s;
-}
-
-.glyphicon-ok{
-    font-size: 30px;
-    color:#f58025;
 }
 
 .btn-fixed-validate:hover .glyphicon-ok{
@@ -272,6 +270,7 @@ label:hover {
     left: 50%;
     transform: translateX(-50%);
 }
+
 .goToButton{
     background-color: white;
     border-color: black;
@@ -281,6 +280,7 @@ label:hover {
     border: 1px solid;
     border-radius: 50%;
 }
+
 .box-options{
 	position: fixed;
     /*padding-bottom: 25px;*/
@@ -322,6 +322,7 @@ label:hover {
     width: 100%;
     text-align: center;
 }
+
 div.answer{
     display: inline-block;
     max-width: 200px;
@@ -329,14 +330,6 @@ div.answer{
     padding: 10px;
     word-break: break-word;
     font-weight: normal;
-}
-
-.containerMCQ{
-    padding-bottom: 15px;
-}
-
-.imgprev, .videoBlockElem div div iframe{
-	display: block;
 }
 
 .quit{
@@ -347,37 +340,69 @@ div.answer{
     border-radius: 5px;
 }
 
-
-
-/*.ligneorangefine {
-    width: 80%;
-    margin: 0px auto;
-}*/
-#progressBar{
-	position: absolute;
-	right: 315px;
-	top: 15%;
-	width: 600px;
-	height: 35px;
+/*==================================================
+    Scenario Lists
+==================================================*/
+#headline {
+    background-color: #f58025;
+    border-radius: 0px;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
+    padding: 3px;
 }
-#skill{
-    display: inline;
+
+#headline span {
+    padding: 13px
 }
+
+#headline td p {
+    color: white;
+}
+
+#contentlist {
+    color: #f58025;
+}
+
+#addScenarioButton{
+    margin-bottom: 30px;
+}
+
+.simple-text{
+    background-color: #ffffffe6;
+    padding: 20px;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20%;
+    border-radius: 5px;
+    word-break: break-word;
+    width: 100%;
+}
+
+.boxTitleMcq{
+    padding: 5px;
+}
+
+.titleMCQ{
+    margin: 5px;
+    padding: 5px;
+}
+
+/*==================================================
+    Other
+==================================================*/
 #datalist{
     width: 80%;
 }
+
 datalist {
     display: none;
 }
-.control-label{
-    font-weight: bold;
-}
 
-#boxskills{
-    position: relative;
-    left: 20px;
-    width : 90%
-
+.ui-sortable-placeholder {
+    border: 3px dashed #aaa;
+    height: 45px;
+    width: 344px;
+    background: #ccc;
 }
 
 .emptyListScenario{
