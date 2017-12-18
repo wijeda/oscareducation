@@ -194,19 +194,15 @@ def list_scenario(request):
     for s in Scenario.objects.filter(creator = request.user):
 
         dico["own_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
-
-    print("1")
-    for sk in ScenaSkill.objects.filter(id_scenario = s.id):
-        print("2")
-        dico["skills"].append(sk.code_skill)
-        print(sk.code_skill)
-        print(sk)
+        for sk in ScenaSkill.objects.filter(id_scenario = s.id):
+            dico["skills"].append(sk.code_skill)
 
     dico["foreign_scenarios"] = []
 
     for s in Scenario.objects.exclude(creator = request.user).filter(public = True):
         dico["foreign_scenarios"].append({"id":s.id,"sequence":s.title, "skill":s.skill, "topic":s.topic, "grade":s.grade_level,"edit":"","delete":"","see":""})
-
+        for sk in ScenaSkill.objects.filter(id_scenario = s.id):
+            dico["skills"].append(sk.code_skill)    
     # old line = dico["headline"] = ["Title", "Type of exercice", "Topic", "Grade Level", "Actions"]
     dico["headline"] = ["Titre", "Competence", "Thematique", "Niveau", "Actions"]
     # 2 examples to be replaced:

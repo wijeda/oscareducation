@@ -63,7 +63,10 @@
                             %td{:width => "20%"}
                                 %p{:dico => "tab"} #{st.sequence}
                             %td{:width => "20%"}
-                                %p{:dico => "tab"} #{st.skill}
+                                %p.skillList{:dico => "tab"}
+                                    -for sk in skills
+                                        -if sk.id == st.id
+                                            #{sk.skillcode}
                             %td{:width => "20%"}
                                 %p{:dico => "tab"} #{st.topic}
                             %td{:width => "20%"}
